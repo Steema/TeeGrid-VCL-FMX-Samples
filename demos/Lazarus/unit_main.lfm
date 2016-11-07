@@ -1,0 +1,57 @@
+object Form1: TForm1
+  Left = 238
+  Height = 653
+  Top = 150
+  Width = 779
+  Caption = 'Form1'
+  ClientHeight = 653
+  ClientWidth = 779
+  OnCreate = FormCreate
+  LCLVersion = '1.6.0.4'
+  object TeeGrid1: TTeeGrid
+    Left = 0
+    Height = 603
+    Top = 50
+    Width = 779
+    Columns = <>
+    Header.Height.Value = 0
+    ReadOnly = False
+    Align = alClient
+    UseDockManager = False
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 50
+    Top = 0
+    Width = 779
+    Align = alTop
+    Caption = 'Panel1'
+    ClientHeight = 50
+    ClientWidth = 779
+    TabOrder = 1
+    object Button1: TButton
+      Left = 24
+      Height = 25
+      Top = 10
+      Width = 75
+      Caption = '&Edit...'
+      OnClick = Button1Click
+      TabOrder = 0
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = Dbf1
+    left = 160
+    top = 64
+  end
+  object Dbf1: TDbf
+    IndexDefs = <>
+    TableLevel = 4
+    FilterOptions = []
+    left = 95
+    top = 64
+  end
+end

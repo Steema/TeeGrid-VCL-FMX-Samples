@@ -1,0 +1,4 @@
+demos/Lazarus/backup/
+demos/Lazarus/lib/i386-win32/
+*.lps
+demos/Lazarus/teegrid_for_lazarus.exe
