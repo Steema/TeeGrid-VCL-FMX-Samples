@@ -1,14 +1,30 @@
 # TeeGrid
+<www.steebi.com>
 
 ## Lightweight full-featured Grid / Tabular control
 
-### For Embarcadero Studio, Delphi and C++, VCL and Firemonkey frameworks
+### For Embarcadero Studio, Delphi and C++, VCL and Firemonkey frameworks and Lazarus FreePascal
 
-Written from scratch (not derived from TCustomGrid or TGrid), aprox 5k lines of code and 64K compiled size.
+Written from scratch (not derived from TCustomGrid or TGrid), aprox 5K lines of code and 64K compiled size.
 
-### Download
+[![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_FMX.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_FMX.png)
 
-Click this link to download TeeGrid full source code and automatic installer
+[![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_VCL.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_VCL.png)
+
+[![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_Lazarus.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_Lazarus.png)
+
+### Links
+
+Full source code and automatic installer:
+
+[Download latest version](http://www.steebi.com/files/code/beta/vcl_fmx/teegrid/index.htm)
+
+[Release Notes](https://github.com/Steema/TeeGrid/blob/master/docs/releasenotes.md) (What's new?)
+
+[Google+ Community](https://plus.google.com/u/0/communities/117324086536146457211)
+
+Website: <http://www.steebi.com>
+
 
 ### Install
 
@@ -29,16 +45,26 @@ TeeGrid is "data-agnostic"
 Data must be provided to TeeGrid using a data provider class, manually created.
 
 The reason is TeeGrid has no dependencies on database units (DB.pas) or any TDataset component.
-This enables linking a TeeGrid to any kind of data, like arrays of objects or records, generic TList, TCollection, TeeBI TDataItem structures or any other source, including your own custom "virtual data" class.
 
-This means the big difference vs TDBGrid and TGrid is there is no automatic support (yet) for "TDataset" or "TDataSource" components at design-time. (This will be solved in the near future, with a DataSource property assignable at design-time)
+This enables linking a TeeGrid to any kind of data, like a TDataset, TDataSource, arrays of objects or records or a generic TList using Rtti, a TCollection, TeeBI TDataItem structures or any other source, including your own custom "virtual data" class.
 
-Several classes are provided to bind data to TeeGrid, like TVirtualData<T> in Tee.Grid.Data unit (for arrays, TList etc), and TBIGridData in BI.Grid.Data unit (for TeeBI TDataItem objects)
+Note: Support for "TDataset" or "TDataSource" components at design-time is not yet implemented.
+
+Several classes are provided to bind data to TeeGrid, like:
+
+- TVirtualData<T> in Tee.Grid.Data unit (for arrays, generic TList etc)
+
+- TVirtualDBData in Tee.Grid.Data.DB unit (for TDataSource and TDataSet)
+
+- TBIGridData in BI.Grid.Data unit (for TeeBI TDataItem objects)
 
 Examples:
 
 ```delphi
-// From array:
+// From a TDataSource:
+TeeGrid1.Data:= TVirtualDBData.From(DataSource1);
+
+// From an array:
 var MyData : Array of TPerson; 
 ... fill array...
 TeeGrid1.Data:=TVirtualData<TPerson>.Create(MyData);
@@ -176,7 +202,7 @@ TeeGrid1.Columns[0].ReadOnly:= True;
 Note: Edit box for texts in current beta version.
 
 ```delphi
-TeeGrid1.SetEditor(TeeGrid1.Columns[1], TCalendarEditor);
+TeeGrid1.Columns[1].EditorClass:= TCalendarEditor;
 ```
 
 - Rows and Columns lines separators (stroke settings)
@@ -246,7 +272,7 @@ TTeeGridEditor.Edit(Self,TeeGrid1);
 
 - TDataSource / TDataSet support
 
-A new TVirtualData class to bind to datasets
+Improve TVirtualDBData class to support DB buffering and events
 
 - Easy embeddable controls in cells or rows.
 
