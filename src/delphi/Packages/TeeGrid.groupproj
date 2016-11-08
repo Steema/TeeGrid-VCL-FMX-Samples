@@ -1,0 +1,84 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{A1576768-D7DC-4E50-B240-6FEB10652B8A}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="TeeGrid.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="VCLTeeGrid.dproj">
+            <Dependencies>TeeGrid.dproj</Dependencies>
+        </Projects>
+        <Projects Include="DCLVCLTeeGrid.dproj">
+            <Dependencies>VCLTeeGrid.dproj</Dependencies>
+        </Projects>
+        <Projects Include="FMXTeeGrid.dproj">
+            <Dependencies>TeeGrid.dproj</Dependencies>
+        </Projects>
+        <Projects Include="DCLFMXTeeGrid.dproj">
+            <Dependencies>FMXTeeGrid.dproj</Dependencies>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="TeeGrid">
+        <MSBuild Projects="TeeGrid.dproj"/>
+    </Target>
+    <Target Name="TeeGrid:Clean">
+        <MSBuild Projects="TeeGrid.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid:Make">
+        <MSBuild Projects="TeeGrid.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VCLTeeGrid" DependsOnTargets="TeeGrid">
+        <MSBuild Projects="VCLTeeGrid.dproj"/>
+    </Target>
+    <Target Name="VCLTeeGrid:Clean" DependsOnTargets="TeeGrid:Clean">
+        <MSBuild Projects="VCLTeeGrid.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VCLTeeGrid:Make" DependsOnTargets="TeeGrid:Make">
+        <MSBuild Projects="VCLTeeGrid.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DCLVCLTeeGrid" DependsOnTargets="VCLTeeGrid">
+        <MSBuild Projects="DCLVCLTeeGrid.dproj"/>
+    </Target>
+    <Target Name="DCLVCLTeeGrid:Clean" DependsOnTargets="VCLTeeGrid:Clean">
+        <MSBuild Projects="DCLVCLTeeGrid.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DCLVCLTeeGrid:Make" DependsOnTargets="VCLTeeGrid:Make">
+        <MSBuild Projects="DCLVCLTeeGrid.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FMXTeeGrid" DependsOnTargets="TeeGrid">
+        <MSBuild Projects="FMXTeeGrid.dproj"/>
+    </Target>
+    <Target Name="FMXTeeGrid:Clean" DependsOnTargets="TeeGrid:Clean">
+        <MSBuild Projects="FMXTeeGrid.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FMXTeeGrid:Make" DependsOnTargets="TeeGrid:Make">
+        <MSBuild Projects="FMXTeeGrid.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DCLFMXTeeGrid" DependsOnTargets="FMXTeeGrid">
+        <MSBuild Projects="DCLFMXTeeGrid.dproj"/>
+    </Target>
+    <Target Name="DCLFMXTeeGrid:Clean" DependsOnTargets="FMXTeeGrid:Clean">
+        <MSBuild Projects="DCLFMXTeeGrid.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DCLFMXTeeGrid:Make" DependsOnTargets="FMXTeeGrid:Make">
+        <MSBuild Projects="DCLFMXTeeGrid.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="TeeGrid;VCLTeeGrid;DCLVCLTeeGrid;FMXTeeGrid;DCLFMXTeeGrid"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="TeeGrid:Clean;VCLTeeGrid:Clean;DCLVCLTeeGrid:Clean;FMXTeeGrid:Clean;DCLFMXTeeGrid:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="TeeGrid:Make;VCLTeeGrid:Make;DCLVCLTeeGrid:Make;FMXTeeGrid:Make;DCLFMXTeeGrid:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
