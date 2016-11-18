@@ -83,6 +83,13 @@ TeeGrid1.Data := TBIGridData.Create(TeeGrid1.Grid, MyData );
 
 ### Current Features
 
+- Huge data
+
+TeeGrid is capable of handling a very big number of cells.
+For example **1 billion** cells ( 1000 columns by 1 million rows ).
+
+The only limit is the available memory, (compile for the 64bit platform).
+
 - Virtual data 
 
 TVirtualData or derived class to automatically create columns and provide cell values
