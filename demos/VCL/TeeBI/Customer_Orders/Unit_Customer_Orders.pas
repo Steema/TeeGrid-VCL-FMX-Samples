@@ -1,6 +1,21 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  Master -> Detail sub-grid rows             }
+{  Copyright (c) 2015-2016 by Steema Software }
+{  All Rights Reserved                        }
+{*********************************************}
 unit Unit_Customer_Orders;
 
 interface
+
+{
+   Example to show multi-level row groups (Master -> Detail)
+
+   Using TeeBI data samples, TeeGrid rows can be expanded / collapsed to show
+   their detail sub-rows.
+
+   Customer -> Orders -> Order Items
+}
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
@@ -19,14 +34,16 @@ type
   private
     { Private declarations }
 
+    // Sample data items
     Customers,
     Orders,
     OrderItems : TDataItem;
 
+    procedure AddDetail(const AData:TVirtualData; const ADetail:TDataItem; const AColumn:TColumn);
     procedure AddMainTotals(const AData:TVirtualData; const AColumns:TColumns);
     procedure AddOrderTotals(const AGroup:TRowGroup);
     procedure NewDetail(const Sender,NewGroup:TRowGroup);
-    procedure SetExpander(const AData:TVirtualData; const AColumn:TColumn);
+    procedure LoadSampleData;
   public
     { Public declarations }
   end;
@@ -44,18 +61,8 @@ uses
 
 procedure TFormDetailRows.Button1Click(Sender: TObject);
 begin
+  // Show TeeGrid editor dialog
   TTeeGridEditor.Edit(Self,TeeGrid1)
-end;
-
-procedure TFormDetailRows.SetExpander(const AData:TVirtualData; const AColumn:TColumn);
-var Expander : TExpanderRender;
-begin
-  Expander:=TExpanderRender.Create(AColumn.Changed);
-
-  Expander.OnCanExpand:=AData.CanExpand;
-  Expander.OnGetExpanded:=TeeGrid1.Grid.GetExpanded;
-
-  AColumn.Render:=Expander;
 end;
 
 procedure TFormDetailRows.AddOrderTotals(const AGroup:TRowGroup);
@@ -70,43 +77,62 @@ begin
   AGroup.Footer.Add(TTotalsHeader.CreateTotals(tmp));
 end;
 
-procedure TFormDetailRows.NewDetail(const Sender,NewGroup:TRowGroup);
-var Data : TBIGridData;
+procedure TFormDetailRows.AddDetail(const AData:TVirtualData; const ADetail:TDataItem; const AColumn:TColumn);
 begin
-  Data:=(NewGroup.Data as TBIGridData);
+  // Set the detail item
+  (AData as TBIGridData).Detail:=ADetail;
 
-  Data.Detail:=OrderItems;
+  // Set the "+/-" icon to a column to enable expand / collapse
+  AColumn.Render:=TeeGrid1.NewExpander(AData);
+end;
 
-  SetExpander(NewGroup.Data,NewGroup.Columns['OrderID']);
-
+// Optional event.
+// It is used here to add a new 3rd level sub-detail (Customer->Orders->OrderItems)
+procedure TFormDetailRows.NewDetail(const Sender,NewGroup:TRowGroup);
+begin
+  AddDetail(NewGroup.Data,OrderItems,NewGroup.Columns['OrderID']);
   AddOrderTotals(NewGroup);
 end;
 
-procedure TFormDetailRows.FormCreate(Sender: TObject);
-var Data : TBIGridData;
+// Load sample data from TeeBI default "BISamples" disk store
+procedure TFormDetailRows.LoadSampleData;
+var Demo : TDataItem;
 begin
-  Customers:=TStore.Load('SQLite_Demo')['Customers'];
-  Orders:=TStore.Load('SQLite_Demo')['Orders'];
-  OrderItems:=TStore.Load('SQLite_Demo')['"Order Details"'];
+  Demo:=TStore.Load('SQLite_Demo');
 
-  Data:=TBIGridData.From(Customers);
-  TeeGrid1.Data:=Data;
+  Customers:=Demo['Customers'];
+  Orders:=Demo['Orders'];
+  OrderItems:=Demo['"Order Details"'];
+end;
 
-  Data.Detail:=Orders;
+procedure TFormDetailRows.FormCreate(Sender: TObject);
+begin
+  LoadSampleData;
+
+  // Main data: Customers
+  TeeGrid1.Data:=TBIGridData.From(Customers);
+
+  // Detail data: Orders
+  AddDetail(TeeGrid1.Data,Orders,TeeGrid1.Columns['CustomerID']);
 
   TeeGrid1.OnNewDetail:=NewDetail;
 
-  AddMainTotals(Data,TeeGrid1.Columns);
-
-  SetExpander(Data,TeeGrid1.Columns['CustomerID']);
+  AddMainTotals(TeeGrid1.Data,TeeGrid1.Columns);
 end;
 
+// Add a grid footer band with "Totals" for main Customer table
 procedure TFormDetailRows.AddMainTotals(const AData:TVirtualData; const AColumns:TColumns);
 var Totals : TColumnTotals;
 begin
+  // Create grid band
   Totals:=TColumnTotals.From(AData,AColumns);
+
+  // There is no numeric field in Customer table, so the only thing we can
+  // add is a counter:
+
   Totals.Calculation.Add(AColumns['CustomerID'],TColumnCalculation.Count);
 
+  // Add band to grid footer
   TeeGrid1.Footer.Add(Totals);
 end;
 

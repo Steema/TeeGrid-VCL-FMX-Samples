@@ -19,18 +19,26 @@ object StringGridForm: TStringGridForm
     Left = 0
     Top = 0
     Width = 703
-    Height = 492
+    Height = 451
     Columns = <>
+    Header.OnClick = TeeGrid1ClickedHeader
     Footer = <>
     ReadOnly = False
+    OnClickedHeader = TeeGrid1ClickedHeader
+    OnSelect = TeeGrid1Select
     Align = alClient
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    ExplicitLeft = 160
-    ExplicitTop = 144
-    ExplicitWidth = 400
-    ExplicitHeight = 250
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 451
+    Width = 703
+    Height = 41
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 1
   end
 end

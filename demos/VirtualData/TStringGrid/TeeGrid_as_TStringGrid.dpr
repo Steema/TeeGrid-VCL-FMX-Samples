@@ -9,5 +9,6 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TStringGridForm, StringGridForm1);
   Application.Run;
 end.
