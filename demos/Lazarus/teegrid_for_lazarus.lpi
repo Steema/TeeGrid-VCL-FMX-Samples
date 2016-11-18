@@ -67,7 +67,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="C:\Root\teebee\Sources\Grid\Lazarus\"/>
+      <OtherUnitFiles Value="C:\Root\teebee\Sources\Grid\Lazarus\;E:\lazarus12_64\components\datetimectrls\lib\i386-win32\win32\"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

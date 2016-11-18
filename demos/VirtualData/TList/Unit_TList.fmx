@@ -1,0 +1,40 @@
+object FormGridTList: TFormGridTList
+  Left = 0
+  Top = 0
+  Caption = 'TeeGrid and TList'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object CBTheme: TComboBox
+      Items.Strings = (
+        ''
+        'Default'
+        'Black'
+        'iOS'
+        'Android')
+      Position.X = 472.000000000000000000
+      Position.Y = 16.000000000000000000
+      TabOrder = 0
+      OnChange = CBThemeChange
+    end
+  end
+  object TeeGrid1: TTeeGrid
+    Cells.Format.Brush.Color = 8454143
+    Columns = <>
+    ReadOnly = False
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 430.000000000000000000
+    Size.PlatformDefault = False
+  end
+end
