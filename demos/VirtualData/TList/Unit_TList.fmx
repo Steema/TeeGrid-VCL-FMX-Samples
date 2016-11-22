@@ -29,8 +29,8 @@ object FormGridTList: TFormGridTList
     end
   end
   object TeeGrid1: TTeeGrid
-    Cells.Format.Brush.Color = 8454143
     Columns = <>
+    Footer = <>
     ReadOnly = False
     Align = Client
     Size.Width = 640.000000000000000000
