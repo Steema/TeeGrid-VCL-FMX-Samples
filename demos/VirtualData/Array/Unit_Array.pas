@@ -50,7 +50,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Unit_MyData, Tee.Grid.Data, Tee.Grid.Data.Rtti,
+  Unit_MyData, Tee.Grid.Data, Tee.Grid.Data.Rtti, VCLTee.Painter.GdiPlus,
 
   Tee.Grid.Totals, Tee.Grid.Bands;
 
@@ -184,6 +184,8 @@ begin
   FillMyData(MyData);
 
   TeeGrid1.Data:=TVirtualArrayData<TPerson>.Create(MyData);
+
+  TeeGrid1.Painter:=TGdiPlusPainter.Create;
 
 //  TeeGrid1.Header.Hide;
 
