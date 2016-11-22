@@ -22,7 +22,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
   Tee.Renders, BI.DataSet, VCLTee.Editor.Grid, Vcl.StdCtrls, Vcl.ExtCtrls,
 
-  BI.Data, Tee.Grid.Rows, Tee.Grid.Columns, Tee.Grid.Data;
+  BI.Data, Tee.Grid.Rows, Tee.Grid.Columns, Tee.Grid.Data, Tee.Grid.RowGroup;
 
 type
   TFormDetailRows = class(TForm)
@@ -73,8 +73,8 @@ begin
   tmp.Calculation.Add(AGroup.Columns['Freight'],TColumnCalculation.Sum);
   tmp.Format.Font.Style:=[fsBold];
 
-  AGroup.Footer.Add(tmp);
   AGroup.Footer.Add(TTotalsHeader.CreateTotals(tmp));
+  AGroup.Footer.Add(tmp);
 end;
 
 procedure TFormDetailRows.AddDetail(const AData:TVirtualData; const ADetail:TDataItem; const AColumn:TColumn);
