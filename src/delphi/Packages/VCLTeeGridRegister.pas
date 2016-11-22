@@ -3,7 +3,7 @@ unit VCLTeeGridRegister;
 interface
 
 uses
-  System.Classes;
+  {System.}Classes;
 
 procedure Register;
 

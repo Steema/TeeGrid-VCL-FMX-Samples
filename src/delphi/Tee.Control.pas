@@ -5,14 +5,15 @@
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Control;
+{$I Tee.inc}
 
 interface
 
 uses
-  System.Classes,
+  {System.}Classes,
 
   {$IFNDEF FPC}
-  System.Types,
+  {System.}Types,
   {$ENDIF}
 
   Tee.Format, Tee.Painter;
@@ -20,18 +21,16 @@ uses
 type
   TCustomTeeControl=class(TComponent)
   private
-    FBack: TBrush;
+    FBack: TFormat;
 
     IChanged : TNotifyEvent;
 
-    procedure SetBack(const Value: TBrush);
+    procedure SetBack(const Value: TFormat);
   protected
     IUpdating : Integer;
 
     procedure BeginUpdate; inline;
     procedure EndUpdate;
-
-    function Bounds:TRectF;
 
     procedure Changed(Sender:TObject);
     property OnChange:TNotifyEvent read IChanged write IChanged;
@@ -39,15 +38,17 @@ type
     Constructor Create(AOwner:TComponent); override;
     Destructor Destroy; override;
 
+    procedure Assign(Source:TPersistent); override;
+
     procedure Paint; virtual;
 
+    function ClientHeight:Single; virtual;
+    function ClientWidth:Single; virtual;
     function Height:Single; virtual; abstract;
     function Painter:TPainter; virtual; abstract;
     function Width:Single; virtual; abstract;
   published
-    property Back:TBrush read FBack write SetBack;
+    property Back:TFormat read FBack write SetBack;
   end;
-
-  TMouseCursor=(Default,HandPoint,HorizResize,VertResize);
 
 implementation

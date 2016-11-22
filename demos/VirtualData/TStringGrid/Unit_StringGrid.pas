@@ -4,8 +4,10 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes, Vcl.Graphics,
+  System.UITypes,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
-  Vcl.ExtCtrls, Tee.Grid.RowGroup, Vcl.StdCtrls;
+  Vcl.ExtCtrls, Tee.Grid.RowGroup, Vcl.StdCtrls,
+  Tee.Grid.Data.Strings;
 
 type
   TStringGridForm = class(TForm)
@@ -17,6 +19,8 @@ type
     Label2: TLabel;
     ERows: TEdit;
     Button1: TButton;
+    Label3: TLabel;
+    LCells: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure TeeGrid1ClickedHeader(Sender: TObject);
     procedure TeeGrid1Select(const Sender: TRowGroup);
@@ -25,6 +29,10 @@ type
     procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
+
+    Data : TStringsData;
+
+    procedure RefreshTotalCells;
   public
     { Public declarations }
   end;
@@ -37,7 +45,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Tee.Grid.Data.Strings, Tee.Grid.Columns, VCLTee.Editor.Grid;
+  Tee.Grid.Columns, VCLTee.Editor.Grid, Tee.Grid.Bands, VCLTee.Painter.GDIPlus;
 
 procedure TStringGridForm.Button1Click(Sender: TObject);
 begin
@@ -48,19 +56,37 @@ procedure TStringGridForm.EColumnsChange(Sender: TObject);
 var tmp : Integer;
 begin
   if TryStrToInt(EColumns.Text,tmp) then
-     TStringsData(TeeGrid1.Data).Columns:=tmp;
+  begin
+    TStringsData(TeeGrid1.Data).Columns:=tmp;
+
+    RefreshTotalCells;
+  end;
 end;
 
 procedure TStringGridForm.ERowsChange(Sender: TObject);
 var tmp : Integer;
 begin
   if TryStrToInt(ERows.Text,tmp) then
-     TStringsData(TeeGrid1.Data).Rows:=tmp;
+  begin
+    TStringsData(TeeGrid1.Data).Rows:=tmp;
+
+    RefreshTotalCells;
+  end;
+end;
+
+function NewTitle:TTitleBand;
+begin
+  result:=TTitleBand.Create(nil);
+  result.Text:='Sub-Title';
+
+  result.Format.Font.Style:=[fsBold];
+  result.Format.Brush.Show;
+  result.Format.Brush.Color:=TColors.Indianred;
+  result.Format.Stroke.Show;
 end;
 
 procedure TStringGridForm.FormCreate(Sender: TObject);
-var Data : TStringsData;
-    t : Integer;
+var t : Integer;
 begin
   // Create data
   Data:=TStringsData.Create;
@@ -90,6 +116,17 @@ begin
   // Refresh edit boxes
   EColumns.Text:=IntToStr(Data.Columns);
   ERows.Text:=IntToStr(Data.Rows);
+
+  TeeGrid1.Rows.SubBands[20]:=NewTitle;
+
+  RefreshTotalCells;
+
+  TeeGrid1.Painter:=TGdiPlusPainter.Create;
+end;
+
+procedure TStringGridForm.RefreshTotalCells;
+begin
+  LCells.Caption:=FormatFloat('#,###',Data.Columns*Data.Rows);
 end;
 
 procedure TStringGridForm.TeeGrid1ClickedHeader(Sender: TObject);

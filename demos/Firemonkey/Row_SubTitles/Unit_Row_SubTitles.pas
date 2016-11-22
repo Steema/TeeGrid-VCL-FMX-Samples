@@ -32,7 +32,7 @@ begin
   result:=TTitleBand.Create(nil);
   result.Text:=AText;
 
-  result.Format.Brush.Visible:=True;
+  result.Format.Brush.Show;
   result.Format.Brush.Color:=TAlphaColors.Brown;
   result.Format.Font.Color:=TAlphaColors.White;
 end;
@@ -52,10 +52,10 @@ begin
 
   // Add custom sub-title bands
 
-  TeeGrid1.Rows.SubTitles[0]:=NewTitle('North');
-  TeeGrid1.Rows.SubTitles[6]:=NewTitle('East');
-  TeeGrid1.Rows.SubTitles[11]:=NewTitle('South');
-  TeeGrid1.Rows.SubTitles[18]:=NewTitle('West');
+  TeeGrid1.Rows.SubBands[0]:=NewTitle('North');
+  TeeGrid1.Rows.SubBands[6]:=NewTitle('East');
+  TeeGrid1.Rows.SubBands[11]:=NewTitle('South');
+  TeeGrid1.Rows.SubBands[18]:=NewTitle('West');
 end;
 
 end.

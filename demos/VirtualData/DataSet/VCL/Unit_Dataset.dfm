@@ -3,7 +3,7 @@ object FormGridDataset: TFormGridDataset
   Top = 0
   Caption = 'FormGridDataset'
   ClientHeight = 525
-  ClientWidth = 836
+  ClientWidth = 1114
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object FormGridDataset: TFormGridDataset
   object TeeGrid1: TTeeGrid
     Left = 0
     Top = 41
-    Width = 836
+    Width = 592
     Height = 459
     Columns = <>
     Footer = <>
@@ -27,14 +27,16 @@ object FormGridDataset: TFormGridDataset
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
+    ExplicitWidth = 836
   end
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 836
+    Width = 1114
     Height = 41
     Align = alTop
     TabOrder = 1
+    ExplicitWidth = 836
     object CheckBox1: TCheckBox
       Left = 24
       Top = 13
@@ -59,11 +61,35 @@ object FormGridDataset: TFormGridDataset
   object DBNavigator1: TDBNavigator
     Left = 0
     Top = 500
-    Width = 836
+    Width = 1114
     Height = 25
     DataSource = DataSource1
     Align = alBottom
     TabOrder = 2
+    ExplicitWidth = 836
+  end
+  object Panel2: TPanel
+    Left = 592
+    Top = 41
+    Width = 522
+    Height = 459
+    Align = alRight
+    BevelOuter = bvNone
+    TabOrder = 3
+    object DBGrid1: TDBGrid
+      Left = 0
+      Top = 0
+      Width = 522
+      Height = 459
+      Align = alClient
+      DataSource = DataSource1
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+    end
   end
   object ClientDataSet1: TClientDataSet
     PersistDataPacket.Data = {

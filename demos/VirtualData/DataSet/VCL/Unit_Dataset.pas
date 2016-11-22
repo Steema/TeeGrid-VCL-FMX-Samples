@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid, Data.DB,
-  Datasnap.DBClient, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.DBCtrls;
+  Datasnap.DBClient, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.Grids,
+  Vcl.DBGrids;
 
 type
   TFormGridDataset = class(TForm)
@@ -16,6 +17,8 @@ type
     CheckBox1: TCheckBox;
     Button1: TButton;
     DBNavigator1: TDBNavigator;
+    Panel2: TPanel;
+    DBGrid1: TDBGrid;
     procedure FormCreate(Sender: TObject);
     procedure CheckBox1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);

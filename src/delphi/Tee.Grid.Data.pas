@@ -1,118 +1,76 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  Abstract TVirtualData class                }
+{  Copyright (c) 2016 by Steema Software      }
+{  All Rights Reserved                        }
+{*********************************************}
 unit Tee.Grid.Data;
+{$I Tee.inc}
 
 interface
 
-{$IFDEF FPC}
-{$ELSE}
-{$IF CompilerVersion>25} // XE4 bug: Internal Error: URW1154
-{$DEFINE HASRTTI}
-{$ENDIF}
-{$ENDIF}
+{
+  Base abstract TVirtualData class.
+
+  Provides data to a TeeGrid.
+
+  See concrete implementations at the following units:
+
+  Tee.Grid.Data.Rtti
+  Tee.Grid.Data.DB
+
+  BI.Grid.Data
+
+}
 
 uses
-  System.Classes,
-  {$IFDEF HASRTTI}
-  System.Generics.Collections, System.Rtti, System.TypInfo,
-  {$ENDIF}
-  Tee.Grid.Columns, Tee.Painter;
+  {System.}Classes,
+  Tee.Grid.Columns, Tee.Painter, Tee.Renders;
 
 type
+  TFloat=Double;
+
+  TRowChangedEvent=procedure(const Sender:TObject; const ARow:Integer) of object;
+
+  TColumnCalculation=(Count,Sum,Min,Max,Average);
+
   TVirtualData=class abstract
   protected
+    FOnChangeRow : TRowChangedEvent;
+    FOnRepaint,
     FOnRefresh : TNotifyEvent;
 
-    {$IFDEF HASRTTI}
-    class function Add(const AColumns:TColumns;
-                       const AMember:TRttiMember;
-                       const AType:TRttiType):TColumn;
+    class function Add(const AColumns:TColumns; const AName:String; const ATag:TObject):TColumn; overload; static;
 
-    class procedure DoSetValue(const AColumn:TColumn; const P:Pointer; const Value:TValue); static;
-    class function GetValue(const AColumn:TColumn; const P:Pointer):TValue; static;
-    class function IsBoolean(const AType:TRttiType):Boolean; static;
+    procedure ChangeSelectedRow(const ARow:Integer);
 
-    class function IsDate(const AType:TRttiType):Boolean; static;
-    class function IsTime(const AType:TRttiType):Boolean; static;
-    class function IsDateTime(const AType:TRttiType):Boolean; static;
-
-    class function IsNumeric(const AType:TRttiType):Boolean; static;
-    class function MemberOf(const AColumn:TColumn):TRttiMember; inline; static;
-    class function PointerOf(const AValue:TValue):Pointer; static;
-    class function TypeOf(const AColumn: TColumn): TRttiType; static;
-    class function ValueOf(const AMember:TRttiMember; const P:Pointer):TValue; static;
-    {$ENDIF}
+    class procedure DoError(const AText:String); static;
 
     procedure Refresh;
+    procedure RowChanged(const ARow:Integer); virtual;
+    procedure Repaint;
 
     function SampleDate(const AColumn:TColumn): String;
     function SampleDateTime(const AColumn:TColumn):String;
     function SampleTime(const AColumn:TColumn):String;
-
   public
     procedure AddColumns(const AColumns:TColumns); virtual; abstract;
+    function AsFloat(const AColumn:TColumn; const ARow:Integer):TFloat; virtual;
     function AsString(const AColumn:TColumn; const ARow:Integer):String; virtual; abstract;
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; virtual; abstract;
+    function Calculate(const AColumn:TColumn; const ACalculation:TColumnCalculation):TFloat;
+    function CanExpand(const Sender:TRender; const ARow:Integer):Boolean; virtual;
+    function CanSortBy(const AColumn:TColumn):Boolean; virtual;
     function Count:Integer; virtual; abstract;
+    function GetDetail(const ARow:Integer; const AColumns:TColumns; out AParent:TColumn):TVirtualData; virtual;
+    function HasDetail(const ARow:Integer):Boolean; virtual;
+    class function IsNumeric(const AColumn:TColumn):Boolean; overload; virtual;
+    function IsSorted(const AColumn:TColumn; out Ascending:Boolean):Boolean; virtual;
     procedure Load; virtual; abstract;
+    function LongestString(const APainter:TPainter; const AColumn:TColumn):Single;
     function ReadOnly(const AColumn:TColumn):Boolean; virtual;
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); virtual; abstract;
+    procedure SortBy(const AColumn:TColumn); virtual;
   end;
-
-  {$IFDEF HASRTTI}
-  TVisibility=set of TMemberVisibility;
-
-  TRttiMembers=(Both, Fields, Properties);
-
-  TVirtualData<T>=class(TVirtualData)
-  private
-  class var
-    Context : TRttiContext;
-
-  var
-    FMembers : TRttiMembers;
-    FTypeInfo : PTypeInfo;
-    FVisibility : TVisibility;
-
-    procedure AddFields(const AColumns:TColumns; const AType:TRttiType);
-    procedure AddProperties(const AColumns:TColumns; const AType:TRttiType);
-
-    procedure DoAddColumns(const AColumns:TColumns; const AType:TRttiType);
-
-    procedure InternalAddType(const AColumns:TColumns;
-                              const AMember:TRttiMember;
-                              const AType:TRttiType);
-
-    function IsVisible(const AMember:TRttiMember):Boolean; inline;
-  public
-    Constructor Create(const AType:PTypeInfo;
-                       const AVisibility:TVisibility=[mvPublic,mvPublished];
-                       const AMembers:TRttiMembers=TRttiMembers.Both);
-
-    procedure AddColumns(const AColumns:TColumns); override;
-    function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; override;
-    procedure Load; override;
-  end;
-
-  TVirtualArrayData<T>=class(TVirtualData<T>)
-  private
-    FArray : TArray<T>;
-  public
-    Constructor Create(const Value: TArray<T>);
-
-    function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
-    function Count:Integer; override;
-    procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
-  end;
-
-  TVirtualListData<T>=class(TVirtualData<T>)
-  private
-    FList : TList<T>;
-  public
-    Constructor Create(const Value: TList<T>);
-
-    function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
-    function Count:Integer; override;
-    procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
-  end;
-  {$ENDIF}
 
 implementation

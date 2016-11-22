@@ -35,8 +35,8 @@ requires
   fmx;
 
 contains
-  FMXTee.Control in '..\FMXTee.Control.pas',
-  FMXTee.Grid in '..\FMXTee.Grid.pas',
-  FMXTee.Painter in '..\FMXTee.Painter.pas';
+  FMXTee.Control in '..\FMX\FMXTee.Control.pas',
+  FMXTee.Grid in '..\FMX\FMXTee.Grid.pas',
+  FMXTee.Painter in '..\FMX\FMXTee.Painter.pas';
 
 end.

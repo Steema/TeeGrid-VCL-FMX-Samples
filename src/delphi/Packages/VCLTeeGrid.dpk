@@ -35,16 +35,20 @@ requires
   TeeGrid;
 
 contains
-  VCLTee.Control in '..\VCLTee.Control.pas',
-  VCLTee.Editor.Column in '..\VCLTee.Editor.Column.pas',
-  VCLTee.Editor.Format in '..\VCLTee.Editor.Format.pas' {FormatEditor},
-  VCLTee.Editor.Grid in '..\VCLTee.Editor.Grid.pas' {TeeGridEditor},
-  VCLTee.Editor.Stroke in '..\VCLTee.Editor.Stroke.pas' {StrokeEditor},
-  VCLTee.Grid in '..\VCLTee.Grid.pas',
-  VCLTee.Painter in '..\VCLTee.Painter.pas',
-  VCLTee.Editor.Brush in '..\VCLTee.Editor.Brush.pas' {BrushEditor},
-  VCLTee.Editor.Coordinate in '..\VCLTee.Editor.Coordinate.pas' {CoordinateEditor},
-  VCLTee.Editor.Format.Text in '..\VCLTee.Editor.Format.Text.pas' {TextFormatEditor},
-  VCLTee.Editor.Header in '..\VCLTee.Editor.Header.pas' {HeaderEditor};
+  VCLTee.Painter in '..\VCL\VCLTee.Painter.pas',
+  VCLTee.Control in '..\VCL\VCLTee.Control.pas',
+  VCLTee.Grid in '..\VCL\VCLTee.Grid.pas',
+  VCLTee.Editor.Column in '..\VCL\VCLTee.Editor.Column.pas',
+  VCLTee.Editor.ColumnBand in '..\VCL\VCLTee.Editor.ColumnBand.pas' {ColumnBandEditor},
+  VCLTee.Editor.Format in '..\VCL\VCLTee.Editor.Format.pas' {FormatEditor},
+  VCLTee.Editor.Stroke in '..\VCL\VCLTee.Editor.Stroke.pas' {StrokeEditor},
+  VCLTee.Editor.Borders in '..\VCL\VCLTee.Editor.Borders.pas' {BordersEditor},
+  VCLTee.Editor.Brush in '..\VCL\VCLTee.Editor.Brush.pas' {BrushEditor},
+  VCLTee.Editor.Coordinate in '..\VCL\VCLTee.Editor.Coordinate.pas' {CoordinateEditor},
+  VCLTee.Editor.Format.Text in '..\VCL\VCLTee.Editor.Format.Text.pas' {TextFormatEditor},
+  VCLTee.Editor.Render.Text in '..\VCL\VCLTee.Editor.Render.Text.pas' {TextRenderEditor},
+  VCLTee.Editor.Header in '..\VCL\VCLTee.Editor.Header.pas' {HeaderEditor},
+  VCLTee.Editor.Margins in '..\VCL\VCLTee.Editor.Margins.pas' {MarginsEditor},
+  VCLTee.Editor.Grid in '..\VCL\VCLTee.Editor.Grid.pas' {TeeGridEditor};
 
 end.

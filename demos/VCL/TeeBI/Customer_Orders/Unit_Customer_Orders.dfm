@@ -37,6 +37,14 @@ object FormDetailRows: TFormDetailRows
     Align = alTop
     BevelOuter = bvLowered
     TabOrder = 1
+    object Label1: TLabel
+      Left = 128
+      Top = 14
+      Width = 55
+      Height = 13
+      Caption = '&Expanders:'
+      FocusControl = CBExpander
+    end
     object Button1: TButton
       Left = 24
       Top = 9
@@ -45,6 +53,21 @@ object FormDetailRows: TFormDetailRows
       Caption = '&Edit...'
       TabOrder = 0
       OnClick = Button1Click
+    end
+    object CBExpander: TComboBox
+      Left = 189
+      Top = 11
+      Width = 92
+      Height = 21
+      Style = csDropDownList
+      ItemIndex = 0
+      TabOrder = 1
+      Text = 'Plus Minus'
+      OnChange = CBExpanderChange
+      Items.Strings = (
+        'Plus Minus'
+        'Triangle'
+        'Arrow')
     end
   end
 end

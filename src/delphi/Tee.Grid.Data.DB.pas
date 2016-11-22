@@ -1,9 +1,16 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  DB TDataSet Virtual Data                   }
+{  Copyright (c) 2016 by Steema Software      }
+{  All Rights Reserved                        }
+{*********************************************}
 unit Tee.Grid.Data.DB;
+{$I Tee.inc}
 
 interface
 
 uses
-  Data.DB, Tee.Grid.Columns, Tee.Grid.Data, Tee.Painter;
+  {Data.}DB, Tee.Grid.Columns, Tee.Grid.Data, Tee.Painter;
 
 type
   TVirtualDBData=class;
@@ -11,8 +18,13 @@ type
   TVirtualDataLink=class(TDataLink)
   private
     IData : TVirtualDBData;
+
+    IChanging : Boolean;
+
+    procedure ChangeRow(const ARow:Integer);
   protected
     procedure ActiveChanged; override;
+    procedure RecordChanged(Field: TField); override;
     procedure UpdateData; override;
   end;
 
@@ -28,6 +40,7 @@ type
     class function Add(const AColumns:TColumns; const AField:TField):TColumn;
     procedure CreateLink;
     function FieldOf(const AColumn:TColumn):TField; inline;
+    procedure RowChanged(const ARow:Integer); override;
   public
     Destructor Destroy; override;
 

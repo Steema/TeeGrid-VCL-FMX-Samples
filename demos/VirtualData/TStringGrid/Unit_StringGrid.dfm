@@ -49,6 +49,7 @@ object StringGridForm: TStringGridForm
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitTop = -6
     object Label1: TLabel
       Left = 16
       Top = 14
@@ -62,6 +63,20 @@ object StringGridForm: TStringGridForm
       Width = 30
       Height = 13
       Caption = 'Rows:'
+    end
+    object Label3: TLabel
+      Left = 264
+      Top = 14
+      Width = 26
+      Height = 13
+      Caption = 'Cells:'
+    end
+    object LCells: TLabel
+      Left = 296
+      Top = 14
+      Width = 6
+      Height = 13
+      Caption = '0'
     end
     object EColumns: TEdit
       Left = 66
@@ -84,8 +99,8 @@ object StringGridForm: TStringGridForm
       OnChange = ERowsChange
     end
     object Button1: TButton
-      Left = 312
-      Top = 8
+      Left = 496
+      Top = 10
       Width = 75
       Height = 25
       Caption = '&Edit...'

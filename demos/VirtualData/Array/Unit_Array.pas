@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
   VCLTee.Editor.Grid, Vcl.StdCtrls, Vcl.ExtCtrls, System.UITypes,
 
-  Tee.Renders, Tee.Grid.Columns, VCLTee.Editor.Render.Text;
+  Tee.Renders, Tee.Grid.Columns, VCLTee.Editor.Render.Text, Tee.Grid.Rows;
 
 type
   TForm43 = class(TForm)
@@ -37,7 +37,7 @@ type
     procedure GridShowEditor(const Sender:TObject; const AEditor:TControl;
                              const AColumn:TColumn; const ARow:Integer);
 
-    procedure SetExpander(const AColumn:String);
+    procedure SetExpander(const AColumn:String; const ARows:TRows);
   public
     { Public declarations }
   end;
@@ -154,13 +154,12 @@ begin
   result.Format.Font.Style:=[fsBold];
 end;
 
-procedure TForm43.SetExpander(const AColumn:String);
+procedure TForm43.SetExpander(const AColumn:String; const ARows:TRows);
 var tmp : TColumn;
 begin
   tmp:=TeeGrid1.Columns[AColumn];
   tmp.ChangeRender(TExpanderRender);
-
-  TExpanderRender(tmp.Render).OnGetExpanded:=TeeGrid1.Grid.GetExpanded;
+  TExpanderRender(tmp.Render).OnGetExpanded:=ARows.Children.IsVisible;
 end;
 
 function Hello(const AGrid:TTeeGrid):TTitleBand;
@@ -189,7 +188,7 @@ begin
 
 //  TeeGrid1.Header.Hide;
 
-  SetExpander('Name');
+  SetExpander('Name',TeeGrid1.Rows);
 
   TeeGrid1.Footer.Clear;
 
