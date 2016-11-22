@@ -5,15 +5,24 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
-  Vcl.ExtCtrls, Tee.Grid.Rows;
+  Vcl.ExtCtrls, Tee.Grid.RowGroup, Vcl.StdCtrls;
 
 type
   TStringGridForm = class(TForm)
     TeeGrid1: TTeeGrid;
     Panel1: TPanel;
+    Panel2: TPanel;
+    Label1: TLabel;
+    EColumns: TEdit;
+    Label2: TLabel;
+    ERows: TEdit;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure TeeGrid1ClickedHeader(Sender: TObject);
     procedure TeeGrid1Select(const Sender: TRowGroup);
+    procedure EColumnsChange(Sender: TObject);
+    procedure ERowsChange(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,7 +37,26 @@ implementation
 {$R *.dfm}
 
 uses
-  Tee.Grid.Data.Strings, Tee.Grid.Columns;
+  Tee.Grid.Data.Strings, Tee.Grid.Columns, VCLTee.Editor.Grid;
+
+procedure TStringGridForm.Button1Click(Sender: TObject);
+begin
+  TTeeGridEditor.Edit(Self,TeeGrid1);
+end;
+
+procedure TStringGridForm.EColumnsChange(Sender: TObject);
+var tmp : Integer;
+begin
+  if TryStrToInt(EColumns.Text,tmp) then
+     TStringsData(TeeGrid1.Data).Columns:=tmp;
+end;
+
+procedure TStringGridForm.ERowsChange(Sender: TObject);
+var tmp : Integer;
+begin
+  if TryStrToInt(ERows.Text,tmp) then
+     TStringsData(TeeGrid1.Data).Rows:=tmp;
+end;
 
 procedure TStringGridForm.FormCreate(Sender: TObject);
 var Data : TStringsData;
@@ -38,8 +66,10 @@ begin
   Data:=TStringsData.Create;
 
   // Initialize size
-  Data.Columns:=3;
-  Data.Rows:=6;
+  //Data.Columns:=1000;
+  //Data.Rows:=100000;
+
+  Data.Resize(1000,100000);
 
   // Set header texts
   Data.Headers[0]:='A';
@@ -56,6 +86,10 @@ begin
 
   // Set data to grid
   TeeGrid1.Data:=Data;
+
+  // Refresh edit boxes
+  EColumns.Text:=IntToStr(Data.Columns);
+  ERows.Text:=IntToStr(Data.Rows);
 end;
 
 procedure TStringGridForm.TeeGrid1ClickedHeader(Sender: TObject);

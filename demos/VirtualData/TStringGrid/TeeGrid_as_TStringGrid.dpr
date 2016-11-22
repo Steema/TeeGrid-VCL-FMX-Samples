@@ -2,7 +2,7 @@ program TeeGrid_as_TStringGrid;
 
 uses
   Vcl.Forms,
-  Unit_StringGrid in 'Unit_StringGrid.pas';
+  Unit_StringGrid in 'Unit_StringGrid.pas' {StringGridForm};
 
 {$R *.res}
 
