@@ -8,16 +8,15 @@
 Written from scratch (not derived from TCustomGrid or TGrid), aprox 10K lines of code and 100K compiled size.
 
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_FMX.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_FMX.png)
-
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_VCL.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_VCL.png)
-
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_Lazarus.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_Lazarus.png)
+[![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_Hierarchical.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_Hierarchical.png)
 
 ### Links
 
 Full **source code** and automatic installer:
 
-[Download latest version](http://www.steebi.com/files/code/beta/vcl_fmx/teegrid/index.htm)
+[Download latest version](http://www.steebi.com/files/code/beta/vcl_fmx/teegrid/index.htm) **Nov-22nd, v0.2 Beta**
 
 [Release Notes](https://github.com/Steema/TeeGrid/blob/master/docs/releasenotes.md) (What's new?)
 
@@ -159,6 +158,18 @@ TeeGrid1.Footer.Add(Totals);
 
 // Add also a band with total names
 TeeGrid1.Footer.Add( TTotalsHeader.CreateTotals( Totals ) );
+```
+
+- Row "Sub-Bands"
+
+Any row might display a grid band above the row.
+The "band" can be anything, from a simple TTitleBand to a complex group of bands or rows.
+
+```delphi
+var Title: TTitleBand;
+Title:= TTitleBand.Create;
+Title.Text:='My Rows';
+TeeGrid1.Rows.SubBands[23]:= Title;
 ```
 
 - Custom cell rendering
