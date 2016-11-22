@@ -10,3 +10,5 @@ demos/VCL/TeeBI/Customer_Orders/__history/
 *.dcu
 *.stat
 *.exe
+demos/VirtualData/TStringGrid/Win32/
+demos/Lazarus/StringGrid/lib/
