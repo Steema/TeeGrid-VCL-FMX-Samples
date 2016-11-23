@@ -1,4 +1,4 @@
-object Form43: TForm43
+object FormArray: TFormArray
   Left = 0
   Top = 0
   Caption = 'TeeGrid using Array as Data'
@@ -46,32 +46,32 @@ object Form43: TForm43
       TabOrder = 0
       OnClick = Button1Click
     end
-    object Button2: TButton
+    object BInteger: TButton
       Left = 280
       Top = 8
       Width = 75
       Height = 25
       Caption = 'Integer 1D'
       TabOrder = 1
-      OnClick = Button2Click
+      OnClick = BIntegerClick
     end
-    object Button3: TButton
+    object BFloat: TButton
       Left = 368
       Top = 8
       Width = 75
       Height = 25
       Caption = 'Float 1D'
       TabOrder = 2
-      OnClick = Button3Click
+      OnClick = BFloatClick
     end
-    object Button4: TButton
+    object BString: TButton
       Left = 457
       Top = 8
       Width = 75
       Height = 25
       Caption = 'String 1D'
       TabOrder = 3
-      OnClick = Button4Click
+      OnClick = BStringClick
     end
     object BTObject: TButton
       Left = 546
@@ -83,7 +83,7 @@ object Form43: TForm43
       OnClick = BTObjectClick
     end
     object BRecord: TButton
-      Left = 178
+      Left = 186
       Top = 8
       Width = 75
       Height = 25
