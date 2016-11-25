@@ -1,0 +1,195 @@
+object StrokeEditor: TStrokeEditor
+  Left = 0
+  Top = 0
+  Caption = 'Stroke Editor'
+  ClientHeight = 268
+  ClientWidth = 282
+  Position = OwnerFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object TabStroke: TTabControl
+    Align = Client
+    Size.Width = 282.000000000000000000
+    Size.Height = 268.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 0
+    TabPosition = PlatformDefault
+    OnChange = TabStrokeChange
+    Sizes = (
+      282s
+      242s
+      282s
+      242s
+      282s
+      242s)
+    object TabOptions: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 62.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Options'
+      ExplicitSize.cx = 62.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object CBVisible: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 89.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = '&Visible'
+        OnChange = CBVisibleChange
+      end
+      object CBColor: TColorComboBox
+        DropDownKind = Custom
+        Color = claNull
+        DisableFocusEffect = False
+        ItemIndex = 147
+        Position.X = 16.000000000000000000
+        Position.Y = 38.000000000000000000
+        TabOrder = 1
+        OnChange = CBColorChange
+      end
+      object TBSize: TTrackBar
+        CanParentFocus = True
+        Frequency = 1.000000000000000000
+        Max = 50.000000000000000000
+        Orientation = Horizontal
+        Position.X = 16.000000000000000000
+        Position.Y = 90.000000000000000000
+        TabOrder = 2
+        OnChange = TBSizeChange
+      end
+      object Label1: TLabel
+        FocusControl = TBSize
+        Position.X = 16.000000000000000000
+        Position.Y = 74.000000000000000000
+        Text = '&Size:'
+      end
+      object LSize: TLabel
+        AutoSize = True
+        Position.X = 128.000000000000000000
+        Position.Y = 90.000000000000000000
+        Size.Width = 120.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        Text = '0'
+      end
+    end
+    object TabFill: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 35.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Fill'
+      ExplicitSize.cx = 35.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+    object TabStyle: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 46.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Style'
+      ExplicitSize.cx = 46.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object Label2: TLabel
+        FocusControl = LBStyle
+        Position.X = 16.000000000000000000
+        Position.Y = 11.000000000000000000
+        Text = '&Line:'
+      end
+      object LBStyle: TListBox
+        Position.X = 16.000000000000000000
+        Position.Y = 30.000000000000000000
+        Size.Width = 113.000000000000000000
+        Size.Height = 121.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 7
+        DisableFocusEffect = True
+        Items.Strings = (
+          'Solid'
+          'Dash'
+          'Dot'
+          'Dash Dot'
+          'Dash Dot Dot'
+          'Custom')
+        DefaultItemStyles.ItemStyle = ''
+        DefaultItemStyles.GroupHeaderStyle = ''
+        DefaultItemStyles.GroupFooterStyle = ''
+        OnChange = LBStyleChange
+        Viewport.Width = 109.000000000000000000
+        Viewport.Height = 117.000000000000000000
+      end
+      object Label3: TLabel
+        FocusControl = LBEndStyle
+        Position.X = 144.000000000000000000
+        Position.Y = 11.000000000000000000
+        Text = '&End:'
+      end
+      object LBEndStyle: TListBox
+        Position.X = 144.000000000000000000
+        Position.Y = 30.000000000000000000
+        Size.Width = 113.000000000000000000
+        Size.Height = 67.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 6
+        DisableFocusEffect = True
+        Items.Strings = (
+          'Round'
+          'Square'
+          'Flat')
+        DefaultItemStyles.ItemStyle = ''
+        DefaultItemStyles.GroupHeaderStyle = ''
+        DefaultItemStyles.GroupFooterStyle = ''
+        OnChange = LBEndStyleChange
+        Viewport.Width = 109.000000000000000000
+        Viewport.Height = 63.000000000000000000
+      end
+      object Label4: TLabel
+        FocusControl = LBJoinStyle
+        Position.X = 144.000000000000000000
+        Position.Y = 115.000000000000000000
+        Text = '&Join:'
+      end
+      object LBJoinStyle: TListBox
+        Position.X = 144.000000000000000000
+        Position.Y = 134.000000000000000000
+        Size.Width = 113.000000000000000000
+        Size.Height = 67.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        DisableFocusEffect = True
+        Items.Strings = (
+          'Round'
+          'Square'
+          'Flat')
+        DefaultItemStyles.ItemStyle = ''
+        DefaultItemStyles.GroupHeaderStyle = ''
+        DefaultItemStyles.GroupFooterStyle = ''
+        OnChange = LBJoinStyleChange
+        Viewport.Width = 109.000000000000000000
+        Viewport.Height = 63.000000000000000000
+      end
+    end
+  end
+end
