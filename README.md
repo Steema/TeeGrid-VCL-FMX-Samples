@@ -7,16 +7,17 @@
 
 Written from scratch (not derived from TCustomGrid or TGrid), aprox 10K lines of code and 100K compiled size.
 
+Full **source code** and automatic installer:
+
+[Download latest version](http://www.steebi.com/files/code/beta/vcl_fmx/teegrid/index.htm) **Nov-30th, v0.3 Beta**
+
+
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_FMX.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_FMX.png)
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_VCL.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_VCL.png)
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_Lazarus.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_Lazarus.png)
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_Hierarchical.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_Hierarchical.png)
 
 ### Links
-
-Full **source code** and automatic installer:
-
-[Download latest version](http://www.steebi.com/files/code/beta/vcl_fmx/teegrid/index.htm) **Nov-22nd, v0.2 Beta**
 
 [Release Notes](https://github.com/Steema/TeeGrid/blob/master/docs/releasenotes.md) (What's new?)
 
@@ -49,8 +50,6 @@ The reason is TeeGrid has no dependencies on database units (DB.pas) or any TDat
 
 This enables linking a TeeGrid to any kind of data, like a TDataset, TDataSource, arrays of objects or records or a generic TList using Rtti, a TCollection, TeeBI TDataItem structures or any other source, including your own custom "virtual data" class.
 
-Note: Support for "TDataset" or "TDataSource" components at design-time is not yet implemented.
-
 Several classes are provided to bind data to TeeGrid, like:
 
 - TVirtualData<T> in Tee.Grid.Data.Rtti unit (for arrays, generic TList etc)
@@ -70,7 +69,7 @@ TeeGrid1.Data:= TVirtualDBData.From(DataSource1);
 // From an array:
 var MyData : Array of TPerson; 
 ... fill array...
-TeeGrid1.Data:=TVirtualData<TPerson>.Create(MyData);
+TeeGrid1.Data:=TVirtualArrayData<TPerson>.Create(MyData);
 
 // From a TeeBI TDataItem:
 var MyData : TDataItem;
@@ -330,21 +329,17 @@ TeeGrid1.Rows.Alternate.Stroke.Visible:= True;
 
 The usual Onxxx events:
 
-OnAfterDraw
-
-OnClickedHeader
-
-OnColumnResized
-
-OnEditing
-
-OnEdited
+  * OnAfterDraw
+  * OnClickedHeader
+  * OnColumnResized
+  * OnEditing
+  * OnEdited
 
 **TeeGrid-specific events:**
 
-OnNewDetail (called when a row is expanded to show a sub-grid)
-
-OnShowEditor (called when a cell editor is about to be displayed)
+  * OnNewDetail (called when a row is expanded to show a sub-grid)
+  * OnPaint (at TColumn, to paint individual cells)
+  * OnShowEditor (called when a cell editor is about to be displayed)
 
 
 - Abstract Grid "Painter" (canvas) 
@@ -353,7 +348,7 @@ TeeGrid Painter property is of TPainter class.
 This is an abstract class that can be overriden, for example to use GDI+ in VCL:
 
 ```delphi
-TeeGrid1.Painter:= TGDIPlusPainter.Create; // <-- Note: not yet in beta version
+TeeGrid1.Painter:= TGDIPlusPainter.Create;
 ```
 
 - Design-time editor dialog to modify all settings and properties
@@ -367,15 +362,17 @@ TTeeGridEditor.Edit(Self,TeeGrid1);
 
 ### Wish-List, Pending Features
 
-- TDataSource / TDataSet support
+- Fixed columns (left and right aligned)
 
-Improve TVirtualDBData class to support DB buffering and events
+- Using TStringGrid with TeeBI expressions to build a Spreadsheet (Excel like) control
+
+- TreeColumn class (to display a tree inside a column, to expand / collapse rows)
+
+- Improve TVirtualDBData class to support DB buffering and events
 
 - Easy embeddable controls in cells or rows.
 
 To for example display sub-grids or TeeCharts below a row or inside a cell.
-
-- Image / Picture display in cells and header
 
 - Compositions (several texts, images, etc inside the same cell)
 
