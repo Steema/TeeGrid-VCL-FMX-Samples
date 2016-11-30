@@ -12,14 +12,15 @@ interface
 {
   Base abstract TVirtualData class.
 
-  Provides data to a TeeGrid.
+  Provides data to a TeeGrid (main rows or sub-rows)
 
   See concrete implementations at the following units:
 
-  Tee.Grid.Data.Rtti
-  Tee.Grid.Data.DB
+  Tee.Grid.Data.Rtti     (for generic TArray<T> or TList<T> data)
+  Tee.Grid.Data.DB       (for TDataSet and TDataSource)
+  Tee.Grid.Data.Strings  (to emulate a TStringGrid with Cells[Col,Row] property)
 
-  BI.Grid.Data
+  BI.Grid.Data           (for any TeeBI TDataItem data structure)
 
 }
 
@@ -39,6 +40,8 @@ type
     FOnChangeRow : TRowChangedEvent;
     FOnRepaint,
     FOnRefresh : TNotifyEvent;
+
+    PictureClass : TPersistentClass;
 
     class function Add(const AColumns:TColumns; const AName:String; const ATag:TObject):TColumn; overload; static;
 
@@ -62,6 +65,7 @@ type
     function CanExpand(const Sender:TRender; const ARow:Integer):Boolean; virtual;
     function CanSortBy(const AColumn:TColumn):Boolean; virtual;
     function Count:Integer; virtual; abstract;
+    class function From(const ASource:TComponent):TVirtualData; overload; virtual;
     function GetDetail(const ARow:Integer; const AColumns:TColumns; out AParent:TColumn):TVirtualData; virtual;
     function HasDetail(const ARow:Integer):Boolean; virtual;
     class function IsNumeric(const AColumn:TColumn):Boolean; overload; virtual;
@@ -71,6 +75,20 @@ type
     function ReadOnly(const AColumn:TColumn):Boolean; virtual;
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); virtual; abstract;
     procedure SortBy(const AColumn:TColumn); virtual;
+  end;
+
+  TVirtualDataClass=class of TVirtualData;
+
+  TVirtualDataClasses=record
+  private
+    class var
+      Items : Array of TVirtualDataClass;
+
+    class function IndexOf(const AClass:TVirtualDataClass):Integer; static;
+  public
+    class function Guess(const ASource:TComponent):TVirtualData; static;
+    class procedure Register(const AClass:TVirtualDataClass); static;
+    class procedure UnRegister(const AClass:TVirtualDataClass); static;
   end;
 
 implementation

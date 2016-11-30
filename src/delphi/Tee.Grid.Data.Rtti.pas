@@ -9,8 +9,8 @@ unit Tee.Grid.Data.Rtti;
 interface
 
 {
-   Several classes to automatically link a TeeGrid with arrays or TList of
-   records and classes.
+   Several classes to automatically link a TeeGrid with records or classes,
+   or arrays of records or classes, or TList of records and classes.
 
    Example using arrays:
 
@@ -23,14 +23,30 @@ interface
       SetLength(MyData,10);
       ... fill MyData ....
 
-      TeeGrid1.Data:= TVirtualArrayData<TPerson>.Create(MyData);
+      TeeGrid1.Data:= TVirtualData<TArray<TPerson>>.Create(MyData);
 
     Example using TList:
 
     var
       MyData : TList<TPerson>;
 
-      TeeGrid1.Data:= TVirtualListData<TPerson>.Create(MyData);
+      TeeGrid1.Data:= TVirtualData<TList<TPerson>>.Create(MyData);
+
+    Example using single records:
+
+    var
+      MyData : TPerson;
+
+      TeeGrid1.Data:= TVirtualData<TPerson>.Create(MyData);
+
+    Note:
+
+      These are equivalent classes, for easier use:
+
+      TeeGrid1.Data:= TVirtualArrayData<TPerson>.Create(MyData);
+
+      TeeGrid1.Data:= TVirtualData<TArray<TPerson>>.Create(MyData);
+
 }
 
 uses
@@ -40,17 +56,12 @@ uses
 type
   TVirtualDataRtti=class(TVirtualData)
   private
-    var
-      Parents : Array[0..99] of TColumn;
-
     class function Add(const AColumns:TColumns;
                        const AMember:TRttiMember;
                        const AType:TRttiType):TColumn; overload; static;
 
-    class procedure DoSetValue(const AMember:TRttiMember; const P:Pointer; const Value:TValue); overload; static;
-    class procedure DoSetValue(const AColumn:TColumn; const P:Pointer; const Value:TValue); overload; static;
+    procedure DoSetValue(const AColumn:TColumn; const ADest:TValue; const Value:TValue);
 
-    //function FinalPointer(AParent: TColumn; P:Pointer):Pointer;
     function FinalValue(const AColumn: TColumn; const AValue:TValue):TValue; overload;
 
     class function IsBoolean(const AType:TRttiType):Boolean; static;
@@ -76,9 +87,15 @@ type
     Context : TRttiContext;
 
   var
+    FData : ^T;
     FMembers : TRttiMembers;
     FTypeInfo : PTypeInfo;
     FVisibility : TVisibility;
+
+    IsDynArray : Boolean;
+    IItems : TRttiIndexedProperty;
+    ICount : TRttiProperty;
+    IObject : TObject;
 
     procedure AddFields(const AColumns:TColumns; const AType:TRttiType);
     procedure AddProperties(const AColumns:TColumns; const AType:TRttiType);
@@ -93,41 +110,27 @@ type
 
     class function NameOf(const AType:TRttiOrdinalType):String; overload; static;
     class function NameOf(const AType:TRttiFloatType):String; overload; static;
+
+    procedure TrySetInt64(const AColumn: TColumn; const ARow: Integer; const AText: String);
+    procedure TrySetFloat(const AColumn: TColumn; const ARow: Integer; const AText: String);
+  protected
+    function RowValue(const ARow:Integer):TValue; virtual;
+    function RttiType:TRttiType; inline;
   public
-    Constructor Create(const AType:PTypeInfo;
+    Constructor Create(var AData:T;
                        const AVisibility:TVisibility=[mvPublic,mvPublished];
-                       const AMembers:TRttiMembers=TRttiMembers.Both);
+                       const AMembers:TRttiMembers=TRttiMembers.Both); overload;
 
     procedure AddColumns(const AColumns:TColumns); override;
+    function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; override;
+    function Count:Integer; override;
     procedure Load; override;
-  end;
-
-  TVirtualArrayData<T>=class(TVirtualData<T>)
-  private
-    FArray : TArray<T>;
-
-    function FinalValue(const AColumn: TColumn; const ARow: Integer): TValue; overload;
-
-    procedure TryInt64(const AColumn: TColumn; const ARow: Integer; const AText: String);
-    procedure TryFloat(const AColumn: TColumn; const ARow: Integer; const AText: String);
-  public
-    Constructor Create(var Value: TArray<T>);
-
-    function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
-    function Count:Integer; override;
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
   end;
 
-  TVirtualListData<T>=class(TVirtualData<T>)
-  private
-    FList : TList<T>;
-  public
-    Constructor Create(const Value: TList<T>);
-
-    function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
-    function Count:Integer; override;
-    procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
-  end;
+  // Helper classes, just aliases:
+  TVirtualArrayData<T>=class(TVirtualData<TArray<T>>);
+  TVirtualListData<T>=class(TVirtualData<TList<T>>);
 
 implementation

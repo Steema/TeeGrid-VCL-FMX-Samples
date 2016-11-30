@@ -5,6 +5,7 @@
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Grid.Totals;
+{$I Tee.inc}
 
 interface
 
@@ -39,16 +40,10 @@ uses
 
 type
   TBaseTotals=class(TColumnBand)
-  private
-    FRender : TTextRender;
   public
-    Constructor Create(const AChanged:TNotifyEvent; const AColumns:TColumns); override;
+    Constructor Create(const ACollection:TCollection; const AColumns:TColumns); override;
 
-    {$IFNDEF AUTOREFCOUNT}
-    Destructor Destroy; override;
-    {$ENDIF}
-
-    procedure Paint(var AData:TRenderData); override;
+    procedure Paint(var AData:TRenderData; const ARender:TRender); override;
   end;
 
   TColumnTotals=class(TBaseTotals)
@@ -58,31 +53,35 @@ type
     function AsString(const AColumn:TColumn):String; override;
   public
     type
-      TTotalCalculation=record
+      // A Column total calculation
+      TTotalCalculation=record // <-- convert to TCollectionItem
       public
         Column: TColumn;
         Calculation : TColumnCalculation;
       end;
 
-      TTotals=record
-      private
-        Items : Array of TTotalCalculation;
+      // List of calculations
+      TTotals=record  // <-- convert to TCollectionChange
       public
+        Items : Array of TTotalCalculation;
+
         procedure Add(const AColumn:TColumn; const ACalculation:TColumnCalculation);
         procedure Clear; inline;
         function Count:Integer; inline;
+        procedure Delete(const AIndex:Integer);
         function Find(const AColumn:TColumn; out ACalculation:TColumnCalculation):Boolean;
+        function IndexOf(const AColumn:TColumn):Integer;
       end;
 
     var
       Calculation : TTotals;
 
-    Constructor Create(const AChanged:TNotifyEvent; const AColumns:TColumns; const AData:TVirtualData); reintroduce;
+    Constructor Create(const ACollection:TCollection; const AColumns:TColumns; const AData:TVirtualData); reintroduce;
 
-    // Create a Totals band automatically, with all columns that are numeric
-    class function From(const AData:TVirtualData; const AColumns:TColumns):TColumnTotals; static;
+    class function Description:String; override;
   end;
 
+  // Displays the names of a "Column Totals" band items
   TTotalsHeader=class(TBaseTotals)
   private
     FTotals : TColumnTotals;
@@ -91,7 +90,9 @@ type
   protected
     function AsString(const AColumn:TColumn):String; override;
   public
-    Constructor CreateTotals(const ATotals:TColumnTotals);
+    Constructor CreateTotals(const ACollection:TCollection; const ATotals:TColumnTotals);
+
+    class function Description:String; override;
 
     property Totals : TColumnTotals read FTotals write SetTotals;
   end;

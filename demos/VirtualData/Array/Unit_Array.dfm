@@ -2,7 +2,7 @@ object FormArray: TFormArray
   Left = 0
   Top = 0
   Caption = 'TeeGrid using Array as Data'
-  ClientHeight = 346
+  ClientHeight = 501
   ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,7 +20,7 @@ object FormArray: TFormArray
     Left = 0
     Top = 41
     Width = 635
-    Height = 264
+    Height = 419
     Columns = <>
     Footer = <>
     ReadOnly = False
@@ -94,20 +94,40 @@ object FormArray: TFormArray
   end
   object Panel2: TPanel
     Left = 0
-    Top = 305
+    Top = 460
     Width = 635
     Height = 41
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
     object Button5: TButton
-      Left = 16
+      Left = 120
       Top = 6
       Width = 75
       Height = 25
       Caption = '&Footer...'
       TabOrder = 0
       OnClick = Button5Click
+    end
+    object Button2: TButton
+      Left = 16
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = '&Header...'
+      TabOrder = 1
+      OnClick = Button2Click
+    end
+    object CBGdiPlus: TCheckBox
+      Left = 272
+      Top = 13
+      Width = 97
+      Height = 17
+      Caption = 'GDI+ Plus'
+      Checked = True
+      State = cbChecked
+      TabOrder = 2
+      OnClick = CBGdiPlusClick
     end
   end
 end

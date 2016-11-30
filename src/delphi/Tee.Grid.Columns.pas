@@ -16,17 +16,21 @@ interface
 
    Other TColumn properties:
 
+     DataFormat (formatting strings for numbers and date-time data types)
+
      Expanded (default true, show column sub-columns, if they exist)
 
      Format (custom brush, stroke, font for a column)
 
      Header (text and formatting to display column names at TeeGrid headers.
 
-     DataFormat (formatting strings for numbers and date-time data types)
-
      Margins (edge spacing inside grid cells)
 
      ReadOnly (enable or disable editing a grid cell content using keyboard)
+
+     Render (an optional TRender instance, used to paint column cell contents)
+
+     TagObject (a custom user-defined TObject associated to each TColumn)
 
      TextAlignment (automatic depending on data type, or custom)
 
@@ -81,9 +85,6 @@ type
   end;
 
   // Just an alias
-  TCellRender=class(TVisibleTextRender);
-
-  // Just an alias
   TColumnWidth=class(TCoordinate);
 
   // Cell text alignment. Automatic means to right-align numbers etc.
@@ -93,66 +94,63 @@ type
   TColumnHeader=class(TCellRender)
   private
     FParentFormat: Boolean;
-    FText: String;
     FTextAlignment: TColumnTextAlign;
 
     procedure SetParentFormat(const Value: Boolean);
-    procedure SetText(const Value: String);
     procedure SetTextAlignment(const Value: TColumnTextAlign);
   public
     Constructor Create(const AChanged:TNotifyEvent); override;
     procedure Assign(Source:TPersistent); override;
 
-    property ParentFormat:Boolean read FParentFormat write SetParentFormat default True;
+    function DisplayText:String;
   published
-    property Text:String read FText write SetText;
+    property ParentFormat:Boolean read FParentFormat write SetParentFormat default True;
     property TextAlignment:TColumnTextAlign read FTextAlignment
                      write SetTextAlignment default TColumnTextAlign.Automatic;
   end;
 
-  TRenderClass=class of TRender;
+  TColumn=class;
+
+  TColumnPaintEvent=procedure(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean) of object;
 
   TColumns=class;
 
   // TColumn class
   // Defines the properties used to paint rows of a TeeGrid column,
   // and an optional "Items" property to contain sub-columns
-  TColumn=class(TCollectionItem)
+  TColumn=class(TVisibleRenderItem)
   private
     FDataFormat: TDataFormat;
     FExpanded: Boolean;
     FHeader: TColumnHeader;
     FItems : TColumns;
-    FTagObject : TObject;
+    FOnPaint : TColumnPaintEvent;
+    FParentFormat: Boolean;
     FReadOnly: Boolean;
-    FRender: TRender;
     FTextAlignment: TColumnTextAlign;
-    FVisible: Boolean;
     FWidth: TColumnWidth;
 
     IHorizontal : THorizontalAlign;
     ITopParent : TColumns;
 
     function GetAlign: TTextAlign;
-    function GetFormat: TTextFormat;
     function GetItems: TColumns;
     function GetMargins: TMargins;
     function GetParent: TColumn;
-    function GetRender: TRender;
+    procedure GetTopParent;
     function MaxLevel:Integer;
+
     procedure SetAlign(const Value: TTextAlign);
     procedure SetDataFormat(const Value: TDataFormat);
     procedure SetExpanded(const Value: Boolean);
-    procedure SetFormat(const Value: TTextFormat);
     procedure SetHeader(const Value: TColumnHeader);
     procedure SetItems(const Value: TColumns);
     procedure SetMargins(const Value: TMargins);
-    procedure SetRender(const Value: TRender);
+    procedure SetParentFormat(const Value: Boolean);
     procedure SetTextAlignment(const Value: TColumnTextAlign);
-    procedure SetVisible(const Value: Boolean);
     procedure SetWidth(const Value: TColumnWidth);
   protected
-    procedure DoChanged;
+    procedure DoChanged; override;
 
     property DefaultHorizAlign:THorizontalAlign read IHorizontal;
   public
@@ -167,14 +165,12 @@ type
     Destructor Destroy; override;
     {$ENDIF}
 
+    procedure Assign(Source:TPersistent); override;
+
     function CanDisplay:Boolean;
-    procedure Changed(Sender:TObject);
-    procedure ChangeRender(const ARenderClass:TRenderClass);
     function ParentColumns:TColumns; inline;
 
-    function HasFormat:Boolean; inline;
     function HasItems:Boolean; inline;
-    function HasRender:Boolean; inline;
 
     function HorizAlign:THorizontalAlign; inline;
 
@@ -182,25 +178,26 @@ type
     function Level:Integer;
     function Right:Single; inline;
 
-    procedure Paint(var AData:TRenderData; const ARender:TRender);
+    procedure Paint(var AData:TRenderData; const ARender:TRender); override;
+
+    function ToString:String; override;
 
     property Parent:TColumn read GetParent;
-    property Render:TRender read GetRender write SetRender;
-    property TagObject:TObject read FTagObject write FTagObject;
     property TopParent:TColumns read ITopParent;
   published
     property DataFormat:TDataFormat read FDataFormat write SetDataFormat;
     property Expanded:Boolean read FExpanded write SetExpanded default True;
-    property Format:TTextFormat read GetFormat write SetFormat;
     property Header:TColumnHeader read FHeader write SetHeader;
     property Items:TColumns read GetItems write SetItems;
     property Margins:TMargins read GetMargins write SetMargins;
+    property ParentFormat:Boolean read FParentFormat write SetParentFormat default True;
     property ReadOnly:Boolean read FReadOnly write FReadOnly default False;
     property TextAlign:TTextAlign read GetAlign write SetAlign;
     property TextAlignment:TColumnTextAlign read FTextAlignment
                      write SetTextAlignment default TColumnTextAlign.Automatic;
-    property Visible:Boolean read FVisible write SetVisible default True;
     property Width:TColumnWidth read FWidth write SetWidth;
+
+    property OnPaint:TColumnPaintEvent read FOnPaint write FOnPaint;
   end;
 
   TColumnEvent=procedure(Sender:TObject; const AColumn:TColumn) of object;
@@ -213,12 +210,12 @@ type
     FOnRemoved : TColumnEvent;
     FSpacing : TCoordinate;
 
-    function Get(const Index: Integer): TColumn; inline;
+    function Get(const Index: Integer): TColumn; {$IFNDEF FPC}inline;{$ENDIF}
     function GetByName(const AName:String): TColumn;
     function GetParent: TColumn;
     function GetSpacing:TCoordinate;
     function MaxLevel:Integer;
-    procedure Put(const Index: Integer; const Value: TColumn);
+    procedure Put(const Index: Integer; const Value: TColumn); {$IFNDEF FPC}inline;{$ENDIF}
     procedure SetSpacing(const Value: TCoordinate);
   protected
     procedure Notify(Item: TCollectionItem; Action: TCollectionNotification); override;
@@ -237,10 +234,21 @@ type
     function FindAt(const X,MaxRight:Single):TColumn;
     function FindFirst(const AName:String):TColumn;
     function FirstVisible:TColumn;
+    //function GetEnumerator: TColumnsEnumerator;
     function HasSpacing:Boolean; inline;
     function LevelCount:Integer;
 
     property Items[const Index:Integer]:TColumn read Get write Put; default;
+
+    {$IFNDEF FPC}
+    {$IF CompilerVersion>28} // C++ Builder compatibility
+    // *** RSP-14999 Workaround: https://quality.embarcadero.com/browse/RSP-14999
+    [HPPGEN('__property TColumn* Item2[const System::UnicodeString Name] = {read=GetByName/*, default*/};'+
+            sLineBreak+
+            'TColumn* operator[](const System::UnicodeString Name) { return this->Item2[Name]; }'
+            )]
+    {$IFEND}
+    {$ENDIF}
 
     {$IFNDEF FPC}
     property Items[const AName:String]:TColumn read GetByName; default;
@@ -289,7 +297,12 @@ type
       DefaultWidth=10;
 
     Constructor Create(const AChanged:TNotifyEvent); override;
+
+    {$IFNDEF AUTOREFCOUNT}
     Destructor Destroy; override;
+    {$ENDIF}
+
+    procedure Assign(Source:TPersistent); override;
 
     procedure Paint(var AData:TRenderData); override;
   published

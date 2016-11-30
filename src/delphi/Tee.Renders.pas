@@ -126,6 +126,7 @@ type
     procedure Assign(Source:TPersistent); override;
     function Horizontal:Single;
     procedure Prepare(const AWidth,AHeight:Single);
+    function Vertical:Single;
   published
     property Left:TCoordinate read FLeft write SetLeft;
     property Top:TCoordinate read FTop write SetTop;
@@ -172,6 +173,7 @@ type
   protected
   public
     PaintText : Boolean;
+    TextLines : Integer;
 
     Constructor Create(const AChanged:TNotifyEvent); override;
 
@@ -181,6 +183,8 @@ type
 
     procedure Assign(Source:TPersistent); override;
 
+    function CalcHeight:Single;
+    function CalcTextLines(const AText:String):Integer;
     procedure Paint(var AData:TRenderData); override;
   published
     property Margins:TMargins read FMargins write SetMargins;
@@ -202,6 +206,17 @@ type
     procedure Show;
   published
     property Visible:Boolean read FVisible write SetVisible default True;
+  end;
+
+  TCellRender=class(TVisibleTextRender)
+  private
+    FText: String;
+
+    procedure SetText(const Value: String);
+  public
+    procedure Assign(Source:TPersistent); override;
+  published
+    property Text:String read FText write SetText;
   end;
 
   // Square shape with format (Brush and Stroke)
@@ -293,11 +308,13 @@ type
   TExpanderRender=class(TBoxRender)
   private
     FExpandFormat : TFormat;
+    FExpandLine: TStroke;
     FOnCanExpand : TCanExpandEvent;
     FOnGetExpanded : TGetExpandedEvent;
     FStyle : TExpanderStyle;
 
     procedure SetExpandFormat(const Value: TFormat);
+    procedure SetExpandLine(const Value: TStroke);
     procedure SetStyle(const Value: TExpanderStyle);
   public
     Constructor Create(const AChanged:TNotifyEvent); override;
@@ -309,11 +326,13 @@ type
     procedure Assign(Source:TPersistent); override;
 
     procedure Paint(var AData:TRenderData); override;
+    procedure PaintLines(var AData:TRenderData);
 
     property OnCanExpand:TCanExpandEvent read FOnCanExpand write FOnCanExpand;
     property OnGetExpanded:TGetExpandedEvent read FOnGetExpanded write FOnGetExpanded;
   published
     property ExpandFormat:TFormat read FExpandFormat write SetExpandFormat;
+    property ExpandLine:TStroke read FExpandLine write SetExpandLine;
     property Style:TExpanderStyle read FStyle write SetStyle default TExpanderStyle.PlusMinus;
   end;
 
@@ -359,15 +378,42 @@ type
     property ParentFont:Boolean read FParentFont write SetParentFont default True;
   end;
 
-  // Helper TCollection with OnChanged event
-  TCollectionChange=class(TOwnedCollection)
+  // Base class for TGridBand and TColumn
+  TVisibleRenderItem=class(TCollectionItem)
   private
-    FOnChanged : TNotifyEvent;
+    FTagObject : TObject;
+    FVisible: Boolean;
+
+    function GetRender: TRender;
+    procedure SetFormat(const Value: TTextFormat);
+    procedure SetRender(const Value: TRender);
+    procedure SetVisible(const Value: Boolean);
+    function IsFormatStored: Boolean;
   protected
-    procedure DoChanged(Sender:TObject);
-    procedure Update(Item: TCollectionItem); override;
+    FRender: TRender;
+
+    function CreateRender:TRender; virtual;
+    procedure DoChanged; virtual;
+    function GetFormat: TTextFormat; virtual;
+  public
+    Constructor Create(ACollection:TCollection); override;
+
+    {$IFNDEF AUTOREFCOUNT}
+    Destructor Destroy; override;
+    {$ENDIF}
+
+    procedure Assign(Source:TPersistent); override;
+
+    procedure Changed(Sender:TObject);
+    function HasFormat:Boolean; inline;
+    function HasRender:Boolean; inline;
+    procedure Paint(var AData:TRenderData; const ARender:TRender); virtual;
+
+    property Render:TRender read GetRender write SetRender;
+    property TagObject:TObject read FTagObject write FTagObject;
   published
-    property OnChanged:TNotifyEvent read FOnChanged write FOnChanged;
+    property Format:TTextFormat read GetFormat write SetFormat stored IsFormatStored;
+    property Visible:Boolean read FVisible write SetVisible default True;
   end;
 
 implementation

@@ -17,7 +17,7 @@ interface
    A "Grid Band" is a rectangle to display at a Grid with support for
    mouse-hover highlighting, custom height and OnClick.
 
-   TTitleBand is an example of a custom TGridBand to display text at for
+   TTextBand is an example of a custom TGridBand to display text at for
    example grid header and footer.
 
    Other units implement different kinds of Grid Bands, like Grid Header,
@@ -61,16 +61,17 @@ type
   TBandHeight=class(TCoordinate);
 
   // Base class with Hover and Height properties
-  TGridBand=class(TVisibleTextRender)
+  TGridBand=class(TVisibleRenderItem)
   private
     FHeight: TBandHeight;
     FOnClick: TNotifyEvent;
 
+    procedure Changed(Sender: TObject);
     procedure SetHeight(const Value: TBandHeight);
   protected
     Top : Single;
   public
-    Constructor Create(const AChanged:TNotifyEvent); override;
+    Constructor Create(ACollection:TCollection); override;
 
     {$IFNDEF AUTOREFCOUNT}
     Destructor Destroy; override;
@@ -80,9 +81,9 @@ type
 
     procedure CalcHeight(const ATotal:Single); virtual;
     function Contains(const X,Y:Single):Boolean;
+    class function Description:String; virtual;
     function Mouse(var AState:TMouseState; const AWidth,AHeight:Single): Boolean; overload; virtual;
-    procedure Paint(var AData:TRenderData); override;
-    function RowHeight: Single;
+    procedure Paint(var AData:TRenderData; const ARender:TRender); override;
   published
     property Height:TBandHeight read FHeight write SetHeight;
     property OnClick:TNotifyEvent read FOnClick write FOnClick;
@@ -94,7 +95,7 @@ type
 
     procedure SetLines(const Value: TStroke);
   public
-    Constructor Create(const AChanged:TNotifyEvent); override;
+    Constructor Create(ACollection:TCollection); override;
 
     {$IFNDEF AUTOREFCOUNT}
     Destructor Destroy; override;
@@ -103,23 +104,32 @@ type
     property Lines:TStroke read FLines write SetLines;
   end;
 
-  // Collection Item with a Band property
-  TGridBandItem=class(TCollectionItem)
+  // Basic grid band with Text, usable at grid header and footer
+  TTextBand=class(TGridBand)
   private
-    FBand : TGridBand;
+    function GetText:String;
+    function GetTextRender: TCellRender;
+    procedure SetText(const Value: String);
+  protected
+    function CreateRender:TRender; override;
   public
-    {$IFNDEF AUTOREFCOUNT}
-    Destructor Destroy; override;
-    {$ENDIF}
+    procedure CalcHeight(const ATotal:Single); override;
+    class function Description:String; override;
+    procedure Paint(var AData:TRenderData; const ARender:TRender); override;
 
-    property Band : TGridBand read FBand write FBand;
+    property TextRender:TCellRender read GetTextRender;
+  published
+    property Text:String read GetText write SetText;
   end;
 
   // Collection of Grid Bands
   TGridBands=class(TCollectionChange)
   private
-    function Get(Index: Integer): TGridBandItem;
-    procedure Put(Index: Integer; const Value: TGridBandItem);
+    FVisible : Boolean;
+
+    function Get(Index: Integer): TGridBand;
+    procedure Put(Index: Integer; const Value: TGridBand);
+    procedure SetVisible(const Value: Boolean);
   public
     const
       Spacing=0;
@@ -128,28 +138,20 @@ type
       Floating : Boolean;
       Height : Single;
 
-    function Add(const ABand:TGridBand):TGridBandItem;
+    Constructor Create(AOwner: TPersistent; const AChanged:TNotifyEvent); reintroduce;
+
+    procedure Assign(Source:TPersistent); override;
+
+    function AddText(const AText:String):TTextBand;
+
     procedure CalcHeight(const ATotal:Single);
-
+    function CanDisplay:Boolean; inline;
     procedure Mouse(var AState:TMouseState; const AWidth,AHeight:Single);
-
     procedure Paint(var AData:TRenderData);
 
-    property Items[Index: Integer]: TGridBandItem read Get write Put; default;
-  end;
-
-  // Basic grid band with Text, usable at grid header and footer
-  TTitleBand=class(TGridBand)
-  private
-    FText: String;
-
-    procedure SetText(const Value: String);
-  public
-    Constructor Create(const AChanged:TNotifyEvent); override;
-
-    procedure Paint(var AData:TRenderData); override;
+    property Items[Index: Integer]: TGridBand read Get write Put; default;
   published
-    property Text:String read FText write SetText;
+    property Visible:Boolean read FVisible write SetVisible default True;
   end;
 
 implementation

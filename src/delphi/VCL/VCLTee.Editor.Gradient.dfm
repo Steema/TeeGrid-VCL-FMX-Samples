@@ -20,15 +20,11 @@ object GradientEditor: TGradientEditor
     Top = 0
     Width = 303
     Height = 290
-    ActivePage = TabDirection
+    ActivePage = TabColors
     Align = alClient
     TabOrder = 0
     object TabColors: TTabSheet
       Caption = 'Colors'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 12
         Top = 67
@@ -69,18 +65,18 @@ object GradientEditor: TGradientEditor
       object CBColor0: TColorBox
         Left = 12
         Top = 40
-        Width = 90
+        Width = 141
         Height = 22
-        Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeDefault, cbCustomColor, cbPrettyNames, cbCustomColors]
+        Style = [cbStandardColors, cbExtendedColors, cbIncludeDefault, cbCustomColor, cbPrettyNames, cbCustomColors]
         TabOrder = 1
         OnChange = CBColor0Change
       end
       object CBColor1: TColorBox
         Left = 12
         Top = 130
-        Width = 90
+        Width = 141
         Height = 22
-        Style = [cbStandardColors, cbExtendedColors, cbSystemColors, cbIncludeDefault, cbCustomColor, cbPrettyNames, cbCustomColors]
+        Style = [cbStandardColors, cbExtendedColors, cbIncludeDefault, cbCustomColor, cbPrettyNames, cbCustomColors]
         TabOrder = 2
         OnChange = CBColor1Change
       end

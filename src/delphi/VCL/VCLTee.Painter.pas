@@ -47,7 +47,14 @@ type
       IAlign : TAlign;
       IClipHistory : Array of HRGN;
 
+      //IFontGradient,
+      //IStrokeGradient,
+      IBrushGradient : TGradient;
+
+      IBrushPicture : TPicture;
+
     function GraphicOf(const APicture: TPicture):TGraphic;
+    function ImageFrom(const APicture: TPicture): TGraphic;
     procedure SetTextAlignments;
   public
     class procedure ApplyFont(const ASource:TTeeFont; const ADest:Graphics.TFont); static;

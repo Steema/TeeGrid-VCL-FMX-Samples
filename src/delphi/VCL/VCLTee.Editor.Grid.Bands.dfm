@@ -70,10 +70,6 @@ object GridBandsEditor: TGridBandsEditor
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitLeft = 136
-    ExplicitTop = 208
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     object PanelBandTop: TPanel
       Left = 0
       Top = 0
@@ -82,9 +78,6 @@ object GridBandsEditor: TGridBandsEditor
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitLeft = 72
-      ExplicitTop = 168
-      ExplicitWidth = 185
       object CBBandVisible: TCheckBox
         Left = 16
         Top = 16

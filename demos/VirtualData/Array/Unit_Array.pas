@@ -22,6 +22,8 @@ type
     BRecord: TButton;
     Panel2: TPanel;
     Button5: TButton;
+    Button2: TButton;
+    CBGdiPlus: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure BIntegerClick(Sender: TObject);
@@ -31,9 +33,12 @@ type
     procedure BTObjectClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure CBGdiPlusClick(Sender: TObject);
   private
     { Private declarations }
 
+    procedure AddSampleFooter;
     procedure GridShowEditor(const Sender:TObject; const AEditor:TControl;
                              const AColumn:TColumn; const ARow:Integer);
 
@@ -50,14 +55,21 @@ implementation
 {$R *.dfm}
 
 uses
-  Unit_MyData, Tee.Grid.Data, Tee.Grid.Data.Rtti, VCLTee.Painter.GdiPlus,
+  Unit_MyData, Tee.Grid.Data, Tee.Grid.Data.Rtti,
 
-  Tee.Grid.Totals, Tee.Grid.Bands;
+  VCLTee.Painter.GdiPlus, VCLTee.Painter, Tee.Format,
+
+  Tee.Grid.Totals, Tee.Grid.Bands, VCLTee.Editor.Grid.Bands;
 
 // Show the TeeGrid editor dialog
 procedure TFormArray.Button1Click(Sender: TObject);
 begin
   TTeeGridEditor.Edit(Self,TeeGrid1);
+end;
+
+procedure TFormArray.Button2Click(Sender: TObject);
+begin
+  TGridBandsEditor.Edit(Self,TeeGrid1.Headers);
 end;
 
 var
@@ -72,7 +84,7 @@ begin
   for t:=0 to High(MyIntegers) do
       MyIntegers[t]:=Random(1000);
 
-  TeeGrid1.Data:=TVirtualArrayData<Integer>.Create(MyIntegers);
+  TeeGrid1.Data:=TVirtualData<TArray<Integer>>.Create(MyIntegers);
 
   TeeGrid1.Footer.Clear;
 end;
@@ -89,7 +101,7 @@ begin
   for t:=0 to High(MyFloats) do
       MyFloats[t]:=Random(1000)*0.01;
 
-  TeeGrid1.Data:=TVirtualArrayData<Single>.Create(MyFloats);
+  TeeGrid1.Data:=TVirtualData<TArray<Single>>.Create(MyFloats);
 
   TeeGrid1.Footer.Clear;
 end;
@@ -114,7 +126,7 @@ begin
   for t:=0 to High(MyStrings) do
       MyStrings[t]:=RandomString;
 
-  TeeGrid1.Data:=TVirtualArrayData<String>.Create(MyStrings);
+  TeeGrid1.Data:=TVirtualData<TArray<String>>.Create(MyStrings);
 
   TeeGrid1.Footer.Clear;
 end;
@@ -122,8 +134,15 @@ end;
 // Show the TextRender editor dialog, to edit Footer band
 procedure TFormArray.Button5Click(Sender: TObject);
 begin
-  if TeeGrid1.Footer.Count>1 then
-     TTextRenderEditor.Edit(Self,TeeGrid1.Footer[1].Band)
+  TGridBandsEditor.Edit(Self,TeeGrid1.Footer);
+end;
+
+procedure TFormArray.CBGdiPlusClick(Sender: TObject);
+begin
+  if CBGdiPlus.Checked then
+     TeeGrid1.Painter:=TGdiPlusPainter.Create
+  else
+     TeeGrid1.Painter:=TGDIPainter.Create(TeeGrid1.Canvas);
 end;
 
 // Destroy all objects in Array
@@ -145,15 +164,15 @@ begin
   SetLength(MyCars,10);
   FillMyData(MyCars);
 
-  TeeGrid1.Data:=TVirtualArrayData<TCar>.Create(MyCars);
+  TeeGrid1.Data:=TVirtualData<TArray<TCar>>.Create(MyCars);
 
   TeeGrid1.Footer.Clear;
 end;
 
 // Return a new Totals grid-band
-function Totals(const AGrid:TTeeGrid):TColumnTotals;
+function Totals(const ACollection:TCollection; const AGrid:TTeeGrid):TColumnTotals;
 begin
-  result:=TColumnTotals.Create(AGrid.Changed,AGrid.Columns,AGrid.Data);
+  result:=TColumnTotals.Create(ACollection,AGrid.Columns,AGrid.Data);
 
   result.Calculation.Add(AGrid.Columns['Name'],TColumnCalculation.Count);
   result.Calculation.Add(AGrid.Columns['Children'],TColumnCalculation.Sum);
@@ -169,21 +188,31 @@ procedure TFormArray.SetExpander(const AColumn:String; const ARows:TRows);
 var tmp : TColumn;
 begin
   tmp:=TeeGrid1.Columns[AColumn];
-  tmp.ChangeRender(TExpanderRender);
+  tmp.Render:=TExpanderRender.Create(tmp.Changed);
   TExpanderRender(tmp.Render).OnGetExpanded:=ARows.IsChildrenVisible;
 end;
 
 // Create a new Title grid-band
-function Hello(const AGrid:TTeeGrid):TTitleBand;
+function NewTitle(const ACollection:TCollection; const AText:String):TTextBand;
 begin
-  result:=TTitleBand.Create(AGrid.Changed);
+  result:=TTextBand.Create(ACollection);
 
-  result.Text:='Hello';
+  result.Text:=AText;
 
   // Cosmetic
   result.Format.Font.Size:=12;
   result.Format.Stroke.Visible:=True;
   result.Format.Stroke.Color:=TColors.Red;
+end;
+
+procedure TFormArray.AddSampleFooter;
+var tmp : TTextBand;
+begin
+  tmp:=NewTitle(TeeGrid1.Footer,'Footer Sample'#13'Text');
+
+  tmp.Format.Brush.Show;
+  tmp.Format.Brush.Gradient.Show;
+  tmp.Format.Brush.Gradient.Direction:=TGradientDirection.Horizontal;
 end;
 
 var
@@ -196,7 +225,7 @@ begin
   SetLength(MyData,10);
   FillMyData(MyData);
 
-  TeeGrid1.Data:=TVirtualArrayData<TPerson>.Create(MyData);
+  TeeGrid1.Data:=TVirtualData<TArray<TPerson>>.Create(MyData);
 
   // Set "Name" column as expandable
   SetExpander('Name',TeeGrid1.Rows);
@@ -204,13 +233,14 @@ begin
   // Setup grid Footer bands
   TeeGrid1.Footer.Clear;
 
-  tmp:=Totals(TeeGrid1);
+  tmp:=Totals(TeeGrid1.Footer,TeeGrid1);
+  TTotalsHeader.CreateTotals(TeeGrid1.Footer,tmp);
 
-  TeeGrid1.Footer.Add(TTotalsHeader.CreateTotals(tmp));
-  TeeGrid1.Footer.Add(tmp);
+  // Add a simple Title band to footer
+  AddSampleFooter;
 
-  // Add a simple Title band
-  TeeGrid1.Footer.Add(Hello(TeeGrid1));
+  // Add a simple Title band to headers
+  NewTitle(TeeGrid1.Headers,'Header Sample'#13#10'Text').Index:=0;
 
   // Use a TDateTimePicker as editor control for "BirthDate" column
   TeeGrid1.Columns['BirthDate'].EditorClass:=TDateTimePicker;
@@ -247,7 +277,7 @@ end;
 procedure TFormArray.FormCreate(Sender: TObject);
 begin
   // Change painter to use GDI+ plus
-  TeeGrid1.Painter:=TGdiPlusPainter.Create;
+  CBGdiPlusClick(Self);
 
   // Start with the Array of Record example
   BRecordClick(Self);

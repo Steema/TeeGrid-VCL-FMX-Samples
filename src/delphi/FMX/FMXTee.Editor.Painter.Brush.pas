@@ -1,4 +1,11 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  TBrush Editor for Firemonkey               }
+{  Copyright (c) 2016 by Steema Software      }
+{  All Rights Reserved                        }
+{*********************************************}
 unit FMXTee.Editor.Painter.Brush;
+{$I Tee.inc}
 
 interface
 

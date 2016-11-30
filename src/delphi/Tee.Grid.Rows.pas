@@ -49,63 +49,61 @@ type
     procedure InitFormat;
   end;
 
-  TRowsBands=record
+  TRowsBands=class(TGridBands)
   private
-    FItems : Array of TGridBand;
-
-    procedure FreeAll;
-    function Get(const AIndex:Integer):TGridBand;
-    procedure Put(const AIndex:Integer; const AValue:TGridBand);
+    function GetRow(const Index:Integer):TGridBand;
+    procedure SetRow(const Index:Integer; const ABand:TGridBand);
+  protected
+    Rows : Array of TGridBand;
   public
-    function Count:Integer; inline;
     function Height(const ARow: Integer): Single;
     function Hit(const X,Y:Single):TGridBand;
-    property Items[const Index:Integer]:TGridBand read Get write Put; default;
+    function RowOf(const ABand:TGridBand):Integer;
+    procedure Swap(const A,B:Integer);
+
+    property Row[const Index:Integer]:TGridBand read GetRow write SetRow;
   end;
 
   // Grid Band to paint multiple rows of cells
   TRows=class(TGridBandLines)
   private
     FAlternate: TAlternateFormat;
-    FHeight: Single;
+    FBack : TFormat;
+    FHeight: TCoordinate;
     FHover: TCellHover;
     FRowLines: TStroke;
     FSpacing: TCoordinate;
 
     IData : TVirtualData;
 
-    ICustomHeights,
     IHeights : Array of Single;
-
     ISpacing : Single;
 
-    FChildren,
+    FChildren : TRowsBands;
     FSubBands : TRowsBands;
 
-    function AllHeightsEqual:Boolean;
+    function CalcColumnHeight(const AColumn:TColumn; const AText:String): Single;
     function GetHeights(const Index: Integer): Single;
-    function IsHeightStored: Boolean;
     procedure SetAlternate(const Value: TAlternateFormat);
-    procedure SetHeight(const Value: Single);
+    procedure SetBack(const Value: TFormat);
+    procedure SetHeight(const Value: TCoordinate);
     procedure SetHeights(const Index: Integer; const Value: Single);
     procedure SetHover(const Value: TCellHover);
     procedure SetSpacing(const Value: TCoordinate);
     procedure SetRowLines(const Value: TStroke);
-    function SubBandHeight(const ARow:Integer):Single;
   protected
     procedure PaintRow(var AData:TRenderData; const ARender: TRender);
   public
     DefaultHeight : Single;
+    Painter : TPainter;
     VisibleColumns : TVisibleColumns;
-
-    Render : TTextRender;
 
     // Temporary:
     XOffset : Single;
     XSpacing : Single;
     Scroll : TPointF;
 
-    Constructor Create(const AChanged:TNotifyEvent); override;
+    Constructor Create(ACollection:TCollection); override;
 
     {$IFNDEF AUTOREFCOUNT}
     Destructor Destroy; override;
@@ -113,18 +111,24 @@ type
 
     procedure Assign(Source:TPersistent); override;
 
+    function AllHeightsEqual:Boolean;
+    function AutoHeight(const ARow: Integer): Single; overload;
+    function BottomOf(const ARow:Integer):Single;
+    procedure CalcDefaultHeight;
     procedure CalcYSpacing(const AHeight:Single);
     procedure Clear;
     function Count:Integer;
     function DraggedColumn(const X:Single; const AColumn:TColumn):TColumn;
     function FirstVisible:Integer;
+    function FontOf(const AColumn:TColumn):TFont;
     function HeightOf(const ARow:Integer):Single;
     function IsChildrenVisible(const Sender:TRender; const ARow: Integer): Boolean;
     function MaxBottom: Single;
-    procedure Paint(var AData:TRenderData); override;
+    procedure Paint(var AData:TRenderData; const ARender:TRender); override;
     procedure PaintLines(const AData:TRenderData; const FirstRow:Integer; Y:Single);
     function RowAt(const Y, AvailableHeight: Single): Integer;
     procedure SetColumnsLeft(const ALeft:Single);
+    procedure Swap(const A,B:Integer);
     function TopOf(const ARow:Integer):Single;
     function TopOfRow(const ARow:Integer):Single;
     function TotalHeight(const ARow:Integer):Single;
@@ -137,7 +141,8 @@ type
     property YSpacing:Single read ISpacing;
   published
     property Alternate:TAlternateFormat read FAlternate write SetAlternate;
-    property Height:Single read FHeight write SetHeight stored IsHeightStored;
+    property Back:TFormat read FBack write SetBack;
+    property Height:TCoordinate read FHeight write SetHeight;
     property Hover:TCellHover read FHover write SetHover;
     property RowLines:TStroke read FRowLines write SetRowLines;
     property Spacing:TCoordinate read FSpacing write SetSpacing;

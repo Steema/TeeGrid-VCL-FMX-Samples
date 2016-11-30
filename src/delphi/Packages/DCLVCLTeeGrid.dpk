@@ -35,6 +35,7 @@ requires
   designide;
 
 contains
-  VCLTeeGridRegister in 'VCLTeeGridRegister.pas';
+  VCLTeeGridRegister in 'VCLTeeGridRegister.pas',
+  VCLTee.Grid.About in 'VCLTee.Grid.About.pas';
 
 end.

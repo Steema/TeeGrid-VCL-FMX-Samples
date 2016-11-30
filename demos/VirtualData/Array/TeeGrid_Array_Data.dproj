@@ -138,6 +138,10 @@
             <Form>FormArray</Form>
         </DCCReference>
         <DCCReference Include="..\Unit_MyData.pas"/>
+        <DCCReference Include="..\..\..\..\Packages\VCLTee.Grid.About.pas">
+            <Form>VCLGridAbout</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

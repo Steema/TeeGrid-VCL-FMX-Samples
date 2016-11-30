@@ -32,15 +32,20 @@ package VCLTeeGrid;
 requires
   rtl,
   vcl,
+  vclimg,
   TeeGrid;
 
 contains
   VCLTee.Painter in '..\VCL\VCLTee.Painter.pas',
+  VCLTee.Painter.GdiPlus in '..\VCL\VCLTee.Painter.GdiPlus.pas',
   VCLTee.Control in '..\VCL\VCLTee.Control.pas',
   VCLTee.Grid in '..\VCL\VCLTee.Grid.pas',
+  VCLTee.Picture in '..\VCL\VCLTee.Picture.pas',
   VCLTee.Editor.Column in '..\VCL\VCLTee.Editor.Column.pas',
   VCLTee.Editor.ColumnBand in '..\VCL\VCLTee.Editor.ColumnBand.pas' {ColumnBandEditor},
+  VCLTee.Editor.Font in '..\VCL\VCLTee.Editor.Font.pas' {FontEditor},
   VCLTee.Editor.Format in '..\VCL\VCLTee.Editor.Format.pas' {FormatEditor},
+  VCLTee.Editor.Gradient in '..\VCL\VCLTee.Editor.Gradient.pas' {GradientEditor},
   VCLTee.Editor.Stroke in '..\VCL\VCLTee.Editor.Stroke.pas' {StrokeEditor},
   VCLTee.Editor.Borders in '..\VCL\VCLTee.Editor.Borders.pas' {BordersEditor},
   VCLTee.Editor.Brush in '..\VCL\VCLTee.Editor.Brush.pas' {BrushEditor},
@@ -49,6 +54,10 @@ contains
   VCLTee.Editor.Render.Text in '..\VCL\VCLTee.Editor.Render.Text.pas' {TextRenderEditor},
   VCLTee.Editor.Header in '..\VCL\VCLTee.Editor.Header.pas' {HeaderEditor},
   VCLTee.Editor.Margins in '..\VCL\VCLTee.Editor.Margins.pas' {MarginsEditor},
-  VCLTee.Editor.Grid in '..\VCL\VCLTee.Editor.Grid.pas' {TeeGridEditor};
+  VCLTee.Editor.Grid in '..\VCL\VCLTee.Editor.Grid.pas' {TeeGridEditor},
+  VCLTee.Editor.Grid.Bands in '..\VCL\VCLTee.Editor.Grid.Bands.pas' {GridBandsEditor},
+  VCLTee.Editor.Grid.Band.Text in '..\VCL\VCLTee.Editor.Grid.Band.Text.pas' {TextBandEditor},
+  VCLTee.Editor.Grid.Band.Totals in '..\VCL\VCLTee.Editor.Grid.Band.Totals.pas' {ColumnTotalsEditor},
+  VCLTee.Editor.Grid.Ticker in '..\VCL\VCLTee.Editor.Grid.Ticker.pas' {GridTickerEditor};
 
 end.

@@ -1,6 +1,6 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
-{  Abstract Painter class                     }
+{  Windows GDI+ Plus Painter class            }
 {  Copyright (c) 2016 by Steema Software      }
 {  All Rights Reserved                        }
 {*********************************************}
@@ -10,8 +10,8 @@ unit VCLTee.Painter.GdiPlus;
 interface
 
 uses
-  System.Types,
-  Windows, VCL.Graphics, GdiPAPI, GdiPObj,
+  {System.}Types,
+  Windows, {VCL.}Graphics, {Winapi.}GdiPAPI, {Winapi.}GdiPObj,
   Tee.Painter, Tee.Format, VCLTee.Painter;
 
 type
@@ -19,6 +19,7 @@ type
   private
     IPlus : TGPGraphics;
 
+    IBitmap : TBitmap;
     IBrush : TGPSolidBrush;
     IFont : TGPFont;
     IFontBrush,
@@ -30,8 +31,23 @@ type
 
     IClipped : Array of TGPRectF;
 
+    IFontGradient,
+    IStrokeGradient,
+    IBrushGradient : TGradient;
+
+    IBrushPicture : TPicture;
+
+    // Maximum 256 colors for Gradient:
+    IBlendColors : Array[0..255] of TGPColor;
+    IBlendPositions : Array[0..255] of Single;
+
+    function CreateGradient(const AGradient:TGradient; const R:TGPRectF):TGPBrush; overload;
+    function CreateGradient(const AGradient:TGradient; const P:TPointsF):TGPBrush; overload;
+
+    procedure FinishPen(const APen:TGPPen; const AStroke: TStroke);
     function GetCanvas:TGPGraphics;
-    function ImageFrom(const AGraphic: TGraphic):TGPImage;
+    function ImageFrom(const AGraphic: TGraphic):TGPImage; overload;
+    function ImageFrom(const APicture: TPicture):TGPImage; overload;
     function TextSize(const AText:String):TGPRectF;
   public
     Constructor Create;

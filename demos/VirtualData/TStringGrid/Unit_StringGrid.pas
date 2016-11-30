@@ -2,12 +2,22 @@ unit Unit_StringGrid;
 
 interface
 
+{
+  This example shows how to use TeeGrid like a "TStringGrid"
+
+  It also setups the grid to a relatively "big" size: 1000 x 100000 (hundred million cells)
+
+  For bigger sizes, this project should be compiled as 64bit platform because 32bit
+  has a limit of 2GB (or 3GB using a custom PEFlag)
+}
+
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes, Vcl.Graphics,
-  System.UITypes,
+  System.UITypes, System.Types,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
   Vcl.ExtCtrls, Tee.Grid.RowGroup, Vcl.StdCtrls,
-  Tee.Grid.Data.Strings;
+  Tee.Grid.Data.Strings, Tee.Grid.Columns, Tee.Renders, Vcl.Imaging.pngimage,
+  Tee.Format;
 
 type
   TStringGridForm = class(TForm)
@@ -21,17 +31,26 @@ type
     Button1: TButton;
     Label3: TLabel;
     LCells: TLabel;
+    CBGDIPlus: TCheckBox;
+    OkImage: TImage;
+    Benchmark: TButton;
     procedure FormCreate(Sender: TObject);
     procedure TeeGrid1ClickedHeader(Sender: TObject);
-    procedure TeeGrid1Select(const Sender: TRowGroup);
+    procedure TeeGrid1Select(Sender: TObject);
     procedure EColumnsChange(Sender: TObject);
     procedure ERowsChange(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure CBGDIPlusClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure BenchmarkClick(Sender: TObject);
   private
     { Private declarations }
 
     Data : TStringsData;
 
+    OkPicture : TPicture;
+
+    procedure PaintPicture(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean);
     procedure RefreshTotalCells;
   public
     { Public declarations }
@@ -45,13 +64,42 @@ implementation
 {$R *.dfm}
 
 uses
-  Tee.Grid.Columns, VCLTee.Editor.Grid, Tee.Grid.Bands, VCLTee.Painter.GDIPlus;
+  VCLTee.Editor.Grid, Tee.Grid.Bands, Tee.Grid, Tee.Painter,
+  VCLTee.Painter.GDIPlus, VCLTee.Painter,
+  Tee.Grid.Selection, System.Diagnostics, VCLTee.Picture;
 
+// Shows the TeeGrid editor dialog
 procedure TStringGridForm.Button1Click(Sender: TObject);
 begin
   TTeeGridEditor.Edit(Self,TeeGrid1);
 end;
 
+// Repaints the TeeGrid 1000 times to benchmark painting speed
+procedure TStringGridForm.BenchmarkClick(Sender: TObject);
+var t1 : TStopWatch;
+    t : Integer;
+    t2 : Int64;
+begin
+  t1:=TStopwatch.StartNew;
+
+  for t:=0 to 999 do
+      TeeGrid1.Grid.Paint;
+
+  t2:=t1.ElapsedMilliseconds;
+
+  Caption:=t2.ToString+' msec to repaint: 1000 times';
+end;
+
+// Use GDI+ or normal GDI canvas
+procedure TStringGridForm.CBGDIPlusClick(Sender: TObject);
+begin
+  if CBGDIPlus.Checked then
+     TeeGrid1.Painter:=TGdiPlusPainter.Create
+  else
+     TeeGrid1.Painter:=TGdiPainter.Create(TeeGrid1.Canvas);
+end;
+
+// Change the number of grid columns
 procedure TStringGridForm.EColumnsChange(Sender: TObject);
 var tmp : Integer;
 begin
@@ -63,6 +111,7 @@ begin
   end;
 end;
 
+// Change the number of grid rows
 procedure TStringGridForm.ERowsChange(Sender: TObject);
 var tmp : Integer;
 begin
@@ -74,20 +123,25 @@ begin
   end;
 end;
 
-function NewTitle:TTitleBand;
-begin
-  result:=TTitleBand.Create(nil);
-  result.Text:='Sub-Title';
-
-  result.Format.Font.Style:=[fsBold];
-  result.Format.Brush.Show;
-  result.Format.Brush.Color:=TColors.Indianred;
-  result.Format.Stroke.Show;
-end;
-
 procedure TStringGridForm.FormCreate(Sender: TObject);
+
+  // Simple test, returns a new "Text Band" object
+  function NewTitle:TTextBand;
+  begin
+    result:=TTextBand.Create(TeeGrid1.Rows.SubBands);
+    result.Text:='Sub-Title'#13+'Double';
+
+    result.Format.Font.Style:=[fsBold];
+    result.Format.Brush.Show;
+    result.Format.Brush.Color:=TColors.Indianred;
+    result.Format.Stroke.Show;
+  end;
+
 var t : Integer;
 begin
+  // Speed tip: For huge number of rows, hidden ScrollBars accelerate painting
+  TeeGrid1.ScrollBars.Visible:=False;
+
   // Create data
   Data:=TStringsData.Create;
 
@@ -97,10 +151,13 @@ begin
 
   Data.Resize(1000,100000);
 
-  // Set header texts
-  Data.Headers[0]:='A';
+  RefreshTotalCells;
+
+  // Set column header texts
+  Data.Headers[0]:='A'#13'Text';
   Data.Headers[1]:='B';
   Data.Headers[2]:='C';
+  Data.Headers[3]:='OK';
 
   // Fill rows and cells
   for t:=0 to Data.Rows-1 do
@@ -108,6 +165,9 @@ begin
     Data[0,t]:='0 '+IntToStr(t);
     Data[1,t]:='1 '+IntToStr(t);
     Data[2,t]:='2 '+IntToStr(t);
+
+    if Random(100)<30 then
+       Data[3,t]:='OK';
   end;
 
   // Set data to grid
@@ -117,31 +177,87 @@ begin
   EColumns.Text:=IntToStr(Data.Columns);
   ERows.Text:=IntToStr(Data.Rows);
 
-  TeeGrid1.Rows.SubBands[20]:=NewTitle;
+  // Insert a "sub-band" at position 20
+  TeeGrid1.Rows.SubBands.Row[20]:=NewTitle;
 
-  RefreshTotalCells;
+  // Just a test, hide 2nd column header text
+  TeeGrid1.Columns[1].Header.Hide;
 
-  TeeGrid1.Painter:=TGdiPlusPainter.Create;
+  // Set event to paint a picture at some of 4th column cells
+  TeeGrid1.Columns[3].OnPaint:=PaintPicture;
+
+  // Just some text alignment tests
+  TeeGrid1.Cells.TextAlign.Vertical:=TVerticalAlign.Center;
+  TeeGrid1.Selected.TextAlign.Vertical:=TVerticalAlign.Center;
+
+  // Create a picture from a TImage on this form
+  OkPicture:=TVCLPicture.From(OkImage);
+
+  //TeeGrid1.Rows.Heights[4]:=32;
+
+  // Default row height, for all rows
+  TeeGrid1.Rows.Height.Value:=32;
+
+  // Speed performance, disable cosmetic effects:
+  TeeGrid1.Rows.Alternate.Hide;
+  TeeGrid1.Header.Format.Brush.Gradient.Hide;
 end;
 
+procedure TStringGridForm.FormDestroy(Sender: TObject);
+begin
+  // Destroy the picture, just to avoid a memory leak
+  OkPicture.Free;
+end;
+
+// This event is called for all cells of 4th column, when they are going to be painted
+procedure TStringGridForm.PaintPicture(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean);
+var tmp : TRectF;
+begin
+  // We'll replace "OK" text with a picture
+  DefaultPaint:=not SameText(AData.Text,'OK');
+
+  if not DefaultPaint then
+  begin
+    tmp:=AData.Rect;
+    tmp.Inflate(-8,-6);
+
+    AData.Painter.Draw(OkPicture,tmp);
+  end;
+end;
+
+// Show the total number of grid cells
 procedure TStringGridForm.RefreshTotalCells;
 begin
   LCells.Caption:=FormatFloat('#,###',Data.Columns*Data.Rows);
 end;
 
+// Just a test, when clicking a column header
 procedure TStringGridForm.TeeGrid1ClickedHeader(Sender: TObject);
 begin
   Panel1.Caption:='Clicked column header: '+(Sender as TColumn).Header.Text;
 end;
 
-procedure TStringGridForm.TeeGrid1Select(const Sender: TRowGroup);
+// Just a test, when selecting a grid cell with mouse click or arrow keys
+procedure TStringGridForm.TeeGrid1Select(Sender: TObject);
+
+  function ColumnHeader(const AColumn:TColumn):String;
+  begin
+    result:=AColumn.Header.Text;
+
+    if result='' then
+       result:=IntToStr(AColumn.Index);
+  end;
+
+var tmp : TGridSelection;
 begin
-  if Sender.Selected.IsEmpty then
+  tmp:=TeeGrid1.Grid.Current.Selected;
+
+  if tmp.IsEmpty then
      Panel1.Caption:=''
   else
-     Panel1.Caption:='Selected cell: '+Sender.Selected.Column.Header.Text+
-                     ' Row: '+IntToStr(Sender.Selected.Row)+
-                     ' Value: '+Sender.Data.AsString(Sender.Selected.Column,Sender.Selected.Row);
+     Panel1.Caption:='Selected cell: '+ColumnHeader(tmp.Column)+
+                     ' Row: '+IntToStr(tmp.Row)+
+                     ' Value: '+TeeGrid1.Grid.Current.Data.AsString(tmp.Column,tmp.Row);
 end;
 
 end.

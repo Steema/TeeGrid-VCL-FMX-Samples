@@ -116,10 +116,6 @@ object FontEditor: TFontEditor
     object TabFill: TTabSheet
       Caption = 'Fill'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 287
-      ExplicitHeight = 0
     end
   end
 end

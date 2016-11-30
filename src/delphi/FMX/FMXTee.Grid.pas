@@ -7,11 +7,14 @@
 unit FMXTee.Grid;
 {$I Tee.inc}
 
+//{$IF CompilerVersion>23}
+//{$LEGACYIFEND ON}
+//{$IFEND}
+
 interface
 
 {
-   TTeeGrid control for Firemonkey.
-
+   TTeeGrid control for Firemonkey
 }
 
 {$IF CompilerVersion>24}
@@ -55,22 +58,23 @@ type
     IEditorRow : Integer;
 
     procedure CreateEditor(const AColumn:TColumn);
-    procedure DoStopEditor(const ChangeValue:Boolean);
     procedure EditorKeyUp(Sender: TObject; var Key: Word; var KeyChar: WideChar; Shift: TShiftState);
+    function EditorShowing:Boolean;
+    procedure TryChangeEditorData;
     procedure TryShowEditor(const AColumn: TColumn; const ARow: Integer);
   protected
-    procedure CopySelected; override;
     procedure DataChanged; override;
 
     function HorizScrollBarHeight:Single; override;
     procedure HorizScrollChanged; override;
 
-    function VertScrollBarWidth:Single; override;
-    procedure VertScrollChanged; override;
-
     procedure StartEditor(const AColumn:TColumn; const ARow:Integer); override;
     procedure StopEditor; override;
+
+    function VertScrollBarWidth:Single; override;
+    procedure VertScrollChanged; override;
   public
+    procedure CopySelected; override;
     function Height:Single; override;
     function Painter:TPainter; override;
     function Width:Single; override;
@@ -95,8 +99,8 @@ type
     FOnColumnResized: TColumnEvent;
     FOnShowEditor: TShowEditorEvent;
 
+    procedure ChangePainter(const APainter:TFMXPainter);
     procedure ColumnResized(Sender:TObject);
-    procedure DoChanged(Sender:TObject);
     procedure SetDataItem(const Value: TVirtualData);
 
     function GetColumns: TColumns;
@@ -117,7 +121,6 @@ type
     function GetReadOnly: Boolean;
     procedure SetReadOnly(const Value: Boolean);
 
-    procedure ResetScrollBars;
     function GetBack: TFormat;
     function GetCells: TTextRender;
     function GetFooter: TGridBands;
@@ -128,8 +131,12 @@ type
     procedure SetEditing(const Value: TGridEditing);
     function GetOnNewDetail: TNewDetailEvent;
     procedure SetOnNewDetail(const Value: TNewDetailEvent);
-    function GetOnSelect: TSelectEvent;
-    procedure SetOnSelect(const Value: TSelectEvent);
+    function GetOnSelect: TNotifyEvent;
+    procedure SetOnSelect(const Value: TNotifyEvent);
+    function GetHeaders: TGridBands;
+    procedure SetHeaders(const Value: TGridBands);
+    function GetDataSource: TComponent;
+    procedure SetDataSource(const Value: TComponent);
   protected
     procedure DblClick; override;
 
@@ -145,12 +152,11 @@ type
     procedure MouseWheel(Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean); override;
     procedure Paint; override;
 
+    procedure ResetScrollBars; override;
     procedure Resize; override;
 
     procedure SetScrollX(const Value:Single); override;
     procedure SetScrollY(const Value:Single); override;
-
-    property Painter:TFMXPainter read FPainter;
   public
     Constructor Create(AOwner:TComponent); override;
 
@@ -159,15 +165,21 @@ type
     {$ENDIF}
 
     procedure ApplyStyle; override;
+    procedure Changed(Sender:TObject);
+
+    procedure Loaded; override;
 
     property Data:TVirtualData read GetDataItem write SetDataItem;
     property Grid:TFMXTeeGrid read FGrid;
+    property Painter:TFMXPainter read FPainter;
   published
     property Back:TFormat read GetBack write SetBack;
     property Cells:TTextRender read GetCells write SetCells;
     property Columns:TColumns read GetColumns write SetColumns;
+    property DataSource:TComponent read GetDataSource write SetDataSource;
     property Editing:TGridEditing read GetEditing write SetEditing;
     property Header:TColumnHeaderBand read GetHeader write SetHeader;
+    property Headers:TGridBands read GetHeaders write SetHeaders stored False;
     property Footer:TGridBands read GetFooter write SetFooter;
     property Indicator:TIndicator read GetIndicator write SetIndicator;
     property ReadOnly:Boolean read GetReadOnly write SetReadOnly default True;
@@ -179,7 +191,7 @@ type
     property OnClickedHeader:TNotifyEvent read GetClickedHeader write SetClickedHeader;
     property OnColumnResized:TColumnEvent read FOnColumnResized write FOnColumnResized;
     property OnNewDetail:TNewDetailEvent read GetOnNewDetail write SetOnNewDetail;
-    property OnSelect:TSelectEvent read GetOnSelect write SetOnSelect;
+    property OnSelect:TNotifyEvent read GetOnSelect write SetOnSelect;
     property OnShowEditor:TShowEditorEvent read FOnShowEditor write FOnShowEditor;
 
     // inherited

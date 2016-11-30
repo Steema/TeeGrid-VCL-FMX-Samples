@@ -31,10 +31,6 @@ object FormatEditor: TFormatEditor
     object TabBrush: TTabSheet
       Caption = 'Fill'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
   end
 end

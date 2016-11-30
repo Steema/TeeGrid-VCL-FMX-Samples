@@ -37,6 +37,10 @@ interface
 uses
   {System.}Classes,
 
+  {$IFDEF FPC}
+  Graphics,
+  {$ENDIF}
+
   {$IFNDEF FPC}
   {System.}Types,
   {$ENDIF}
@@ -58,12 +62,14 @@ type
     OldX : Single;
 
     procedure ChangeDraggedWidth(const AValue:Single);
+    procedure DoChangedRepaint;
     procedure PaintLines(var AData:TRenderData; const DrawFirst:Boolean);
     procedure SetHighLight(const Value: TColumn);
     procedure SetHover(const Value: THover);
     procedure SetColumns(const Value: TColumns);
   protected
     IColumns : TColumns;
+    IJustRepaint : Boolean;
 
     function AdjustBounds(const AColumn:TColumn; const R:TRectF):TRectF; virtual;
     function AsString(const AColumn:TColumn):String; virtual; abstract;
@@ -78,18 +84,21 @@ type
     OffsetX,
     StartX : Single;
 
-    Constructor Create(const AChanged:TNotifyEvent; const AColumns:TColumns); reintroduce; virtual;
+    Constructor Create(const ACollection:TCollection;
+                       const AColumns:TColumns); reintroduce; virtual;
 
     {$IFNDEF AUTOREFCOUNT}
     Destructor Destroy; override;
     {$ENDIF}
 
-    function CalcFont(const AColumn:TColumn):TFont;
+    procedure Assign(Source:TPersistent); override;
+
+    function CalcFont(const AColumn:TColumn; const AFont:TFont):TFont;
     procedure InitFormat;
 
     function Mouse(var AState:TMouseState; const AWidth,AHeight:Single):Boolean; override;
 
-    procedure Paint(var AData:TRenderData); override;
+    procedure Paint(var AData:TRenderData; const ARender:TRender); override;
 
     property Columns:TColumns read IColumns write SetColumns;
 
@@ -133,8 +142,12 @@ type
     FSortable: Boolean;
 
     IData : TVirtualData;
+    IHeights : Array of Single;
 
+    function HeaderRender(const AColumn:TColumn):TRender;
+    //function HeaderRowHeight:Single;
     function LevelTop(const ALevel:Integer):Single;
+    function MaxColumnHeight(const ATotal:Single):Single;
     procedure PaintRowLines(const APainter:TPainter; const AColumns:TColumns; const ALevel:Integer);
     procedure SetRowLines(const Value: TStroke);
     procedure SetSortable(const Value: Boolean);
@@ -143,13 +156,10 @@ type
     function AsString(const AColumn:TColumn):String; override;
     procedure DoClick; override;
   public
-    const
-      RowSpacing=4;
-
     var
-      Render : TSortableHeader;
+      SortRender : TSortableHeader;
 
-    Constructor Create(const AChanged:TNotifyEvent;
+    Constructor Create(const ACollection:TCollection;
                        const AColumns:TColumns;
                        const AData:TVirtualData); reintroduce; virtual;
 
@@ -160,8 +170,9 @@ type
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single;
     procedure CalcHeight(const ATotal:Single); override;
     function CanSort(const AColumn:TColumn):Boolean;
+    class function Description:String; override;
 
-    procedure Paint(var AData:TRenderData); override;
+    procedure Paint(var AData:TRenderData; const ARender:TRender); override;
 
     function RowCount:Integer;
 

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, VCLTee_Grid, db, dbf, DateTimePicker;
+  StdCtrls, VCLTee.Grid, db, dbf; //, DateTimePicker;
 
 type
 
@@ -34,8 +34,8 @@ implementation
 {$R *.lfm}
 
 uses
-  VCLTee_Editor_Grid,
-  Tee_Grid_Data_DB;
+  VCLTee.Editor.Grid,
+  Tee.Grid.Data.DB;
 
 { TForm1 }
 
@@ -46,7 +46,7 @@ begin
   Dbf1.TableName:='disco.dbf';
   Dbf1.Open;
 
-  TeeGrid1.Columns.FindFirst('Last_Sell').EditorClass:=TDateTimePicker;
+//  TeeGrid1.Columns.FindFirst('Last_Sell').EditorClass:=TDateTimePicker;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);

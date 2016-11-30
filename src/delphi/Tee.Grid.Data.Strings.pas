@@ -7,6 +7,11 @@
 unit Tee.Grid.Data.Strings;
 {$I Tee.inc}
 
+// Force range-checking in Debug mode
+{$IFOPT D+}
+{$R+}
+{$ENDIF}
+
 interface
 
 {
@@ -51,17 +56,23 @@ type
 
   { TStringsData }
 
+  TStringArray=Array of String;
+
   TStringsData=class(TVirtualData)
   private
     FColumns: Integer;
     FRows: Integer;
 
     IColumns : TColumns;
-    IHeaders : Array of String;
-    IData : Array of Array of String;
+    IHeaders : TStringArray;
+    IData : Array of TStringArray;
 
     FOnSetValue: TOnSetValue;
     FOnGetValue: TOnGetValue;
+
+    {$IFOPT R+}
+    procedure RangeCheck(const Column,Row: Integer);
+    {$ENDIF}
 
     function GetCell(const Column,Row: Integer): String;
     function GetHeader(const Column: Integer): String;
@@ -71,6 +82,8 @@ type
     procedure SetHeader(const Column: Integer; const Value: String);
     procedure SetRows(const Value: Integer);
   public
+    Constructor Create(const AColumns:Integer=0; const ARows:Integer=0);
+
     procedure AddColumns(const AColumns:TColumns); override;
     function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; override;

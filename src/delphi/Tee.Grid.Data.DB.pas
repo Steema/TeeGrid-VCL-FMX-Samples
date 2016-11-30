@@ -9,8 +9,21 @@ unit Tee.Grid.Data.DB;
 
 interface
 
+{
+  Virtual Data class to link TDataSet fields to a TeeGrid
+
+  Usage examples:
+
+  uses Tee.Grid.Data.DB;
+
+  TeeGrid1.Data:= TVirtualDBData.From(DataSource1);
+
+  TeeGrid1.Data:= TVirtualDBData.From(MyDataSet1);
+
+}
+
 uses
-  {Data.}DB, Tee.Grid.Columns, Tee.Grid.Data, Tee.Painter;
+  {System.}Classes, {Data.}DB, Tee.Grid.Columns, Tee.Grid.Data, Tee.Painter;
 
 type
   TVirtualDBData=class;
@@ -24,6 +37,7 @@ type
     procedure ChangeRow(const ARow:Integer);
   protected
     procedure ActiveChanged; override;
+    procedure LayoutChanged; override;
     procedure RecordChanged(Field: TField); override;
     procedure UpdateData; override;
   end;
@@ -40,6 +54,7 @@ type
     class function Add(const AColumns:TColumns; const AField:TField):TColumn;
     procedure CreateLink;
     function FieldOf(const AColumn:TColumn):TField; inline;
+    class function HorizAlignOf(const AField:TField):THorizontalAlign; static;
     procedure RowChanged(const ARow:Integer); override;
   public
     Destructor Destroy; override;
@@ -49,8 +64,7 @@ type
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; override;
     function Count:Integer; override;
 
-    class function From(const ADataSet:TDataSet):TVirtualDBData; overload; static;
-    class function From(const ADataSource:TDataSource):TVirtualDBData; overload; static;
+    class function From(const ASource:TComponent):TVirtualData; override;
 
     procedure Load; override;
     function ReadOnly(const AColumn:TColumn):Boolean; override;

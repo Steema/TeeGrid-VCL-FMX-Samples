@@ -1,4 +1,11 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  TStroke Editor for Firemonkey              }
+{  Copyright (c) 2016 by Steema Software      }
+{  All Rights Reserved                        }
+{*********************************************}
 unit FMXTee.Editor.Painter.Stroke;
+{$I Tee.inc}
 
 interface
 

@@ -20,7 +20,7 @@ object ColumnEditor: TColumnEditor
     Top = 0
     Width = 360
     Height = 304
-    ActivePage = TabAlign
+    ActivePage = TabFormat
     Align = alClient
     TabOrder = 0
     OnChange = PageFormatChange
@@ -153,7 +153,7 @@ object ColumnEditor: TColumnEditor
         TabOrder = 0
         object CBParentFormat: TCheckBox
           Left = 16
-          Top = 16
+          Top = 11
           Width = 97
           Height = 17
           Caption = '&Parent Format'
@@ -226,6 +226,15 @@ object ColumnEditor: TColumnEditor
           Caption = '&Parent Format'
           TabOrder = 0
           OnClick = CBHeaderParentClick
+        end
+        object CBHeaderVisible: TCheckBox
+          Left = 136
+          Top = 11
+          Width = 97
+          Height = 17
+          Caption = '&Visible'
+          TabOrder = 1
+          OnClick = CBHeaderVisibleClick
         end
       end
       object PageHeader: TPageControl

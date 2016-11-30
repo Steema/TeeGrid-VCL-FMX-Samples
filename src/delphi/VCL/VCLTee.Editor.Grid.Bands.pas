@@ -5,8 +5,8 @@ interface
 uses
   {Winapi.}Windows, {Winapi.}Messages, {System.}SysUtils, {System.}Classes,
   {Vcl.}Graphics, {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}StdCtrls,
-  {Vcl.}ExtCtrls,
-  Tee.Grid.Bands, Vcl.ComCtrls, Vcl.Buttons;
+  {Vcl.}ExtCtrls, {Vcl.}ComCtrls, {Vcl.}Buttons,
+  Tee.Grid.Bands;
 
 type
   TGridBandsEditor = class(TForm)

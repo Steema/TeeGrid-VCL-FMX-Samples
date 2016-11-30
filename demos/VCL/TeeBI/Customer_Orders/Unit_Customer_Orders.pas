@@ -43,7 +43,7 @@ type
     OrderItems : TDataItem;
 
     procedure AddDetail(const ARows:TRows; const ADetail:TDataItem; const AColumn:TColumn);
-    procedure AddMainTotals(const AData:TVirtualData; const AColumns:TColumns);
+    procedure AddMainTotals(const AColumns:TColumns; const AData:TVirtualData);
     procedure AddOrderTotals(const AGroup:TRowGroup);
     procedure NewDetail(const Sender,NewGroup:TRowGroup);
     procedure NewOrderItemsDetail(const Sender,NewGroup:TRowGroup);
@@ -61,7 +61,7 @@ implementation
 
 uses
   BI.DataSource, BI.Persist, BI.Grid.Data,
-  Tee.Grid.Header, Tee.Grid.Totals, Tee.Grid.Themes;
+  Tee.Grid.Header, Tee.Grid.Totals, Tee.Grid.Themes, Tee.Grid.Bands;
 
 procedure TFormDetailRows.Button1Click(Sender: TObject);
 begin
@@ -82,15 +82,14 @@ end;
 procedure TFormDetailRows.AddOrderTotals(const AGroup:TRowGroup);
 var tmp : TColumnTotals;
 begin
-  tmp:=TColumnTotals.Create(nil,AGroup.Columns,AGroup.Data);
+  tmp:=TColumnTotals.Create(AGroup.Footer,AGroup.Columns,AGroup.Data);
 
   tmp.Calculation.Add(AGroup.Columns[0],TColumnCalculation.Count);
 
   tmp.Calculation.Add(AGroup.Columns['Freight'],TColumnCalculation.Sum);
   tmp.Format.Font.Style:=[fsBold];
 
-  AGroup.Footer.Add(TTotalsHeader.CreateTotals(tmp));
-  AGroup.Footer.Add(tmp);
+  TTotalsHeader.CreateTotals(AGroup.Footer,tmp);
 end;
 
 procedure TFormDetailRows.AddDetail(const ARows:TRows; const ADetail:TDataItem; const AColumn:TColumn);
@@ -112,7 +111,7 @@ end;
 procedure TFormDetailRows.NewOrderItemsDetail(const Sender,NewGroup:TRowGroup);
 var tmp : TColumnTotals;
 begin
-  tmp:=TColumnTotals.Create(nil,NewGroup.Columns,NewGroup.Data);
+  tmp:=TColumnTotals.Create(NewGroup.Footer,NewGroup.Columns,NewGroup.Data);
 
   tmp.Calculation.Add(NewGroup.Columns[0],TColumnCalculation.Count);
 
@@ -121,8 +120,6 @@ begin
   tmp.Calculation.Add(NewGroup.Columns['Quantity'],TColumnCalculation.Sum);
 
   tmp.Format.Font.Style:=[fsBold];
-
-  NewGroup.Footer.Add(tmp);
 
 //  TGridThemes.iOS.ApplyTo(NewGroup);
 end;
@@ -148,6 +145,12 @@ begin
   OrderItems:=Demo['"Order Details"'];
 end;
 
+function TitleSample(const ACollection:TCollection):TTextBand;
+begin
+  result:=TTextBand.Create(ACollection);
+  result.Text:='Some sub-header';
+end;
+
 procedure TFormDetailRows.FormCreate(Sender: TObject);
 begin
   LoadSampleData;
@@ -160,23 +163,22 @@ begin
 
   TeeGrid1.OnNewDetail:=NewDetail;
 
-  AddMainTotals(TeeGrid1.Data,TeeGrid1.Columns);
+  AddMainTotals(TeeGrid1.Columns,TeeGrid1.Data);
+
+  TeeGrid1.Rows.SubBands.Row[10]:=TitleSample(TeeGrid1.Rows.SubBands);
 end;
 
 // Add a grid footer band with "Totals" for main Customer table
-procedure TFormDetailRows.AddMainTotals(const AData:TVirtualData; const AColumns:TColumns);
+procedure TFormDetailRows.AddMainTotals(const AColumns:TColumns; const AData:TVirtualData);
 var Totals : TColumnTotals;
 begin
   // Create grid band
-  Totals:=TColumnTotals.From(AData,AColumns);
+  Totals:=TColumnTotals.Create(TeeGrid1.Footer,AColumns,AData);
 
   // There is no numeric field in Customer table, so the only thing we can
   // add is a counter:
 
   Totals.Calculation.Add(AColumns['CustomerID'],TColumnCalculation.Count);
-
-  // Add band to grid footer
-  TeeGrid1.Footer.Add(Totals);
 end;
 
 end.

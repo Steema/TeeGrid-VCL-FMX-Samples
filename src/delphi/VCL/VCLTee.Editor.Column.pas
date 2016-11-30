@@ -51,6 +51,7 @@ type
     TabHeaderAlign: TTabSheet;
     RadioGroup1: TRadioGroup;
     RadioGroup2: TRadioGroup;
+    CBHeaderVisible: TCheckBox;
     procedure CBVisibleClick(Sender: TObject);
     procedure CBExpandedClick(Sender: TObject);
     procedure EFloatFormatChange(Sender: TObject);
@@ -70,6 +71,7 @@ type
     procedure PageHeaderChange(Sender: TObject);
     procedure RadioGroup2Click(Sender: TObject);
     procedure RadioGroup1Click(Sender: TObject);
+    procedure CBHeaderVisibleClick(Sender: TObject);
   private
     { Private declarations }
 

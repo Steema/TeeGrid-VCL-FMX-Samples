@@ -8,6 +8,10 @@ unit VCLTee.Editor.Grid;
 
 interface
 
+{
+   Main VCL TeeGrid editor dialog
+}
+
 uses
   {Winapi.}Windows, {Winapi.}Messages, {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
   {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}ComCtrls, {Vcl.}StdCtrls, {Vcl.}ExtCtrls,
@@ -18,21 +22,19 @@ uses
   VCLTee.Grid,
 
   VCLTee.Editor.Format, VCLTee.Editor.Stroke, VCLTee.Editor.Column,
-  VCLTee.Editor.Header, VCLTee.Editor.Coordinate, VCLTee.Editor.Margins,
-  VCLTee.Editor.Render.Text;
+  VCLTee.Editor.Coordinate, VCLTee.Editor.Margins,
+  VCLTee.Editor.Render.Text, VCLTee.Editor.Grid.Bands;
 
 type
   TTeeGridEditor = class(TForm)
     PageGrid: TPageControl;
     TabColumns: TTabSheet;
-    TreeView1: TTreeView;
+    TreeColumns: TTreeView;
     Panel5: TPanel;
     TabOptions: TTabSheet;
     SBDeleteColumn: TSpeedButton;
-    TabHeader: TTabSheet;
+    TabBands: TTabSheet;
     PanelEditor: TPanel;
-    Panel1: TPanel;
-    CBHeaderVisible: TCheckBox;
     TabCells: TTabSheet;
     PageCells: TPageControl;
     TabCellsFormat: TTabSheet;
@@ -56,7 +58,6 @@ type
     PanelButtons: TPanel;
     PanelOk: TPanel;
     BOk: TButton;
-    TabGeneralOptions: TTabSheet;
     TabBack: TTabSheet;
     TabMargins: TTabSheet;
     TabTheme: TTabSheet;
@@ -67,10 +68,6 @@ type
     CBSelectedParentFont: TCheckBox;
     Panel4: TPanel;
     CBAlternateVisible: TCheckBox;
-    GroupBox1: TGroupBox;
-    Label3: TLabel;
-    TBHorizSpacing: TTrackBar;
-    LHorizSpacing: TLabel;
     PageIndicator: TPageControl;
     TabIndicatorFormat: TTabSheet;
     TabIndicatorWidth: TTabSheet;
@@ -86,9 +83,17 @@ type
     PageSelected: TPageControl;
     TabSelectedFocused: TTabSheet;
     TabSelectedUnfocused: TTabSheet;
-    procedure TreeView1Change(Sender: TObject; Node: TTreeNode);
+    Label3: TLabel;
+    TBHorizSpacing: TTrackBar;
+    LHorizSpacing: TLabel;
+    RGPainter: TRadioGroup;
+    TabScrollBars: TTabSheet;
+    CBScrollBars: TCheckBox;
+    PageBands: TPageControl;
+    TabHeaders: TTabSheet;
+    TabFooter: TTabSheet;
+    procedure TreeColumnsChange(Sender: TObject; Node: TTreeNode);
     procedure CBFullRowClick(Sender: TObject);
-    procedure CBHeaderVisibleClick(Sender: TObject);
     procedure SBDeleteColumnClick(Sender: TObject);
     procedure PageGridChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -99,7 +104,7 @@ type
     procedure CBRowHeightAutoClick(Sender: TObject);
     procedure CBReadOnlyClick(Sender: TObject);
     procedure PageOptionsChange(Sender: TObject);
-    procedure TreeView1Edited(Sender: TObject; Node: TTreeNode; var S: string);
+    procedure TreeColumnsEdited(Sender: TObject; Node: TTreeNode; var S: string);
     procedure PageRowsChange(Sender: TObject);
     procedure PageCellsChange(Sender: TObject);
     procedure LBThemesClick(Sender: TObject);
@@ -111,6 +116,9 @@ type
     procedure CBDoubleClickClick(Sender: TObject);
     procedure CBEditingAlwaysClick(Sender: TObject);
     procedure CBSelectedRangeClick(Sender: TObject);
+    procedure RGPainterClick(Sender: TObject);
+    procedure CBScrollBarsClick(Sender: TObject);
+    procedure PageBandsChange(Sender: TObject);
   private
     { Private declarations }
 
@@ -121,7 +129,8 @@ type
     ISelectedFocused,
     ISelectedUnfocused : TTextRenderEditor;
 
-    IHeader : THeaderEditor;
+    IFooters,
+    IHeaders : TGridBandsEditor;
 
     IRowAlternate,
     IIndicatorFormat : TFormatEditor;

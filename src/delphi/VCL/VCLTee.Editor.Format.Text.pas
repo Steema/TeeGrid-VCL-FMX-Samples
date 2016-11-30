@@ -17,7 +17,7 @@ uses
   ColorBox,
   {$ENDIF}
 
-  VCLTee.Editor.Stroke, VCLTee.Editor.Brush;
+  VCLTee.Editor.Stroke, VCLTee.Editor.Brush, VCLTee.Editor.Font;
 
 type
   TTextFormatEditor = class(TForm)
@@ -25,24 +25,6 @@ type
     TabFont: TTabSheet;
     TabStroke: TTabSheet;
     TabBrush: TTabSheet;
-    Label2: TLabel;
-    TBFontSize: TTrackBar;
-    Label1: TLabel;
-    LBFontName: TListBox;
-    CBFontColor: TColorBox;
-    GroupBox1: TGroupBox;
-    CBFontBold: TCheckBox;
-    CBFontItalic: TCheckBox;
-    CBFontUnderline: TCheckBox;
-    CBFontStrikeOut: TCheckBox;
-    LFontSize: TLabel;
-    procedure TBFontSizeChange(Sender: TObject);
-    procedure CBFontColorChange(Sender: TObject);
-    procedure LBFontNameClick(Sender: TObject);
-    procedure CBFontBoldClick(Sender: TObject);
-    procedure CBFontItalicClick(Sender: TObject);
-    procedure CBFontUnderlineClick(Sender: TObject);
-    procedure CBFontStrikeOutClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure PageFormatChange(Sender: TObject);
   private
@@ -50,11 +32,9 @@ type
 
     IFormat : TTextFormat;
 
+    IFont : TFontEditor;
     IBrush : TBrushEditor;
     IStroke : TStrokeEditor;
-
-    procedure ChangeFontStyle(const Enable:Boolean; const AStyle:TFontStyle);
-    procedure SetFontSettings(const AFont:TFont);
   public
     { Public declarations }
 

@@ -20,7 +20,7 @@ object TeeGridEditor: TTeeGridEditor
     Top = 0
     Width = 339
     Height = 472
-    ActivePage = TabCells
+    ActivePage = TabRows
     Align = alClient
     TabOrder = 0
     OnChange = PageGridChange
@@ -37,7 +37,7 @@ object TeeGridEditor: TTeeGridEditor
         ExplicitTop = 0
         ExplicitWidth = 192
       end
-      object TreeView1: TTreeView
+      object TreeColumns: TTreeView
         Left = 0
         Top = 41
         Width = 331
@@ -47,8 +47,8 @@ object TeeGridEditor: TTeeGridEditor
         HotTrack = True
         Indent = 19
         TabOrder = 0
-        OnChange = TreeView1Change
-        OnEdited = TreeView1Edited
+        OnChange = TreeColumnsChange
+        OnEdited = TreeColumnsEdited
       end
       object Panel5: TPanel
         Left = 0
@@ -84,6 +84,34 @@ object TeeGridEditor: TTeeGridEditor
           Enabled = False
           OnClick = SBColumnDownClick
         end
+        object Label3: TLabel
+          Left = 158
+          Top = 7
+          Width = 41
+          Height = 13
+          Alignment = taRightJustify
+          Caption = '&Spacing:'
+          FocusControl = TBHorizSpacing
+        end
+        object LHorizSpacing: TLabel
+          Left = 294
+          Top = 7
+          Width = 6
+          Height = 13
+          Caption = '0'
+        end
+        object TBHorizSpacing: TTrackBar
+          Left = 202
+          Top = 7
+          Width = 87
+          Height = 21
+          Max = 30
+          Frequency = 5
+          Position = 10
+          TabOrder = 0
+          ThumbLength = 12
+          OnChange = TBHorizSpacingChange
+        end
       end
       object PanelEditor: TPanel
         Left = 0
@@ -96,27 +124,24 @@ object TeeGridEditor: TTeeGridEditor
         Visible = False
       end
     end
-    object TabHeader: TTabSheet
-      Caption = 'Header'
+    object TabBands: TTabSheet
+      Caption = 'Bands'
       ImageIndex = 2
-      object Panel1: TPanel
+      object PageBands: TPageControl
         Left = 0
         Top = 0
         Width = 331
-        Height = 41
-        Align = alTop
-        BevelOuter = bvNone
+        Height = 444
+        ActivePage = TabHeaders
+        Align = alClient
         TabOrder = 0
-        object CBHeaderVisible: TCheckBox
-          Left = 9
-          Top = 13
-          Width = 96
-          Height = 17
-          Caption = '&Visible'
-          Checked = True
-          State = cbChecked
-          TabOrder = 0
-          OnClick = CBHeaderVisibleClick
+        OnChange = PageBandsChange
+        object TabHeaders: TTabSheet
+          Caption = 'Headers'
+        end
+        object TabFooter: TTabSheet
+          Caption = 'Footer'
+          ImageIndex = 1
         end
       end
     end
@@ -128,7 +153,7 @@ object TeeGridEditor: TTeeGridEditor
         Top = 0
         Width = 331
         Height = 444
-        ActivePage = TabSelection
+        ActivePage = TabIndicator
         Align = alClient
         TabOrder = 0
         OnChange = PageOptionsChange
@@ -271,43 +296,17 @@ object TeeGridEditor: TTeeGridEditor
             OnClick = CBReadOnlyClick
           end
         end
-        object TabGeneralOptions: TTabSheet
-          Caption = 'Columns'
-          ImageIndex = 2
-          object GroupBox1: TGroupBox
+        object TabScrollBars: TTabSheet
+          Caption = 'Scroll Bars'
+          ImageIndex = 5
+          object CBScrollBars: TCheckBox
             Left = 16
             Top = 16
-            Width = 185
-            Height = 73
-            Caption = '&Spacing:'
+            Width = 97
+            Height = 17
+            Caption = '&Visible'
             TabOrder = 0
-            object Label3: TLabel
-              Left = 8
-              Top = 20
-              Width = 52
-              Height = 13
-              Caption = '&Horizontal:'
-              FocusControl = TBHorizSpacing
-            end
-            object LHorizSpacing: TLabel
-              Left = 161
-              Top = 40
-              Width = 6
-              Height = 13
-              Caption = '0'
-            end
-            object TBHorizSpacing: TTrackBar
-              Left = 3
-              Top = 36
-              Width = 150
-              Height = 21
-              Max = 50
-              Frequency = 5
-              Position = 10
-              TabOrder = 0
-              ThumbLength = 12
-              OnChange = TBHorizSpacingChange
-            end
+            OnClick = CBScrollBarsClick
           end
         end
       end
@@ -320,7 +319,7 @@ object TeeGridEditor: TTeeGridEditor
         Top = 0
         Width = 331
         Height = 444
-        ActivePage = TabColumnLines
+        ActivePage = TabCellsFormat
         Align = alClient
         TabOrder = 0
         OnChange = PageCellsChange
@@ -454,6 +453,19 @@ object TeeGridEditor: TTeeGridEditor
         ItemHeight = 13
         TabOrder = 0
         OnClick = LBThemesClick
+      end
+      object RGPainter: TRadioGroup
+        Left = 16
+        Top = 208
+        Width = 145
+        Height = 81
+        Caption = '&Painter:'
+        ItemIndex = 0
+        Items.Strings = (
+          'GDI+'
+          'GDI')
+        TabOrder = 1
+        OnClick = RGPainterClick
       end
     end
   end

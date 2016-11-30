@@ -2,13 +2,18 @@ unit Unit_FMX_StringGrid;
 
 interface
 
+{
+  This example shows using a TeeGrid like a TStringGrid
+}
+
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, FMXTee.Control, FMXTee.Grid,
   FMX.Layouts, FMX.Edit, FMX.EditBox, FMX.NumberBox,
 
-  Tee.Grid.Data.Strings, Tee.Grid.Columns, Tee.Renders, Tee.Format, FMX.Objects;
+  Tee.Grid.Data.Strings, Tee.Grid.Columns, Tee.Renders, Tee.Format, Tee.Painter,
+  FMX.Objects, FMXTee.Picture;
 
 type
   TStringGridForm = class(TForm)
@@ -49,8 +54,10 @@ implementation
 {$R *.fmx}
 
 uses
-  System.Diagnostics, Tee.Grid.Bands, Tee.Grid.Selection, Tee.Grid;
+  System.Diagnostics, Tee.Grid.Bands, Tee.Grid.Selection, Tee.Grid,
+  Tee.Grid.RowGroup;
 
+// Repaint the grid 1000 times to benchmark painting speed
 procedure TStringGridForm.Button1Click(Sender: TObject);
 var t1 : TStopWatch;
     t : Integer;
@@ -66,6 +73,7 @@ begin
   Caption:=t2.ToString+' msec to repaint: 1000 times';
 end;
 
+// Change the number of grid columns
 procedure TStringGridForm.EColumnsChangeTracking(Sender: TObject);
 begin
   TStringsData(TeeGrid1.Data).Columns:=Round(EColumns.Value);
@@ -73,6 +81,7 @@ begin
   RefreshTotalCells;
 end;
 
+// Change the number of grid rows
 procedure TStringGridForm.ERowsChangeTracking(Sender: TObject);
 begin
   TStringsData(TeeGrid1.Data).Columns:=Round(EColumns.Value);
@@ -82,10 +91,10 @@ end;
 
 procedure TStringGridForm.FormCreate(Sender: TObject);
 
-  function NewTitle:TTitleBand;
+  // Create an example TextBand
+  function NewTitle:TTextBand;
   begin
-    result:=TTitleBand.Create(TeeGrid1.Rows.SubBands);
-    result.Text:='Sub-Title'#13+'Double';
+    result:=TeeGrid1.Rows.SubBands.AddText('Sub-Title'#13+'Double');
 
     result.Format.Font.Style:=[TFontStyle.fsBold];
     result.Format.Brush.Show;
@@ -95,6 +104,9 @@ procedure TStringGridForm.FormCreate(Sender: TObject);
 
 var t : Integer;
 begin
+  // Speed optimization, disable scrollbars
+  TeeGrid1.ScrollBars.Hide;
+
   // Create data
   Data:=TStringsData.Create;
 
@@ -105,7 +117,7 @@ begin
   Data.Resize(1000,100000);
 
   // Set header texts
-  Data.Headers[0]:='A'#13'Text';
+  Data.Headers[0]:='A'#13#10'Text';
   Data.Headers[1]:='B';
   Data.Headers[2]:='C';
   Data.Headers[3]:='OK';
@@ -128,31 +140,57 @@ begin
   EColumns.Text:=IntToStr(Data.Columns);
   ERows.Text:=IntToStr(Data.Rows);
 
-  TeeGrid1.Rows.SubBands.Row[20]:=NewTitle;
-
   RefreshTotalCells;
 
-  TeeGrid1.Header.Format.Brush.Gradient.Show;
+  // Insert a text band positioned above row 20th
+  TeeGrid1.Rows.SubBands.Row[20]:=NewTitle;
 
+  // Just an example, hide 2nd column header text
   TeeGrid1.Columns[1].Header.Hide;
 
+  // Set 4th column paint to display a picture
   TeeGrid1.Columns[3].OnPaint:=PaintPicture;
 
-  OkPicture:=TeeGrid1.PictureFrom(OkImage);
+  // Create a picture from an image
+  OkPicture:=TFMXPicture.From(OkImage);
 
-  TeeGrid1.Rows.Height:=32;
+  // Set the default row height (same height for all rows)
+  TeeGrid1.Rows.Height.Pixels:=32;
+
+  // Note: The following cosmetic effects have a strong performance penalty:
+
+  // Show odd / even rows with a different background color
+  // TeeGrid1.Rows.Alternate.Show;
+
+  // Column headers using a gradient effect?
+  TeeGrid1.Header.Format.Brush.Gradient.Hide;
+
+  // Vertical text alignment, default for all columns:
+  // TeeGrid1.Cells.TextAlign.Vertical:=TVerticalAlign.Center;
 end;
 
 procedure TStringGridForm.FormDestroy(Sender: TObject);
 begin
+  // Destroy the picture to avoid memory leak
   OkPicture.Free;
 end;
 
-procedure TStringGridForm.TeeGrid1ClickedHeader(Sender: TObject);
+// Return the header text of AColumn
+function HeaderText(const AColumn:TColumn):String;
 begin
-  Label1.Text:='Clicked column header: '+(Sender as TColumn).Header.Text;
+  result:=AColumn.Header.Text.Replace(#13#10,' ');
+
+  if result='' then
+     result:=IntToStr(AColumn.Index);
 end;
 
+// Called when clicking a column header
+procedure TStringGridForm.TeeGrid1ClickedHeader(Sender: TObject);
+begin
+  Label1.Text:='Clicked column header: '+HeaderText(Sender as TColumn);
+end;
+
+// Called when selecting a cell, by mouse click, touch, or arrow keys
 procedure TStringGridForm.TeeGrid1Select(Sender: TObject);
 var tmp : TGridSelection;
 begin
@@ -161,11 +199,12 @@ begin
   if tmp.IsEmpty then
      Label1.Text:=''
   else
-     Label1.Text:='Selected cell: '+tmp.Column.Header.Text+
+     Label1.Text:='Selected cell: '+HeaderText(tmp.Column)+
                      ' Row: '+IntToStr(tmp.Row)+
                      ' Value: '+TeeGrid1.Grid.Current.Data.AsString(tmp.Column,tmp.Row);
 end;
 
+// Display a picture inside a cell
 procedure TStringGridForm.PaintPicture(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean);
 var tmp : TRectF;
 begin

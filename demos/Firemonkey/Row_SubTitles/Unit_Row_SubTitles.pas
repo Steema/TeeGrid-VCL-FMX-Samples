@@ -2,17 +2,36 @@ unit Unit_Row_SubTitles;
 
 interface
 
+{
+  This example shows how to insert "middle-bands" in between rows
+
+}
+
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMXTee.Control,
-  FMXTee.Grid, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts;
+  FMXTee.Grid, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts,
+  Tee.Grid.Bands, Tee.Grid.Rows, FMX.ListBox;
 
 type
   TForm43 = class(TForm)
     TeeGrid1: TTeeGrid;
+    Layout1: TLayout;
+    BCopy: TButton;
+    CBBands: TComboBox;
+    CBVisible: TCheckBox;
+    CBAllBands: TCheckBox;
     procedure FormCreate(Sender: TObject);
+    procedure BCopyClick(Sender: TObject);
+    procedure TeeGrid1Select(Sender: TObject);
+    procedure CBBandsChange(Sender: TObject);
+    procedure CBVisibleChange(Sender: TObject);
+    procedure CBAllBandsChange(Sender: TObject);
   private
     { Private declarations }
+
+    procedure AddBandsToCombo(const ABands:TRowsBands);
+    function NewTitle(const AText:String):TTextBand;
   public
     { Public declarations }
   end;
@@ -25,16 +44,55 @@ implementation
 {$R *.fmx}
 
 uses
-  Tee.Grid.Data.Strings, Tee.Grid.Bands, Tee.Format, Unit_Sample;
+  Tee.Grid.Data.Strings, Tee.Format, Unit_Sample, Tee.Grid.CSV;
 
-function NewTitle(const AText:String):TTitleBand;
+// Create a new Title grid-band
+function TForm43.NewTitle(const AText:String):TTextBand;
 begin
-  result:=TTitleBand.Create(nil);
+  result:=TTextBand.Create(TeeGrid1.Rows.SubBands);
   result.Text:=AText;
 
+  // Cosmetic
   result.Format.Brush.Show;
   result.Format.Brush.Color:=TAlphaColors.Brown;
+
+  result.Format.Brush.Gradient.Colors[0].Color:=TAlphaColors.Brown;
+  result.Format.Brush.Gradient.Show;
+
   result.Format.Font.Color:=TAlphaColors.White;
+end;
+
+// Called when a cell or range of cells are selected
+procedure TForm43.TeeGrid1Select(Sender: TObject);
+begin
+  BCopy.Enabled:=not TeeGrid1.Selected.IsEmpty;
+end;
+
+// Copy the selected cells contents to clipboard (in CSV format)
+procedure TForm43.BCopyClick(Sender: TObject);
+begin
+  TeeGrid1.Grid.CopySelected;
+end;
+
+// Show or hide all "Sub-Bands"
+procedure TForm43.CBAllBandsChange(Sender: TObject);
+begin
+  TeeGrid1.Rows.SubBands.Visible:=CBAllBands.IsChecked;
+end;
+
+// Called when the combobox selected item is changed
+procedure TForm43.CBBandsChange(Sender: TObject);
+begin
+  CBVisible.Enabled:=CBBands.ItemIndex<>-1;
+
+  if CBVisible.Enabled then
+     CBVisible.IsChecked:=TeeGrid1.Rows.SubBands[CBBands.ItemIndex].Visible;
+end;
+
+// Show or hide a specific Sub-Band
+procedure TForm43.CBVisibleChange(Sender: TObject);
+begin
+  TeeGrid1.Rows.SubBands[CBBands.ItemIndex].Visible:=CBVisible.IsChecked;
 end;
 
 procedure TForm43.FormCreate(Sender: TObject);
@@ -52,10 +110,33 @@ begin
 
   // Add custom sub-title bands
 
-  TeeGrid1.Rows.SubBands[0]:=NewTitle('North');
-  TeeGrid1.Rows.SubBands[6]:=NewTitle('East');
-  TeeGrid1.Rows.SubBands[11]:=NewTitle('South');
-  TeeGrid1.Rows.SubBands[18]:=NewTitle('West');
+  TeeGrid1.Rows.SubBands.Row[0]:=NewTitle('North');
+  TeeGrid1.Rows.SubBands.Row[6]:=NewTitle('East');
+  TeeGrid1.Rows.SubBands.Row[11]:=NewTitle('South');
+  TeeGrid1.Rows.SubBands.Row[18]:=NewTitle('West');
+
+  AddBandsToCombo(TeeGrid1.Rows.SubBands);
+end;
+
+// Fill a ComboBox with all Bands
+procedure TForm43.AddBandsToCombo(const ABands:TRowsBands);
+var t : Integer;
+    tmp : TGridBand;
+begin
+  for t:=0 to ABands.Count-1 do
+  begin
+    tmp:=ABands[t];
+
+    if tmp is TTextBand then
+       CBBands.Items.Add(TTextBand(tmp).Text)
+    else
+       CBBands.Items.Add(tmp.ClassName);
+  end;
+
+  if ABands.Count=0 then
+     CBBands.ItemIndex:=-1
+  else
+     CBBands.ItemIndex:=0;
 end;
 
 end.

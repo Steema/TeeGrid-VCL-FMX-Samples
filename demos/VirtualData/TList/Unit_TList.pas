@@ -2,6 +2,10 @@ unit Unit_TList;
 
 interface
 
+{
+  Using TeeGrid with data from a generic TList<T>
+}
+
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMXTee.Control,
@@ -14,6 +18,7 @@ type
     CBTheme: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure CBThemeChange(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,14 +33,11 @@ implementation
 {$R *.fmx}
 
 uses
-  // BI.Grid.Data,
   Tee.Grid.Data, Tee.Grid.Data.Rtti,
 
   Unit_MyData, System.Generics.Collections, Tee.Grid.Themes;
 
-var
-  MyData : TList<TPerson>;
-
+// Example of applying "Themes" to a grid
 procedure TFormGridTList.CBThemeChange(Sender: TObject);
 begin
   case CBTheme.ItemIndex of
@@ -46,14 +48,25 @@ begin
   end;
 end;
 
+var
+  MyData : TList<TPerson>;  // <-- sample data variable
+
 procedure TFormGridTList.FormCreate(Sender: TObject);
 begin
   MyData:=TList<TPerson>.Create;
 
   FillMyData(MyData,100);
 
+  // Set Data from TList<TPerson>
+  TeeGrid1.Data:=TVirtualData<TList<TPerson>>.Create(MyData);
+
+// Alternative way, using TeeBI
 //  TeeGrid1.Data:=TBIGridData.FromList<TPerson>(MyData);
-  TeeGrid1.Data:=TVirtualListData<TPerson>.Create(MyData);
+end;
+
+procedure TFormGridTList.FormDestroy(Sender: TObject);
+begin
+  MyData.Free;
 end;
 
 end.

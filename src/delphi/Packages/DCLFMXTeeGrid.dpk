@@ -35,6 +35,7 @@ requires
   FMXTeeGrid;
 
 contains
+  FMXTee.Grid.About in 'FMXTee.Grid.About.pas' {FMXGridAbout},
   FMXTeeGridRegister in 'FMXTeeGridRegister.pas';
 
 end.

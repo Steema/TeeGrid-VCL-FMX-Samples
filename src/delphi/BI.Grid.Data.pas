@@ -9,6 +9,7 @@ unit BI.Grid.Data;
 interface
 
 uses
+  System.Classes,
   Tee.Grid, Tee.Grid.Columns, Tee.Painter, Tee.Renders, Tee.Grid.Data,
   BI.Data, BI.DataSource, BI.Data.RTTI, System.Generics.Collections;
 
@@ -41,7 +42,9 @@ type
 
     function Count:Integer; override;
 
-    class function From(const AData:TDataItem):TBIGridData; overload; static;
+    class function From(const ASource:TComponent):TVirtualData; override;
+    class function From(const AData:TDataItem):TBIGridData; overload;
+
     class function From<T>(const Value:Array of T):TBIGridData; overload; static;
     class function From<T>(const Value:TList<T>):TBIGridData; overload; static;
 

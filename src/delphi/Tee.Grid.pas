@@ -56,34 +56,41 @@ type
     property Active:Boolean read FActive write FActive default False;
     property EditorClass:TClass read FClass write FClass;
   published
-    property AlwaysVisible:Boolean read FAlwaysVisible write FAlwaysVisible default True;
+    property AlwaysVisible:Boolean read FAlwaysVisible write FAlwaysVisible default False;
     property DoubleClick:Boolean read FDoubleClick write FDoubleClick default True;
   end;
-
-  TSelectEvent=procedure(const Sender:TRowGroup) of object;
 
   TScroll=TPointF;
 
   TCustomTeeGrid=class(TCustomTeeControl)
   private
     FData : TVirtualData;
+    FDataSource: TComponent;
     FEditing : TGridEditing;
     FMargins : TMargins;
     FOnAfterDraw: TNotifyEvent;
-    FOnSelect: TSelectEvent;
+    FOnSelect: TNotifyEvent;
     FRoot: TRowGroup;
+
+    IBands : TGridBands;
 
     function AvailableHeight:Single;
     procedure ChangedRow(const Sender:TObject; const ARow:Integer);
     procedure CheckHorizScroll(const AColumn:TColumn);
+    procedure CheckScroll(const ASelected:TGridSelection);
     procedure CheckVertScroll(const ARow:Integer);
     procedure DataRefresh(Sender:TObject);
 
     function GetCells: TTextRender;
+    function GetColumns: TColumns;
+    function GetCurrent: TRowGroup; inline;
     function GetFooter: TGridBands;
     function GetHeader:TColumnHeaderBand;
+    function GetHeaders: TGridBands;
+    function GetIndicator: TIndicator;
+    function GetReadOnly: Boolean;
+    function GetSelected: TGridSelection;
     function GetRows:TRows;
-    procedure CheckScroll(const ASelected:TGridSelection);
 
     function IsColumnsStored: Boolean;
 
@@ -91,45 +98,34 @@ type
 
     procedure SetCells(const Value: TTextRender);
     procedure SetColumns(const Value: TColumns);
+    procedure SetCurrent(const Value: TRowGroup); inline;
     procedure SetData(const Value:TVirtualData);
+    procedure SetDataSource(const Value: TComponent);
+    procedure SetEditing(const Value: TGridEditing);
     procedure SetFooter(const Value: TGridBands);
     procedure SetHeader(const Value: TColumnHeaderBand);
+    procedure SetHeaders(const Value: TGridBands);
     procedure SetIndicator(const Value: TIndicator);
     procedure SetMargins(const Value: TMargins);
     procedure SetReadOnly(const Value: Boolean);
     procedure SetRows(const Value: TRows);
     procedure SetSelected(const Value: TGridSelection);
-    procedure SetEditing(const Value: TGridEditing);
-    function GetReadOnly: Boolean;
-    function GetColumns: TColumns;
-    function GetIndicator: TIndicator;
-    function GetSelected: TGridSelection;
-    function GetCurrent: TRowGroup; inline;
-    procedure SetCurrent(const Value: TRowGroup); inline;
   protected
     procedure ChangeHorizScroll(const Value:Single);
     procedure ChangeVertScroll(const Value:Single);
-
-    procedure CopySelected; virtual; abstract;
-
     procedure DataChanged; virtual;
-
+    procedure DataSourceChanged;
     procedure Key(const AState:TKeyState);
-
     function HorizScrollBarHeight:Single; virtual; abstract;
     procedure HorizScrollChanged; virtual; abstract;
-
     procedure Mouse(var AState:TMouseState);
-
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+    procedure FinishPaint(const IsDesign:Boolean);
     property Root:TRowGroup read FRoot;
-
     procedure StartEditor(const AColumn:TColumn; const ARow:Integer); overload; virtual; abstract;
     procedure StartEditor; overload;
-
     procedure StopEditor; virtual;
-
     procedure TryStartEditor;
-
     function VertScrollBarWidth:Single; virtual; abstract;
     procedure VertScrollChanged; virtual; abstract;
   public
@@ -141,31 +137,38 @@ type
 
     procedure Assign(Source:TPersistent); override;
 
+    function CanExpand(const Sender:TRender; const ARow:Integer):Boolean;
     function ClientHeight:Single; override;
     function ClientWidth:Single; override;
-
-
-    function CanExpand(const Sender:TRender; const ARow:Integer):Boolean;
-
+    procedure CopySelected; virtual; abstract;
+    procedure MouseLeave;
     procedure Paint; override;
     procedure RefreshData;
 
+    // Focused rows group
     property Current:TRowGroup read GetCurrent write SetCurrent;
+
+    // Data for main rows
     property Data:TVirtualData read FData write SetData;
+
+    // Main rows
     property Rows:TRows read GetRows write SetRows;
   published
     property Cells:TTextRender read GetCells write SetCells;
     property Columns:TColumns read GetColumns write SetColumns stored IsColumnsStored;
+    property DataSource:TComponent read FDataSource write SetDataSource;
     property Editing:TGridEditing read FEditing write SetEditing;
     property Footer:TGridBands read GetFooter write SetFooter;
     property Header:TColumnHeaderBand read GetHeader write SetHeader;
+    property Headers:TGridBands read GetHeaders write SetHeaders stored False;
     property Indicator:TIndicator read GetIndicator write SetIndicator;
     property Margins:TMargins read FMargins write SetMargins;
     property ReadOnly:Boolean read GetReadOnly write SetReadOnly default False;
     property Selected:TGridSelection read GetSelected write SetSelected;
 
+    // Events
     property OnAfterDraw:TNotifyEvent read FOnAfterDraw write FOnAfterDraw;
-    property OnSelect:TSelectEvent read FOnSelect write FOnSelect;
+    property OnSelect:TNotifyEvent read FOnSelect write FOnSelect;
   end;
 
 implementation

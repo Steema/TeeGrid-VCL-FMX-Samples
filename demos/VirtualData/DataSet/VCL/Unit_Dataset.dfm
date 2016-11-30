@@ -11,23 +11,32 @@ object FormGridDataset: TFormGridDataset
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
+  object Splitter1: TSplitter
+    Left = 589
+    Top = 41
+    Height = 459
+    Align = alRight
+    ExplicitLeft = 568
+    ExplicitTop = 232
+    ExplicitHeight = 100
+  end
   object TeeGrid1: TTeeGrid
     Left = 0
     Top = 41
-    Width = 592
+    Width = 589
     Height = 459
     Columns = <>
+    DataSource = DataSource1
     Footer = <>
     ReadOnly = False
+    Rows.Height.Automatic = False
     Align = alClient
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    ExplicitWidth = 836
   end
   object Panel1: TPanel
     Left = 0
@@ -36,7 +45,6 @@ object FormGridDataset: TFormGridDataset
     Height = 41
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 836
     object CheckBox1: TCheckBox
       Left = 24
       Top = 13
@@ -49,8 +57,8 @@ object FormGridDataset: TFormGridDataset
       OnClick = CheckBox1Click
     end
     object Button1: TButton
-      Left = 384
-      Top = 8
+      Left = 127
+      Top = 10
       Width = 75
       Height = 25
       Caption = '&Edit...'
@@ -66,7 +74,6 @@ object FormGridDataset: TFormGridDataset
     DataSource = DataSource1
     Align = alBottom
     TabOrder = 2
-    ExplicitWidth = 836
   end
   object Panel2: TPanel
     Left = 592

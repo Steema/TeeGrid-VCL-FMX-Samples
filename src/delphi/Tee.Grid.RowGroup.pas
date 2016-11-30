@@ -43,9 +43,9 @@ type
   // Grid band to paint headers, rows and footers
   TRowGroup=class(TGridBand)
   private
-    FCells: TTextRender;
     FFooter: TGridBands;
-    FHeader: TColumnHeaderBand;  // Collection
+    FHeader: TColumnHeaderBand;
+    FHeaders: TGridBands;
     FIndicator: TIndicator;
     FOnChangedSelected : TNotifyEvent;
     FOnNewDetail : TNewDetailEvent;
@@ -56,18 +56,24 @@ type
     OwnsData : Boolean;
     FCurrent: TRowGroup;
 
+    IBands : TGridBands;
+
     function CalcAutoWidth(const APainter:TPainter; const AColumn:TColumn;
                            const AWidth:Single):Single;
     procedure ChangedCellFormat(Sender: TObject);
-    procedure ChangedFooter(Sender:TObject);
+    procedure ChangedHeadersFooter(Sender:TObject);
     procedure DoCalcWidth(const APainter:TPainter; const AColumn: TColumn;
                           const AWidth:Single);
     procedure DoHeaderFooter(var AState:TMouseState; const AWidth,AHeight:Single);
     procedure DoMove(var AState:TMouseState; const AWidth,AHeight:Single);
     procedure DoSelectedChanged(Sender:TObject);
+
+    function GetCells: TTextRender;
     function GetColumns: TColumns;
     function GetData: TVirtualData;
     function GetFooter: TGridBands;
+    function GetHeaders: TGridBands;
+
     procedure PaintRest(var AData: TRenderData);
     function PositionOf(const AColumn:TColumn; const ARow:Integer):TPointF;
     procedure RemovedColumn(Sender:TObject; const AColumn:TColumn);
@@ -75,6 +81,7 @@ type
     procedure SetCurrent(const Value: TRowGroup);
     procedure SetFooter(const Value: TGridBands);
     procedure SetHeader(const Value: TColumnHeaderBand);
+    procedure SetHeaders(const Value: TGridBands);
     procedure SetIndicator(const Value: TIndicator);
     procedure SetReadOnly(const Value: Boolean);
     procedure SetRows(const Value: TRows);
@@ -87,7 +94,11 @@ type
     IsFocused,
     RecalcScrollBars : Boolean;
 
-    Constructor Create(const AChanged:TNotifyEvent; const AData:TVirtualData); reintroduce;
+    const
+      MinColumnWidth:Single=24;
+
+    Constructor Create(const ACollection:TCollection;
+                       const AData:TVirtualData); reintroduce;
 
     {$IFNDEF AUTOREFCOUNT}
     Destructor Destroy; override;
@@ -96,7 +107,6 @@ type
     procedure Assign(Source:TPersistent); override;
 
     procedure CalcHeight(const ATotal:Single); override;
-    procedure CalcRowsHeight;
     function CanEditRender(const AColumn:TColumn):Boolean;
     function CanStartEditor:Boolean;
 
@@ -105,7 +115,6 @@ type
 
     procedure CheckColumnsWidth(const APainter:TPainter; const Forced:Boolean;
                                 const AWidth:Single);
-    function FontOf(const AColumn:TColumn):TFont;
 
     procedure Key(const AState:TKeyState);
 
@@ -113,7 +122,7 @@ type
 
     function Mouse(var AState:TMouseState; const AWidth,AHeight:Single): Boolean; override;
 
-    procedure Paint(var AData:TRenderData); override;
+    procedure Paint(var AData:TRenderData; const ARender:TRender); override;
     procedure PrepareColumns(const APainter:TPainter; const ALeft,AWidth:Single);
 
     procedure RefreshData(const AData:TVirtualData);
@@ -124,9 +133,10 @@ type
     property Current:TRowGroup read FCurrent write SetCurrent;
     property Data:TVirtualData read GetData;
   published
-    property Cells:TTextRender read FCells write SetCells;
+    property Cells:TTextRender read GetCells write SetCells;
     property Footer:TGridBands read GetFooter write SetFooter;
     property Header:TColumnHeaderBand read FHeader write SetHeader;
+    property Headers:TGridBands read GetHeaders write SetHeaders stored False;
     property Indicator:TIndicator read FIndicator write SetIndicator;
     property ReadOnly:Boolean read FReadOnly write SetReadOnly default False;
     property Rows:TRows read FRows write SetRows;

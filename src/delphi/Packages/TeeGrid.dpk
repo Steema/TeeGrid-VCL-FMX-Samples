@@ -50,6 +50,8 @@ contains
   Tee.Grid.Selection in '..\Tee.Grid.Selection.pas',
   Tee.Grid in '..\Tee.Grid.pas',
   Tee.Grid.CSV in '..\Tee.Grid.CSV.pas',
+  Tee.Grid.Ticker in '..\Tee.Grid.Ticker.pas',
+  Tee.Grid.Totals in '..\Tee.Grid.Totals.pas',
   Tee.Grid.Themes in '..\Tee.Grid.Themes.pas';
                                                     
 

@@ -26,29 +26,33 @@ type
     TabPen: TTabSheet;
     TabBrush: TTabSheet;
     Label3: TLabel;
+    CBVisible: TCheckBox;
+    TBSize: TTrackBar;
+    CBColor: TColorBox;
+    LSize: TLabel;
+    TabStyle: TTabSheet;
     Label4: TLabel;
-    CBStrokeVisible: TCheckBox;
-    TBStrokeSize: TTrackBar;
-    CBStrokeColor: TColorBox;
-    LBStrokeStyle: TListBox;
-    LStrokeSize: TLabel;
+    LBStyle: TListBox;
     Label1: TLabel;
     LBEndStyle: TListBox;
     Label2: TLabel;
     LBJoinStyle: TListBox;
-    procedure CBStrokeColorChange(Sender: TObject);
-    procedure CBStrokeVisibleClick(Sender: TObject);
-    procedure LBStrokeStyleClick(Sender: TObject);
-    procedure TBStrokeSizeChange(Sender: TObject);
+    procedure CBColorChange(Sender: TObject);
+    procedure CBVisibleClick(Sender: TObject);
+    procedure LBStyleClick(Sender: TObject);
+    procedure TBSizeChange(Sender: TObject);
     procedure PageStrokeChange(Sender: TObject);
     procedure LBEndStyleClick(Sender: TObject);
     procedure LBJoinStyleClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
 
     IBrush : TBrushEditor;
-
     IStroke : TStroke;
+
+    procedure ChangedColor(Sender: TObject);
+    procedure SetLabelSize;
   public
     { Public declarations }
 

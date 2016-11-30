@@ -16,7 +16,7 @@ uses
   {$ENDIF}
 
   Windows, Messages,
-  {VCL.}Controls, {VCL.}Graphics,
+  {VCL.}Controls, {VCL.}Graphics, {VCL.}ExtCtrls, {VCL.}Forms,
 
   {$IFDEF FPC}
   LCLType,
@@ -40,25 +40,23 @@ type
     IEditorRow : Integer;
 
     procedure CreateEditor(const AColumn:TColumn);
-    procedure EditorKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure EditorKeyUp(Sender: TObject; var AKey: Word; Shift: TShiftState);
     function EditorShowing:Boolean;
     procedure TryChangeEditorData;
     procedure TryShowEditor(const AColumn:TColumn; const ARow:Integer);
   protected
-    procedure CopySelected; override;
     procedure DataChanged; override;
 
     function HorizScrollBarHeight:Single; override;
     procedure HorizScrollChanged; override;
 
-    function VertScrollBarWidth:Single; override;
-    procedure VertScrollChanged; override;
-
     procedure StartEditor(const AColumn:TColumn; const ARow:Integer); override;
     procedure StopEditor; override;
-  public
-    procedure ChangePainter(const APainter:TPainter);
 
+    function VertScrollBarWidth:Single; override;
+    procedure VertScrollChanged; override;
+  public
+    procedure CopySelected; override;
     function Height:Single; override;
     function Painter:TPainter; override;
     function Width:Single; override;
@@ -87,6 +85,7 @@ type
 
     ICanvas : TControlCanvas;
 
+    procedure ChangePainter(const Value: TPainter);
     procedure ColumnResized(Sender:TObject);
     function MouseStateFrom(const Button: TMouseButton; const Shift: TShiftState;
                             const X,Y: Integer; const AEvent:TGridMouseEvent):TMouseState;
@@ -124,8 +123,12 @@ type
     procedure SetEditing(const Value: TGridEditing);
     function GetOnNewDetail: TNewDetailEvent;
     procedure SetOnNewDetail(const Value: TNewDetailEvent);
-    function GetOnSelect: TSelectEvent;
-    procedure SetOnSelect(const Value: TSelectEvent);
+    function GetOnSelect: TNotifyEvent;
+    procedure SetOnSelect(const Value: TNotifyEvent);
+    function GetHeaders: TGridBands;
+    procedure SetHeaders(const Value: TGridBands);
+    function GetDataSource: TComponent;
+    procedure SetDataSource(const Value: TComponent);
   protected
     procedure CMMouseLeave(var Message: TMessage); message CM_MOUSELEAVE;
     procedure CreateParams(var Params: TCreateParams); override;
@@ -141,6 +144,8 @@ type
     function GetScrollX:Single; override;
     function GetScrollY:Single; override;
 
+    procedure Loaded; override;
+
     procedure SetScrollX(const Value:Single); override;
     procedure SetScrollY(const Value:Single); override;
 
@@ -155,6 +160,8 @@ type
     Constructor Create(AOwner:TComponent); override;
     Destructor Destroy; override;
 
+    procedure Assign(Source: TPersistent); override;
+
     procedure Changed(Sender:TObject);
     function NewExpander(const ARows:TRows):TExpanderRender;
 
@@ -167,9 +174,11 @@ type
     property Cells:TTextRender read GetCells write SetCells;
     property Color default clWhite;
     property Columns:TColumns read GetColumns write SetColumns;
+    property DataSource:TComponent read GetDataSource write SetDataSource;
     property DoubleBuffered default True;
     property Editing:TGridEditing read GetEditing write SetEditing;
     property Header:TColumnHeaderBand read GetHeader write SetHeader;
+    property Headers:TGridBands read GetHeaders write SetHeaders stored False;
     property Footer:TGridBands read GetFooter write SetFooter;
     property Indicator:TIndicator read GetIndicator write SetIndicator;
     property ReadOnly:Boolean read GetReadOnly write SetReadOnly default True;
@@ -190,7 +199,7 @@ type
     property OnClickedHeader:TNotifyEvent read GetClickedHeader write SetClickedHeader;
     property OnColumnResized:TColumnEvent read FOnColumnResized write FOnColumnResized;
     property OnNewDetail:TNewDetailEvent read GetOnNewDetail write SetOnNewDetail;
-    property OnSelect:TSelectEvent read GetOnSelect write SetOnSelect;
+    property OnSelect:TNotifyEvent read GetOnSelect write SetOnSelect;
     property OnShowEditor:TShowEditorEvent read FOnShowEditor write FOnShowEditor;
 
     // inherited

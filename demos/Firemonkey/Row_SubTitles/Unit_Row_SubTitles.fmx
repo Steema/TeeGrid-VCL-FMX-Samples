@@ -14,10 +14,57 @@ object Form43: TForm43
     Columns = <>
     Footer = <>
     ReadOnly = False
+    OnSelect = TeeGrid1Select
     Align = Client
     Size.Width = 640.000000000000000000
-    Size.Height = 480.000000000000000000
+    Size.Height = 430.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
+  end
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object BCopy: TButton
+      Enabled = False
+      Position.X = 24.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 241.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Copy selected cells to clipboard'
+      OnClick = BCopyClick
+    end
+    object CBBands: TComboBox
+      Position.X = 336.000000000000000000
+      Position.Y = 16.000000000000000000
+      TabOrder = 1
+      OnChange = CBBandsChange
+    end
+    object CBVisible: TCheckBox
+      Enabled = False
+      Position.X = 448.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Visible'
+      OnChange = CBVisibleChange
+    end
+    object CBAllBands: TCheckBox
+      IsChecked = True
+      Position.X = 544.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 88.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'All'
+      OnChange = CBAllBandsChange
+    end
   end
 end
