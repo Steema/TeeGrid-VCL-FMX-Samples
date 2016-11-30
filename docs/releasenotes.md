@@ -1,5 +1,127 @@
 # TeeGrid Release Notes
 
+##Version: 0.3 Beta, Nov-30th 2016
+
+###TGridTicker
+
+A new small component class to refresh grid cells using an internal thread.
+See the "Ticker" demos for VCL and Firemonkey, and the design-time "About..." dialog for a live example.
+
+### Multi-line text support
+
+Grid Headers automatically resize according to multi-line text.
+Rows cells are multi-line disabled by default (can be a big speed penalty for "millions" of rows grids)
+
+```delphi
+TeeGrid1.Columns[3].Header.Text:= 'This is a'#13#10'multi-line text';
+
+// Enable automatic per-row independent heights based on cell contents:
+TeeGrid1.Rows.Height.Automatic:= True;
+```
+
+### TColumn
+
+New OnPaint event, called when a cell of a column is going to be painted.
+This event has a boolean parameter "DefaultPaint", setting it to True will make the column to paint its text content after the event finishes.
+
+New ParentFormat property (boolean, default True).
+Setting it to False uses the Column.Format attributes to paint cells.
+The default is to use the TeeGrid1.Cells.Format, available to all columns.
+
+### Formatting
+
+Gradient property in TBrush, to fill shapes and lines using multiple colors.
+Note: GDI+ or Firemonkey painters required.
+
+```delphi
+uses Tee.Format;
+TeeGrid1.Header.Format.Brush.Show;
+TeeGrid1.Header.Format.Brush.Gradient.Show;
+TeeGrid1.Header.Format.Brush.Gradient.Direction:= TGradientDirection.Horizontal;
+```
+
+Picture support.
+
+```delphi
+uses Tee.Format, VCLTee.Picture; // FMXTee.Picture in Firemonkey
+TeeGrid1.Header.Format.Brush.Show;
+TeeGrid1.Header.Format.Brush.Picture:= TVCLPicture.From('myimage.png');
+```
+
+Pictures are also automatically displayed when connecting a TeeGrid with a Dataset with graphic fields.
+
+The StringGrid demo shows how to paint custom pictures at specific grid cells.
+
+
+### DataSource property
+
+Links a TeeGrid with a component at both design and runtime.
+
+Components supported in this version are:
+
+  TDataSet and TDataSource (using Tee.Grid.Data.Db.pas unit)
+  TDataProvider (TeeBI only, using BI.Grid.Data.pas unit)
+  
+### Tee.Grid.Data.DB
+
+Improved support for DataSet linking, such as initializing columns horizontal text alignment, detecting changes to TField properties (Visible, DisplayWidth, etc), painting Blob graphic fields, and design-time support.
+
+### Tee.Grid.Data.Rtti
+
+Improved support to handle generic records and objects from generic TArray, TList, TDictionary etc
+
+### Grid Bands
+
+TeeGrid Headers, Footers, Row "Sub-Bands" and Row "Children" properties are now collection components (note: not yet usable at design-time). 
+They are accessible at runtime at the TeeGrid editor dialog.
+
+
+### New Demos included
+
+For VCL:
+
+  * Header_Footer
+  * Row_Heights
+  * Customer_Orders (Master-detail hierarchical grid. Note: needs TeeBI)
+  * Themes
+  * Ticker
+  
+For Firemonkey:  
+
+  * Row_Subtitles
+  * Ticker
+  * TStringGrid
+  
+For Lazarus / FreePascal:
+
+  * DataSet
+  * StringGrid
+  
+VirtualData:
+
+  * Arrays
+  * DataSet
+  * TList
+  * TStringGrid
+  
+### TeeBI specific
+
+Any TeeBI "Provider" component can be assigned to TeeGrid DataSource property at design and runtime:
+
+```delphi
+TeeGrid1.DataSource:= DataDefinition1;
+```
+
+### Miscellaneous
+
+  * New TUIColor.Interpolate function at Tee.Format unit
+  * TTitleBand class renamed to TTextBand  
+  * Fixed C++ Builder header files generation
+  * Overall speed improvements (see "Benchmark" buttons at StringGrid demos)
+  * TeeGrid1.Rows.Back property (TFormat) to optionally fill the space behind all rows
+  * ScrollBar visibility (Automatic or hidden) (VCL only)
+  
+  
 ##Version: 0.2 Beta, Nov-22nd 2016
 
 - GDI+ Plus support 
