@@ -1,7 +1,7 @@
-object Form43: TForm43
+object FormRowHeights: TFormRowHeights
   Left = 0
   Top = 0
-  Caption = 'Form43'
+  Caption = 'TeeGrid Row Heights'
   ClientHeight = 618
   ClientWidth = 903
   Color = clBtnFace
@@ -27,9 +27,5 @@ object Form43: TForm43
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    ExplicitLeft = 224
-    ExplicitTop = 112
-    ExplicitWidth = 400
-    ExplicitHeight = 250
   end
 end

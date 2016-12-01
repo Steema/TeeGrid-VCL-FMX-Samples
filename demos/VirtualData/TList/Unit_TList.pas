@@ -55,7 +55,7 @@ procedure TFormGridTList.FormCreate(Sender: TObject);
 begin
   MyData:=TList<TPerson>.Create;
 
-  FillMyData(MyData,100);
+  FillMyData(MyData,20);
 
   // Set Data from TList<TPerson>
   TeeGrid1.Data:=TVirtualData<TList<TPerson>>.Create(MyData);

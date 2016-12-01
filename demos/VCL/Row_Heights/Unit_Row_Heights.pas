@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid;
 
 type
-  TForm43 = class(TForm)
+  TFormRowHeights = class(TForm)
     TeeGrid1: TTeeGrid;
     procedure FormCreate(Sender: TObject);
   private
@@ -17,7 +17,7 @@ type
   end;
 
 var
-  Form43: TForm43;
+  FormRowHeights: TFormRowHeights;
 
 implementation
 
@@ -26,23 +26,24 @@ implementation
 uses
   Tee.Grid.Data.Strings, Tee.Grid.Columns;
 
-procedure TForm43.FormCreate(Sender: TObject);
+procedure TFormRowHeights.FormCreate(Sender: TObject);
 var tmp : TStringsData;
 begin
-  tmp:=TStringsData.Create(2,10);
+  tmp:=TStringsData.Create(2,11);
   TeeGrid1.Data:=tmp;
 
   TeeGrid1.Columns[0].Header.Text:='ABC';
-  TeeGrid1.Columns[1].Header.Text:='DEF';
+  TeeGrid1.Columns[1].Header.Text:='DEF'#13#10'SubText';
 
   tmp[0,4]:='Hello';
   tmp[0,5]:='Hello'#13#10'World';
+  tmp[0,10]:='This is a long line'#13#10'of text with multiple'#13#10'lines';
 
   // Different row heights, depending on all row cell contents
   TeeGrid1.Rows.Height.Automatic:=True;
 
   // Just a test, always show the vertical scrollbar
-  TeeGrid1.ScrollBars.Vertical.Visible:=TScrollBarVisible.Yes;
+//  TeeGrid1.ScrollBars.Vertical.Visible:=TScrollBarVisible.Yes;
 
   TeeGrid1.Columns[1].Format.Stroke.Show;
   TeeGrid1.Columns[1].Format.Stroke.Size:=4;

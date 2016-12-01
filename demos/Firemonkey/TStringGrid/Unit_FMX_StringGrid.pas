@@ -40,6 +40,7 @@ type
 
     OkPicture : TPicture;
 
+    procedure OptimizePaintSpeed;
     procedure PaintPicture(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean);
     procedure RefreshTotalCells;
   public
@@ -104,9 +105,6 @@ procedure TStringGridForm.FormCreate(Sender: TObject);
 
 var t : Integer;
 begin
-  // Speed optimization, disable scrollbars
-  TeeGrid1.ScrollBars.Hide;
-
   // Create data
   Data:=TStringsData.Create;
 
@@ -157,12 +155,15 @@ begin
   // Set the default row height (same height for all rows)
   TeeGrid1.Rows.Height.Pixels:=32;
 
-  // Note: The following cosmetic effects have a strong performance penalty:
+  OptimizePaintSpeed;
+end;
 
-  // Show odd / even rows with a different background color
-  // TeeGrid1.Rows.Alternate.Show;
+procedure TStringGridForm.OptimizePaintSpeed;
+begin
+  // Speed optimization, disable scrollbars
+  TeeGrid1.ScrollBars.Hide;
 
-  // Column headers using a gradient effect?
+  TeeGrid1.Rows.Alternate.Hide;
   TeeGrid1.Header.Format.Brush.Gradient.Hide;
 
   // Vertical text alignment, default for all columns:

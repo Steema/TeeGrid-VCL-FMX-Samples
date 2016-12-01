@@ -3,7 +3,9 @@ unit Unit_Dataset;
 interface
 
 {
-  Linking a TeeGrid with a TDataSource or TDataSet
+  Linking a TeeGrid with a TDataSource or TDataSet:
+
+  TeeGrid1.DataSource:= DataSource1;
 }
 
 uses

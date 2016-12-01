@@ -2,6 +2,13 @@ unit Unit_Themes;
 
 interface
 
+{
+  Example of TeeGrid cosmetic customization using "Themes".
+
+  uses Tee.Grid.Themes;
+    TGridThemes.Android.ApplyTo(TeeGrid1.Grid);
+}
+
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,

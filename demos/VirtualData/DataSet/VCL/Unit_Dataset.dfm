@@ -27,11 +27,64 @@ object FormGridDataset: TFormGridDataset
     Top = 41
     Width = 589
     Height = 459
-    Columns = <>
+    Columns = <
+      item
+        Header.Text = 'CustNo'
+        Items = <>
+      end
+      item
+        Header.Text = 'Company'
+        Items = <>
+      end
+      item
+        Header.Text = 'Addr1'
+        Items = <>
+      end
+      item
+        Header.Text = 'Addr2'
+        Items = <>
+      end
+      item
+        Header.Text = 'City'
+        Items = <>
+      end
+      item
+        Header.Text = 'State'
+        Items = <>
+      end
+      item
+        Header.Text = 'Zip'
+        Items = <>
+      end
+      item
+        Header.Text = 'Country'
+        Items = <>
+      end
+      item
+        Header.Text = 'Phone'
+        Items = <>
+      end
+      item
+        Header.Text = 'FAX'
+        Items = <>
+      end
+      item
+        Header.Text = 'TaxRate'
+        Items = <>
+      end
+      item
+        Header.Text = 'Contact'
+        Items = <>
+      end
+      item
+        Header.Text = 'LastInvoiceDate'
+        Items = <>
+      end>
     DataSource = DataSource1
     Footer = <>
     ReadOnly = False
-    Rows.Height.Automatic = False
+    Selected.Range.FromRow = 0
+    Selected.Range.ToRow = 0
     Align = alClient
     UseDockManager = False
     ParentBackground = False

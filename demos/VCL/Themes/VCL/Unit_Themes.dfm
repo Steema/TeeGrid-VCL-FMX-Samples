@@ -28,10 +28,6 @@ object FormGridThemes: TFormGridThemes
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    ExplicitLeft = 264
-    ExplicitTop = 48
-    ExplicitWidth = 601
-    ExplicitHeight = 497
   end
   object LBTheme: TListBox
     Left = 0
@@ -56,9 +52,6 @@ object FormGridThemes: TFormGridThemes
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitLeft = 376
-    ExplicitTop = 344
-    ExplicitWidth = 185
     object Button1: TButton
       Left = 8
       Top = 9

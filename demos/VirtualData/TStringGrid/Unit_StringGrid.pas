@@ -43,6 +43,7 @@ type
     procedure CBGDIPlusClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BenchmarkClick(Sender: TObject);
+    procedure ScrollBar1Change(Sender: TObject);
   private
     { Private declarations }
 
@@ -50,6 +51,7 @@ type
 
     OkPicture : TPicture;
 
+    procedure OptimizePaintSpeed;
     procedure PaintPicture(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean);
     procedure RefreshTotalCells;
   public
@@ -198,7 +200,12 @@ begin
   // Default row height, for all rows
   TeeGrid1.Rows.Height.Value:=32;
 
-  // Speed performance, disable cosmetic effects:
+  OptimizePaintSpeed;
+end;
+
+// Speed performance, disable cosmetic effects:
+procedure TStringGridForm.OptimizePaintSpeed;
+begin
   TeeGrid1.Rows.Alternate.Hide;
   TeeGrid1.Header.Format.Brush.Gradient.Hide;
 end;
@@ -229,6 +236,10 @@ end;
 procedure TStringGridForm.RefreshTotalCells;
 begin
   LCells.Caption:=FormatFloat('#,###',Data.Columns*Data.Rows);
+end;
+
+procedure TStringGridForm.ScrollBar1Change(Sender: TObject);
+begin
 end;
 
 // Just a test, when clicking a column header
