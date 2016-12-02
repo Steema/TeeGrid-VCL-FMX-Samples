@@ -5,12 +5,14 @@
 ###TGridTicker
 
 A new small component class to refresh grid cells using an internal thread.
-See the "Ticker" demos for VCL and Firemonkey, and the design-time "About..." dialog for a live example.
+See the ["Ticker"](https://github.com/Steema/TeeGrid/tree/master/demos/VCL/Ticker) demos for VCL and Firemonkey, and the design-time "About..." dialog for a live example.
+
+![](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_Ticker.gif)
 
 ### Multi-line text support
 
 Grid Headers automatically resize according to multi-line text.
-Rows cells are multi-line disabled by default (can be a big speed penalty for "millions" of rows grids)
+Rows cells are multi-line disabled by default (as it can slow for "millions" of rows grids)
 
 ```delphi
 TeeGrid1.Columns[3].Header.Text:= 'This is a'#13#10'multi-line text';
@@ -19,14 +21,40 @@ TeeGrid1.Columns[3].Header.Text:= 'This is a'#13#10'multi-line text';
 TeeGrid1.Rows.Height.Automatic:= True;
 ```
 
+![](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_multiline_text.png)
+
+
 ### TColumn
 
 New OnPaint event, called when a cell of a column is going to be painted.
 This event has a boolean parameter "DefaultPaint", setting it to True will make the column to paint its text content after the event finishes.
 
+```delphi
+TeeGrid1.Columns[3].OnPaint:= PaintPicture;
+
+procedure TForm1.PaintPicture(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean);
+var tmp : TRectF;
+begin
+  DefaultPaint:=False; // True = paint cell after this method finishes
+
+  if not DefaultPaint then
+  begin
+    tmp:=AData.Rect;
+    tmp.Inflate(-8,-6);
+
+    AData.Painter.Draw(MyPicture,tmp);
+  end;
+end;
+```
+
 New ParentFormat property (boolean, default True).
 Setting it to False uses the Column.Format attributes to paint cells.
 The default is to use the TeeGrid1.Cells.Format, available to all columns.
+
+```delphi
+TeeGrid1.Columns['Person'].ParentFormat:= False;
+TeeGrid1.Columns['Person'].Format.Font.Color:= TColors.Green;
+```
 
 ### Formatting
 
@@ -50,7 +78,7 @@ TeeGrid1.Header.Format.Brush.Picture:= TVCLPicture.From('myimage.png');
 
 Pictures are also automatically displayed when connecting a TeeGrid with a Dataset with graphic fields.
 
-The StringGrid demo shows how to paint custom pictures at specific grid cells.
+The [StringGrid](https://github.com/Steema/TeeGrid/tree/master/demos/VirtualData/TStringGrid) demo shows how to paint custom pictures at specific grid cells.
 
 
 ### DataSource property
@@ -61,7 +89,16 @@ Components supported in this version are:
 
   TDataSet and TDataSource (using Tee.Grid.Data.Db.pas unit)
   TDataProvider (TeeBI only, using BI.Grid.Data.pas unit)
-  
+
+```delphi
+uses Tee.Grid.Data.DB;
+
+TeeGrid1.DataSource:= DataSource1;
+
+// also allowed:
+TeeGrid1.DataSource:= ClientDataset1;
+```
+
 ### Tee.Grid.Data.DB
 
 Improved support for DataSet linking, such as initializing columns horizontal text alignment, detecting changes to TField properties (Visible, DisplayWidth, etc), painting Blob graphic fields, and design-time support.
@@ -75,10 +112,12 @@ Improved support to handle generic records and objects from generic TArray, TLis
 TeeGrid Headers, Footers, Row "Sub-Bands" and Row "Children" properties are now collection components (note: not yet usable at design-time). 
 They are accessible at runtime at the TeeGrid editor dialog.
 
+![](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_Bands_Editor.png)
+
 
 ### New Demos included
 
-For VCL:
+For [VCL](https://github.com/Steema/TeeGrid/tree/master/demos/VCL):
 
   * Header_Footer
   * Row_Heights
@@ -86,18 +125,18 @@ For VCL:
   * Themes
   * Ticker
   
-For Firemonkey:  
+For [Firemonkey](https://github.com/Steema/TeeGrid/tree/master/demos/Firemonkey):  
 
   * Row_Subtitles
   * Ticker
   * TStringGrid
   
-For Lazarus / FreePascal:
+For [Lazarus / FreePascal](https://github.com/Steema/TeeGrid/tree/master/demos/Lazarus):
 
   * DataSet
   * StringGrid
   
-VirtualData:
+[VirtualData demos](https://github.com/Steema/TeeGrid/tree/master/demos/VirtualData):
 
   * Arrays
   * DataSet
