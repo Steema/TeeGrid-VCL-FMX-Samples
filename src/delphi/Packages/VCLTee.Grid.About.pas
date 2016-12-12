@@ -47,7 +47,7 @@ type
   end;
 
 const
-  TeeGrid_Version='v0.3 beta';
-  TeeGrid_Version_Numeric=003;
+  TeeGrid_Version='v0.4 beta';
+  TeeGrid_Version_Numeric=004;
 
 implementation
