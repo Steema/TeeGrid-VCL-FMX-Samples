@@ -12,7 +12,6 @@ object Form43: TForm43
   DesignerMasterStyle = 0
   object TeeGrid1: TTeeGrid
     Columns = <>
-    Footer = <>
     ReadOnly = False
     OnSelect = TeeGrid1Select
     Align = Client
@@ -20,6 +19,12 @@ object Form43: TForm43
     Size.Height = 430.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
   end
   object Layout1: TLayout
     Align = Top

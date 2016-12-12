@@ -15,35 +15,51 @@ unit Tee.Grid.Data.Strings;
 interface
 
 {
-  "TStringGrid" emulator.
+ Two classes in this unit:
 
-  A virtual data class for custom "Column x Row" grid of Cells[col,row].
+ 1) "Virtual Mode" data
+
+  A virtual data class for custom "Column x Row" grid using events.
+
+  Usage:
+
+    var Data : TVirtualModeData;
+
+    // Columns, Rows and optional default column width (much faster)
+    Data:= TVirtualModeData.Create(10,1000,60);
+
+    // Events:
+    Data.OnGetValue:=GetCell;
+    Data.OnSetValue:=SetCell;
+
+    TeeGrid1.Data:= Data;
+
+    procedure TMyForm.GetCell(Sender:TObject; const AColumn:TColumn; const ARow:Integer; var AValue:String);
+    procedure TMyForm.SetCell(Sender:TObject; const AColumn:TColumn; const ARow:Integer; var AValue:String);
+
+
+ 2) "TStringGrid" emulator with TStringsData class
+
+  Derived from TVirtualModeData, maintains an internal array of strings, one for
+  each cell in the grid.
 
   Usage:
 
     var Data : TStringsData;
-    Data:= TStringsData.Create;
+    Data:= TStringsData.Create; // optional params: Create(5,4)
 
-    // Initial size
-
+    // Set size
     Data.Columns:= 5;
     Data.Rows:= 4;
 
     // Set data to grid
-
     TeeGrid1.Data:= Data;
 
     // Set header texts
-
     Data.Headers[1]:='Company';
 
     // Set cell values
-
     Data[1,1]:= 'Steema';
-
-    // Optional events
-    Data.OnGetValue:=...
-    Data.OnSetValue:=...
 }
 
 uses
@@ -51,57 +67,73 @@ uses
   Tee.Grid.Columns, Tee.Grid.Data, Tee.Painter;
 
 type
-  TOnGetValue=procedure(Sender:TObject; const AColumn,ARow:Integer; var AValue:String) of object;
-  TOnSetValue=procedure(Sender:TObject; const AColumn,ARow:Integer; const AValue:String) of object;
-
-  { TStringsData }
+  TOnVirtualData=procedure(Sender:TObject; const AColumn:TColumn; const ARow:Integer; var AValue:String) of object;
 
   TStringArray=Array of String;
 
-  TStringsData=class(TVirtualData)
+  { TVirtualModeData }
+
+  TVirtualModeData=class(TVirtualData)
   private
     FColumns: Integer;
     FRows: Integer;
 
+    IDefaultWidth : Single;
     IColumns : TColumns;
     IHeaders : TStringArray;
-    IData : Array of TStringArray;
 
-    FOnSetValue: TOnSetValue;
-    FOnGetValue: TOnGetValue;
+    FOnSetValue,
+    FOnGetValue: TOnVirtualData;
+
+    function GetHeader(const Column: Integer): String;
+    procedure SetColumns(const Value: Integer);
+    procedure SetHeader(const Column: Integer; const Value: String);
+    procedure SetRows(const Value: Integer);
 
     {$IFOPT R+}
     procedure RangeCheck(const Column,Row: Integer);
     {$ENDIF}
-
-    function GetCell(const Column,Row: Integer): String;
-    function GetHeader(const Column: Integer): String;
-    function IndexOf(const AColumn: TColumn):Integer; inline;
-    procedure SetCell(const Column,Row: Integer; const Value: String);
-    procedure SetColumns(const Value: Integer);
-    procedure SetHeader(const Column: Integer; const Value: String);
-    procedure SetRows(const Value: Integer);
+  protected
+    procedure InternalResize; virtual;
   public
-    Constructor Create(const AColumns:Integer=0; const ARows:Integer=0);
+    Constructor Create(const AColumns:Integer=0; const ARows:Integer=0; const DefaultWidth:Single=0);
 
     procedure AddColumns(const AColumns:TColumns); override;
     function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; override;
     function Count:Integer; override;
+    function IndexOf(const AColumn: TColumn):Integer; inline;
     procedure Load; override;
     procedure Resize(const AColumns,ARows:Integer);
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
 
-    property Cells[const Column,Row:Integer]:String read GetCell write SetCell; default;
+    // properties
     property ColumnList:TColumns read IColumns;
     property Headers[const Column:Integer]:String read GetHeader write SetHeader;
 
-  //published
+    // published
     property Columns:Integer read FColumns write SetColumns default 0;
     property Rows:Integer read FRows write SetRows default 0;
 
-    property OnGetValue:TOnGetValue read FOnGetValue write FOnGetValue;
-    property OnSetValue:TOnSetValue read FOnSetValue write FOnSetValue;
+    property OnGetValue:TOnVirtualData read FOnGetValue write FOnGetValue;
+    property OnSetValue:TOnVirtualData read FOnSetValue write FOnSetValue;
+  end;
+
+  { TStringsData }
+
+  TStringsData=class(TVirtualModeData)
+  private
+    IData : Array of TStringArray;
+
+    function GetCell(const AColumn,ARow: Integer): String;
+    procedure SetCell(const AColumn,ARow: Integer; const Value: String);
+  protected
+    procedure InternalResize; override;
+  public
+    function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
+    procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
+
+    property Cells[const Column,Row:Integer]:String read GetCell write SetCell; default;
   end;
 
 implementation

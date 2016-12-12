@@ -15,11 +15,13 @@ uses
   {System.}Types,
   {$ENDIF}
 
+  {$IFDEF MSWINDOWS}
   Windows, Messages,
+  {$ENDIF}
   {VCL.}Controls, {VCL.}Graphics, {VCL.}ExtCtrls, {VCL.}Forms,
 
   {$IFDEF FPC}
-  LCLType,
+  LCLType, LCLIntf, LMessages,
   {$ENDIF}
 
   Tee.Control, Tee.Grid, Tee.Grid.Columns, Tee.Painter, Tee.Renders,
@@ -89,11 +91,19 @@ type
     procedure ColumnResized(Sender:TObject);
     function MouseStateFrom(const Button: TMouseButton; const Shift: TShiftState;
                             const X,Y: Integer; const AEvent:TGridMouseEvent):TMouseState;
+    procedure ProcessWheel(const AKey:Word);
     procedure SetData(const Value: TVirtualData);
 
+    {$IFDEF MSWINDOWS}
     procedure WMEraseBkgnd(var Message: TWmEraseBkgnd); message WM_ERASEBKGND;
     procedure WMGetDlgCode(var Message: TWMGetDlgCode); message WM_GETDLGCODE;
+    {$ENDIF}
+
+    {$IFDEF FPC}
+    procedure WMSize(var Message: TLMSize); message LM_SIZE;
+    {$ELSE}
     procedure WMSize(var Message: TWMSize); message WM_SIZE;
+    {$ENDIF}
 
     function GetColumns: TColumns;
     function GetSelected: TGridSelection;
@@ -105,6 +115,7 @@ type
     procedure SetClickedHeader(const Value: TNotifyEvent);
     function GetIndicator: TIndicator;
     procedure SetIndicator(const Value: TIndicator);
+    function CurrentRows: TRows; inline;
     function GetData: TVirtualData;
     function GetRows: TRows;
     procedure SetRows(const Value: TRows);
@@ -129,11 +140,23 @@ type
     procedure SetHeaders(const Value: TGridBands);
     function GetDataSource: TComponent;
     procedure SetDataSource(const Value: TComponent);
+
+    procedure ReadPainter(Reader: TReader);
+    procedure WritePainter(Writer: TWriter);
   protected
+    {$IFDEF FPC}
+    procedure MouseLeave; override;
+    {$ELSE}
+    {$IFDEF MSWINDOWS}
     procedure CMMouseLeave(var Message: TMessage); message CM_MOUSELEAVE;
+    {$ENDIF}
+    {$ENDIF}
+
     procedure CreateParams(var Params: TCreateParams); override;
 
     procedure DblClick; override;
+
+    procedure DefineProperties(Filer: TFiler); override;
 
     function DoMouseWheelDown(Shift: TShiftState; MousePos: TPoint): Boolean; override;
     function DoMouseWheelUp(Shift: TShiftState; MousePos: TPoint): Boolean; override;
@@ -162,8 +185,8 @@ type
 
     procedure Assign(Source: TPersistent); override;
 
-    procedure Changed(Sender:TObject);
-    function NewExpander(const ARows:TRows):TExpanderRender;
+    procedure DoChanged(Sender:TObject);
+    function NewExpander(const AGroup:TRowGroup):TExpanderRender;
 
     property Canvas:TControlCanvas read ICanvas;
     property Data:TVirtualData read GetData write SetData;
@@ -179,10 +202,11 @@ type
     property Editing:TGridEditing read GetEditing write SetEditing;
     property Header:TColumnHeaderBand read GetHeader write SetHeader;
     property Headers:TGridBands read GetHeaders write SetHeaders stored False;
-    property Footer:TGridBands read GetFooter write SetFooter;
+    property Footer:TGridBands read GetFooter write SetFooter stored False;
     property Indicator:TIndicator read GetIndicator write SetIndicator;
     property ReadOnly:Boolean read GetReadOnly write SetReadOnly default True;
     property Rows:TRows read GetRows write SetRows;
+    property ScrollBars;
     property Selected:TGridSelection read GetSelected write SetSelected;
 
     {$IFDEF FPC}

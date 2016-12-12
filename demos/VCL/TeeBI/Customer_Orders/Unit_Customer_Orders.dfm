@@ -21,13 +21,18 @@ object FormDetailRows: TFormDetailRows
     Width = 692
     Height = 542
     Columns = <>
-    Footer = <>
     ReadOnly = False
     Align = alClient
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
   end
   object Panel1: TPanel
     Left = 0

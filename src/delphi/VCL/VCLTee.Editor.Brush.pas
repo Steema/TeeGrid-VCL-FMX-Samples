@@ -9,7 +9,10 @@ unit VCLTee.Editor.Brush;
 interface
 
 uses
-  {Winapi.}Windows, {Winapi.}Messages, {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
+  {$IFDEF MSWINDOWS}
+  {Winapi.}Windows, {Winapi.}Messages,
+  {$ENDIF}
+  {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
   {$IFDEF FPC}
   ColorBox,
   {$ENDIF}
@@ -41,6 +44,7 @@ type
     OpenPictureDialog1: TOpenPictureDialog;
     LPictureSize: TLabel;
     LPictureType: TLabel;
+    CBStretch: TCheckBox;
     procedure CBVisibleClick(Sender: TObject);
     procedure CBColorChange(Sender: TObject);
     procedure PageBrushChange(Sender: TObject);
@@ -48,6 +52,7 @@ type
     procedure TBOpacityChange(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure BClearPictureClick(Sender: TObject);
+    procedure CBStretchClick(Sender: TObject);
   private
     { Private declarations }
 

@@ -9,12 +9,22 @@ unit VCLTee.Painter;
 
 interface
 
+{$DEFINE USETEXTRECT}
+
 uses
   {$IFNDEF FPC}
   {System.}Types,
   {$ENDIF}
 
-  {WinAPI.}Windows, {VCL.}Graphics,
+  {$IFDEF MSWINDOWS}
+  {WinAPI.}Windows,
+  {$ENDIF}
+  {VCL.}Graphics,
+
+  {$IFDEF FPC}
+  LCLType, LCLIntf, Classes,
+  {$ENDIF}
+
   Tee.Painter, Tee.Format;
 
 type
@@ -35,6 +45,7 @@ type
   TGDIPainter=class(TWindowsPainter)
   private
     type
+      {$IFNDEF FPC}
       TAlign=record
       public
         Horizontal : THorizontalAlign;
@@ -42,9 +53,17 @@ type
 
         function Flags:Cardinal;
       end;
+      {$ENDIF}
+
+      {$IFDEF USETEXTRECT}
+      TVCLTextFormat={$IFDEF FPC}TTextStyle{$ELSE}Graphics.TTextFormat{$ENDIF};
+      {$ENDIF}
 
     var
+      {$IFNDEF FPC}
       IAlign : TAlign;
+      {$ENDIF}
+
       IClipHistory : Array of HRGN;
 
       //IFontGradient,
@@ -53,9 +72,21 @@ type
 
       IBrushPicture : TPicture;
 
+      {$IFDEF USETEXTRECT}
+      ITextFormat : TVCLTextFormat;
+      {$ENDIF}
+
+    procedure Fill(const R: TRect); overload;
     function GraphicOf(const APicture: TPicture):TGraphic;
     function ImageFrom(const APicture: TPicture): TGraphic;
+
+    {$IFNDEF FPC}
     procedure SetTextAlignments;
+    {$ENDIF}
+
+    {$IFNDEF USETEXTRECT}
+    procedure TextOutMultiple(const ARect:TRectF; const AText:String);
+    {$ENDIF}
   public
     class procedure ApplyFont(const ASource:TTeeFont; const ADest:Graphics.TFont); static;
 
@@ -88,7 +119,7 @@ type
     procedure Paint(const AFormat: TFormat; const R: TRectF); override;
     procedure Paint(const AFormat: TFormat; const P: TPointsF); override;
     function TextHeight(const AText:String):Single; override;
-    procedure TextOut(const X,Y:Single; const AText:String); override;
+    procedure TextOut(const ARect:TRectF; const AText:String); override;
     function TextWidth(const AText:String):Single; override;
     procedure VerticalLine(const X,Y0,Y1:Single); override;
   end;

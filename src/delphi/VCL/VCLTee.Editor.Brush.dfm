@@ -16,12 +16,16 @@ object BrushEditor: TBrushEditor
     Top = 41
     Width = 285
     Height = 226
-    ActivePage = TabSolid
+    ActivePage = TabPicture
     Align = alClient
     TabOrder = 0
     OnChange = PageBrushChange
     object TabSolid: TTabSheet
       Caption = 'Color'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label1: TLabel
         Left = 12
         Top = 56
@@ -62,10 +66,18 @@ object BrushEditor: TBrushEditor
     object TabGradient: TTabSheet
       Caption = 'Gradient'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabPicture: TTabSheet
       Caption = 'Picture'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Image1: TImage
         Left = 12
         Top = 16
@@ -110,6 +122,15 @@ object BrushEditor: TBrushEditor
         Caption = '&Load...'
         TabOrder = 1
         OnClick = Button1Click
+      end
+      object CBStretch: TCheckBox
+        Left = 12
+        Top = 163
+        Width = 97
+        Height = 17
+        Caption = '&Stretch'
+        TabOrder = 2
+        OnClick = CBStretchClick
       end
     end
   end

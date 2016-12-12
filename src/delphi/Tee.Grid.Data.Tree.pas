@@ -9,50 +9,72 @@ unit Tee.Grid.Data.Tree;
 interface
 
 uses
+  {System.}Classes,
   Tee.Grid, Tee.Grid.Columns, Tee.Painter, Tee.Renders, Tee.Grid.Data;
 
 type
+  TTreeColumn=class;
+
   PNode=^TNode;
 
-  TNodes=Array of PNode;
+  TNodes=record
+  private
+    Nodes : Array of PNode;
+
+    Owner : PNode;
+    Tree : TTreeColumn;
+
+    procedure FreeAll;
+    function Get(const Index: Integer): PNode; inline;
+  public
+    function Add(const AText:String):PNode;
+    function Count:Integer; inline;
+
+    property Node[const Index:Integer]:PNode read Get; default;
+  end;
+
+  PNodes=^TNodes;
 
   TNode=record
   public
-    Data : TVirtualData;
+    Expanded : Boolean;
+    Nodes : TNodes;
+    Parent : PNodes;
     Text : String;
-    Items : TNodes;
 
-    function Add(const AText:String):PNode;
+    function Add(const AText:String):PNode; inline;
     function Count:Integer; inline;
+    function Level:Integer;
   end;
 
-  TTreeGridData=class(TVirtualData)
+  TTreeExpanderRender=class(TExpanderRender)
   private
-    FItems : TNodes;
-
-    class function NodeOf(const AColumn:TColumn):PNode; inline; static;
-  protected
+    Tree : TTreeColumn;
   public
-    Constructor Create;
+    procedure Paint(var AData:TRenderData); override;
+  end;
+
+  TTreeColumn=class(TColumn)
+  private
+    FExpander : TTreeExpanderRender;
+    Flat : Array of PNode;
+    Valid : Boolean;
+
+    procedure CreateFlat;
+    procedure Invalidate;
+    function LeftMargin(const ALevel:Integer):Single;
+    function NodeOf(const ARow:Integer):PNode;
+
+    function CanExpand(const Sender:TRender; const ARow:Integer):Boolean;
+    function ToggleNode(const Sender:TRender; const ARow:Integer):Boolean;
+    function GetExpanded(const Sender:TRender; const ARow:Integer):Boolean;
+  protected
+    function AutoWidth(const APainter:TPainter):Single; override;
+  public
+    Nodes : TNodes;
+
+    Constructor Create(ACollection:TCollection); override;
     Destructor Destroy; override;
-
-    procedure AddColumns(const AColumns:TColumns); override;
-    function AsFloat(const AColumn:TColumn; const ARow:Integer):TFloat; override;
-    function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
-    function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; override;
-
-    function CanExpand(const Sender:TRender; const ARow:Integer):Boolean; override;
-    function CanSortBy(const AColumn:TColumn):Boolean; override;
-
-    function Count:Integer; override;
-
-    function GetDetail(const ARow:Integer; const AColumns:TColumns; out AParent:TColumn): TVirtualData; override;
-
-    function IsSorted(const AColumn:TColumn; out Ascending:Boolean):Boolean; override;
-
-    procedure Load; override;
-    procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
-    procedure SortBy(const AColumn:TColumn); override;
   end;
 
 implementation

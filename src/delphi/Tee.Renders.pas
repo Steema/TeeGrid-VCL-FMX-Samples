@@ -98,6 +98,7 @@ type
 
     function HasFormat:Boolean; inline;
     procedure Paint(var AData:TRenderData); override;
+    function StrokeHeight:Single;
   published
     property Borders:TBorders read GetBorders write SetBorders;
     property Format:TTextFormat read GetFormat write SetFormat;
@@ -125,6 +126,7 @@ type
     function Adjust(const R:TRectF):TRectF;
     procedure Assign(Source:TPersistent); override;
     function Horizontal:Single;
+    procedure Init(const AHoriz,AVert:Single);
     procedure Prepare(const AWidth,AHeight:Single);
     function Vertical:Single;
   published
@@ -183,7 +185,8 @@ type
 
     procedure Assign(Source:TPersistent); override;
 
-    function CalcHeight:Single;
+    function CalcHeight(const APainter:TPainter):Single; overload;
+    function CalcHeight(const APainter:TPainter; const AText:String):Single; overload;
     function CalcTextLines(const AText:String):Integer;
     procedure Paint(var AData:TRenderData); override;
   published
@@ -256,6 +259,8 @@ type
 
     procedure SetBox(const Value: TBox);
   protected
+    AlwaysDraw : Boolean;
+
     function Calculate(const R:TRectF):TRectF;
   public
     Constructor Create(const AChanged:TNotifyEvent); override;
@@ -299,8 +304,7 @@ type
 
   TExpanderRender=class;
 
-  TCanExpandEvent=function(const Sender:TRender; const ARow:Integer):Boolean of object;
-  TGetExpandedEvent=function(const Sender:TRender; const ARow:Integer):Boolean of object;
+  TExpanderEvent=function(const Sender:TRender; const ARow:Integer):Boolean of object;
 
   TExpanderStyle=(PlusMinus,Triangle,Arrow);
 
@@ -309,8 +313,9 @@ type
   private
     FExpandFormat : TFormat;
     FExpandLine: TStroke;
-    FOnCanExpand : TCanExpandEvent;
-    FOnGetExpanded : TGetExpandedEvent;
+    FOnCanExpand : TExpanderEvent;
+    FOnExpand : TExpanderEvent;
+    FOnGetExpanded : TExpanderEvent;
     FStyle : TExpanderStyle;
 
     procedure SetExpandFormat(const Value: TFormat);
@@ -325,11 +330,13 @@ type
 
     procedure Assign(Source:TPersistent); override;
 
+    procedure Expand(const ARow:Integer);
     procedure Paint(var AData:TRenderData); override;
     procedure PaintLines(var AData:TRenderData);
 
-    property OnCanExpand:TCanExpandEvent read FOnCanExpand write FOnCanExpand;
-    property OnGetExpanded:TGetExpandedEvent read FOnGetExpanded write FOnGetExpanded;
+    property OnCanExpand:TExpanderEvent read FOnCanExpand write FOnCanExpand;
+    property OnExpand:TExpanderEvent read FOnExpand write FOnExpand;
+    property OnGetExpanded:TExpanderEvent read FOnGetExpanded write FOnGetExpanded;
   published
     property ExpandFormat:TFormat read FExpandFormat write SetExpandFormat;
     property ExpandLine:TStroke read FExpandLine write SetExpandLine;
@@ -386,7 +393,6 @@ type
 
     function GetRender: TRender;
     procedure SetFormat(const Value: TTextFormat);
-    procedure SetRender(const Value: TRender);
     procedure SetVisible(const Value: Boolean);
     function IsFormatStored: Boolean;
   protected
@@ -395,6 +401,7 @@ type
     function CreateRender:TRender; virtual;
     procedure DoChanged; virtual;
     function GetFormat: TTextFormat; virtual;
+    procedure SetRender(const Value: TRender); virtual;
   public
     Constructor Create(ACollection:TCollection); override;
 
@@ -414,6 +421,29 @@ type
   published
     property Format:TTextFormat read GetFormat write SetFormat stored IsFormatStored;
     property Visible:Boolean read FVisible write SetVisible default True;
+  end;
+
+  TShapePainter=record
+  type
+    TArrow=record
+    public
+      class procedure Down(const APainter:TPainter; const ARect:TRectF); static;
+      class procedure Right(const APainter:TPainter; const ARect:TRectF); static;
+    end;
+
+    TTriangle=record
+    public
+      class procedure LeftRight(const APainter:TPainter; const ARect:TRectF); static;
+      class procedure TopBottom(const APainter:TPainter; const ARect:TRectF); static;
+    end;
+
+  public
+    class var
+      Arrow : TArrow;
+      Triangle : TTriangle;
+
+    class procedure Check(const APainter:TPainter; const ARect:TRectF); static;
+    class procedure PlusMinus(const APainter:TPainter; const ARect:TRectF; const IsExpanded:Boolean); static;
   end;
 
 implementation

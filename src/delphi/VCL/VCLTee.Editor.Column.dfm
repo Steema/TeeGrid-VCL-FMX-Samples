@@ -20,7 +20,7 @@ object ColumnEditor: TColumnEditor
     Top = 0
     Width = 360
     Height = 304
-    ActivePage = TabFormat
+    ActivePage = TabGeneral
     Align = alClient
     TabOrder = 0
     OnChange = PageFormatChange
@@ -34,6 +34,14 @@ object ColumnEditor: TColumnEditor
         Height = 13
         Caption = '&Header:'
         FocusControl = MemoHeader
+      end
+      object Label1: TLabel
+        Left = 13
+        Top = 168
+        Width = 37
+        Height = 13
+        Caption = '&Locked:'
+        FocusControl = CBLocked
       end
       object CBVisible: TCheckBox
         Left = 13
@@ -70,6 +78,21 @@ object ColumnEditor: TColumnEditor
         Height = 49
         TabOrder = 3
         OnChange = MemoHeaderChange
+      end
+      object CBLocked: TComboBox
+        Left = 13
+        Top = 187
+        Width = 108
+        Height = 21
+        Style = csDropDownList
+        ItemIndex = 0
+        TabOrder = 4
+        Text = 'None'
+        OnChange = CBLockedChange
+        Items.Strings = (
+          'None'
+          'Left'
+          'Right')
       end
     end
     object TabWidth: TTabSheet
@@ -163,44 +186,25 @@ object ColumnEditor: TColumnEditor
       end
     end
     object TabAlign: TTabSheet
-      Caption = 'Align'
+      Caption = 'Text Align'
       ImageIndex = 4
-      object CBAutoAlign: TCheckBox
-        Left = 11
-        Top = 16
-        Width = 97
-        Height = 17
-        Caption = '&Automatic'
+      object Panel3: TPanel
+        Left = 0
+        Top = 0
+        Width = 352
+        Height = 41
+        Align = alTop
+        BevelOuter = bvNone
         TabOrder = 0
-        OnClick = CBAutoAlignClick
-      end
-      object RGHorizAlign: TRadioGroup
-        Left = 11
-        Top = 48
-        Width = 118
-        Height = 113
-        Caption = '&Horizontal:'
-        ItemIndex = 0
-        Items.Strings = (
-          '&Left'
-          '&Center'
-          '&Right')
-        TabOrder = 1
-        OnClick = RGHorizAlignClick
-      end
-      object RGVerticalAlign: TRadioGroup
-        Left = 146
-        Top = 48
-        Width = 119
-        Height = 113
-        Caption = '&Vertical'
-        ItemIndex = 0
-        Items.Strings = (
-          '&Top'
-          '&Center'
-          '&Bottom')
-        TabOrder = 2
-        OnClick = RGVerticalAlignClick
+        object CBAutoAlign: TCheckBox
+          Left = 19
+          Top = 8
+          Width = 97
+          Height = 17
+          Caption = '&Automatic'
+          TabOrder = 0
+          OnClick = CBAutoAlignClick
+        end
       end
     end
     object TabMargins: TTabSheet
@@ -235,51 +239,6 @@ object ColumnEditor: TColumnEditor
           Caption = '&Visible'
           TabOrder = 1
           OnClick = CBHeaderVisibleClick
-        end
-      end
-      object PageHeader: TPageControl
-        Left = 0
-        Top = 41
-        Width = 352
-        Height = 235
-        ActivePage = TabHeaderAlign
-        Align = alClient
-        TabOrder = 1
-        OnChange = PageHeaderChange
-        object TabHeaderFormat: TTabSheet
-          Caption = 'Format'
-        end
-        object TabHeaderAlign: TTabSheet
-          Caption = 'Align'
-          ImageIndex = 1
-          object RadioGroup1: TRadioGroup
-            Left = 146
-            Top = 16
-            Width = 119
-            Height = 113
-            Caption = '&Vertical'
-            ItemIndex = 0
-            Items.Strings = (
-              '&Top'
-              '&Center'
-              '&Bottom')
-            TabOrder = 0
-            OnClick = RadioGroup1Click
-          end
-          object RadioGroup2: TRadioGroup
-            Left = 11
-            Top = 16
-            Width = 118
-            Height = 113
-            Caption = '&Horizontal:'
-            ItemIndex = 0
-            Items.Strings = (
-              '&Left'
-              '&Center'
-              '&Right')
-            TabOrder = 1
-            OnClick = RadioGroup2Click
-          end
         end
       end
     end

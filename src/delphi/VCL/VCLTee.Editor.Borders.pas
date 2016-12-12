@@ -9,7 +9,10 @@ unit VCLTee.Editor.Borders;
 interface
 
 uses
-  {Winapi.}Windows, {Winapi.}Messages, {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
+  {$IFDEF MSWINDOWS}
+  {Winapi.}Windows, {Winapi.}Messages,
+  {$ENDIF}
+  {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
   {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}ComCtrls,
   VCLTee.Editor.Stroke, Tee.Format, Tee.Renders;
 

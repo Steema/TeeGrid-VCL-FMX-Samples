@@ -96,8 +96,9 @@ type
     procedure Lines(const P:TPointsF); virtual; abstract;
     procedure Paint(const AFormat:TFormat; const R:TRectF); overload; virtual; abstract;
     procedure Paint(const AFormat:TFormat; const P:TPointsF); overload; virtual; abstract;
-    function TextHeight(const AText:String):Single; virtual; abstract;
-    procedure TextOut(const X,Y:Single; const AText:String); virtual; abstract;
+    function TextHeight(const AText:String):Single; overload; virtual; abstract;
+    function TextHeight(const AFont:TFont):Single; overload;
+    procedure TextOut(const ARect:TRectF; const AText:String); virtual; abstract;
     function TextWidth(const AText:String):Single; virtual; abstract;
     procedure VerticalLine(const X,Y0,Y1:Single); virtual; abstract;
 

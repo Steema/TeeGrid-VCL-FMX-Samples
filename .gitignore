@@ -13,3 +13,16 @@ demos/VCL/TeeBI/Customer_Orders/__history/
 demos/VirtualData/TStringGrid/Win32/
 demos/Lazarus/StringGrid/lib/
 demos/Lazarus/DataSet/lib/
+demos/VCL/Row_Heights/Win32/
+demos/Firemonkey/TStringGrid/Win32/
+demos/Firemonkey/Ticker/Win64/Debug/TeeGrid_FMX_Ticker.rsm
+*.bak
+*.lpi
+demos/VCL/C++/Basic/Win32/
+demos/VCL/Header_Footer/Win32/
+demos/VirtualData/Array/Win32/
+demos/VirtualData/TList/OSX32/
+demos/VirtualData/TList/Win32/
+demos/VirtualData/TStringGrid/Win64/
+demos/VirtualData/Virtual Mode/Win64/
+*.tmp

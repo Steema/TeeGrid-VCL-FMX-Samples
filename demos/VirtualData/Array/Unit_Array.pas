@@ -24,6 +24,7 @@ type
     Button5: TButton;
     Button2: TButton;
     CBGdiPlus: TCheckBox;
+    BGDIPlusEdit: TButton;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure BIntegerClick(Sender: TObject);
@@ -35,10 +36,12 @@ type
     procedure Button5Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure CBGdiPlusClick(Sender: TObject);
+    procedure BGDIPlusEditClick(Sender: TObject);
   private
     { Private declarations }
 
     procedure AddSampleFooter;
+    procedure GDIPlusChanged(Sender: TObject);
     procedure GridShowEditor(const Sender:TObject; const AEditor:TControl;
                              const AColumn:TColumn; const ARow:Integer);
 
@@ -59,7 +62,8 @@ uses
 
   VCLTee.Painter.GdiPlus, VCLTee.Painter, Tee.Format,
 
-  Tee.Grid.Totals, Tee.Grid.Bands, VCLTee.Editor.Grid.Bands;
+  Tee.Grid.Totals, Tee.Grid.Bands, VCLTee.Editor.Grid.Bands,
+  VCLTee.Editor.Painter.GDIPlus;
 
 // Show the TeeGrid editor dialog
 procedure TFormArray.Button1Click(Sender: TObject);
@@ -106,6 +110,16 @@ begin
   TeeGrid1.Footer.Clear;
 end;
 
+procedure TFormArray.GDIPlusChanged(Sender: TObject);
+begin
+  TeeGrid1.Invalidate;
+end;
+
+procedure TFormArray.BGDIPlusEditClick(Sender: TObject);
+begin
+  TGDIPlusEditor.Edit(Self,TeeGrid1.Painter as TGdiPlusPainter,GDIPlusChanged);
+end;
+
 // Return a random string
 function RandomString:String;
 const
@@ -143,6 +157,8 @@ begin
      TeeGrid1.Painter:=TGdiPlusPainter.Create
   else
      TeeGrid1.Painter:=TGDIPainter.Create(TeeGrid1.Canvas);
+
+  BGDIPlusEdit.Enabled:=CBGdiPlus.Checked;
 end;
 
 // Destroy all objects in Array
@@ -170,15 +186,15 @@ begin
 end;
 
 // Return a new Totals grid-band
-function Totals(const ACollection:TCollection; const AGrid:TTeeGrid):TColumnTotals;
+function Totals(const ACollection:TCollection):TColumnTotals;
 begin
-  result:=TColumnTotals.Create(ACollection,AGrid.Columns,AGrid.Data);
+  result:=TColumnTotals.Create(ACollection);
 
-  result.Calculation.Add(AGrid.Columns['Name'],TColumnCalculation.Count);
-  result.Calculation.Add(AGrid.Columns['Children'],TColumnCalculation.Sum);
-  result.Calculation.Add(AGrid.Columns['Height'],TColumnCalculation.Average);
+  result.Calculation.Add('Name',TColumnCalculation.Count);
+  result.Calculation.Add('Children',TColumnCalculation.Sum);
+  result.Calculation.Add('Height',TColumnCalculation.Average);
 
-  result.Calculation.Add(AGrid.Columns['Address'].Items['Number'],TColumnCalculation.Max);
+  result.Calculation.Add(result.Columns['Address'].Items['Number'],TColumnCalculation.Max);
 
   result.Format.Font.Style:=[fsBold];
 end;
@@ -233,7 +249,7 @@ begin
   // Setup grid Footer bands
   TeeGrid1.Footer.Clear;
 
-  tmp:=Totals(TeeGrid1.Footer,TeeGrid1);
+  tmp:=Totals(TeeGrid1.Footer);
   TTotalsHeader.CreateTotals(TeeGrid1.Footer,tmp);
 
   // Add a simple Title band to footer
@@ -281,6 +297,9 @@ begin
 
   // Start with the Array of Record example
   BRecordClick(Self);
+
+  // Enable automatic multi-line text in cells
+  TeeGrid1.Rows.Height.Automatic:=True;
 end;
 
 procedure TFormArray.FormDestroy(Sender: TObject);

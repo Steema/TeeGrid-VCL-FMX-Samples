@@ -41,14 +41,12 @@ uses
 type
   TBaseTotals=class(TColumnBand)
   public
-    Constructor Create(const ACollection:TCollection; const AColumns:TColumns); override;
+    Constructor Create(ACollection:TCollection); override;
 
     procedure Paint(var AData:TRenderData; const ARender:TRender); override;
   end;
 
   TColumnTotals=class(TBaseTotals)
-  private
-    FData : TVirtualData;
   protected
     function AsString(const AColumn:TColumn):String; override;
   public
@@ -62,10 +60,13 @@ type
 
       // List of calculations
       TTotals=record  // <-- convert to TCollectionChange
+      private
+        ITotals : TColumnTotals;
       public
         Items : Array of TTotalCalculation;
 
-        procedure Add(const AColumn:TColumn; const ACalculation:TColumnCalculation);
+        procedure Add(const AColumn:TColumn; const ACalculation:TColumnCalculation); overload;
+        procedure Add(const AColumnName:String; const ACalculation:TColumnCalculation); overload;
         procedure Clear; inline;
         function Count:Integer; inline;
         procedure Delete(const AIndex:Integer);
@@ -76,8 +77,7 @@ type
     var
       Calculation : TTotals;
 
-    Constructor Create(const ACollection:TCollection; const AColumns:TColumns; const AData:TVirtualData); reintroduce;
-
+    Constructor Create(ACollection:TCollection); override;
     class function Description:String; override;
   end;
 

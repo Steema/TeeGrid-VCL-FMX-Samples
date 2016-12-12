@@ -9,12 +9,17 @@ unit VCLTee.Editor.Column;
 interface
 
 uses
-  {Winapi.}Windows, {Winapi.}Messages, {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
+  {$IFDEF MSWINDOWS}
+  {Winapi.}Windows, {Winapi.}Messages,
+  {$ENDIF}
+  {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
   {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, VCLTee.Editor.Format.Text, {Vcl.}StdCtrls,
   {Vcl.}ExtCtrls, {Vcl.}ComCtrls,
 
   Tee.Grid.Columns,
-  VCLTee.Editor.Coordinate, VCLTee.Editor.Margins, VCLTee.Editor.Render.Text;
+
+  VCLTee.Editor.Coordinate, VCLTee.Editor.Margins, VCLTee.Editor.Render.Text,
+  VCLTee.Editor.Text.Align;
 
 type
   TColumnEditor = class(TForm)
@@ -43,15 +48,11 @@ type
     CBParentFormat: TCheckBox;
     Panel2: TPanel;
     CBHeaderParent: TCheckBox;
-    CBAutoAlign: TCheckBox;
-    RGHorizAlign: TRadioGroup;
-    RGVerticalAlign: TRadioGroup;
-    PageHeader: TPageControl;
-    TabHeaderFormat: TTabSheet;
-    TabHeaderAlign: TTabSheet;
-    RadioGroup1: TRadioGroup;
-    RadioGroup2: TRadioGroup;
     CBHeaderVisible: TCheckBox;
+    Panel3: TPanel;
+    CBAutoAlign: TCheckBox;
+    Label1: TLabel;
+    CBLocked: TComboBox;
     procedure CBVisibleClick(Sender: TObject);
     procedure CBExpandedClick(Sender: TObject);
     procedure EFloatFormatChange(Sender: TObject);
@@ -62,16 +63,12 @@ type
     procedure MemoHeaderChange(Sender: TObject);
     procedure EDateFormatChange(Sender: TObject);
     procedure ETimeFormatChange(Sender: TObject);
-    procedure RGHorizAlignClick(Sender: TObject);
-    procedure RGVerticalAlignClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure CBAutoAlignClick(Sender: TObject);
     procedure CBParentFormatClick(Sender: TObject);
     procedure CBHeaderParentClick(Sender: TObject);
-    procedure PageHeaderChange(Sender: TObject);
-    procedure RadioGroup2Click(Sender: TObject);
-    procedure RadioGroup1Click(Sender: TObject);
     procedure CBHeaderVisibleClick(Sender: TObject);
+    procedure CBLockedChange(Sender: TObject);
   private
     { Private declarations }
 
@@ -80,13 +77,16 @@ type
     IHeader : TTextRenderEditor;
     IFormat : TTextFormatEditor;
     IMargins : TMarginsEditor;
+    ITextAlign : TTextAlignEditor;
     IWidth : TCoordinateEditor;
 
     IChangingAlign : Boolean;
 
     FOnChangedHeader : TNotifyEvent;
 
+    procedure ChangedTextAlign(Sender: TObject);
     procedure RefreshColumnFormat(const AFormat: TDataFormat);
+    procedure TryHeaderFormat;
   public
     { Public declarations }
 

@@ -109,6 +109,8 @@ type
                      write SetTextAlignment default TColumnTextAlign.Automatic;
   end;
 
+  TColumnLocked=(None,Left,Right);
+
   TColumn=class;
 
   TColumnPaintEvent=procedure(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean) of object;
@@ -124,6 +126,7 @@ type
     FExpanded: Boolean;
     FHeader: TColumnHeader;
     FItems : TColumns;
+    FLocked : TColumnLocked;
     FOnPaint : TColumnPaintEvent;
     FParentFormat: Boolean;
     FReadOnly: Boolean;
@@ -131,7 +134,6 @@ type
     FWidth: TColumnWidth;
 
     IHorizontal : THorizontalAlign;
-    ITopParent : TColumns;
 
     function GetAlign: TTextAlign;
     function GetItems: TColumns;
@@ -145,12 +147,17 @@ type
     procedure SetExpanded(const Value: Boolean);
     procedure SetHeader(const Value: TColumnHeader);
     procedure SetItems(const Value: TColumns);
+    procedure SetLocked(const Value: TColumnLocked);
     procedure SetMargins(const Value: TMargins);
     procedure SetParentFormat(const Value: Boolean);
     procedure SetTextAlignment(const Value: TColumnTextAlign);
     procedure SetWidth(const Value: TColumnWidth);
   protected
+    ITopParent : TColumns;
+
+    function AutoWidth(const APainter:TPainter):Single; virtual;
     procedure DoChanged; override;
+    procedure SetRender(const Value: TRender); override;
 
     property DefaultHorizAlign:THorizontalAlign read IHorizontal;
   public
@@ -189,6 +196,7 @@ type
     property Expanded:Boolean read FExpanded write SetExpanded default True;
     property Header:TColumnHeader read FHeader write SetHeader;
     property Items:TColumns read GetItems write SetItems;
+    property Locked:TColumnLocked read FLocked write SetLocked default TColumnLocked.None;
     property Margins:TMargins read GetMargins write SetMargins;
     property ParentFormat:Boolean read FParentFormat write SetParentFormat default True;
     property ReadOnly:Boolean read FReadOnly write FReadOnly default False;
@@ -210,9 +218,10 @@ type
     FOnRemoved : TColumnEvent;
     FSpacing : TCoordinate;
 
+    IParent : TColumn;
+
     function Get(const Index: Integer): TColumn; {$IFNDEF FPC}inline;{$ENDIF}
     function GetByName(const AName:String): TColumn;
-    function GetParent: TColumn;
     function GetSpacing:TCoordinate;
     function MaxLevel:Integer;
     procedure Put(const Index: Integer; const Value: TColumn); {$IFNDEF FPC}inline;{$ENDIF}
@@ -221,6 +230,8 @@ type
     procedure Notify(Item: TCollectionItem; Action: TCollectionNotification); override;
   public
     ValidWidth : Boolean;
+
+    Constructor Create(const AOwner: TPersistent; const ItemClass: TCollectionItemClass);
 
     {$IFNDEF AUTOREFCOUNT}
     Destructor Destroy; override;
@@ -254,7 +265,7 @@ type
     property Items[const AName:String]:TColumn read GetByName; default;
     {$ENDIF}
 
-    property Parent:TColumn read GetParent;
+    property Parent:TColumn read IParent;
   published
     property Spacing: TCoordinate read GetSpacing write SetSpacing;
 
@@ -263,15 +274,18 @@ type
 
   // Internal use.
   // Contains an array of TColumn with all "Visible" columns of a TeeGrid.
-  TVisibleColumns=record
+  TVisibleColumns=class
   private
     FVisible : Array of TColumn;
 
     function Get(const Index: Integer): TColumn; inline;
   public
+    NonLocked : TRectF;
+
     procedure Add(const AColumn:TColumn); overload;
     procedure Add(const AColumns:TColumns); overload;
     function AllSameFormat:Boolean;
+    function AnyLocked: Boolean;
     procedure Clear; inline;
     function Count:Integer; inline;
     function First:TColumn;

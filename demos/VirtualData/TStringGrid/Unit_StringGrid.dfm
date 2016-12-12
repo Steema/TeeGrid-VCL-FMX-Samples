@@ -23,7 +23,6 @@ object StringGridForm: TStringGridForm
     Height = 410
     Columns = <>
     Header.OnClick = TeeGrid1ClickedHeader
-    Footer = <>
     ReadOnly = False
     OnClickedHeader = TeeGrid1ClickedHeader
     OnSelect = TeeGrid1Select
@@ -32,6 +31,13 @@ object StringGridForm: TStringGridForm
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+          OnClick = TeeGrid1ClickedHeader
+        end>)
   end
   object Panel1: TPanel
     Left = 0

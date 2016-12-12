@@ -32,6 +32,7 @@ package VCLTeeGrid;
 requires
   rtl,
   vcl,
+  vclx,
   vclimg,
   TeeGrid;
 
@@ -54,6 +55,7 @@ contains
   VCLTee.Editor.Render.Text in '..\VCL\VCLTee.Editor.Render.Text.pas' {TextRenderEditor},
   VCLTee.Editor.Header in '..\VCL\VCLTee.Editor.Header.pas' {HeaderEditor},
   VCLTee.Editor.Margins in '..\VCL\VCLTee.Editor.Margins.pas' {MarginsEditor},
+  VCLTee.Editor.Text.Align in '..\VCL\VCLTee.Editor.Text.Align.pas' {TextAlignEditor},
   VCLTee.Editor.Grid in '..\VCL\VCLTee.Editor.Grid.pas' {TeeGridEditor},
   VCLTee.Editor.Grid.Bands in '..\VCL\VCLTee.Editor.Grid.Bands.pas' {GridBandsEditor},
   VCLTee.Editor.Grid.Band.Text in '..\VCL\VCLTee.Editor.Grid.Band.Text.pas' {TextBandEditor},

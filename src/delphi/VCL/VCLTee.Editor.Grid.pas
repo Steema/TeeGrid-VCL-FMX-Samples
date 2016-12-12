@@ -13,13 +13,16 @@ interface
 }
 
 uses
-  {Winapi.}Windows, {Winapi.}Messages, {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
+  {$IFDEF MSWINDOWS}
+  {Winapi.}Windows, {Winapi.}Messages,
+  {$ENDIF}
+  {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
   {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}ComCtrls, {Vcl.}StdCtrls, {Vcl.}ExtCtrls,
   {Vcl.}Buttons,
 
   Tee.Renders, Tee.Grid.Columns, Tee.Grid.Selection,
 
-  VCLTee.Grid,
+  VCLTee.Grid, VCLTee.Control,
 
   VCLTee.Editor.Format, VCLTee.Editor.Stroke, VCLTee.Editor.Column,
   VCLTee.Editor.Coordinate, VCLTee.Editor.Margins,
@@ -92,6 +95,13 @@ type
     PageBands: TPageControl;
     TabHeaders: TTabSheet;
     TabFooter: TTabSheet;
+    TabRowsBack: TTabSheet;
+    SBAdd: TSpeedButton;
+    TabSubBands: TTabSheet;
+    Label2: TLabel;
+    CBHorizScrollBar: TComboBox;
+    Label5: TLabel;
+    CBVertScrollBar: TComboBox;
     procedure TreeColumnsChange(Sender: TObject; Node: TTreeNode);
     procedure CBFullRowClick(Sender: TObject);
     procedure SBDeleteColumnClick(Sender: TObject);
@@ -119,6 +129,9 @@ type
     procedure RGPainterClick(Sender: TObject);
     procedure CBScrollBarsClick(Sender: TObject);
     procedure PageBandsChange(Sender: TObject);
+    procedure SBAddClick(Sender: TObject);
+    procedure CBHorizScrollBarChange(Sender: TObject);
+    procedure CBVertScrollBarChange(Sender: TObject);
   private
     { Private declarations }
 
@@ -129,10 +142,12 @@ type
     ISelectedFocused,
     ISelectedUnfocused : TTextRenderEditor;
 
+    ISubBands,
     IFooters,
     IHeaders : TGridBandsEditor;
 
     IRowAlternate,
+    IRowsBack,
     IIndicatorFormat : TFormatEditor;
 
     IIndicatorWidth : TCoordinateEditor;
@@ -153,6 +168,7 @@ type
     procedure EnableUpDown;
     procedure FillThemes;
     procedure MoveColumn(const Delta:Integer);
+    procedure RefreshScrollSettings;
     procedure RefreshMargins(const AMargins:TMargins);
     procedure RefreshSelected(const ASelected:TGridSelection);
     procedure SetSpacingSettings;

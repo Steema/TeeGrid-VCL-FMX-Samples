@@ -29,7 +29,7 @@ interface
 uses
   {System.}Classes,
 
-  Tee.Format, Tee.Renders;
+  Tee.Painter, Tee.Format, Tee.Renders;
 
 type
   // Mouse and keyboard agnostic types
@@ -79,7 +79,7 @@ type
 
     procedure Assign(Source:TPersistent); override;
 
-    procedure CalcHeight(const ATotal:Single); virtual;
+    procedure CalcHeight(const APainter:TPainter; const ATotal:Single); virtual;
     function Contains(const X,Y:Single):Boolean;
     class function Description:String; virtual;
     function Mouse(var AState:TMouseState; const AWidth,AHeight:Single): Boolean; overload; virtual;
@@ -88,6 +88,8 @@ type
     property Height:TBandHeight read FHeight write SetHeight;
     property OnClick:TNotifyEvent read FOnClick write FOnClick;
   end;
+
+  TGridBandClass=class of TGridBand;
 
   TGridBandLines=class(TGridBand)
   private
@@ -113,7 +115,7 @@ type
   protected
     function CreateRender:TRender; override;
   public
-    procedure CalcHeight(const ATotal:Single); override;
+    procedure CalcHeight(const APainter:TPainter; const ATotal:Single); override;
     class function Description:String; override;
     procedure Paint(var AData:TRenderData; const ARender:TRender); override;
 
@@ -144,7 +146,7 @@ type
 
     function AddText(const AText:String):TTextBand;
 
-    procedure CalcHeight(const ATotal:Single);
+    procedure CalcHeight(const APainter:TPainter; const ATotal:Single);
     function CanDisplay:Boolean; inline;
     procedure Mouse(var AState:TMouseState; const AWidth,AHeight:Single);
     procedure Paint(var AData:TRenderData);

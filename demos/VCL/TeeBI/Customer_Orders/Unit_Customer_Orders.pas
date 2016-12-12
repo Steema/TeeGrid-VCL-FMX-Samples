@@ -42,8 +42,8 @@ type
     Orders,
     OrderItems : TDataItem;
 
-    procedure AddDetail(const ARows:TRows; const ADetail:TDataItem; const AColumn:TColumn);
-    procedure AddMainTotals(const AColumns:TColumns; const AData:TVirtualData);
+    procedure AddDetail(const AGroup:TRowGroup; const ADetail:TDataItem; const AColumn:TColumn);
+    procedure AddMainTotals;
     procedure AddOrderTotals(const AGroup:TRowGroup);
     procedure NewDetail(const Sender,NewGroup:TRowGroup);
     procedure NewOrderItemsDetail(const Sender,NewGroup:TRowGroup);
@@ -61,7 +61,7 @@ implementation
 
 uses
   BI.DataSource, BI.Persist, BI.Grid.Data,
-  Tee.Grid.Header, Tee.Grid.Totals, Tee.Grid.Themes, Tee.Grid.Bands;
+  Tee.Grid.Header, Tee.Grid.Totals, Tee.Grid.Themes, Tee.Grid.Bands, Tee.Grid;
 
 procedure TFormDetailRows.Button1Click(Sender: TObject);
 begin
@@ -82,24 +82,24 @@ end;
 procedure TFormDetailRows.AddOrderTotals(const AGroup:TRowGroup);
 var tmp : TColumnTotals;
 begin
-  tmp:=TColumnTotals.Create(AGroup.Footer,AGroup.Columns,AGroup.Data);
+  tmp:=TColumnTotals.Create(AGroup.Footer);
 
   tmp.Calculation.Add(AGroup.Columns[0],TColumnCalculation.Count);
 
-  tmp.Calculation.Add(AGroup.Columns['Freight'],TColumnCalculation.Sum);
+  tmp.Calculation.Add('Freight',TColumnCalculation.Sum);
   tmp.Format.Font.Style:=[fsBold];
 
   TTotalsHeader.CreateTotals(AGroup.Footer,tmp);
 end;
 
-procedure TFormDetailRows.AddDetail(const ARows:TRows; const ADetail:TDataItem; const AColumn:TColumn);
+procedure TFormDetailRows.AddDetail(const AGroup:TRowGroup; const ADetail:TDataItem; const AColumn:TColumn);
 var Expander : TExpanderRender;
 begin
   // Set the detail item
-  (ARows.Data as TBIGridData).Detail:=ADetail;
+  (AGroup.Data as TBIGridData).Detail:=ADetail;
 
   // Set the "+/-" icon to a column to enable expand / collapse
-  Expander:=TeeGrid1.NewExpander(ARows);
+  Expander:=TeeGrid1.NewExpander(AGroup);
 
   Expander.Style:=TExpanderStyle(CBExpander.ItemIndex);
 
@@ -111,7 +111,7 @@ end;
 procedure TFormDetailRows.NewOrderItemsDetail(const Sender,NewGroup:TRowGroup);
 var tmp : TColumnTotals;
 begin
-  tmp:=TColumnTotals.Create(NewGroup.Footer,NewGroup.Columns,NewGroup.Data);
+  tmp:=TColumnTotals.Create(NewGroup.Footer);
 
   tmp.Calculation.Add(NewGroup.Columns[0],TColumnCalculation.Count);
 
@@ -128,7 +128,7 @@ end;
 // It is used here to add a new 3rd level sub-detail (Customer->Orders->OrderItems)
 procedure TFormDetailRows.NewDetail(const Sender,NewGroup:TRowGroup);
 begin
-  AddDetail(NewGroup.Rows,OrderItems,NewGroup.Columns['OrderID']);
+  AddDetail(NewGroup,OrderItems,NewGroup.Columns['OrderID']);
   AddOrderTotals(NewGroup);
 
   NewGroup.OnNewDetail:=NewOrderItemsDetail;
@@ -149,6 +149,9 @@ function TitleSample(const ACollection:TCollection):TTextBand;
 begin
   result:=TTextBand.Create(ACollection);
   result.Text:='Some sub-header';
+
+  result.Format.Font.Style:=[fsBold];
+  result.Format.Font.Color:=clNavy;
 end;
 
 procedure TFormDetailRows.FormCreate(Sender: TObject);
@@ -159,26 +162,26 @@ begin
   TeeGrid1.Data:=TBIGridData.From(Customers);
 
   // Detail data: Orders
-  AddDetail(TeeGrid1.Rows,Orders,TeeGrid1.Columns['CustomerID']);
+  AddDetail(TeeGrid1.Grid.Current,Orders,TeeGrid1.Columns['CustomerID']);
 
   TeeGrid1.OnNewDetail:=NewDetail;
 
-  AddMainTotals(TeeGrid1.Columns,TeeGrid1.Data);
+  AddMainTotals;
 
   TeeGrid1.Rows.SubBands.Row[10]:=TitleSample(TeeGrid1.Rows.SubBands);
 end;
 
 // Add a grid footer band with "Totals" for main Customer table
-procedure TFormDetailRows.AddMainTotals(const AColumns:TColumns; const AData:TVirtualData);
+procedure TFormDetailRows.AddMainTotals;
 var Totals : TColumnTotals;
 begin
   // Create grid band
-  Totals:=TColumnTotals.Create(TeeGrid1.Footer,AColumns,AData);
+  Totals:=TColumnTotals.Create(TeeGrid1.Footer);
 
   // There is no numeric field in Customer table, so the only thing we can
   // add is a counter:
 
-  Totals.Calculation.Add(AColumns['CustomerID'],TColumnCalculation.Count);
+  Totals.Calculation.Add('CustomerID',TColumnCalculation.Count);
 end;
 
 end.

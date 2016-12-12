@@ -10,54 +10,21 @@ interface
 
 uses
   Messages, {System.}Classes,
-  {VCL.}Controls;
+  {VCL.}Controls, Tee.Control;
 
 type
-  TScrollBarVisible=(Automatic,Yes,No);
-
-  TScrollBars=class;
-
-  TScrollBar=class(TPersistent)
-  private
-    FVisible : TScrollBarVisible;
-
-    IsVisible : Boolean;
-    ThumbPosition : Integer;
-
-    IBars : TScrollBars;
-
-    procedure PrepareVisible(const Needed:Boolean);
-    procedure SetVisible(const Value: TScrollBarVisible);
-  public
-    property Visible : TScrollBarVisible read FVisible write SetVisible default TScrollBarVisible.Automatic;
-  end;
-
-  TScrollableControl=class;
-
-  TScrollBars=class(TPersistent)
-  private
-    FHorizontal,
-    FVertical : TScrollBar;
-    FVisible : Boolean;
-
-    IControl : TScrollableControl;
-
-    procedure SetVisible(const Value: Boolean);
-  public
-    Constructor Create(const AControl:TScrollableControl);
-    Destructor Destroy; override;
-
-    property Horizontal:TScrollBar read FHorizontal;
-    property Vertical:TScrollBar read FVertical;
-  published
-    property Visible:Boolean read FVisible write SetVisible default True;
-  end;
-
   TScrollableControl=class(TCustomControl)
   private
     FScrollBars: TScrollBars;
 
+    function AvailableWidth:Single;
+    function AvailableHeight:Single;
+
     function CalcScroll(const Bar:Word; const Code,Pos:Integer):Single;
+    procedure DoResetScrollBars(Sender:TObject);
+    procedure DoSetScrollInfo(const ABar:Word; const APos:Integer);
+    procedure DoUpdateScrollPosition(const Bar:Integer; const Value:Single);
+    function GetBar(const ABar: Word): TScrollBar;
     procedure WMHScroll(var Msg: TWMHScroll); message WM_HSCROLL;
     procedure WMVScroll(var Msg: TWMVScroll); message WM_VSCROLL;
 
@@ -82,6 +49,8 @@ type
   public
     Constructor Create(AOwner:TComponent); override;
     Destructor Destroy; override;
+
+    procedure Assign(Source:TPersistent); override;
 
     property ScrollBars:TScrollBars read FScrollBars write SetScrollBars;
   end;

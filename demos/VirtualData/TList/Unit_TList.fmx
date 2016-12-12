@@ -28,14 +28,26 @@ object FormGridTList: TFormGridTList
       TabOrder = 0
       OnChange = CBThemeChange
     end
+    object CheckBox1: TCheckBox
+      Position.X = 264.000000000000000000
+      Position.Y = 16.000000000000000000
+      TabOrder = 1
+      Text = 'CheckBox1'
+      OnChange = CheckBox1Change
+    end
   end
   object TeeGrid1: TTeeGrid
     Columns = <>
-    Footer = <>
     ReadOnly = False
     Align = Client
     Size.Width = 640.000000000000000000
     Size.Height = 430.000000000000000000
     Size.PlatformDefault = False
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
   end
 end

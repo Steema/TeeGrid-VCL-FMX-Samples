@@ -17,7 +17,11 @@ uses
 type
   TGdiPlusPainter=class(TWindowsPainter)
   private
+    FSmoothingMode : TSmoothingMode;
+    FTextQuality : TTextRenderingHint;
+
     IPlus : TGPGraphics;
+    IStringFormat : TGPStringFormat;
 
     IBitmap : TBitmap;
     IBrush : TGPSolidBrush;
@@ -44,16 +48,18 @@ type
     function CreateGradient(const AGradient:TGradient; const R:TGPRectF):TGPBrush; overload;
     function CreateGradient(const AGradient:TGradient; const P:TPointsF):TGPBrush; overload;
 
+    procedure DrawImage(const APicture: TPicture; const AImage:TGPImage; const ARect:TGPRectF);
     procedure FinishPen(const APen:TGPPen; const AStroke: TStroke);
     function GetCanvas:TGPGraphics;
     function ImageFrom(const AGraphic: TGraphic):TGPImage; overload;
     function ImageFrom(const APicture: TPicture):TGPImage; overload;
+    procedure InitGraphics;
+    procedure SetSmoothingMode(const Value: TSmoothingMode);
+    procedure SetTextQuality(const Value: TTextRenderingHint);
     function TextSize(const AText:String):TGPRectF;
   public
     Constructor Create;
     Destructor Destroy; override;
-
-    property Canvas:TGPGraphics read GetCanvas;
 
     procedure Clip(const R:TRectF); override;
     procedure UnClip; override;
@@ -85,9 +91,20 @@ type
     procedure Paint(const AFormat:TFormat; const R:TRectF); override;
     procedure Paint(const AFormat:TFormat; const P:TPointsF); override;
     function TextHeight(const AText:String):Single; override;
-    procedure TextOut(const X,Y:Single; const AText:String); override;
+    procedure TextOut(const ARect:TRectF; const AText:String); override;
     function TextWidth(const AText:String):Single; override;
     procedure VerticalLine(const X,Y0,Y1:Single); override;
+
+  // properties
+
+    property Canvas:TGPGraphics read GetCanvas;
+
+    property SmoothMode:TSmoothingMode read FSmoothingMode write SetSmoothingMode
+                                       default SmoothingModeHighQuality;
+
+    property StringFormat:TGpStringFormat read IStringFormat write IStringFormat;
+    property TextQuality:TTextRenderingHint read FTextQuality write SetTextQuality
+                                  default TextRenderingHintClearTypeGridFit;
   end;
 
 implementation

@@ -101,9 +101,12 @@ type
 
     procedure ChangePainter(const APainter:TFMXPainter);
     procedure ColumnResized(Sender:TObject);
+    function CurrentRows: TRows;
     procedure SetDataItem(const Value: TVirtualData);
 
     function GetColumns: TColumns;
+    function GetScrollX: Single;
+    function GetScrollY: Single;
     function GetSelected: TGridSelection;
     procedure SetColumns(const Value: TColumns);
     procedure SetSelected(const Value: TGridSelection);
@@ -139,6 +142,8 @@ type
     procedure SetDataSource(const Value: TComponent);
   protected
     procedure DblClick; override;
+
+    procedure DefineProperties(Filer: TFiler); override;
 
     procedure DoMouseLeave; override;
 
@@ -180,7 +185,7 @@ type
     property Editing:TGridEditing read GetEditing write SetEditing;
     property Header:TColumnHeaderBand read GetHeader write SetHeader;
     property Headers:TGridBands read GetHeaders write SetHeaders stored False;
-    property Footer:TGridBands read GetFooter write SetFooter;
+    property Footer:TGridBands read GetFooter write SetFooter stored False;
     property Indicator:TIndicator read GetIndicator write SetIndicator;
     property ReadOnly:Boolean read GetReadOnly write SetReadOnly default True;
     property Rows:TRows read GetRows write SetRows;

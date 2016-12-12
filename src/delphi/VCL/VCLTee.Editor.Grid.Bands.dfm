@@ -23,7 +23,7 @@ object GridBandsEditor: TGridBandsEditor
     BevelOuter = bvNone
     TabOrder = 0
     object SBUp: TSpeedButton
-      Left = 8
+      Left = 69
       Top = 13
       Width = 23
       Height = 22
@@ -33,7 +33,7 @@ object GridBandsEditor: TGridBandsEditor
       OnClick = SBUpClick
     end
     object SBDown: TSpeedButton
-      Left = 37
+      Left = 97
       Top = 13
       Width = 23
       Height = 22
@@ -42,8 +42,27 @@ object GridBandsEditor: TGridBandsEditor
       Flat = True
       OnClick = SBDownClick
     end
+    object SBAdd: TSpeedButton
+      Left = 8
+      Top = 13
+      Width = 23
+      Height = 22
+      Caption = '+'
+      Flat = True
+      OnClick = SBAddClick
+    end
+    object SBRemove: TSpeedButton
+      Left = 35
+      Top = 13
+      Width = 23
+      Height = 22
+      Caption = '-'
+      Enabled = False
+      Flat = True
+      OnClick = SBRemoveClick
+    end
     object CBVisible: TCheckBox
-      Left = 72
+      Left = 130
       Top = 13
       Width = 97
       Height = 17
@@ -52,11 +71,12 @@ object GridBandsEditor: TGridBandsEditor
       OnClick = CBVisibleClick
     end
   end
-  object LBBands: TListBox
+  object LBBands: TCheckListBox
     Left = 0
     Top = 41
     Width = 121
     Height = 372
+    OnClickCheck = LBBandsClickCheck
     Align = alLeft
     ItemHeight = 13
     TabOrder = 1
@@ -70,23 +90,25 @@ object GridBandsEditor: TGridBandsEditor
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 2
-    object PanelBandTop: TPanel
-      Left = 0
-      Top = 0
-      Width = 326
-      Height = 41
-      Align = alTop
-      BevelOuter = bvNone
-      TabOrder = 0
-      object CBBandVisible: TCheckBox
-        Left = 16
-        Top = 16
-        Width = 97
-        Height = 17
-        Caption = '&Visible'
-        TabOrder = 0
-        OnClick = CBBandVisibleClick
-      end
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 216
+    Top = 216
+    object ext1: TMenuItem
+      Caption = '&Text'
+      OnClick = ext1Click
+    end
+    object Header1: TMenuItem
+      Caption = '&Header'
+      OnClick = Header1Click
+    end
+    object otals1: TMenuItem
+      Caption = 'T&otals'
+      OnClick = otals1Click
+    end
+    object otalsHeader1: TMenuItem
+      Caption = 'Totals H&eader'
+      OnClick = otalsHeader1Click
     end
   end
 end

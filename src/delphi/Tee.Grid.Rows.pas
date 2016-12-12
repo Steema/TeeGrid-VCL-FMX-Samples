@@ -39,7 +39,7 @@ type
   public
     Constructor Create(const AChanged:TNotifyEvent); override;
 
-    function ShouldPaint:Boolean;
+    function IsVisible:Boolean;
   published
     property Visible default False;
   end;
@@ -73,6 +73,7 @@ type
     FHover: TCellHover;
     FRowLines: TStroke;
     FSpacing: TCoordinate;
+    FVisibleColumns : TVisibleColumns;
 
     IData : TVirtualData;
 
@@ -96,11 +97,9 @@ type
   public
     DefaultHeight : Single;
     Painter : TPainter;
-    VisibleColumns : TVisibleColumns;
 
     // Temporary:
     XOffset : Single;
-    XSpacing : Single;
     Scroll : TPointF;
 
     Constructor Create(ACollection:TCollection); override;
@@ -127,7 +126,7 @@ type
     procedure Paint(var AData:TRenderData; const ARender:TRender); override;
     procedure PaintLines(const AData:TRenderData; const FirstRow:Integer; Y:Single);
     function RowAt(const Y, AvailableHeight: Single): Integer;
-    procedure SetColumnsLeft(const ALeft:Single);
+    function SetColumnsLeft(const ALeft,ARight,ASpacing:Single):TRectF;
     procedure Swap(const A,B:Integer);
     function TopOf(const ARow:Integer):Single;
     function TopOfRow(const ARow:Integer):Single;
@@ -138,6 +137,7 @@ type
     property Data:TVirtualData read IData write IData;
     property Heights[const Index:Integer]:Single read GetHeights write SetHeights;
     property SubBands:TRowsBands read FSubBands;
+    property VisibleColumns:TVisibleColumns read FVisibleColumns;
     property YSpacing:Single read ISpacing;
   published
     property Alternate:TAlternateFormat read FAlternate write SetAlternate;

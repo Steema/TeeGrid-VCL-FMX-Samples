@@ -15,6 +15,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes, Vcl.Graphics,
   System.UITypes, System.Types,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
+
   Vcl.ExtCtrls, Tee.Grid.RowGroup, Vcl.StdCtrls,
   Tee.Grid.Data.Strings, Tee.Grid.Columns, Tee.Renders, Vcl.Imaging.pngimage,
   Tee.Format;
@@ -43,17 +44,18 @@ type
     procedure CBGDIPlusClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure BenchmarkClick(Sender: TObject);
-    procedure ScrollBar1Change(Sender: TObject);
   private
     { Private declarations }
 
     Data : TStringsData;
 
+    CustomFormat : TTextFormat;
     OkPicture : TPicture;
 
     procedure OptimizePaintSpeed;
     procedure PaintPicture(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean);
     procedure RefreshTotalCells;
+    procedure TestPaintBackground(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean);
   public
     { Public declarations }
   end;
@@ -131,7 +133,7 @@ procedure TStringGridForm.FormCreate(Sender: TObject);
   function NewTitle:TTextBand;
   begin
     result:=TTextBand.Create(TeeGrid1.Rows.SubBands);
-    result.Text:='Sub-Title'#13+'Double';
+    result.Text:='Sub-Title'#13#10'Double';
 
     result.Format.Font.Style:=[fsBold];
     result.Format.Brush.Show;
@@ -142,21 +144,20 @@ procedure TStringGridForm.FormCreate(Sender: TObject);
 var t : Integer;
 begin
   // Speed tip: For huge number of rows, hidden ScrollBars accelerate painting
-  TeeGrid1.ScrollBars.Visible:=False;
+  // TeeGrid1.ScrollBars.Visible:=False;
 
   // Create data
-  Data:=TStringsData.Create;
+  Data:=TStringsData.Create(1000,100000,60); // speed tip: pass a default width (60)
 
-  // Initialize size
-  //Data.Columns:=1000;
-  //Data.Rows:=100000;
-
-  Data.Resize(1000,100000);
+  // Other ways to initialize size:
+  // Data.Columns:=1000;
+  // Data.Rows:=100000;
+  // Data.Resize(1000,100000);
 
   RefreshTotalCells;
 
   // Set column header texts
-  Data.Headers[0]:='A'#13'Text';
+  Data.Headers[0]:='A'#13#10'Text';
   Data.Headers[1]:='B';
   Data.Headers[2]:='C';
   Data.Headers[3]:='OK';
@@ -171,6 +172,9 @@ begin
     if Random(100)<30 then
        Data[3,t]:='OK';
   end;
+
+  // Multi-line test:
+  Data[2,4]:=Data[2,4]+#13#10+'this is a long line';
 
   // Set data to grid
   TeeGrid1.Data:=Data;
@@ -187,6 +191,7 @@ begin
 
   // Set event to paint a picture at some of 4th column cells
   TeeGrid1.Columns[3].OnPaint:=PaintPicture;
+  TeeGrid1.Columns[3].Width.InitValue(40);
 
   // Just some text alignment tests
   TeeGrid1.Cells.TextAlign.Vertical:=TVerticalAlign.Center;
@@ -194,6 +199,7 @@ begin
 
   // Create a picture from a TImage on this form
   OkPicture:=TVCLPicture.From(OkImage);
+  // OkPicture.Stretch:=False;
 
   //TeeGrid1.Rows.Heights[4]:=32;
 
@@ -201,6 +207,44 @@ begin
   TeeGrid1.Rows.Height.Value:=32;
 
   OptimizePaintSpeed;
+
+  // Test Column OnPaint
+  CustomFormat:=TTextFormat.Create(nil);
+
+  TeeGrid1.Columns[6].OnPaint:=TestPaintBackground;
+end;
+
+// Simple test, customize per-cell background format
+procedure TStringGridForm.TestPaintBackground(const Sender:TColumn;
+                      var AData:TRenderData; var DefaultPaint:Boolean);
+begin
+  DefaultPaint:=True;
+
+  CustomFormat.Stroke.Visible:=False;
+  CustomFormat.Brush.Visible:=True;
+  CustomFormat.Brush.Gradient.Hide;
+
+  if AData.Row=4 then
+     CustomFormat.Brush.Color:=TColors.Red
+  else
+  if AData.Row=6 then
+  begin
+    CustomFormat.Brush.Color:=TColors.Lime;
+
+    CustomFormat.Stroke.Visible:=True;
+    CustomFormat.Stroke.Size:=3;
+  end
+  else
+  if AData.Row=2 then
+  begin
+    CustomFormat.Brush.Gradient.Show;
+    CustomFormat.Brush.Gradient.Colors[0].Color:=TColors.Navy;
+    CustomFormat.Brush.Gradient.Colors[1].Color:=TColors.Yellow;
+  end
+  else
+    Exit;
+
+  AData.Painter.Paint(CustomFormat,AData.Rect);
 end;
 
 // Speed performance, disable cosmetic effects:
@@ -214,6 +258,9 @@ procedure TStringGridForm.FormDestroy(Sender: TObject);
 begin
   // Destroy the picture, just to avoid a memory leak
   OkPicture.Free;
+
+  // Destroy the custom brush, just to avoid a memory leak
+  CustomFormat.Free;
 end;
 
 // This event is called for all cells of 4th column, when they are going to be painted
@@ -236,10 +283,6 @@ end;
 procedure TStringGridForm.RefreshTotalCells;
 begin
   LCells.Caption:=FormatFloat('#,###',Data.Columns*Data.Rows);
-end;
-
-procedure TStringGridForm.ScrollBar1Change(Sender: TObject);
-begin
 end;
 
 // Just a test, when clicking a column header

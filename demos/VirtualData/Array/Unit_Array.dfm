@@ -22,13 +22,18 @@ object FormArray: TFormArray
     Width = 635
     Height = 419
     Columns = <>
-    Footer = <>
     ReadOnly = False
     Align = alClient
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
   end
   object Panel1: TPanel
     Left = 0
@@ -120,14 +125,23 @@ object FormArray: TFormArray
     end
     object CBGdiPlus: TCheckBox
       Left = 272
-      Top = 13
-      Width = 97
+      Top = 10
+      Width = 73
       Height = 17
       Caption = 'GDI+ Plus'
       Checked = True
       State = cbChecked
       TabOrder = 2
       OnClick = CBGdiPlusClick
+    end
+    object BGDIPlusEdit: TButton
+      Left = 351
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'GDI+ ...'
+      TabOrder = 3
+      OnClick = BGDIPlusEditClick
     end
   end
 end

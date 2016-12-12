@@ -8,6 +8,28 @@ unit BI.Grid.Data;
 
 interface
 
+{
+  TBIGridData class enables connecting any TDataItem to a TeeGrid
+
+  Example:
+
+  uses BI.Persist, BI.DataSource, BI.Grid.Data;
+  var Customers : TDataItem;
+      Data : TBIGridData;
+
+    Customers:= TStore.Load('SQLite_Demo')['Customers'];
+    Data:= TBIGridData.Create(Customers);
+    TeeGrid1.Data:= Data;
+
+  Optionally set a "Detail" to show it as sub-grid rows:
+
+    Data.Detail:= TStore.Load('SQLite_Demo')['Orders'];
+
+  Enable or disable column sorting (clicking Grid Header):
+
+    Data.Sortable:= False; // default is True
+}
+
 uses
   System.Classes,
   Tee.Grid, Tee.Grid.Columns, Tee.Painter, Tee.Renders, Tee.Grid.Data,
@@ -17,19 +39,25 @@ type
   TBIGridData=class(TVirtualData)
   private
     FCursor : TDataCursor;
+    FSortable : Boolean;
 
     class function DataOf(const AColumn:TColumn):TDataItem; inline; static;
 
     function GetData: TDataItem;
     function RowOf(const ARow:Integer):Integer;
     procedure SetData(const Value: TDataItem);
+    procedure SetSortable(const Value: Boolean);
   protected
     Master : TDataItem;
   public
     Detail : TDataItem;
 
-    Constructor Create(const AProvider:TDataProvider=nil);
+    Constructor Create(const AProvider:TDataProvider); overload;
+    Constructor Create(const AItem:TDatAItem=nil); overload;
+
+    {$IFNDEF AUTOREFCOUNT}
     Destructor Destroy; override;
+    {$ENDIF}
 
     procedure AddColumns(const AColumns:TColumns); override;
     function AsFloat(const AColumn:TColumn; const ARow:Integer):TFloat; override;
@@ -58,6 +86,7 @@ type
     procedure SortBy(const AColumn:TColumn); override;
 
     property Data:TDataItem read GetData write SetData;
+    property Sortable:Boolean read FSortable write SetSortable default True;
   end;
 
 implementation

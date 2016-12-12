@@ -52,10 +52,11 @@ type
   // Grid band with Columns
   TColumnBand=class(TGridBandLines)
   private
+    FAllowResize : Boolean;
     FHover: THover;
     FOnColumnResized: TNotifyEvent;
 
-    IDragging  : TColumn;
+    IDragging,
     IHighLight : TColumn;
 
     OldWidth,
@@ -63,13 +64,17 @@ type
 
     procedure ChangeDraggedWidth(const AValue:Single);
     procedure DoChangedRepaint;
+    function GetMargins: TMargins;
     procedure PaintLines(var AData:TRenderData; const DrawFirst:Boolean);
+    procedure SetColumns(const Value: TColumns);
     procedure SetHighLight(const Value: TColumn);
     procedure SetHover(const Value: THover);
-    procedure SetColumns(const Value: TColumns);
+    procedure SetMargins(const Value: TMargins);
   protected
     IColumns : TColumns;
+    IData : TVirtualData;
     IJustRepaint : Boolean;
+    IVisible : TVisibleColumns;
 
     function AdjustBounds(const AColumn:TColumn; const R:TRectF):TRectF; virtual;
     function AsString(const AColumn:TColumn):String; virtual; abstract;
@@ -84,8 +89,7 @@ type
     OffsetX,
     StartX : Single;
 
-    Constructor Create(const ACollection:TCollection;
-                       const AColumns:TColumns); reintroduce; virtual;
+    Constructor Create(ACollection:TCollection); override;
 
     {$IFNDEF AUTOREFCOUNT}
     Destructor Destroy; override;
@@ -101,14 +105,17 @@ type
     procedure Paint(var AData:TRenderData; const ARender:TRender); override;
 
     property Columns:TColumns read IColumns write SetColumns;
+    property Data:TVirtualData read IData write IData;
 
-    // Current column being dragged
+    // Current column being dragged or resized
     property Dragging:TColumn read IDragging write IDragging;
 
     // Current column to highlight
     property HighLight:TColumn read IHighLight write SetHighLight;
   published
+    property AllowResize:Boolean read FAllowResize write FAllowResize default True;
     property Hover:THover read FHover write SetHover;
+    property Margins:TMargins read GetMargins write SetMargins;
     property OnColumnResized:TNotifyEvent read FOnColumnResized write FOnColumnResized;
   end;
 
@@ -141,13 +148,11 @@ type
     FRowLines : TStroke;
     FSortable: Boolean;
 
-    IData : TVirtualData;
     IHeights : Array of Single;
 
     function HeaderRender(const AColumn:TColumn):TRender;
-    //function HeaderRowHeight:Single;
     function LevelTop(const ALevel:Integer):Single;
-    function MaxColumnHeight(const ATotal:Single):Single;
+    function MaxColumnHeight(const APainter:TPainter; const ATotal:Single):Single;
     procedure PaintRowLines(const APainter:TPainter; const AColumns:TColumns; const ALevel:Integer);
     procedure SetRowLines(const Value: TStroke);
     procedure SetSortable(const Value: Boolean);
@@ -159,24 +164,20 @@ type
     var
       SortRender : TSortableHeader;
 
-    Constructor Create(const ACollection:TCollection;
-                       const AColumns:TColumns;
-                       const AData:TVirtualData); reintroduce; virtual;
+    Constructor Create(ACollection:TCollection); override;
 
     {$IFNDEF AUTOREFCOUNT}
     Destructor Destroy; override;
     {$ENDIF}
 
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single;
-    procedure CalcHeight(const ATotal:Single); override;
+    procedure CalcHeight(const APainter:TPainter; const ATotal:Single); override;
     function CanSort(const AColumn:TColumn):Boolean;
     class function Description:String; override;
 
     procedure Paint(var AData:TRenderData; const ARender:TRender); override;
 
     function RowCount:Integer;
-
-    property Data:TVirtualData read IData write IData;
   published
     property RowLines:TStroke read FRowLines write SetRowLines;
     property Sortable:Boolean read FSortable write SetSortable default True;

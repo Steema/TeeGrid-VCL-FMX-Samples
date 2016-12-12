@@ -70,7 +70,7 @@ begin
     1: result:='Caps St';
     2: result:='Plain Rd';
     3: result:='56th St';
-    4: result:='Sand Rock St';
+    4: result:='Sand Rock St'#13#10'Santa Cristina by Sea';
   else
     result:='Moon Ave';
   end;

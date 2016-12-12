@@ -65,13 +65,18 @@ type
   // Helper TCollection with OnChanged event
   TCollectionChange=class(TOwnedCollection)
   private
-    FOnChanged : TNotifyEvent;
+    FOnAdded,
+    FOnChanged,
+    FOnRemoved : TNotifyEvent;
   protected
+    procedure Notify(Item: TCollectionItem; Action: TCollectionNotification); override;
     procedure Update(Item: TCollectionItem); override;
   public
     procedure DoChanged(Sender:TObject);
   published
+    property OnAdded:TNotifyEvent read FOnAdded write FOnAdded;
     property OnChanged:TNotifyEvent read FOnChanged write FOnChanged;
+    property OnRemoved:TNotifyEvent read FOnRemoved write FOnRemoved;
   end;
 
   TVisiblePersistentChange=class(TPersistentChange)
@@ -155,6 +160,8 @@ type
     {$ENDIF}
 
     procedure Assign(Source:TPersistent); override;
+
+    procedure InitColors(const AColor0,AColor1:TColor);
   published
     property Angle:TAngle read FAngle write SetAngle;
     property Colors:TGradientColors read FColors write SetColors stored IsColorsStored;
@@ -173,6 +180,10 @@ type
 
     procedure FreeInternal;
   public
+    Stretch : Boolean;
+
+    Constructor Create(const AChanged:TNotifyEvent); override;
+
     Destructor Destroy; override;
 
     procedure Clear;
@@ -343,6 +354,8 @@ type
     {$ENDIF}
 
     procedure Assign(Source:TPersistent); override;
+
+    function ShouldPaint:Boolean;
   published
     property Brush:TBrush read FBrush write SetBrush;
     property Stroke:TStroke read FStroke write SetStroke;
@@ -408,7 +421,6 @@ type
     {$ENDIF}
 
     procedure Assign(Source:TPersistent); override;
-    function TextHeight: Single;
   published
     property Font:TFont read FFont write SetFont;
   end;
@@ -421,6 +433,7 @@ type
       Black=0;
       Cream=$F0FBFF;
       DkGray=$808080;
+      DarkGray=DkGray;
       Green=$008000;
       LightGray=$D3D3D3;
       Navy=$800000;

@@ -20,7 +20,7 @@ object ColumnBandEditor: TColumnBandEditor
     Top = 0
     Width = 348
     Height = 405
-    ActivePage = TabHover
+    ActivePage = TabFormat
     Align = alClient
     TabOrder = 0
     OnChange = PageBandChange

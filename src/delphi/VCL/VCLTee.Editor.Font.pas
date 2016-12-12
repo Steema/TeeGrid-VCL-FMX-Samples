@@ -3,7 +3,10 @@ unit VCLTee.Editor.Font;
 interface
 
 uses
-  {Winapi.}Windows, {Winapi.}Messages, {System.}SysUtils, {System.}Classes,
+  {$IFDEF MSWINDOWS}
+  {Winapi.}Windows, {Winapi.}Messages,
+  {$ENDIF}
+  {System.}SysUtils, {System.}Classes,
   {Vcl.}Graphics, {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}StdCtrls,
   {Vcl.}ComCtrls,
 

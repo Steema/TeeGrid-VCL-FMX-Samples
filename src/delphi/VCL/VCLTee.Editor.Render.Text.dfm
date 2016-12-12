@@ -20,7 +20,7 @@ object TextRenderEditor: TTextRenderEditor
     Top = 0
     Width = 431
     Height = 484
-    ActivePage = TabFormat
+    ActivePage = TabAlign
     Align = alClient
     TabOrder = 0
     OnChange = PageSelectedChange
@@ -30,50 +30,14 @@ object TextRenderEditor: TTextRenderEditor
     object TabBorders: TTabSheet
       Caption = 'Borders'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object TabMargins: TTabSheet
       Caption = 'Margins'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object TabAlign: TTabSheet
-      Caption = 'Align'
+      Caption = 'Text Align'
       ImageIndex = 3
-      object RGVerticalAlign: TRadioGroup
-        Left = 138
-        Top = 16
-        Width = 119
-        Height = 113
-        Caption = '&Vertical'
-        ItemIndex = 0
-        Items.Strings = (
-          '&Top'
-          '&Center'
-          '&Bottom')
-        TabOrder = 0
-        OnClick = RGVerticalAlignClick
-      end
-      object RGHorizAlign: TRadioGroup
-        Left = 6
-        Top = 16
-        Width = 118
-        Height = 113
-        Caption = '&Horizontal:'
-        ItemIndex = 0
-        Items.Strings = (
-          '&Left'
-          '&Center'
-          '&Right')
-        TabOrder = 1
-        OnClick = RGHorizAlignClick
-      end
     end
   end
 end

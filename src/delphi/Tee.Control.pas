@@ -19,6 +19,49 @@ uses
   Tee.Format, Tee.Painter;
 
 type
+  TScrollBarVisible=(Automatic,Show,Hide);
+
+  TScrollBars=class;
+
+  TScrollBar=class(TPersistent)
+  private
+    FVisible : TScrollBarVisible;
+
+    IBars : TScrollBars;
+
+    procedure SetVisible(const Value: TScrollBarVisible);
+  public
+    IsVisible : Boolean;
+    ThumbSize : Integer;
+
+    procedure PrepareVisible(const Needed:Boolean);
+
+    property Visible : TScrollBarVisible read FVisible write SetVisible
+             default TScrollBarVisible.Automatic;
+  end;
+
+  TScrollBars=class(TPersistent)
+  private
+    FHorizontal,
+    FVertical : TScrollBar;
+    FVisible : Boolean;
+
+    IReset : TNotifyEvent;
+
+    procedure SetVisible(const Value: Boolean);
+  public
+    const
+      VirtualRange=2000;
+
+    Constructor Create(const AOnReset:TNotifyEvent);
+    Destructor Destroy; override;
+
+  published
+    property Horizontal:TScrollBar read FHorizontal;
+    property Vertical:TScrollBar read FVertical;
+    property Visible:Boolean read FVisible write SetVisible default True;
+  end;
+
   TCustomTeeControl=class(TComponent)
   private
     FBack: TFormat;
@@ -32,7 +75,9 @@ type
     procedure BeginUpdate; inline;
     procedure EndUpdate;
 
-    procedure Changed(Sender:TObject);
+    procedure DoChanged(Sender:TObject);
+    procedure ResetScrollBars; virtual;
+
     property OnChange:TNotifyEvent read IChanged write IChanged;
   public
     Constructor Create(AOwner:TComponent); override;

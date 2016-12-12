@@ -104,7 +104,7 @@ type
     procedure Paint(const AFormat:TFormat; const R:TRectF); override;
     procedure Paint(const AFormat:TFormat; const P:TPointsF); override;
     function TextHeight(const AText:String):Single; override;
-    procedure TextOut(const X,Y:Single; const AText:String); override;
+    procedure TextOut(const ARect:TRectF; const AText:String); override;
     function TextWidth(const AText:String):Single; override;
     procedure VerticalLine(const X,Y0,Y1:Single); override;
   end;

@@ -9,8 +9,33 @@ interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMXTee.Control,
-  FMXTee.Grid, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Dialogs, FMXTee.Control,
+
+  {$IF CompilerVersion<=27}
+  {$DEFINE HASFMX20}
+  {$IFEND}
+
+  {$IFNDEF HASFMX20}
+  FMX.Graphics,
+  {$ENDIF}
+
+  {$IF CompilerVersion<25}
+  {$DEFINE HASFMX21}
+  {$IFEND}
+
+  {$IFNDEF HASFMX21}
+  FMX.StdCtrls,
+  {$ENDIF}
+
+  {$IF CompilerVersion<=27}
+  {$DEFINE HASFMX22}
+  {$IFEND}
+
+  {$IFNDEF HASFMX22}
+  FMX.Controls.Presentation,
+  {$ENDIF}
+
+  FMXTee.Grid, FMX.Layouts,
   Tee.Grid.Bands, Tee.Grid.Rows, FMX.ListBox;
 
 type

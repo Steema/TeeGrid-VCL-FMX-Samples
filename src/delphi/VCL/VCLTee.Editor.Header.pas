@@ -9,11 +9,14 @@ unit VCLTee.Editor.Header;
 interface
 
 uses
-  {Winapi.}Windows, {Winapi.}Messages, {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
+  {$IFDEF MSWINDOWS}
+  {Winapi.}Windows, {Winapi.}Messages,
+  {$ENDIF}
+  {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
   {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}ComCtrls, {Vcl.}StdCtrls,
   {Vcl.}ExtCtrls,
 
-  VCLTee.Editor.Stroke, VCLTee.Editor.ColumnBand,
+  VCLTee.Editor.Stroke, VCLTee.Editor.ColumnBand, VCLTee.Editor.Margins,
 
   // Must be last used unit due to clash with THeader in VCL
   Tee.Grid.Header;
@@ -23,13 +26,18 @@ type
     PageHeader: TPageControl;
     TabFormat: TTabSheet;
     TabRowLines: TTabSheet;
+    TabMargins: TTabSheet;
+    Panel1: TPanel;
+    CBAllowResize: TCheckBox;
     procedure PageHeaderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure CBAllowResizeClick(Sender: TObject);
   private
     { Private declarations }
 
     IHeader : TColumnHeaderBand;
     IFormat : TColumnBandEditor;
+    IMargins : TMarginsEditor;
     IRowLines : TStrokeEditor;
   public
     { Public declarations }

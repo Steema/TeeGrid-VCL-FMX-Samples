@@ -67,7 +67,6 @@ type
     FData : TVirtualData;
     FDataSource: TComponent;
     FEditing : TGridEditing;
-    FMargins : TMargins;
     FOnAfterDraw: TNotifyEvent;
     FOnSelect: TNotifyEvent;
     FRoot: TRowGroup;
@@ -110,6 +109,7 @@ type
     procedure SetReadOnly(const Value: Boolean);
     procedure SetRows(const Value: TRows);
     procedure SetSelected(const Value: TGridSelection);
+    function GetMargins: TMargins;
   protected
     procedure ChangeHorizScroll(const Value:Single);
     procedure ChangeVertScroll(const Value:Single);
@@ -121,6 +121,8 @@ type
     procedure Mouse(var AState:TMouseState);
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure FinishPaint(const IsDesign:Boolean);
+    procedure ReadFooter(Reader: TReader);
+    procedure ReadHeaders(Reader: TReader);
     property Root:TRowGroup read FRoot;
     procedure StartEditor(const AColumn:TColumn; const ARow:Integer); overload; virtual; abstract;
     procedure StartEditor; overload;
@@ -128,6 +130,8 @@ type
     procedure TryStartEditor;
     function VertScrollBarWidth:Single; virtual; abstract;
     procedure VertScrollChanged; virtual; abstract;
+    procedure WriteFooter(Writer: TWriter);
+    procedure WriteHeaders(Writer: TWriter);
   public
     Constructor Create(AOwner:TComponent); override;
 
@@ -141,6 +145,7 @@ type
     function ClientHeight:Single; override;
     function ClientWidth:Single; override;
     procedure CopySelected; virtual; abstract;
+    procedure Loaded; override;
     procedure MouseLeave;
     procedure Paint; override;
     procedure RefreshData;
@@ -162,7 +167,7 @@ type
     property Header:TColumnHeaderBand read GetHeader write SetHeader;
     property Headers:TGridBands read GetHeaders write SetHeaders stored False;
     property Indicator:TIndicator read GetIndicator write SetIndicator;
-    property Margins:TMargins read FMargins write SetMargins;
+    property Margins:TMargins read GetMargins write SetMargins;
     property ReadOnly:Boolean read GetReadOnly write SetReadOnly default False;
     property Selected:TGridSelection read GetSelected write SetSelected;
 

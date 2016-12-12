@@ -85,8 +85,6 @@ type
   protected
     CheckScroll : Boolean;
   public
-    Dragging : Single;
-
     Constructor Create(const AChanged:TNotifyEvent); override;
 
     {$IFNDEF AUTOREFCOUNT}

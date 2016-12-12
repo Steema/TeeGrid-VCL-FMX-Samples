@@ -60,6 +60,10 @@ type
                        const AMember:TRttiMember;
                        const AType:TRttiType):TColumn; overload; static;
 
+    function AutoWidthOf(const AType:TRttiType;
+                         const APainter:TPainter;
+                         const AColumn:TColumn):Single;
+
     procedure DoSetValue(const AColumn:TColumn; const ADest:TValue; const Value:TValue);
 
     function FinalValue(const AColumn: TColumn; const AValue:TValue):TValue; overload;

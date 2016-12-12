@@ -10,12 +10,12 @@ unit VCLTee.Editor.Format.Text;
 interface
 
 uses
-  {Winapi.}Windows, {Winapi.}Messages, {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
+  {$IFDEF MSWINDOWS}
+  {Winapi.}Windows, {Winapi.}Messages,
+  {$ENDIF}
+  {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
   {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}ComCtrls, {Vcl.}StdCtrls, Tee.Format,
   {Vcl.}ExtCtrls,
-  {$IFDEF FPC}
-  ColorBox,
-  {$ENDIF}
 
   VCLTee.Editor.Stroke, VCLTee.Editor.Brush, VCLTee.Editor.Font;
 

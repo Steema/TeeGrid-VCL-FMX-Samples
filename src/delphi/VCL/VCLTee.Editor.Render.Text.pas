@@ -9,10 +9,15 @@ unit VCLTee.Editor.Render.Text;
 interface
 
 uses
-  {Winapi.}Windows, {Winapi.}Messages, {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
+  {$IFDEF MSWINDOWS}
+  {Winapi.}Windows, {Winapi.}Messages,
+  {$ENDIF}
+  {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
   {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}ComCtrls, {Vcl.}StdCtrls, {Vcl.}ExtCtrls,
 
   VCLTee.Editor.Format.Text, VCLTee.Editor.Borders, VCLTee.Editor.Margins,
+  VCLTee.Editor.Text.Align,
+
   Tee.Renders;
 
 type
@@ -22,17 +27,14 @@ type
     TabBorders: TTabSheet;
     TabMargins: TTabSheet;
     TabAlign: TTabSheet;
-    RGVerticalAlign: TRadioGroup;
-    RGHorizAlign: TRadioGroup;
     procedure PageSelectedChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure RGHorizAlignClick(Sender: TObject);
-    procedure RGVerticalAlignClick(Sender: TObject);
   private
     { Private declarations }
 
     IText : TTextRender;
 
+    IAlign : TTextAlignEditor;
     IBorders : TBordersEditor;
     IFormat : TTextFormatEditor;
     IMargins : TMarginsEditor;
