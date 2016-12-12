@@ -4,12 +4,12 @@
 
 ### Virtual Data
 
-New small class to use TeeGrid in pure "virtual mode":  TVirtualModeData
+New small class to use TeeGrid in pure "virtual mode":  [TVirtualModeData](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.Strings.pas)
 
 This class does not keep grid cells data by itself. 
 Data is passed using two events (OnGetValue and OnSetValue).
 
-See an example at Demos\VirtualData\Virtual Mode folder
+See an example at [Demos\VirtualData\Virtual Mode](https://github.com/Steema/TeeGrid/tree/master/demos/VirtualData/Virtual%20Mode) folder
 
 ```delphi
 uses Tee.Grid.Data.Strings;
@@ -37,11 +37,13 @@ Disabled by default for speed reasons (multi-line text has extra overhead)
 TeeGrid1.Rows.Height.Automatic := True; // <--- enable multi-line text
 ```
 
+![](./img/TeeGrid_multiline_text.png)
+
 ### Custom per-Cell OnPaint event
 
 New event to enable customization of individual grid cells
 
-See Demos\VirtualData\TStringGrid folder for an example in TeeGrid_as_TStringGrid project
+See [Demos\VirtualData\TStringGrid](https://github.com/Steema/TeeGrid/tree/master/demos/VirtualData/TStringGrid) folder for an example in TeeGrid_as_TStringGrid project
 
 ```delphi
 TeeGrid1.Columns[3].OnPaint := MyPaintEvent;
@@ -50,34 +52,47 @@ procedure TMyForm.MyPaintEvent(const Sender:TColumn; var AData:TRenderData; var 
 begin
   DefaultPaint:= True; // <--- let the grid paint the cell text after this event finishes
   
-  if AData.Row=4 then  // <--- custom paint for row 4 only
+  if AData.Row=4 then
+     AData.Painter.Fill(AData.Rect,TColors.Lime)  // <-- paint cell background and continue
+  else
+  if AData.Row=6 then
   begin
-    AData.Painter.Fill(AData.Rect, TColors.Lime);
-    ...
+    DefaultPaint:=False;  // <-- we do all custom cell painting
+
+    AData.Painter.Fill(AData.Rect,TColors.Navy);
+    AData.Painter.SetFontColor(TColors.White);
+    
+    Sender.Render.Paint(AData);  // <-- do text paint
+    
+    AData.Painter.SetFontColor(TColors.Black); // <-- reset color back
   end;
 end;
 ```
 
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_Custom_Cell_Paint.png)
+
 ### Demos
 
- * New basic C++ Builder example at Demos\VCL\C++ folder
- * New example showing the new "Locked" TColumn feature at Demos\VCL\Locked Columns folder
- * New example using the TVirtualModeData at Demos\VirtualData\Virtual mode folder
+ * New basic C++ Builder example at [Demos\VCL\C++](https://github.com/Steema/TeeGrid/tree/master/demos/VCL/C%2B%2B/Basic) folder
+ * New example showing the new "Locked" TColumn feature at [Demos\VCL\Locked Columns](https://github.com/Steema/TeeGrid/tree/master/demos/VCL/Locked%20Columns) folder
+ * New example using the TVirtualModeData at [Demos\VirtualData\Virtual mode](https://github.com/Steema/TeeGrid/tree/master/demos/VirtualData/Virtual%20Mode) folder
  
  
 ### Linux support for Lazarus
 
-Fixed compilation for Lazarus under Linux (tested on Ubuntu), and other FreePascal supported platforms
+Fixed compilation bugs for Lazarus under Linux (tested on Ubuntu), and other FreePascal supported platforms
+
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_Ubuntu_Lazarus_FreePascal.png)
 
 ### Miscellaneous
 
  * Fixed Firemonkey examples to support older RAD Studio XE versions
  * Improved support for multi-line text in grid cells
  * Design-time persistence of grid Headers and Footer collections
- * New TGDIPlusPainter properties: SmoothMode and TextQuality to customize ClearType and picture rendering
- * Editor dialog to customize the GDI+ grid painter (VCLTee.Editor.Painter.GDIPlus.pas unit)
+ * New [TGDIPlusPainter](https://github.com/Steema/TeeGrid/blob/master/src/delphi/VCL/VCLTee.Painter.GdiPlus.pas) properties: SmoothMode and TextQuality to customize ClearType and picture rendering
+ * Editor dialog to customize the GDI+ grid painter ([VCLTee.Editor.Painter.GDIPlus.pas](https://github.com/Steema/TeeGrid/blob/master/src/delphi/VCL/VCLTee.Editor.Painter.GDIPlus.pas) unit)
  * New TeeGrid1.ScrollBars property (scrollbar visibility: when needed, always visible, or hidden)
- * New Sortable boolean property (default True) for BI.Grid.Data class
+ * New Sortable boolean property (default True) to enable or disable column sorting for [BI.Grid.Data](https://github.com/Steema/TeeGrid/blob/master/src/delphi/BI.Grid.Data.pas) class
  * New TPicture.Stretch boolean property (experimental, might change to an enum in next releases)
  * New Margins and AllowResize property for all TColumnBand derived classes like TeeGrid1.Header and Totals
  * Several fixes to improve scrolling (VCL and Firemonkey)
