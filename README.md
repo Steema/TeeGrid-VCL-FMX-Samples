@@ -3,13 +3,14 @@
 
 ## Lightweight full-featured Grid / Tabular control
 
-### For Embarcadero RAD Studio, Delphi and C++, VCL and Firemonkey frameworks and Lazarus FreePascal
+### For Embarcadero RAD Studio, Delphi and C++, VCL and Firemonkey frameworks (all platforms), and Lazarus FreePascal (Windows, Linux, etc)
 
 Written from scratch (not derived from TCustomGrid or TGrid), aprox 10K lines of code and 100K compiled size.
 
 Full **source code** and automatic installer:
 
-[Download latest version](http://www.steebi.com/files/code/beta/vcl_fmx/teegrid/index.htm) **Nov-30th, v0.3 Beta**
+### [Download latest version](http://www.steebi.com/files/code/beta/vcl_fmx/teegrid/index.htm) **Dec-12th, v0.4 Beta**
+
 
 
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_FMX.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_FMX.png)
