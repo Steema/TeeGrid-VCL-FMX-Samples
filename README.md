@@ -45,26 +45,33 @@ Manually:
 
 TeeGrid is **"data-agnostic"**
 
-Data must be provided to TeeGrid using a data provider class, manually created.
+The "DataSource" property can be used not only with TDataSource or TDataSet but also with other component classes.
 
-The reason is TeeGrid has no dependencies on database units (DB.pas) or any TDataset component.
+Custom Data can also be set to TeeGrid using a data provider class, manually created by code.
 
-This enables linking a TeeGrid to any kind of data, like a TDataset, TDataSource, arrays of objects or records or a generic TList using Rtti, a TCollection, TeeBI TDataItem structures or any other source, including your own custom "virtual data" class.
+TeeGrid has no dependencies on database units (DB.pas) or any TDataset component.
+
+This enables linking a TeeGrid to any kind of data, like a TDataset, TDataSource, arrays of objects or records or a generic TList using Rtti, a TCollection, TeeBI TDataItem structures, pure "Virtual Mode" or any other source, including your own custom "virtual data" class.
 
 Several classes are provided to bind data to TeeGrid, like:
 
-- TVirtualData<T> in Tee.Grid.Data.Rtti unit (for arrays, generic TList etc)
+- TVirtualModeData in [Tee.Grid.Data.Strings](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.Strings.pas) unit, to use OnGet and OnSet events
+
+- TVirtualData<T> in [Tee.Grid.Data.Rtti](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.Rtti.pas) unit (for records, arrays, generic TList, collections etc)
 
 - TVirtualDBData in [Tee.Grid.Data.DB](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.DB.pas) unit (for TDataSource and TDataSet)
 
 - TBIGridData in [BI.Grid.Data](https://github.com/Steema/TeeGrid/blob/master/src/delphi/BI.Grid.Data.pas) unit (for [TeeBI](https://github.com/Steema/BI) TDataItem objects)
 
-- TStringData in Tee.Grid.Data.Strings unit (to emulate a TStringGrid)
+- TStringData in [Tee.Grid.Data.Strings](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.Strings.pas) unit (to emulate a TStringGrid with "Cells[col,row]" property)
 
 Examples:
 
 ```delphi
-// From a TDataSource:
+// From a TDataSource or TDataSet:
+TeeGrid1.DataSource:= DataSource1;  // <-- FDQuery1 etc
+
+// From a TDataSource creating a class:
 TeeGrid1.Data:= TVirtualDBData.From(DataSource1);
 
 // From an array:
@@ -76,6 +83,13 @@ TeeGrid1.Data:=TVirtualArrayData<TPerson>.Create(MyData);
 var MyData : TDataItem;
 MyData := TStore.Load('SQLite_Demo')['Products'];
 TeeGrid1.Data := TBIGridData.Create(TeeGrid1.Grid, MyData );
+
+// Emulating a TStringGrid:
+var MyData : TStringsData;
+MyData:= TStringsData.Create(10, 1000); // 10 columns, 1000 rows
+TeeGrid1.Data:= MyData;
+...
+MyData.Cells[4,50]:= 'Hello';
 ```
 
 
@@ -87,11 +101,11 @@ TeeGrid1.Data := TBIGridData.Create(TeeGrid1.Grid, MyData );
 TeeGrid is capable of handling a very big number of cells.
 For example **1 billion** cells ( 1000 columns by 1 million rows ).
 
-The only limit is the available memory, (compile for the 64bit platform).
+The only limit is the memory used by your own data, (compile for the 64bit platform for more than 2GB/3GB).
 
 - Virtual data 
 
-TVirtualData or derived class to automatically create columns and provide cell values
+TVirtualModeData class to automatically create columns and provide cell values using OnGet and OnSet events.
 
 - TStringGrid emulation
 
@@ -129,48 +143,72 @@ TeeGrid1.Columns.AddColumn('My Column 1').Items.AddColumn('Sub-Column 1')...
 TeeGrid1.Columns[3].Format.Font.Size:= 14;
 ```
 
+
+- Per-cell custom paint using OnPaint event
+
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_Custom_Cell_Paint.png)
+
+- Locked columns to left or right grid edges
+
+```delphi
+TeeGrid1.Columns[4].Locked:= TColumnLocked.Left;
+```
+
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_Locked_Columns.gif)
+
 - Individual row heights (per-row custom height)
 
 ```delphi
 TeeGrid1.Rows.Heights[3]:= 50; 
 ```
 
+- Automatic multi-line text in cells
+
+```delphi
+TeeGrid1.Rows.Height.Automatic:= True;  // <-- every row can be of different height
+```
+
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_multiline_text.png)
+
 - Row groups
 
-Any row can be expanded to show its detail sub-grid rows.
+Any row can be expanded to show its detail sub-grid rows (recursive grids-in-grids)
 The grid Data class must support master-detail relationships.
 
-A TBIGridData class is provided to link TeeBI TDataItem data objects supporting master-detail
+For example, the TBIGridData class is provided to link TeeBI TDataItem data objects supporting master-detail.
+
 See ["TeeBI_Customer_Orders"](https://github.com/Steema/TeeGrid/tree/master/demos/VCL/TeeBI/Customer_Orders) example.
+
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_DetailRows.png)
 
 - Totals and SubTotals
 
-Automatic summary "grid bands" can be added to a header or footer, also for "detail" subgrids.
+Automatic summary "grid bands" can be added to any grid header or footer, and also to "detail" subgrids.
 
 ```delphi
 var Totals : TColumnTotals;
-Totals:= TColumnTotals.From(TeeGrid1.Data, TeeGrid1.Columns);
+Totals:= TColumnTotals.Create(TeeGrid1.Footer);
 
-Totals.Calculation.Add( TeeGrid1.Columns['Quantity'], TColumnCalculation.Sum);
-
-// Add band to grid footer
-TeeGrid1.Footer.Add(Totals);
+Totals.Calculation.Add( 'Quantity', TColumnCalculation.Sum);
 
 // Add also a band with total names
-TeeGrid1.Footer.Add( TTotalsHeader.CreateTotals( Totals ) );
+TTotalsHeader.CreateTotals( TeeGrid1.Footer, Totals ) );
 ```
 
 - Row "Sub-Bands"
 
 Any row might display a grid band above the row.
-The "band" can be anything, from a simple TTitleBand to a complex group of bands or rows.
+The "band" can be anything, from a simple TTextBand to a complex group of bands or rows.
 
 ```delphi
-var Title: TTitleBand;
-Title:= TTitleBand.Create;
+var Title: TTextBand;
+Title:= TTextBand.Create(TeeGrid1.Rows.SubBands);
 Title.Text:='My Rows';
+
 TeeGrid1.Rows.SubBands[23]:= Title;
 ```
+
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_SubTitle_Rows.png)
 
 - Custom cell rendering
 
@@ -207,11 +245,11 @@ Dragging the left mouse button in a column header edge resizes it
 
 - Automatic scroll bars visibility
 
-Scrollbars are automatically displayed when necessary.
-In Firemonkey they can be customized:
+Scrollbars are automatically displayed when necessary, or they can be forced visible or hidden.
 
 ```delphi
 TeeGrid1.ScrollBars.Vertical.Width:=50;
+TeeGrid1.ScrollBars.Horizontal.Visible:= TScrollBarVisible.Hide; // <-- Automatic, Show or Hide
 ```
 
 - Column ordering
@@ -228,6 +266,8 @@ TeeGrid1.Columns[2].Index:= 0;  // move 2nd column to first (left-most) position
 TeeGrid1.Columns[0].Header.Text:= 'My Column';
 TeeGrid1.Columns[0].Header.Format.Font.Color:= TAlphaColors.Red;
 ```
+
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_Formatting.png)
 
 - Grid Header mouse-hover 
 
@@ -265,6 +305,8 @@ TeeGrid1.Selected.Range.ToColumn:= TeeGrid1.Columns[6];
 TeeGrid1.Selected.Range.FromRow:= 10;
 TeeGrid1.Selected.Range.ToRow:= 15;
 ```
+
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_SubTotals_Range_Select_CSV_Footer.png)
 
 - Copy selected cells to clipboard in CSV format, pressing Ctrl+C or Ctrl+Insert key and also by code:
 
@@ -339,7 +381,7 @@ The usual Onxxx events:
 **TeeGrid-specific events:**
 
   * OnNewDetail (called when a row is expanded to show a sub-grid)
-  * OnPaint (at TColumn, to paint individual cells)
+  * OnPaint (at TColumn class, to paint individual cells)
   * OnShowEditor (called when a cell editor is about to be displayed)
 
 
@@ -361,9 +403,19 @@ uses VCLTee.Editor.Grid;
 TTeeGridEditor.Edit(Self,TeeGrid1);
 ```
 
-### Wish-List, Pending Features
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_Bands_Editor.png)
 
-- Fixed columns (left and right aligned)
+
+
+- "Ticker" class
+
+Update grid cell changes using a background thread with optional fade-out colors
+
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_Ticker.gif)
+
+
+
+### Wish-List, Pending Features
 
 - Using TStringGrid with TeeBI expressions to build a Spreadsheet (Excel like) control
 
@@ -373,7 +425,9 @@ TTeeGridEditor.Edit(Self,TeeGrid1);
 
 - Easy embeddable controls in cells or rows.
 
-To for example display sub-grids or TeeCharts below a row or inside a cell.
+  A new TControlRender class to for example display sub-grids or TeeCharts below a row or inside a cell.
+
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_embedded_TeeChart.png)
 
 - Compositions (several texts, images, etc inside the same cell)
 
@@ -383,5 +437,9 @@ To for example display sub-grids or TeeCharts below a row or inside a cell.
 
 - Automatic row sorting, filtering and searching
 
-Note: Row sorting, filtering and searching is already possible with TeeBI TBIGrid control.
+  Note: Row sorting, filtering and searching is already possible with TeeBI TBIGrid control.
 
+
+### Lazarus / FreePascal and Ubuntu Linux
+
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_Ubuntu_Lazarus_FreePascal.png)
