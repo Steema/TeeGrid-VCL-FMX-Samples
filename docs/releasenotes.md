@@ -84,6 +84,17 @@ Fixed compilation bugs for Lazarus under Linux (tested on Ubuntu), and other Fre
 
 ![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_Ubuntu_Lazarus_FreePascal.png)
 
+### Locked Columns
+
+Any grid column can be "locked" to a grid edge (left or right), multiple columns too.
+
+```delphi
+TeeGrid1.Columns[3].Locked:= TColumnLocked.Left;
+```
+
+![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_Locked_Columns.gif)
+
+
 ### Miscellaneous
 
  * Fixed Firemonkey examples to support older RAD Studio XE versions
