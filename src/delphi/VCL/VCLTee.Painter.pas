@@ -98,6 +98,7 @@ type
 
     procedure SetBrush(const ABrush:TBrush); override;
     procedure SetFont(const AFont:TFont); override;
+    procedure SetFontColor(const AColor:TColor); override;
     procedure SetHorizontalAlign(const Value:THorizontalAlign); override;
     procedure SetStroke(const AStroke:TStroke); override;
     procedure SetVerticalAlign(const Value:TVerticalAlign); override;
