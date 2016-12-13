@@ -76,6 +76,7 @@ type
 
     procedure SetBrush(const ABrush:TBrush); virtual; abstract;
     procedure SetFont(const AFont:TFont); virtual; abstract;
+    procedure SetFontColor(const AColor:TColor); virtual; abstract;
     procedure SetHorizontalAlign(const Align:THorizontalAlign); virtual; abstract;
     procedure SetStroke(const AStroke:TStroke); virtual; abstract;
     procedure SetVerticalAlign(const Align:TVerticalAlign); virtual; abstract;
