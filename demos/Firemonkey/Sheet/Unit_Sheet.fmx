@@ -1,0 +1,60 @@
+object FormSheet: TFormSheet
+  Left = 0
+  Top = 0
+  Caption = 'TeeGrid Sheet'
+  ClientHeight = 480
+  ClientWidth = 640
+  Position = OwnerFormCenter
+  WindowState = wsMaximized
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object LayoutTools: TLayout
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 113.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+  end
+  object TabSheets: TTabControl
+    Align = Client
+    PopupMenu = PopupTabs
+    Size.Width = 640.000000000000000000
+    Size.Height = 336.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    TabPosition = PlatformDefault
+    OnChange = TabSheetsChange
+  end
+  object LayoutExpression: TLayout
+    Align = Top
+    Position.Y = 113.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 31.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+  end
+  object MainMenu1: TMainMenu
+    Left = 56
+    Top = 168
+  end
+  object PopupTabs: TPopupMenu
+    OnPopup = PopupTabsPopup
+    Left = 80
+    Top = 256
+    object InsertTab: TMenuItem
+      Text = '&Insert...'
+      OnClick = InsertTabClick
+    end
+    object DeleteTab: TMenuItem
+      Text = '&Delete'
+      OnClick = DeleteTabClick
+    end
+    object RenameTab: TMenuItem
+      Text = '&Rename...'
+      OnClick = RenameTabClick
+    end
+  end
+end
