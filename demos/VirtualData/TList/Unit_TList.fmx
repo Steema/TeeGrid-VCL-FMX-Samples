@@ -23,17 +23,44 @@ object FormGridTList: TFormGridTList
         'Black'
         'iOS'
         'Android')
-      Position.X = 472.000000000000000000
+      Position.X = 504.000000000000000000
       Position.Y = 16.000000000000000000
       TabOrder = 0
       OnChange = CBThemeChange
     end
-    object CheckBox1: TCheckBox
-      Position.X = 264.000000000000000000
+    object CBScrollBar: TCheckBox
+      IsChecked = True
+      Position.X = 328.000000000000000000
       Position.Y = 16.000000000000000000
+      Size.Width = 161.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
       TabOrder = 1
-      Text = 'CheckBox1'
-      OnChange = CheckBox1Change
+      Text = 'Bottom ScrollBar'
+      OnChange = CBScrollBarChange
+    end
+    object CBAncestor: TCheckBox
+      Position.X = 8.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 97.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = '&Ancestor'
+      OnChange = CBAncestorChange
+    end
+    object CBExample: TComboBox
+      Items.Strings = (
+        'TList<TPerson>'
+        'TObjectList<TCar>')
+      ItemIndex = 0
+      Position.X = 120.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 177.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      OnChange = CBExampleChange
     end
   end
   object TeeGrid1: TTeeGrid

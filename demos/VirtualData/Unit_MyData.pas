@@ -26,11 +26,15 @@ type
     Height : Single;
   end;
 
-  TCar=class(TPersistent)
+  TVehicle=class(TPersistent)  // <-- ancestor class
+  public
+    Brand : String;
+  end;
+
+  TCar=class(TVehicle)
   private
     FSpeed : Double;
   public
-    Name : String;
     Wheels : Word;
     Driver : TPerson;
 
@@ -110,7 +114,7 @@ begin
   end;
 end;
 
-function RandomCarName:String;
+function RandomCarBrand:String;
 begin
   case Random(5) of
     0: result:='Ford';
@@ -127,7 +131,7 @@ function RandomCar:TCar;
 begin
   result:=TCar.Create;
 
-  result.Name:=RandomCarName;
+  result.Brand:=RandomCarBrand;
 
   result.Wheels:=2+Random(3)*2;
   result.Speed:=50+Random(200);

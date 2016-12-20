@@ -16,13 +16,21 @@ type
     Layout1: TLayout;
     TeeGrid1: TTeeGrid;
     CBTheme: TComboBox;
-    CheckBox1: TCheckBox;
+    CBScrollBar: TCheckBox;
+    CBAncestor: TCheckBox;
+    CBExample: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure CBThemeChange(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure CheckBox1Change(Sender: TObject);
+    procedure CBScrollBarChange(Sender: TObject);
+    procedure CBAncestorChange(Sender: TObject);
+    procedure CBExampleChange(Sender: TObject);
   private
     { Private declarations }
+
+    procedure CarsExample;
+    procedure CreateExample;
+    procedure PersonsExample;
   public
     { Public declarations }
   end;
@@ -41,6 +49,11 @@ uses
 
   Unit_MyData, System.Generics.Collections, Tee.Grid.Themes;
 
+// sample data variables
+var
+  MyPersons : TList<TPerson>;
+  MyCars    : TList<TCar>;
+
 // Example of applying "Themes" to a grid
 procedure TFormGridTList.CBThemeChange(Sender: TObject);
 begin
@@ -52,46 +65,81 @@ begin
   end;
 end;
 
-var
-  MyData : TList<TPerson>;  // <-- sample data variable
-
-procedure TFormGridTList.CheckBox1Change(Sender: TObject);
+procedure TFormGridTList.CBAncestorChange(Sender: TObject);
 begin
-  if CheckBox1.IsChecked then
-     TeeGrid1.ScrollBars.Horizontal.Visible:=TScrollBarVisible.Hide
-  else
-     TeeGrid1.ScrollBars.Horizontal.Visible:=TScrollBarVisible.Automatic;
+  CreateExample;
 end;
 
-procedure TFormGridTList.FormCreate(Sender: TObject);
+procedure TFormGridTList.CBExampleChange(Sender: TObject);
 begin
-  MyData:=TList<TPerson>.Create;
+  CreateExample;
+end;
 
-  FillMyData(MyData,20);
+procedure TFormGridTList.CBScrollBarChange(Sender: TObject);
+begin
+  if CBScrollBar.IsChecked then
+     TeeGrid1.ScrollBars.Horizontal.Visible:=TScrollBarVisible.Automatic
+  else
+     TeeGrid1.ScrollBars.Horizontal.Visible:=TScrollBarVisible.Hide;
+end;
 
+procedure TFormGridTList.PersonsExample;
+begin
   // Set Data from TList<TPerson>
-  TeeGrid1.Data:=TVirtualListData<TPerson>.Create(MyData);
+  TeeGrid1.Data:=TVirtualListData<TPerson>.Create(MyPersons,
+                            [TMemberVisibility.mvPublic,TMemberVisibility.mvPublished],
+                            TRttiMembers.Both,
+                            CBAncestor.IsChecked);
 
 // Alternative way:
-//  TeeGrid1.Data:=TVirtualData<TList<TPerson>>.Create(MyData);
+//  TeeGrid1.Data:=TVirtualData<TList<TPerson>>.Create(MyPersons....);
 
 // Optional parameters:
-//  TeeGrid1.Data:=TVirtualListData<TPerson>.Create(MyData,
+//  TeeGrid1.Data:=TVirtualListData<TPerson>.Create(MyPersons,
 //               [TMemberVisibility.mvPublic,TMemberVisibility.mvPublished],
-//               TRttiMembers.Both
+//               TRttiMembers.Both,
+//               True <--- use ancestor classes
 //          );
 
 
 // Alternative way, using TeeBI:
-//  TeeGrid1.Data:=TBIGridData.FromList<TPerson>(MyData);
+//  TeeGrid1.Data:=TBIGridData.FromList<TPerson>(MyPersons);
+end;
 
+procedure TFormGridTList.CarsExample;
+begin
+  // Set Data from TList<TCar>
+  TeeGrid1.Data:=TVirtualListData<TCar>.Create(MyCars,
+                            [TMemberVisibility.mvPublic,TMemberVisibility.mvPublished],
+                            TRttiMembers.Both,
+                            CBAncestor.IsChecked);
+end;
+
+procedure TFormGridTList.CreateExample;
+begin
+  if CBExample.ItemIndex=0 then
+     PersonsExample
+  else
+     CarsExample;
+end;
+
+procedure TFormGridTList.FormCreate(Sender: TObject);
+begin
+  MyPersons:=TList<TPerson>.Create;
+  FillMyData(MyPersons,20);
+
+  MyCars:=TObjectList<TCar>.Create;
+  FillMyData(MyCars,20);
+
+  CreateExample;
 
   TeeGrid1.Rows.Height.Automatic:=True;
 end;
 
 procedure TFormGridTList.FormDestroy(Sender: TObject);
 begin
-  MyData.Free;
+  MyPersons.Free;
+  MyCars.Free;
 end;
 
 end.
