@@ -23,11 +23,12 @@ type
   private
     { Private declarations }
 
+    IChanging : Boolean;
+
     Sheet : TSheet;
 
     FOnChangeCurrent : TNotifyEvent;
 
-    function Parse(const S:String; out AColumn:TColumn; out ARow:Integer):Boolean;
     function SelectedCellText:String;
     function SelectedColumn:TColumn;
     function SelectedToString:String;
@@ -54,65 +55,6 @@ uses
 
 { TSheetTools }
 
-function IsAZ(const C:Char):Boolean;
-const
-  A=Ord('A');
-  Z=Ord('Z');
-begin
-  result:=(Ord(C)>=A) and (Ord(C)<=Z);
-end;
-
-function Letters(var S:String):String;
-var C : Char;
-begin
-  result:='';
-
-  while S<>'' do
-  begin
-    C:=UpCase(S[1]);
-
-    if IsAZ(C) then
-    begin
-      result:=result+C;
-      Delete(S,1,1);
-    end
-    else
-      break;
-  end;
-end;
-
-function TSheetExpression.Parse(const S:String; out AColumn:TColumn; out ARow:Integer):Boolean;
-var tmp,
-    tmpCol : String;
-begin
-  tmp:=Trim(S);
-
-  result:=tmp<>'';
-
-  if result then
-  begin
-    tmpCol:=Letters(tmp);
-
-    result:=tmpCol<>'';
-
-    if result then
-    begin
-      AColumn:=Sheet.Grid.Columns.FindFirst(tmpCol);
-
-      result:=AColumn<>nil;
-
-      if result then
-         if TryStrToInt(tmp,ARow) then
-         begin
-           result:=ARow>0;
-
-           if result then
-              ARow:=ARow-1;
-         end;
-    end;
-  end;
-end;
-
 function TSheetExpression.TryChangeSelected:Boolean;
 var tmp : String;
     tmpColumn : TColumn;
@@ -120,7 +62,7 @@ var tmp : String;
 begin
   tmp:=Trim(CBCurrent.Text);
 
-  result:=Parse(tmp,tmpColumn,tmpRow);
+  result:=Sheet.Data.Parse(tmp,tmpColumn,tmpRow);
 
   if result then
   begin
@@ -131,7 +73,8 @@ end;
 
 procedure TSheetExpression.CBCurrentChange(Sender: TObject);
 begin
-  TryChangeSelected;
+  if not IChanging then
+     TryChangeSelected;
 end;
 
 procedure TSheetExpression.CBCurrentExit(Sender: TObject);
@@ -151,7 +94,8 @@ end;
 
 procedure TSheetExpression.CBFormulaChange(Sender: TObject);
 begin
-  CBFormulaExit(Self);
+  if not IChanging then
+     CBFormulaExit(Self);
 end;
 
 procedure TSheetExpression.CBFormulaExit(Sender: TObject);
@@ -183,8 +127,13 @@ procedure TSheetExpression.Refresh(const ASheet: TSheet);
 begin
   Sheet:=ASheet;
 
-  RefreshSelected;
-  RefreshFormula;
+  IChanging:=True;
+  try
+    RefreshSelected;
+    RefreshFormula;
+  finally
+    IChanging:=False;
+  end;
 end;
 
 function TSheetExpression.SelectedCellText:String;
@@ -204,19 +153,37 @@ begin
       result:=Sheet.Data.Formulas[tmp.Index,tmpRow];
 
       if result='' then
-         result:=Sheet.Data.Cells[tmp.Index,tmpRow];
+         result:=Sheet.Data.Cells[tmp.Index,tmpRow]
+      else
+         result:='='+result;
     end;
   end;
 end;
 
 procedure TSheetExpression.RefreshSelected;
+var Old : Boolean;
 begin
-  CBCurrent.Text:=SelectedToString;
+  Old:=IChanging;
+
+  IChanging:=True;
+  try
+    CBCurrent.Text:=SelectedToString;
+  finally
+    IChanging:=Old;
+  end;
 end;
 
 procedure TSheetExpression.RefreshFormula;
+var Old : Boolean;
 begin
-  CBFormula.Text:=SelectedCellText;
+  Old:=IChanging;
+
+  IChanging:=True;
+  try
+    CBFormula.Text:=SelectedCellText;
+  finally
+    IChanging:=Old;
+  end;
 end;
 
 function TSheetExpression.SelectedColumn:TColumn;

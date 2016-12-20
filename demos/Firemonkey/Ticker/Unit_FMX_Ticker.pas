@@ -21,13 +21,14 @@ type
     TBSpeed: TTrackBar;
     LSpeed: TLabel;
     TeeGrid1: TTeeGrid;
-    Layout2: TLayout;
+    LayoutEditor: TLayout;
     Timer1: TTimer;
     procedure Timer1Timer(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure TBSpeedChange(Sender: TObject);
+    procedure FormResize(Sender: TObject);
   private
     { Private declarations }
 
@@ -35,6 +36,9 @@ type
     Ticker : TGridTicker;
 
     //TickerEditor : TGridTickerEditor;
+
+    const
+      Product='Product';
 
     procedure ColumnTextAlign;
     procedure CustomFormat;
@@ -54,7 +58,7 @@ implementation
 {$R *.fmx}
 
 uses
-  Tee.Grid.Columns,
+  Tee.Grid.Columns, FMXTee.Editor.Grid.Ticker,
 
   // Just for inline hints:
   Tee.Painter, Tee.Grid, Tee.Format, Tee.Grid.RowGroup;
@@ -80,12 +84,26 @@ begin
   // Create Ticker
   Ticker:=TGridTicker.Create(TeeGrid1.Grid.Current);
 
-  //TickerEditor:=TGridTickerEditor.Embedd(Self,PanelEditor,Ticker);
+  TGridTickerEditor.Embedd(Self,LayoutEditor,Ticker);
 end;
 
 procedure TTickerForm.FormDestroy(Sender: TObject);
 begin
   Ticker.Free; // avoid memory leak
+end;
+
+procedure TTickerForm.FormResize(Sender: TObject);
+begin
+  if Width>Height then
+  begin
+    LayoutEditor.Align:=TAlignLayout.Right;
+    LayoutEditor.Width:=300;
+  end
+  else
+  begin
+    LayoutEditor.Align:=TAlignLayout.Bottom;
+    LayoutEditor.Height:=234;
+  end;
 end;
 
 procedure TTickerForm.FormShow(Sender: TObject);
@@ -103,19 +121,23 @@ end;
 procedure TTickerForm.Timer1Timer(Sender: TObject);
 var Col, Row : Integer;
 
+    tmp : TColumn;
+
     OldValue : Integer;
 begin
   // Choose a random cell
   RandomCell(Col,Row);
 
+  tmp:=TeeGrid1.Columns[Col];
+
   // Get current cell value
-  OldValue:=StrToInt(Data.AsString(TeeGrid1.Columns[Col],Row));
+  OldValue:=StrToInt(Data.AsString(tmp,Row));
 
   // Add some random and set new value to grid data
-  Data[Col,Row]:=IntToStr(OldValue+Random(100)-50);
+  Data.SetValue(tmp,Row,IntToStr(OldValue+Random(100)-50));
 
   // Update Ticker
-  Ticker.Change(Col,Row,OldValue);
+  Ticker.Change(Data.IndexOf(tmp),Row,OldValue);
 end;
 
 // Just fill grid cells with random values
@@ -155,7 +177,7 @@ end;
 // Initialize data headers
 procedure TTickerForm.FillNames;
 begin
-  Data.Headers[0]:='Product';
+  Data.Headers[0]:=Product;
   Data.Headers[1]:='Sales';
   Data.Headers[2]:='Stock';
   Data.Headers[3]:='Orders';
@@ -180,7 +202,12 @@ end;
 // Return a random cell coordinate (Column and Row)
 procedure TTickerForm.RandomCell(out ACol,ARow:Integer);
 begin
-  ACol:=1+Random(TeeGrid1.Columns.Count-1);
+  // Choose a column different than the "Product" column
+  repeat
+    ACol:=Random(TeeGrid1.Columns.Count);
+  until TeeGrid1.Columns[ACol].Header.Text<>Product;
+
+  // Random row
   ARow:=Random(TeeGrid1.Data.Count);
 end;
 

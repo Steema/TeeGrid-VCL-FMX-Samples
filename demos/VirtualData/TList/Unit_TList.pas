@@ -35,6 +35,8 @@ implementation
 {$R *.fmx}
 
 uses
+  {System.}TypInfo,
+
   Tee.Grid.Data, Tee.Grid.Data.Rtti, Tee.Grid.Columns, Tee.Control,
 
   Unit_MyData, System.Generics.Collections, Tee.Grid.Themes;
@@ -68,10 +70,21 @@ begin
   FillMyData(MyData,20);
 
   // Set Data from TList<TPerson>
-  TeeGrid1.Data:=TVirtualData<TList<TPerson>>.Create(MyData);
+  TeeGrid1.Data:=TVirtualListData<TPerson>.Create(MyData);
 
-// Alternative way, using TeeBI
+// Alternative way:
+//  TeeGrid1.Data:=TVirtualData<TList<TPerson>>.Create(MyData);
+
+// Optional parameters:
+//  TeeGrid1.Data:=TVirtualListData<TPerson>.Create(MyData,
+//               [TMemberVisibility.mvPublic,TMemberVisibility.mvPublished],
+//               TRttiMembers.Both
+//          );
+
+
+// Alternative way, using TeeBI:
 //  TeeGrid1.Data:=TBIGridData.FromList<TPerson>(MyData);
+
 
   TeeGrid1.Rows.Height.Automatic:=True;
 end;

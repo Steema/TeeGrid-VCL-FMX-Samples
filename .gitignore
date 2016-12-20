@@ -26,3 +26,8 @@ demos/VirtualData/TList/Win32/
 demos/VirtualData/TStringGrid/Win64/
 demos/VirtualData/Virtual Mode/Win64/
 *.tmp
+demos/Firemonkey/Row_SubTitles/Android/
+demos/Firemonkey/Ticker/Android/
+demos/Firemonkey/Row_SubTitles/iOSDevice32/
+demos/Firemonkey/Ticker/iOSDevice32/
+demos/VCL/C++/Basic/Win64/

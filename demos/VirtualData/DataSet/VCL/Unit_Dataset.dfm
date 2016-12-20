@@ -11,6 +11,7 @@ object FormGridDataset: TFormGridDataset
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poOwnerFormCenter
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
@@ -30,66 +31,69 @@ object FormGridDataset: TFormGridDataset
     Columns = <
       item
         Header.Text = 'CustNo'
-        Items = <>
+        Link = 'CustNo'
       end
       item
         Header.Text = 'Company'
-        Items = <>
+        Link = 'Company'
       end
       item
         Header.Text = 'Addr1'
-        Items = <>
+        Link = 'Addr1'
       end
       item
         Header.Text = 'Addr2'
-        Items = <>
+        Link = 'Addr2'
       end
       item
         Header.Text = 'City'
-        Items = <>
+        Link = 'City'
       end
       item
         Header.Text = 'State'
-        Items = <>
+        Link = 'State'
       end
       item
         Header.Text = 'Zip'
-        Items = <>
+        Link = 'Zip'
       end
       item
         Header.Text = 'Country'
-        Items = <>
+        Link = 'Country'
       end
       item
         Header.Text = 'Phone'
-        Items = <>
+        Link = 'Phone'
       end
       item
         Header.Text = 'FAX'
-        Items = <>
+        Link = 'FAX'
       end
       item
         Header.Text = 'TaxRate'
-        Items = <>
+        Link = 'TaxRate'
       end
       item
         Header.Text = 'Contact'
-        Items = <>
+        Link = 'Contact'
       end
       item
         Header.Text = 'LastInvoiceDate'
-        Items = <>
+        Link = 'LastInvoiceDate'
       end>
     DataSource = DataSource1
-    Footer = <>
     ReadOnly = False
-    Selected.Range.FromRow = 0
-    Selected.Range.ToRow = 0
     Align = alClient
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
   end
   object Panel1: TPanel
     Left = 0
@@ -117,6 +121,21 @@ object FormGridDataset: TFormGridDataset
       Caption = '&Edit...'
       TabOrder = 1
       OnClick = Button1Click
+    end
+    object ComboSource: TComboBox
+      Left = 232
+      Top = 11
+      Width = 145
+      Height = 21
+      Style = csDropDownList
+      ItemIndex = 2
+      TabOrder = 2
+      Text = 'DataSource1'
+      OnChange = ComboSourceChange
+      Items.Strings = (
+        '(none)'
+        'ClientDataSet1'
+        'DataSource1')
     end
   end
   object DBNavigator1: TDBNavigator

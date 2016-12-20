@@ -26,8 +26,10 @@ type
     Panel2: TPanel;
     DBGrid1: TDBGrid;
     Splitter1: TSplitter;
+    ComboSource: TComboBox;
     procedure CheckBox1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure ComboSourceChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,6 +56,16 @@ end;
 procedure TFormGridDataset.CheckBox1Click(Sender: TObject);
 begin
   ClientDataSet1.Active:=CheckBox1.Checked;
+end;
+
+procedure TFormGridDataset.ComboSourceChange(Sender: TObject);
+begin
+  case ComboSource.ItemIndex of
+    0: TeeGrid1.DataSource:=nil;
+    1: TeeGrid1.DataSource:=ClientDataSet1;
+  else
+    TeeGrid1.DataSource:=DataSource1;
+  end;
 end;
 
 end.

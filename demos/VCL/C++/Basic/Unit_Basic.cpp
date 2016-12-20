@@ -23,7 +23,7 @@ __fastcall TFormTeeGridCppBasic::TFormTeeGridCppBasic(TComponent* Owner)
 
 void __fastcall TFormTeeGridCppBasic::FormCreate(TObject *Sender)
 {
-  Data = new TStringsData(10,20);
+  Data = new TStringsData(10,20,60);
 
   TeeGrid1->Data = Data;
 

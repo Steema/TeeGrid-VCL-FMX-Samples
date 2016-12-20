@@ -10,6 +10,8 @@ object FormSheet: TFormSheet
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
   DesignerMasterStyle = 0
   object LayoutTools: TLayout
     Align = Top
@@ -55,6 +57,17 @@ object FormSheet: TFormSheet
     object RenameTab: TMenuItem
       Text = '&Rename...'
       OnClick = RenameTabClick
+    end
+  end
+  object PopupColumns: TPopupMenu
+    Left = 304
+    Top = 224
+    object MenuInsertColumn: TMenuItem
+      Text = '&Insert'
+    end
+    object MenuDeleteColumn: TMenuItem
+      Text = '&Delete'
+      OnClick = MenuDeleteColumnClick
     end
   end
 end

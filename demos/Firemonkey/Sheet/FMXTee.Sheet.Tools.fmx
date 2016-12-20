@@ -35,6 +35,8 @@ object SheetTools: TSheetTools
       StyleLookup = ''
       TabOrder = 0
       Text = 'FILE'
+      ExplicitSize.cx = 41.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
     end
     object TabHome: TTabItem
       CustomIcon = <
@@ -47,6 +49,8 @@ object SheetTools: TSheetTools
       StyleLookup = ''
       TabOrder = 0
       Text = 'HOME'
+      ExplicitSize.cx = 55.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
       object LayoutClipboard: TLayout
         Align = Left
         Size.Width = 145.000000000000000000
@@ -90,6 +94,7 @@ object SheetTools: TSheetTools
           Size.Height = 15.960937500000000000
           Size.PlatformDefault = False
           Text = 'Clipboard'
+          TextSettings.FontColor = claDimgray
         end
       end
       object LayoutFont: TLayout
@@ -106,6 +111,7 @@ object SheetTools: TSheetTools
           Size.Height = 15.960937500000000000
           Size.PlatformDefault = False
           Text = 'Font'
+          TextSettings.FontColor = claDimgray
         end
       end
       object LayoutAlign: TLayout
@@ -122,6 +128,7 @@ object SheetTools: TSheetTools
           Size.Height = 16.000000000000000000
           Size.PlatformDefault = False
           Text = 'Alignment'
+          TextSettings.FontColor = claDimgray
         end
         object SBTop: TSpeedButton
           StaysPressed = True
@@ -202,6 +209,8 @@ object SheetTools: TSheetTools
       StyleLookup = ''
       TabOrder = 0
       Text = 'INSERT'
+      ExplicitSize.cx = 58.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
     end
   end
 end

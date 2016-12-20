@@ -61,7 +61,8 @@ implementation
 
 uses
   BI.DataSource, BI.Persist, BI.Grid.Data,
-  Tee.Grid.Header, Tee.Grid.Totals, Tee.Grid.Themes, Tee.Grid.Bands, Tee.Grid;
+  Tee.Grid.Header, Tee.Grid.Totals, Tee.Grid.Themes, Tee.Grid.Bands, Tee.Grid,
+  Tee.Format;
 
 procedure TFormDetailRows.Button1Click(Sender: TObject);
 begin

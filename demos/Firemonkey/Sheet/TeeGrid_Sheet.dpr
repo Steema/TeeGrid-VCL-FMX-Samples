@@ -8,7 +8,10 @@ uses
   FMXTee.Sheet.Grid in 'FMXTee.Sheet.Grid.pas',
   Tee.Sheet in 'Tee.Sheet.pas',
   FMXTee.Sheet.Expression in 'FMXTee.Sheet.Expression.pas' {SheetExpression},
-  FMXTee.Sheet.Editor.Font in 'FMXTee.Sheet.Editor.Font.pas' {SheetFontEditor};
+  FMXTee.Sheet.Editor.Font in 'FMXTee.Sheet.Editor.Font.pas' {SheetFontEditor},
+  FMXTee.Font.Family in 'FMXTee.Font.Family.pas',
+  Tee.Cell.Expression in 'Tee.Cell.Expression.pas',
+  Tee.Sheet.Data in 'Tee.Sheet.Data.pas';
 
 {$R *.res}
 

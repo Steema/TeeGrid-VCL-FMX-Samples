@@ -11,7 +11,8 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Layouts,
   FMX.Menus, FMX.TabControl,
 
-  FMXTee.Sheet.Tools, FMXTee.Sheet.Grid, FMXTee.Sheet.Expression, Tee.Sheet;
+  FMXTee.Sheet.Tools, FMXTee.Sheet.Grid, FMXTee.Sheet.Expression, Tee.Sheet,
+  Tee.Grid.Columns;
 
 type
   TFormSheet = class(TForm)
@@ -23,23 +24,31 @@ type
     InsertTab: TMenuItem;
     DeleteTab: TMenuItem;
     RenameTab: TMenuItem;
+    PopupColumns: TPopupMenu;
+    MenuInsertColumn: TMenuItem;
+    MenuDeleteColumn: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure InsertTabClick(Sender: TObject);
     procedure PopupTabsPopup(Sender: TObject);
     procedure DeleteTabClick(Sender: TObject);
     procedure TabSheetsChange(Sender: TObject);
     procedure RenameTabClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure MenuDeleteColumnClick(Sender: TObject);
   private
     { Private declarations }
 
     Expression : TSheetExpression;
     Tools : TSheetTools;
 
+    Sheets : TSheets;
+
     function AddSheet(const ATab:TTabControl):TGridSheet;
     procedure ChangedCurrent(Sender: TObject);
     function Current:TSheet;
+    function CurrentColumn:TColumn;
     function CurrentGrid: TGridSheet;
-    function NewName:String;
     procedure Prepare(const AMenu:TMainMenu);
     procedure SelectedChanged(Sender: TObject);
     procedure SelectLastTab;
@@ -55,43 +64,17 @@ implementation
 
 {$R *.fmx}
 
-function TFormSheet.NewName:String;
-
-  function Find(const AName:String):TGridSheet;
-  var t : Integer;
-  begin
-    for t:=0 to TabSheets.TabCount-1 do
-        if SameText(TabSheets.Tabs[t].Text,AName) then
-           Exit(TGridSheet(TabSheets.Tabs[t]));
-
-    result:=nil;
-  end;
-
-var tmp : Integer;
-begin
-  tmp:=1;
-
-  repeat
-    result:='Sheet'+tmp.ToString;
-
-    if Find(result)=nil then
-       break
-    else
-       Inc(tmp);
-
-  until False;
-end;
-
 function TFormSheet.AddSheet(const ATab: TTabControl): TGridSheet;
 var tmp : TTabItem;
 begin
   tmp:=ATab.Add;
-  tmp.Text:=NewName;
 
-  result:=TGridSheet.Create(Self);
+  result:=Sheets.Add.Sheet;
+
   result.Align:=TAlignLayout.Client;
   result.Parent:=tmp;
 
+  tmp.Text:=result.Sheet.Name;
   tmp.TagObject:=result;
 
   result.Grid.OnSelect:=SelectedChanged;
@@ -109,6 +92,8 @@ begin
 
   Expression.RefreshSelected;
   Expression.RefreshFormula;
+
+  Tools.Refresh(Current);
 end;
 
 procedure TFormSheet.TabSheetsChange(Sender: TObject);
@@ -145,6 +130,11 @@ begin
      result:=tmp.Sheet;
 end;
 
+function TFormSheet.CurrentColumn: TColumn;
+begin
+  result:=Current.Grid.Selected.Column;
+end;
+
 procedure TFormSheet.DeleteTabClick(Sender: TObject);
 var tmp,
     tmpCount : Integer;
@@ -163,6 +153,8 @@ end;
 
 procedure TFormSheet.FormCreate(Sender: TObject);
 begin
+  Sheets:=TSheets.Create(Self,TSheetItem);
+
   TabSheets.TabPosition:=TTabPosition.Bottom;
 
   Tools:=TSheetTools.Embedd(Self,LayoutTools);
@@ -173,6 +165,17 @@ begin
   Prepare(MainMenu1);
 
   InsertTabClick(Self);
+end;
+
+procedure TFormSheet.FormDestroy(Sender: TObject);
+begin
+  Sheets.Free;
+end;
+
+procedure TFormSheet.FormShow(Sender: TObject);
+begin
+  CurrentGrid.SetFocus;
+  CurrentGrid.Selected.Column:=CurrentGrid.Columns[1];
 end;
 
 // Switch to last tab
@@ -191,6 +194,11 @@ procedure TFormSheet.InsertTabClick(Sender: TObject);
 begin
   AddSheet(TabSheets);
   SelectLastTab;
+end;
+
+procedure TFormSheet.MenuDeleteColumnClick(Sender: TObject);
+begin
+  CurrentColumn.Free;
 end;
 
 procedure TFormSheet.PopupTabsPopup(Sender: TObject);

@@ -5,11 +5,14 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
+  FMX.Controls.Presentation, FMX.Edit, FMX.ComboEdit, FMX.StdCtrls, FMX.Colors,
 
-  Tee.Format, FMX.Controls.Presentation, FMX.Edit, FMX.ComboEdit, FMX.StdCtrls,
-  FMX.Colors;
+  Tee.Format, Tee.Renders, Tee.Sheet;
 
 type
+  TRenderChange=procedure(const Sender:TRender) of object;
+  TRenderChangeSingle=procedure(const Sender:TRender; const Value:Single) of object;
+
   TSheetFontEditor = class(TForm)
     CBFamily: TComboEdit;
     CBSize: TComboEdit;
@@ -32,18 +35,21 @@ type
   private
     { Private declarations }
 
-    IBack : TBrush;
-    IFont : TFont;
+    IChanging : Boolean;
+
+    IFormat: TTextFormat;
+    ISheet : TSheet;
 
     procedure ChangeStyle(const AButton:TSpeedButton; const AStyle:TFontStyle);
+    procedure ForceFormat;
   public
     { Public declarations }
 
     class function Embedd(const AOwner:TComponent; const AParent:TControl;
-                          const AFont:TFont;
-                          const ABack:TBrush):TSheetFontEditor; static;
+                          const AFormat:TTextFormat;
+                          const ASheet:TSheet):TSheetFontEditor; static;
 
-    procedure Refresh(const AFont:TFont; const ABack:TBrush);
+    procedure Refresh(const AFormat:TTextFormat; const ASheet:TSheet);
   end;
 
 implementation
@@ -51,137 +57,78 @@ implementation
 {$R *.fmx}
 
 uses
-  {$IFDEF MSWINDOWS}
-  Winapi.Windows,
-  {$ENDIF}
-
+  FMXTee.Font.Family,
   FMXTee.Editor.Painter.Stroke;
-
-{$IFDEF MSWINDOWS}
-function EnumFontsProc(var LogFont: TLogFont; var TextMetric: TTextMetric;
-  FontType: Integer; Data: Pointer): Integer; stdcall;
-var
-  Temp : String;
-  CBFamily : TStringList;
-begin
-  Temp := LogFont.lfFaceName;
-
-  CBFamily:=TStringList(Data);
-  if CBFamily.IndexOf(Temp)=-1 then
-     CBFamily.Add(Temp);
-
-  Result := 1;
-end;
-{$ENDIF}
-
-function InstalledFonts:TStringList;
-{$IFDEF MSWINDOWS}
-var DC : HDC;
-    LFont : TLogFont;
-{$ELSE}
-{$IFDEF MACOS}
-{$IFNDEF IOS}
-// http://delphiscience.wordpress.com/2012/11/20/getting-system-fonts-list-in-firemonkey-the-new-tplatformextensions-class/
-var
-  fManager: NsFontManager;
-  list:NSArray;
-  lItem:NSString;
-  t: Integer;
-{$ENDIF}
-{$ENDIF}
-{$ENDIF}
-begin
-  result:=TStringList.Create;
-
-  {$IFDEF MSWINDOWS}
-  DC := GetDC(0);
-  try
-    FillChar(LFont, sizeof(LFont), 0);
-    LFont.lfCharset := DEFAULT_CHARSET;
-
-    EnumFontFamiliesEx(DC, LFont, @EnumFontsProc, NativeInt(result), 0);
-  finally
-    ReleaseDC(0, DC);
-  end;
-  {$ELSE}
-
-  {$IFDEF MACOS}
-
-  {$IFDEF IOS}
-  // ??
-  {$ELSE}
-
-  fManager := TNsFontManager.Wrap(TNsFontManager.OCClass.sharedFontManager);
-  List := fManager.availableFontFamilies;
-
-  if List <> nil then
-     for t := 0 to List.Count-1 do
-     begin
-       lItem := TNSString.Wrap(List.objectAtIndex(t));
-       result.Add(String(lItem.UTF8String));
-     end;
-
-  {$ENDIF}
-
-  {$ELSE}
-
-  {$IFDEF ANDROID}
-  result.Add('Droid Sans');
-  result.Add('Droid Serif');
-  result.Add('Droid Sans Mono');
-  result.Add('Roboto');
-  {$ELSE}
-
-  {$ENDIF}
-
-  {$ENDIF}
-  {$ENDIF}
-
-  result.Sorted:=True;
-end;
 
 { TSheetFontEditor }
 
 procedure TSheetFontEditor.BColorChange(Sender: TObject);
 begin
-  IFont.Color:=BColor.Color;
+  if not IChanging then
+  begin
+    ForceFormat;
+    IFormat.Font.Color:=TColorHelper.SwapCheck(BColor.Color);
+  end;
 end;
 
 procedure TSheetFontEditor.CBBackChange(Sender: TObject);
 begin
-  IBack.Color:=CBBack.Color;
-  IBack.Show;
+  if not IChanging then
+  begin
+    ForceFormat;
+
+    IFormat.Brush.Color:=TColorHelper.SwapCheck(CBBack.Color);
+    IFormat.Brush.Show;
+  end;
 end;
 
 procedure TSheetFontEditor.CBFamilyChange(Sender: TObject);
 var tmp : String;
 begin
-  tmp:=Trim(CBFamily.Text);
+  if not IChanging then
+  begin
+    tmp:=Trim(CBFamily.Text);
 
-  if tmp<>'' then
-     IFont.Name:=tmp;
+    if tmp<>'' then
+    begin
+      ForceFormat;
+      IFormat.Font.Name:=tmp;
+    end;
+  end;
 end;
 
 procedure TSheetFontEditor.CBSizeChangeTracking(Sender: TObject);
 var tmp : String;
     tmpValue : Single;
 begin
-  tmp:=Trim(CBSize.Text);
+  if not IChanging then
+  begin
+    tmp:=Trim(CBSize.Text);
 
-  if tmp<>'' then
-     if TryStrToFloat(tmp,tmpValue) then
-        IFont.Size:=tmpValue;
+    if tmp<>'' then
+       if TryStrToFloat(tmp,tmpValue) then
+       begin
+         ForceFormat;
+         IFormat.Font.Size:=tmpValue;
+       end;
+  end;
 end;
 
 class function TSheetFontEditor.Embedd(const AOwner: TComponent;
                                        const AParent: TControl;
-                                       const AFont:TFont;
-                                       const ABack:TBrush): TSheetFontEditor;
+                                       const AFormat:TTextFormat;
+                                       const ASheet:TSheet): TSheetFontEditor;
 begin
   result:=TSheetFontEditor.Create(AOwner);
 
-  result.Refresh(AFont,ABack);
+  result.Refresh(AFormat,ASheet);
   TStrokeEditor.AddForm(result,AParent);
+end;
+
+procedure TSheetFontEditor.ForceFormat;
+begin
+  IFormat:=ISheet.CurrentRender.Format;
+  ISheet.Grid.Rows.Height.Automatic:=True;
 end;
 
 function SizeAsString(const ASize:Single):String;
@@ -189,48 +136,71 @@ begin
   result:=FormatFloat('0.##',ASize);
 end;
 
-procedure TSheetFontEditor.Refresh(const AFont: TFont; const ABack:TBrush);
-var tmp : String;
-    tmpFonts : TStringList;
-begin
-  IFont:=AFont;
-  IBack:=ABack;
+procedure TSheetFontEditor.Refresh(const AFormat:TTextFormat; const ASheet:TSheet);
 
-  if CBFamily.Count=0 then
+  procedure RefreshFont(const AFont:TFont);
+  var tmp : String;
   begin
-    tmpFonts:=InstalledFonts;
-    try
-      CBFamily.Items:=tmpFonts;
-    finally
-      tmpFonts.Free;
+    CBFamily.ItemIndex:=CBFamily.Items.IndexOf(AFont.Name);
+
+    tmp:=SizeAsString(AFont.Size);
+
+    CBSize.ItemIndex:=CBSize.Items.IndexOf(tmp);
+
+    if CBSize.ItemIndex=-1 then
+       CBSize.Text:=tmp;
+
+    SBBold.IsPressed:=TFontStyle.fsBold in AFont.Style;
+    SBItalic.IsPressed:=TFontStyle.fsItalic in AFont.Style;
+    SBUnderline.IsPressed:=TFontStyle.fsUnderline in AFont.Style;
+
+    BColor.Color:=TColorHelper.SwapCheck(AFont.Color);
+  end;
+
+  procedure TryFillFonts;
+  var tmpFonts : TStringList;
+  begin
+    if CBFamily.Count=0 then
+    begin
+      tmpFonts:=TFMXFonts.Installed;
+      try
+        CBFamily.Items:=tmpFonts;
+      finally
+        tmpFonts.Free;
+      end;
     end;
   end;
 
-  CBFamily.ItemIndex:=CBFamily.Items.IndexOf(IFont.Name);
+begin
+  ISheet:=ASheet;
+  IFormat:=AFormat;
 
-  tmp:=SizeAsString(IFont.Size);
-
-  CBSize.ItemIndex:=CBSize.Items.IndexOf(tmp);
-
-  if CBSize.ItemIndex=-1 then
-     CBSize.Text:=tmp;
-
-  SBBold.IsPressed:=TFontStyle.fsBold in IFont.Style;
-  SBItalic.IsPressed:=TFontStyle.fsItalic in IFont.Style;
-  SBUnderline.IsPressed:=TFontStyle.fsUnderline in IFont.Style;
-
-  CBBack.Color:=TColorHelper.SwapCheck(IBack.Color);
-  BColor.Color:=TColorHelper.SwapCheck(IFont.Color);
+  IChanging:=True;
+  try
+    TryFillFonts;
+    RefreshFont(IFormat.Font);
+    CBBack.Color:=TColorHelper.SwapCheck(IFormat.Brush.Color);
+  finally
+    IChanging:=False;
+  end;
 end;
 
 procedure TSheetFontEditor.ChangeStyle(const AButton:TSpeedButton; const AStyle:TFontStyle);
-begin
-//  AButton.IsPressed:=not AButton.IsPressed;
 
-  if AButton.IsPressed then
-     IFont.Style:=IFont.Style+[AStyle]
-  else
-     IFont.Style:=IFont.Style-[AStyle];
+  procedure DoChange(const AFont:TFont);
+  begin
+    if AButton.IsPressed then
+       AFont.Style:=AFont.Style+[AStyle]
+    else
+       AFont.Style:=AFont.Style-[AStyle];
+  end;
+
+begin
+  if not IChanging then
+  begin
+    ForceFormat;
+    DoChange(IFormat.Font);
+  end;
 end;
 
 procedure TSheetFontEditor.SBBoldClick(Sender: TObject);
@@ -250,13 +220,17 @@ end;
 
 procedure TSheetFontEditor.SpeedButton1Click(Sender: TObject);
 begin
-  CBSize.Text:=SizeAsString(IFont.Size+1);
+  ForceFormat;
+  CBSize.Text:=SizeAsString(IFormat.Font.Size+1);
 end;
 
 procedure TSheetFontEditor.SpeedButton2Click(Sender: TObject);
 begin
-  if IFont.Size>6 then
-     CBSize.Text:=SizeAsString(IFont.Size-1);
+  if IFormat.Font.Size>6 then
+  begin
+    ForceFormat;
+    CBSize.Text:=SizeAsString(IFormat.Font.Size-1);
+  end;
 end;
 
 end.

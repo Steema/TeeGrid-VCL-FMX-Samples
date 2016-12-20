@@ -3,11 +3,11 @@ object Form1: TForm1
   Height = 653
   Top = 150
   Width = 779
-  Caption = 'Form1'
+  Caption = 'TeeGrid DataSet'
   ClientHeight = 653
   ClientWidth = 779
   OnCreate = FormCreate
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.6.2.0'
   object TeeGrid1: TTeeGrid
     Left = 0
     Height = 603
@@ -20,6 +20,13 @@ object Form1: TForm1
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <      
+        item
+        end>
+    )
   end
   object Panel1: TPanel
     Left = 0
@@ -27,7 +34,6 @@ object Form1: TForm1
     Top = 0
     Width = 779
     Align = alTop
-    Caption = 'Panel1'
     ClientHeight = 50
     ClientWidth = 779
     TabOrder = 1
@@ -43,7 +49,7 @@ object Form1: TForm1
   end
   object DataSource1: TDataSource
     DataSet = Dbf1
-    left = 160
+    left = 168
     top = 64
   end
   object Dbf1: TDbf

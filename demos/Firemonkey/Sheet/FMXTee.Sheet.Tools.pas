@@ -50,6 +50,7 @@ type
     IFont : TSheetFontEditor;
 
     procedure ClearSelected;
+    function CurrentAlign:TTextAlign;
     function GetCell(out AColumn:TColumn; out ARow:Integer):Boolean;
     procedure RefreshAlign(const Align:TTextAlign);
     function SelectedText:String;
@@ -68,7 +69,8 @@ implementation
 
 uses
   System.Rtti,
-  FMXTee.Editor.Painter.Stroke, FMX.Platform;
+
+  FMXTee.Editor.Painter.Stroke, FMX.Platform, Tee.Sheet.Data;
 
 { TSheetTools }
 
@@ -145,6 +147,11 @@ begin
   result:=(AColumn<>nil) and (ARow<>-1);
 end;
 
+function TSheetTools.CurrentAlign:TTextAlign;
+begin
+  result:=Sheet.CurrentRender.TextAlign;
+end;
+
 procedure TSheetTools.RefreshAlign(const Align:TTextAlign);
 begin
   SBTop.IsPressed:=Align.Vertical=TVerticalAlign.Top;
@@ -157,44 +164,73 @@ begin
 end;
 
 procedure TSheetTools.Refresh(const ASheet: TSheet);
-var tmp : TTextFormat;
+var tmp : TSheetCell;
+    tmpRender : TRender;
+    tmpFormat : TTextFormat;
 begin
   Sheet:=ASheet;
 
-  tmp:=Sheet.Grid.Cells.Format;
-  IFont:=TSheetFontEditor.Embedd(Self,LayoutFont,tmp.Font,tmp.Brush);
+  tmp:=Sheet.CurrentCell;
 
-  RefreshAlign(Sheet.Grid.Cells.TextAlign);
+  if tmp=nil then
+     tmpRender:=nil
+  else
+     tmpRender:=tmp.Render;
+
+  if tmpRender=nil then
+     tmpRender:=Sheet.Grid.Cells;
+
+  if tmpRender is TTextRender then
+  begin
+    LayoutAlign.Enabled:=True;
+    RefreshAlign(TTextRender(tmpRender).TextAlign);
+  end
+  else
+    LayoutAlign.Enabled:=False;
+
+  if tmpRender is TFormatRender then
+  begin
+    LayoutFont.Enabled:=True;
+
+    tmpFormat:=TFormatRender(tmpRender).Format;
+
+    if IFont=nil then
+       IFont:=TSheetFontEditor.Embedd(Self,LayoutFont,tmpFormat,Sheet)
+    else
+       IFont.Refresh(tmpFormat,Sheet);
+  end
+  else
+    LayoutFont.Enabled:=False;
 end;
 
 procedure TSheetTools.SBBottomClick(Sender: TObject);
 begin
-  Sheet.Grid.Cells.TextAlign.Vertical:=TVerticalAlign.Bottom;
+  CurrentAlign.Vertical:=TVerticalAlign.Bottom;
 end;
 
 procedure TSheetTools.SBCenterClick(Sender: TObject);
 begin
-  Sheet.Grid.Cells.TextAlign.Horizontal:=THorizontalAlign.Center;
+  CurrentAlign.Horizontal:=THorizontalAlign.Center;
 end;
 
 procedure TSheetTools.SBLeftClick(Sender: TObject);
 begin
-  Sheet.Grid.Cells.TextAlign.Horizontal:=THorizontalAlign.Left;
+  CurrentAlign.Horizontal:=THorizontalAlign.Left;
 end;
 
 procedure TSheetTools.SBRightClick(Sender: TObject);
 begin
-  Sheet.Grid.Cells.TextAlign.Horizontal:=THorizontalAlign.Right;
+  CurrentAlign.Horizontal:=THorizontalAlign.Right;
 end;
 
 procedure TSheetTools.SBTopClick(Sender: TObject);
 begin
-  Sheet.Grid.Cells.TextAlign.Vertical:=TVerticalAlign.Top;
+  CurrentAlign.Vertical:=TVerticalAlign.Top;
 end;
 
 procedure TSheetTools.SBVCenterClick(Sender: TObject);
 begin
-  Sheet.Grid.Cells.TextAlign.Vertical:=TVerticalAlign.Center;
+  CurrentAlign.Vertical:=TVerticalAlign.Center;
 end;
 
 function TSheetTools.SelectedText: String;
