@@ -5,7 +5,10 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, VCLTee.Grid, TeeGDIPlus, TeEngine, Series, ExtCtrls, TeeProcs, Chart,
-  DB, TeeData;
+
+  // Tee.Grid.Data.DB,
+
+  DB, TeeData, VCLTee.Control;
 
 type
   TForm224 = class(TForm)
@@ -14,11 +17,10 @@ type
     Chart1: TChart;
     Series1: TLineSeries;
     Splitter1: TSplitter;
-    procedure FormCreate(Sender: TObject);
+    TeeGrid1: TTeeGrid;
   private
     { Private declarations }
 
-    Grid : TTeeGrid;
   public
     { Public declarations }
   end;
@@ -29,17 +31,5 @@ var
 implementation
 
 {$R *.dfm}
-
-uses
-  Tee.Grid.Data.DB;
-
-procedure TForm224.FormCreate(Sender: TObject);
-begin
-  Grid:=TTeeGrid.Create(Self);
-  Grid.Align:=alClient;
-  Grid.Parent:=Self;
-
-  Grid.Data:=TVirtualDBData.From(DataSource1);
-end;
 
 end.

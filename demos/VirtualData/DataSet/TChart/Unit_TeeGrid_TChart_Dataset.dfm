@@ -12,7 +12,6 @@ object Form224: TForm224
   Font.Style = []
   OldCreateOrder = False
   Position = poOwnerFormCenter
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
@@ -82,6 +81,7 @@ object Form224: TForm224
     DefaultCanvas = 'TGDIPlusCanvas'
     ColorPaletteIndex = 13
     object Series1: TLineSeries
+      Brush.BackColor = clDefault
       Pointer.InflateMargins = True
       Pointer.Style = psRectangle
       XValues.Name = 'X'
@@ -99,15 +99,55 @@ object Form224: TForm224
       Detail = {0000000000}
     end
   end
+  object TeeGrid1: TTeeGrid
+    Left = 596
+    Top = 0
+    Width = 527
+    Height = 659
+    Columns = <
+      item
+        Header.Text = 'Color'
+        Link = 'Color'
+      end
+      item
+        Header.Text = 'X'
+        Link = 'X'
+      end
+      item
+        Header.Text = 'Y'
+        Link = 'Y'
+      end
+      item
+        Header.Text = 'Label'
+        Link = 'Label'
+      end>
+    DataSource = DataSource1
+    ReadOnly = False
+    Align = alClient
+    UseDockManager = False
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    ExplicitLeft = 640
+    ExplicitTop = 96
+    ExplicitWidth = 400
+    ExplicitHeight = 250
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
   object DataSource1: TDataSource
     DataSet = ChartDataSet1
-    Left = 312
-    Top = 152
+    Left = 264
+    Top = 136
   end
   object ChartDataSet1: TChartDataSet
     Active = True
     Chart = Chart1
-    Left = 80
-    Top = 88
+    Left = 152
+    Top = 136
   end
 end

@@ -161,7 +161,7 @@ end;
 procedure TStringGridForm.OptimizePaintSpeed;
 begin
   // Speed optimization, disable scrollbars
-  TeeGrid1.ScrollBars.Hide;
+  TeeGrid1.ScrollBars.Visible:=False;
 
   TeeGrid1.Rows.Alternate.Hide;
   TeeGrid1.Header.Format.Brush.Gradient.Hide;
