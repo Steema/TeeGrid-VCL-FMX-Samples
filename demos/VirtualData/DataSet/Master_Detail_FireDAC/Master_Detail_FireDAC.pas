@@ -81,7 +81,11 @@ begin
     TeeGrid1.Columns[0].Render:=Expander;
   end
   else
+  begin
+    TeeGrid1.Rows.Children.Clear;
+
     TeeGrid1.Columns[0].Render:=nil;
+  end;
 end;
 
 procedure TMasterDetail.DetailNewGroup(const Sender,NewGroup:TRowGroup);
