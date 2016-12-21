@@ -1,0 +1,92 @@
+object MasterDetail: TMasterDetail
+  Left = 0
+  Top = 0
+  Caption = 'TeeGrid - FireDAC Master-Detail Example'
+  ClientHeight = 629
+  ClientWidth = 817
+  Position = OwnerFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object TeeGrid1: TTeeGrid
+    Columns = <
+      item
+        Format.Font.Style = [fsBold]
+        Header.Text = 'CustomerID'
+        ParentFormat = False
+        Link = 'CustomerID'
+      end
+      item
+        Header.Text = 'CompanyName'
+        Link = 'CompanyName'
+      end
+      item
+        Header.Text = 'ContactName'
+        Link = 'ContactName'
+      end
+      item
+        Header.Text = 'ContactTitle'
+        Link = 'ContactTitle'
+      end
+      item
+        Header.Text = 'Address'
+        Link = 'Address'
+      end
+      item
+        Header.Text = 'City'
+        Link = 'City'
+      end
+      item
+        Header.Text = 'Region'
+        Link = 'Region'
+      end
+      item
+        Header.Text = 'PostalCode'
+        Link = 'PostalCode'
+      end
+      item
+        Header.Text = 'Country'
+        Link = 'Country'
+      end
+      item
+        Header.Text = 'Phone'
+        Link = 'Phone'
+      end
+      item
+        Header.Text = 'Fax'
+        Link = 'Fax'
+      end>
+    ReadOnly = False
+    Align = Client
+    Size.Width = 817.000000000000000000
+    Size.Height = 579.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 817.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    object CBEnabled: TCheckBox
+      IsChecked = True
+      Position.X = 16.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 185.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Enable Master-Detail'
+      OnChange = CBEnabledChange
+    end
+  end
+end
