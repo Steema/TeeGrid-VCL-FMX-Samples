@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  VCL About TeeGrid...                       }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit VCLTee.Grid.About;
@@ -10,7 +10,10 @@ unit VCLTee.Grid.About;
 interface
 
 uses
-  {Winapi.}Windows, {Winapi.}Messages, {System.}SysUtils, {System.}Variants,
+  {$IFDEF MSWINDOWS}
+  {Winapi.}Windows, {Winapi.}Messages,
+  {$ENDIF}
+  {System.}SysUtils, {System.}Variants,
   {System.}Classes, {Vcl.}Graphics,
   {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}StdCtrls, {Vcl.}ExtCtrls,
   VCLTee.Control, VCLTee.Grid,
@@ -45,9 +48,5 @@ type
 
     class procedure Show(const AOwner:TComponent); static;
   end;
-
-const
-  TeeGrid_Version='v0.4 beta';
-  TeeGrid_Version_Numeric=004;
 
 implementation

@@ -1,12 +1,16 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  VirtualData from Records and Objects       }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Grid.Data.Rtti;
 
 interface
+
+{$IF CompilerVersion>22}
+{$DEFINE NEWRTTI}
+{$IFEND}
 
 {
    Several classes to automatically link a TeeGrid with records or classes,
@@ -51,7 +55,7 @@ interface
 
 uses
   Tee.Grid.Data, Tee.Grid.Columns, Tee.Painter,
-  System.Generics.Collections, System.Rtti, System.TypInfo;
+  {System.}Generics.Collections, {System.}Rtti, {System.}TypInfo;
 
 type
   TVirtualDataRtti=class(TVirtualData)
@@ -91,13 +95,18 @@ type
     Context : TRttiContext;
 
   var
+    FAncestor : Boolean;
     FData : ^T;
     FMembers : TRttiMembers;
     FTypeInfo : PTypeInfo;
     FVisibility : TVisibility;
 
     IsDynArray : Boolean;
+
+    {$IFDEF NEWRTTI}
     IItems : TRttiIndexedProperty;
+    {$ENDIF}
+
     ICount : TRttiProperty;
     IObject : TObject;
 
@@ -105,6 +114,7 @@ type
     procedure AddProperties(const AColumns:TColumns; const AType:TRttiType);
 
     procedure DoAddColumns(const AColumns:TColumns; const AType:TRttiType);
+    procedure GuessArrayItems;
 
     procedure InternalAddType(const AColumns:TColumns;
                               const AMember:TRttiMember;
@@ -123,13 +133,14 @@ type
   public
     Constructor Create(var AData:T;
                        const AVisibility:TVisibility=[mvPublic,mvPublished];
-                       const AMembers:TRttiMembers=TRttiMembers.Both); overload;
+                       const AMembers:TRttiMembers=TRttiMembers.Both;
+                       const AAncestor:Boolean=False); overload;
 
     procedure AddColumns(const AColumns:TColumns); override;
     function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; override;
     function Count:Integer; override;
-    procedure Load; override;
+    procedure Load(const AColumns:TColumns); override;
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
   end;
 

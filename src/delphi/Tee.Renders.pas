@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  Basic Render shapes                        }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Renders;
@@ -306,15 +306,19 @@ type
 
   TExpanderEvent=function(const Sender:TRender; const ARow:Integer):Boolean of object;
 
+  TExpanderGetDataEvent=procedure(const Sender: TExpanderRender; const ARow:Integer; out AData:TObject) of object;
+
   TExpanderStyle=(PlusMinus,Triangle,Arrow);
 
   // Rectangle shape with Box to emulate a "+" "-" expander (also triangles or arrows)
   TExpanderRender=class(TBoxRender)
   private
+    FAlwaysExpand : Boolean;
     FExpandFormat : TFormat;
     FExpandLine: TStroke;
     FOnCanExpand : TExpanderEvent;
     FOnExpand : TExpanderEvent;
+    FOnGetData : TExpanderGetDataEvent;
     FOnGetExpanded : TExpanderEvent;
     FStyle : TExpanderStyle;
 
@@ -334,13 +338,16 @@ type
     procedure Paint(var AData:TRenderData); override;
     procedure PaintLines(var AData:TRenderData);
 
-    property OnCanExpand:TExpanderEvent read FOnCanExpand write FOnCanExpand;
-    property OnExpand:TExpanderEvent read FOnExpand write FOnExpand;
-    property OnGetExpanded:TExpanderEvent read FOnGetExpanded write FOnGetExpanded;
   published
+    property AlwaysExpand:Boolean read FAlwaysExpand write FAlwaysExpand;
     property ExpandFormat:TFormat read FExpandFormat write SetExpandFormat;
     property ExpandLine:TStroke read FExpandLine write SetExpandLine;
     property Style:TExpanderStyle read FStyle write SetStyle default TExpanderStyle.PlusMinus;
+
+    property OnCanExpand:TExpanderEvent read FOnCanExpand write FOnCanExpand;
+    property OnExpand:TExpanderEvent read FOnExpand write FOnExpand;
+    property OnGetData:TExpanderGetDataEvent read FOnGetData write FOnGetData;
+    property OnGetExpanded:TExpanderEvent read FOnGetExpanded write FOnGetExpanded;
   end;
 
   TOrientation=(Horizontal,Vertical);
@@ -388,13 +395,16 @@ type
   // Base class for TGridBand and TColumn
   TVisibleRenderItem=class(TCollectionItem)
   private
+    {$IFDEF AUTOREFCOUNT}[weak]{$ENDIF}
     FTagObject : TObject;
+
+    FTag : Integer;
     FVisible: Boolean;
 
     function GetRender: TRender;
+    function IsFormatStored: Boolean;
     procedure SetFormat(const Value: TTextFormat);
     procedure SetVisible(const Value: Boolean);
-    function IsFormatStored: Boolean;
   protected
     FRender: TRender;
 
@@ -414,9 +424,12 @@ type
     procedure Changed(Sender:TObject);
     function HasFormat:Boolean; inline;
     function HasRender:Boolean; inline;
+    procedure Hide;
     procedure Paint(var AData:TRenderData; const ARender:TRender); virtual;
+    procedure Show;
 
     property Render:TRender read GetRender write SetRender;
+    property Tag:Integer read FTag write FTag;
     property TagObject:TObject read FTagObject write FTagObject;
   published
     property Format:TTextFormat read GetFormat write SetFormat stored IsFormatStored;

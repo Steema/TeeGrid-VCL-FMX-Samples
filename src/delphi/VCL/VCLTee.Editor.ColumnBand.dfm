@@ -20,7 +20,7 @@ object ColumnBandEditor: TColumnBandEditor
     Top = 0
     Width = 348
     Height = 405
-    ActivePage = TabFormat
+    ActivePage = TabMouse
     Align = alClient
     TabOrder = 0
     OnChange = PageBandChange
@@ -64,6 +64,28 @@ object ColumnBandEditor: TColumnBandEditor
     object TabLines: TTabSheet
       Caption = 'Lines'
       ImageIndex = 3
+    end
+    object TabMouse: TTabSheet
+      Caption = 'Mouse'
+      ImageIndex = 4
+      object CBAllowResize: TCheckBox
+        Left = 16
+        Top = 8
+        Width = 97
+        Height = 17
+        Caption = 'Allow &Resize'
+        TabOrder = 0
+        OnClick = CBAllowResizeClick
+      end
+      object CBAllowDrag: TCheckBox
+        Left = 16
+        Top = 31
+        Width = 97
+        Height = 17
+        Caption = 'Allow &Drag'
+        TabOrder = 1
+        OnClick = CBAllowDragClick
+      end
     end
   end
 end

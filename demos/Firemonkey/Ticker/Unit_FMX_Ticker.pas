@@ -137,7 +137,7 @@ begin
   Data.SetValue(tmp,Row,IntToStr(OldValue+Random(100)-50));
 
   // Update Ticker
-  Ticker.Change(Data.IndexOf(tmp),Row,OldValue);
+  Ticker.Change(Col,Row,OldValue);
 end;
 
 // Just fill grid cells with random values

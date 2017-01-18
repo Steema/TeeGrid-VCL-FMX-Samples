@@ -38,6 +38,8 @@ contains
   FMXTee.Control in '..\FMX\FMXTee.Control.pas',
   FMXTee.Grid in '..\FMX\FMXTee.Grid.pas',
   FMXTee.Painter in '..\FMX\FMXTee.Painter.pas',
+  FMXTee.Picture in '..\FMX\FMXTee.Picture.pas',
+  FMXTee.Editor.Painter.Gradient in '..\FMX\FMXTee.Editor.Painter.Gradient.pas' {GradientEditor},
   FMXTee.Editor.Painter.Brush in '..\FMX\FMXTee.Editor.Painter.Brush.pas' {BrushEditor},
   FMXTee.Editor.Painter.Stroke in '..\FMX\FMXTee.Editor.Painter.Stroke.pas' {StrokeEditor};
 

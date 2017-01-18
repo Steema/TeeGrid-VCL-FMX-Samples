@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  Abstract Formatting classes                }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Format;
@@ -99,7 +99,7 @@ type
   end;
 
   {$IFDEF FPC}
-  TColor=Cardinal;
+  TColor=Graphics.TColor;  // Graphics.TColor=TGraphicsColor (for design-time Inspector support)
   {$ELSE}
   {$IF CompilerVersion>22}
   TColor=TAlphaColor;
@@ -136,22 +136,23 @@ type
     property Items[const Index:Integer]:TGradientColor read Get write Put; default;
   end;
 
-  TAngle=Single;
+  TAngle=Single; // 0..360
 
   TGradientDirection=(Vertical,Horizontal,Diagonal,BackDiagonal,Radial);
 
   TGradient=class(TVisiblePersistentChange)
   private
-    FDirection: TGradientDirection;
-    FColors: TGradientColors;
     FAngle: TAngle;
+    FColors: TGradientColors;
+    FDirection: TGradientDirection;
     FInverted: Boolean;
 
+    function IsAngleStored:Boolean;
+    function IsColorsStored: Boolean;
     procedure SetAngle(const Value: TAngle);
     procedure SetColors(const Value: TGradientColors);
     procedure SetDirection(const Value: TGradientDirection);
     procedure SetInverted(const Value: Boolean);
-    function IsColorsStored: Boolean;
   public
     Constructor Create(const AChanged:TNotifyEvent); override;
 
@@ -163,7 +164,7 @@ type
 
     procedure InitColors(const AColor0,AColor1:TColor);
   published
-    property Angle:TAngle read FAngle write SetAngle;
+    property Angle:TAngle read FAngle write SetAngle stored IsAngleStored;
     property Colors:TGradientColors read FColors write SetColors stored IsColorsStored;
 
     property Direction:TGradientDirection read FDirection write SetDirection
@@ -175,7 +176,9 @@ type
   TPicture=class(TPersistentChange)
   protected
     Internal,
-    Original,
+    Original  : TObject;
+
+    {$IFDEF AUTOREFCOUNT}[weak]{$ENDIF}
     TagObject : TObject;
 
     procedure FreeInternal;
@@ -428,18 +431,36 @@ type
   {$IFDEF NOUITYPES}
   TColors=record
   public
-    const
-      Aqua=$FFFF00;
-      Black=0;
-      Cream=$F0FBFF;
-      DkGray=$808080;
-      DarkGray=DkGray;
-      Green=$008000;
-      LightGray=$D3D3D3;
-      Navy=$800000;
-      Red=$800000;
-      SkyBlue=$87CEEB;
-      White=$FFFFFF;
+  const
+    {$IFDEF FPC}
+    Aqua=clAqua;
+    Black=clBlack;
+    Cream=clCream;
+    DkGray=clDkGray;
+    DarkGray=DkGray;
+    Green=clGreen;
+    LightGray=clLtGray;
+    Lime=$00FF00;
+    Navy=clNavy;
+    Pink=$CBC0FF;
+    Red=clRed;
+    SkyBlue=clSkyBlue;
+    White=clWhite;
+    {$ELSE}
+    Aqua=$FFFF00;
+    Black=0;
+    Cream=$F0FBFF;
+    DkGray=$808080;
+    DarkGray=DkGray;
+    Green=$008000;
+    LightGray=$D3D3D3;
+    Lime=$00FF00;
+    Navy=$800000;
+    Pink=$CBC0FF;
+    Red=$800000;
+    SkyBlue=$87CEEB;
+    White=$FFFFFF;
+    {$ENDIF}
   end;
   {$ENDIF}
 

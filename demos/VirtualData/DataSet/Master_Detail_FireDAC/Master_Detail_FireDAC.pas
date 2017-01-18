@@ -82,8 +82,10 @@ begin
   end
   else
   begin
+    // Remove all detail grids
     TeeGrid1.Rows.Children.Clear;
 
+    // Set first column render to default (no expander)
     TeeGrid1.Columns[0].Render:=nil;
   end;
 end;

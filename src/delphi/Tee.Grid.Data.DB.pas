@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  DB TDataSet Virtual Data                   }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Grid.Data.DB;
@@ -57,6 +57,8 @@ type
     class function HorizAlignOf(const AField:TField):THorizontalAlign; static;
     procedure RowChanged(const ARow:Integer); override;
   public
+    OwnsData : Boolean;
+
     Destructor Destroy; override;
 
     procedure AddColumns(const AColumns:TColumns); override;
@@ -66,7 +68,7 @@ type
 
     class function From(const ASource:TComponent):TVirtualData; override;
 
-    procedure Load; override;
+    procedure Load(const AColumns:TColumns); override;
     function ReadOnly(const AColumn:TColumn):Boolean; override;
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
   end;

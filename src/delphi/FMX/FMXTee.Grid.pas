@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  FMX TeeGrid                                }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit FMXTee.Grid;
@@ -23,6 +23,8 @@ interface
 
 uses
   System.Classes, System.Types, System.UITypes,
+
+  Tee.Grid.Data.DB, // <--- Forced always (so this unit is not needed at every project "uses")
 
   FMX.Types, FMX.Controls,
 
@@ -51,6 +53,8 @@ type
 
   TFMXTeeGrid=class(TCustomTeeGrid)
   private
+    FOnTyping : TNotifyEvent;
+
     IEditor : TControl;
     IGrid : TTeeGrid;
 
@@ -60,7 +64,9 @@ type
     procedure CreateEditor(const AColumn:TColumn);
     procedure EditorKeyUp(Sender: TObject; var Key: Word; var KeyChar: WideChar; Shift: TShiftState);
     function EditorShowing:Boolean;
+    procedure EditorTracking(Sender: TObject);
     procedure TryChangeEditorData;
+    procedure TryPaste(const Value:String);
     procedure TryShowEditor(const AColumn: TColumn; const ARow: Integer);
   protected
     procedure DataChanged; override;
@@ -68,7 +74,8 @@ type
     function HorizScrollBarHeight:Single; override;
     procedure HorizScrollChanged; override;
 
-    procedure StartEditor(const AColumn:TColumn; const ARow:Integer); override;
+    procedure StartEditor(const AColumn:TColumn; const ARow:Integer;
+                          const AutoEdit:Boolean=False); override;
     procedure StopEditor; override;
 
     function VertScrollBarWidth:Single; override;
@@ -77,7 +84,10 @@ type
     procedure CopySelected; override;
     function Height:Single; override;
     function Painter:TPainter; override;
+    procedure PasteSelected; override;
     function Width:Single; override;
+
+    property OnTyping:TNotifyEvent read FOnTyping write FOnTyping;
   end;
 
   TShowEditorEvent=procedure(const Sender:TObject; const AEditor:TControl;
@@ -98,6 +108,8 @@ type
     FPainter : TFMXPainter;
     FOnColumnResized: TColumnEvent;
     FOnShowEditor: TShowEditorEvent;
+
+    IDataSource : TComponent;
 
     procedure ChangePainter(const APainter:TFMXPainter);
     procedure ColumnResized(Sender:TObject);
@@ -140,9 +152,11 @@ type
     procedure SetHeaders(const Value: TGridBands);
     function GetDataSource: TComponent;
     procedure SetDataSource(const Value: TComponent);
-  protected
-    procedure DblClick; override;
 
+    function MouseStateFrom(const Button: TMouseButton; const Shift: TShiftState;
+                            const X,Y: Single; const AEvent:TGridMouseEvent):TMouseState;
+    procedure TryClearColumns;
+  protected
     procedure DefineProperties(Filer: TFiler); override;
 
     procedure DoMouseLeave; override;
@@ -205,7 +219,7 @@ type
 
     // NO: property Caption;
 
-    property ClipChildren;
+    property ClipChildren default True;
     property ClipParent;
     property DragMode;
     property EnableDragHighlight;
@@ -266,6 +280,10 @@ type
     property OnPainting;
     property OnPaint;
     property OnResize;
+
+    {$IFDEF D25}
+    property OnResized;
+    {$ENDIF}
   end;
 
 implementation

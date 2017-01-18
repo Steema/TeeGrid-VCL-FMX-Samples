@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  TRowGroup class                            }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Grid.RowGroup;
@@ -54,11 +54,10 @@ type
     FRows : TRows;
     FSelected: TGridSelection;
 
-    OwnsData : Boolean;
     FCurrent: TRowGroup;
 
     IBands : TGridBands;
-    ISelectedDragging : Integer;
+    IParent : TRowGroup;
 
     procedure AddedBand(Sender:TObject);
     function CalcAutoWidth(const APainter:TPainter; const AColumn:TColumn;
@@ -81,6 +80,7 @@ type
     procedure PaintRest(var AData: TRenderData);
     function PositionOf(const AColumn:TColumn; const ARow:Integer):TPointF;
     procedure RemovedColumn(Sender:TObject; const AColumn:TColumn);
+    procedure RemoveHighLights(const ABands:TGridBands);
     procedure SetCells(const Value: TTextRender);
     procedure SetCurrent(const Value: TRowGroup);
     procedure SetFooter(const Value: TGridBands);
@@ -97,8 +97,9 @@ type
     function WidthOf(const APainter:TPainter; const AColumns: TColumns;
                      const AWidth:Single): Single;
   protected
-    procedure Loaded;
+    OwnsData : Boolean;
 
+    procedure Loaded;
   public
     ParentColumn : TColumn;
     IsFocused,
@@ -132,12 +133,17 @@ type
 
     function Mouse(var AState:TMouseState; const AWidth,AHeight:Single): Boolean; override;
 
+    function NewExpander:TExpanderRender;
+
     procedure Paint(var AData:TRenderData; const ARender:TRender); override;
     procedure PrepareColumns(const APainter:TPainter; const ALeft,ARight:Single);
 
     procedure RefreshData(const AData:TVirtualData);
     function RenderHit(const AColumn:TColumn; const ARow:Integer; const X,Y:Single):Boolean;
+    function SelectedContains(const X,Y:Single):Boolean;
     function ToggleDetail(const Sender:TRender; const ARow:Integer):Boolean;
+    procedure TryAutoScroll;
+    procedure TrySelectColumn;
 
     property Columns:TColumns read FColumns;
     property Current:TRowGroup read FCurrent write SetCurrent;

@@ -26,35 +26,26 @@ object HeaderEditor: THeaderEditor
     OnChange = PageHeaderChange
     object TabFormat: TTabSheet
       Caption = 'Options'
-      object Panel1: TPanel
-        Left = 0
-        Top = 0
-        Width = 340
-        Height = 41
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 0
-        ExplicitLeft = 80
-        ExplicitTop = 168
-        ExplicitWidth = 185
-        object CBAllowResize: TCheckBox
-          Left = 16
-          Top = 8
-          Width = 97
-          Height = 17
-          Caption = 'Allow Resize'
-          TabOrder = 0
-          OnClick = CBAllowResizeClick
-        end
-      end
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabRowLines: TTabSheet
       Caption = 'Row Lines'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabMargins: TTabSheet
       Caption = 'Margins'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
 end

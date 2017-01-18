@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  Grid Cells selection class                 }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Grid.Selection;
@@ -17,8 +17,14 @@ interface
 
    Examples:
 
+     // Single-cell selection:
+
      TeeGrid1.Selected.Column:= TeeGrid1.Columns[3];
      TeeGrid1.Selected.Row:= 42;
+
+     or:
+
+     TeeGrid1.Selected.Change( TeeGrid1.Columns[3], 42 );
 
      // Multi-cell range:
 
@@ -28,7 +34,14 @@ interface
      TeeGrid1.Selected.Range.FromColumn:= TeeGrid1.Columns[3];
      TeeGrid1.Selected.Range.ToColumn:= TeeGrid1.Columns[6];
 
-   Needs: Tee.Painter, Tee.Format, Tee.Grid.Columns, Tee.Renders
+
+   Note:
+
+     Selection only applies to columns that have Selectable property = True
+
+   Needs units:
+
+     Tee.Painter, Tee.Format, Tee.Grid.Columns, Tee.Renders
 }
 
 
@@ -55,12 +68,13 @@ type
     Constructor Create(const AChanged:TNotifyEvent); override;
 
     procedure Assign(Source:TPersistent); override;
-  published
-    property Enabled:Boolean read FEnabled write SetEnabled default True;
+
     property FromColumn:TColumn read FFromColumn write SetFromColumn;
     property FromRow:Integer read FFromRow write SetFromRow default -1;
     property ToColumn:TColumn read FToColumn write SetToColumn;
     property ToRow:Integer read FToRow write SetToRow default -1;
+  published
+    property Enabled:Boolean read FEnabled write SetEnabled default True;
   end;
 
   TGridSelection=class(TVisibleTextRender)
@@ -71,6 +85,7 @@ type
     FFull: Boolean;
     FOnChange: TNotifyEvent;
     FParentFont: Boolean;
+    FScrollToView: Boolean;
     FUnFocused : TVisibleTextRender;
 
     procedure ChangeColumn(const Value:TColumn);
@@ -81,10 +96,13 @@ type
     procedure SetRow(const Value: Integer);
     procedure SetFull(const Value: Boolean);
     procedure SetParentFont(const Value: Boolean);
+    procedure SetScrollToView(const Value: Boolean);
     procedure SetUnfocused(const Value: TVisibleTextRender);
   protected
     CheckScroll : Boolean;
   public
+    Dragging : Integer;
+
     Constructor Create(const AChanged:TNotifyEvent); override;
 
     {$IFNDEF AUTOREFCOUNT}
@@ -100,14 +118,17 @@ type
     function IsEmpty:Boolean;
 
     procedure PaintColumn(var AData:TRenderData; const AColumn:TColumn; const AFont:TFont; const IsFocused:Boolean);
+    procedure TryRange(const AColumn:TColumn; const ARow:Integer; const Y:Single);
 
     property OnChange:TNotifyEvent read FOnChange write FOnChange;
-  published
+
     property Column:TColumn read FColumn write SetColumn stored False;
-    property FullRow:Boolean read FFull write SetFull default False;
-    property ParentFont:Boolean read FParentFont write SetParentFont default True;
     property Range:TSelectionRange read FRange write SetRange;
     property Row:Integer read FRow write SetRow stored False;
+  published
+    property FullRow:Boolean read FFull write SetFull default False;
+    property ParentFont:Boolean read FParentFont write SetParentFont default True;
+    property ScrollToView:Boolean read FScrollToView write SetScrollToView default False;
     property UnFocused:TVisibleTextRender read FUnfocused write SetUnfocused;
   end;
 

@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  VCL THeader Editor                         }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit VCLTee.Editor.ColumnBand;
@@ -31,9 +31,14 @@ type
     CBHoverVisible: TCheckBox;
     CBHoverParentFont: TCheckBox;
     TabLines: TTabSheet;
+    TabMouse: TTabSheet;
+    CBAllowResize: TCheckBox;
+    CBAllowDrag: TCheckBox;
     procedure PageBandChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CBHoverVisibleClick(Sender: TObject);
+    procedure CBAllowResizeClick(Sender: TObject);
+    procedure CBAllowDragClick(Sender: TObject);
   private
     { Private declarations }
 

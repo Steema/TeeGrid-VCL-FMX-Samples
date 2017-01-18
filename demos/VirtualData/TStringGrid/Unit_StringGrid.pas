@@ -147,7 +147,7 @@ begin
   // TeeGrid1.ScrollBars.Visible:=False;
 
   // Create data
-  Data:=TStringsData.Create(1000,100000,60); // speed tip: pass a default width (60)
+  Data:=TStringsData.Create(1000,100000 {,60}); // speed tip: pass a default pixel width (for example: 60)
 
   // Other ways to initialize size:
   // Data.Columns:=1000;

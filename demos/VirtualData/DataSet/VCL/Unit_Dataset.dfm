@@ -1,7 +1,7 @@
 object FormGridDataset: TFormGridDataset
   Left = 0
   Top = 0
-  Caption = 'FormGridDataset'
+  Caption = 'TeeGrid - VCL TDataSet Example'
   ClientHeight = 525
   ClientWidth = 1114
   Color = clBtnFace

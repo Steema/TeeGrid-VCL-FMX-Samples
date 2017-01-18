@@ -26,10 +26,6 @@ object TeeGridEditor: TTeeGridEditor
     OnChange = PageGridChange
     object TabColumns: TTabSheet
       Caption = 'Columns'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Splitter1: TSplitter
         Left = 124
         Top = 41
@@ -48,9 +44,12 @@ object TeeGridEditor: TTeeGridEditor
         HideSelection = False
         HotTrack = True
         Indent = 19
+        MultiSelect = True
         TabOrder = 0
         OnChange = TreeColumnsChange
+        OnDeletion = TreeColumnsDeletion
         OnEdited = TreeColumnsEdited
+        OnKeyUp = TreeColumnsKeyUp
       end
       object Panel5: TPanel
         Left = 0
@@ -137,10 +136,6 @@ object TeeGridEditor: TTeeGridEditor
     object TabBands: TTabSheet
       Caption = 'Bands'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object PageBands: TPageControl
         Left = 0
         Top = 0
@@ -152,43 +147,27 @@ object TeeGridEditor: TTeeGridEditor
         OnChange = PageBandsChange
         object TabHeaders: TTabSheet
           Caption = 'Headers'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
         object TabFooter: TTabSheet
           Caption = 'Footer'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
       end
     end
     object TabOptions: TTabSheet
       Caption = 'Options'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object PageOptions: TPageControl
         Left = 0
         Top = 0
         Width = 486
         Height = 396
-        ActivePage = TabScrollBars
+        ActivePage = TabSelection
         Align = alClient
         TabOrder = 0
         OnChange = PageOptionsChange
         object TabIndicator: TTabSheet
           Caption = 'Indicator'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Panel3: TPanel
             Left = 0
             Top = 0
@@ -220,112 +199,36 @@ object TeeGridEditor: TTeeGridEditor
             OnChange = PageIndicatorChange
             object TabIndicatorFormat: TTabSheet
               Caption = 'Format'
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
             end
             object TabIndicatorWidth: TTabSheet
               Caption = 'Width'
               ImageIndex = 1
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
             end
           end
         end
         object TabBack: TTabSheet
           Caption = 'Back'
           ImageIndex = 3
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
         object TabMargins: TTabSheet
           Caption = 'Margins'
           ImageIndex = 4
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
         object TabSelection: TTabSheet
           Caption = 'Selected'
           ImageIndex = 5
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
-          object Panel2: TPanel
-            Left = 0
-            Top = 0
-            Width = 478
-            Height = 65
-            Align = alTop
-            BevelOuter = bvNone
-            TabOrder = 0
-            object CBFullRow: TCheckBox
-              Left = 9
-              Top = 13
-              Width = 112
-              Height = 17
-              Caption = '&Full Row Select'
-              TabOrder = 0
-              OnClick = CBFullRowClick
-            end
-            object CBSelectedParentFont: TCheckBox
-              Left = 137
-              Top = 12
-              Width = 112
-              Height = 17
-              Caption = '&Parent Font'
-              TabOrder = 1
-              OnClick = CBSelectedParentFontClick
-            end
-            object CBSelectedRange: TCheckBox
-              Left = 9
-              Top = 36
-              Width = 97
-              Height = 17
-              Caption = '&Range'
-              TabOrder = 2
-              OnClick = CBSelectedRangeClick
-            end
-          end
-          object PageSelected: TPageControl
-            Left = 0
-            Top = 65
-            Width = 478
-            Height = 303
-            ActivePage = TabSelectedFocused
-            Align = alClient
-            TabOrder = 1
-            object TabSelectedFocused: TTabSheet
-              Caption = 'Focused'
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
-            end
-            object TabSelectedUnfocused: TTabSheet
-              Caption = 'Unfocused'
-              ImageIndex = 1
-              ExplicitLeft = 0
-              ExplicitTop = 0
-              ExplicitWidth = 0
-              ExplicitHeight = 0
-            end
-          end
         end
         object TabEditing: TTabSheet
           Caption = 'Editing'
           ImageIndex = 5
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
+          object Label6: TLabel
+            Left = 16
+            Top = 112
+            Width = 51
+            Height = 13
+            Caption = '&Enter Key:'
+            FocusControl = CBEnterKey
+          end
           object CBDoubleClick: TCheckBox
             Left = 16
             Top = 55
@@ -357,64 +260,92 @@ object TeeGridEditor: TTeeGridEditor
             TabOrder = 2
             OnClick = CBReadOnlyClick
           end
+          object CBEnterKey: TComboBox
+            Left = 16
+            Top = 131
+            Width = 145
+            Height = 21
+            Style = csDropDownList
+            ItemIndex = 0
+            TabOrder = 3
+            Text = 'Next Cell'
+            OnChange = CBEnterKeyChange
+            Items.Strings = (
+              'Next Cell'
+              'Next Row'
+              'Same Cell')
+          end
+          object CBAutoEdit: TCheckBox
+            Left = 16
+            Top = 168
+            Width = 145
+            Height = 17
+            Caption = 'A&uto Edit'
+            TabOrder = 4
+            OnClick = CBAutoEditClick
+          end
         end
         object TabScrollBars: TTabSheet
-          Caption = 'Scroll Bars'
+          Caption = 'Scrolling'
           ImageIndex = 5
-          ExplicitLeft = 0
-          ExplicitTop = 26
-          ExplicitWidth = 0
-          ExplicitHeight = 0
-          object Label2: TLabel
-            Left = 16
-            Top = 48
-            Width = 52
-            Height = 13
-            Caption = '&Horizontal:'
-            FocusControl = CBHorizScrollBar
-          end
-          object Label5: TLabel
-            Left = 16
-            Top = 96
-            Width = 39
-            Height = 13
-            Caption = '&Vertical:'
-            FocusControl = CBVertScrollBar
-          end
-          object CBScrollBars: TCheckBox
-            Left = 16
-            Top = 16
-            Width = 97
-            Height = 17
-            Caption = '&Visible'
+          object GroupBox1: TGroupBox
+            Left = 11
+            Top = 11
+            Width = 150
+            Height = 161
+            Caption = 'Scroll Bars:'
             TabOrder = 0
-            OnClick = CBScrollBarsClick
-          end
-          object CBHorizScrollBar: TComboBox
-            Left = 16
-            Top = 67
-            Width = 113
-            Height = 21
-            Style = csDropDownList
-            TabOrder = 1
-            OnChange = CBHorizScrollBarChange
-            Items.Strings = (
-              'Automatic'
-              'Show'
-              'Hide')
-          end
-          object CBVertScrollBar: TComboBox
-            Left = 16
-            Top = 115
-            Width = 113
-            Height = 21
-            Style = csDropDownList
-            TabOrder = 2
-            OnChange = CBVertScrollBarChange
-            Items.Strings = (
-              'Automatic'
-              'Show'
-              'Hide')
+            object Label2: TLabel
+              Left = 16
+              Top = 48
+              Width = 52
+              Height = 13
+              Caption = '&Horizontal:'
+              FocusControl = CBHorizScrollBar
+            end
+            object Label5: TLabel
+              Left = 16
+              Top = 96
+              Width = 39
+              Height = 13
+              Caption = '&Vertical:'
+              FocusControl = CBVertScrollBar
+            end
+            object CBScrollBars: TCheckBox
+              Left = 16
+              Top = 25
+              Width = 97
+              Height = 17
+              Caption = '&Visible'
+              TabOrder = 0
+              OnClick = CBScrollBarsClick
+            end
+            object CBHorizScrollBar: TComboBox
+              Left = 16
+              Top = 67
+              Width = 113
+              Height = 21
+              Style = csDropDownList
+              TabOrder = 1
+              OnChange = CBHorizScrollBarChange
+              Items.Strings = (
+                'Automatic'
+                'Show'
+                'Hide')
+            end
+            object CBVertScrollBar: TComboBox
+              Left = 16
+              Top = 115
+              Width = 113
+              Height = 21
+              Style = csDropDownList
+              TabOrder = 2
+              OnChange = CBVertScrollBarChange
+              Items.Strings = (
+                'Automatic'
+                'Show'
+                'Hide')
+            end
           end
         end
       end
@@ -422,10 +353,6 @@ object TeeGridEditor: TTeeGridEditor
     object TabCells: TTabSheet
       Caption = 'Cells'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object PageCells: TPageControl
         Left = 0
         Top = 0
@@ -437,36 +364,20 @@ object TeeGridEditor: TTeeGridEditor
         OnChange = PageCellsChange
         object TabCellsFormat: TTabSheet
           Caption = 'Format'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
         object TabCellsHover: TTabSheet
           Caption = 'Hover'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
         object TabColumnLines: TTabSheet
           Caption = 'Column Lines'
           ImageIndex = 2
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
       end
     end
     object TabRows: TTabSheet
       Caption = 'Rows'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object PageRows: TPageControl
         Left = 0
         Top = 0
@@ -479,10 +390,6 @@ object TeeGridEditor: TTeeGridEditor
         object TabRowsGeneral: TTabSheet
           Caption = 'General'
           ImageIndex = 2
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Label1: TLabel
             Left = 9
             Top = 15
@@ -547,18 +454,10 @@ object TeeGridEditor: TTeeGridEditor
         end
         object TabRowLines: TTabSheet
           Caption = 'Lines'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
         object TabRowAlternate: TTabSheet
           Caption = 'Alternate'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Panel4: TPanel
             Left = 0
             Top = 0
@@ -583,28 +482,16 @@ object TeeGridEditor: TTeeGridEditor
         object TabRowsBack: TTabSheet
           Caption = 'Back'
           ImageIndex = 3
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
         object TabSubBands: TTabSheet
           Caption = 'Bands'
           ImageIndex = 4
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
       end
     end
     object TabTheme: TTabSheet
       Caption = 'Theme'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object LBThemes: TListBox
         Left = 16
         Top = 16

@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  Base abstract Grid class                   }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Grid;
@@ -40,12 +40,17 @@ uses
   Tee.Grid.Selection, Tee.Grid.Data, Tee.Grid.RowGroup;
 
 type
+  TEditingEnter=(NextCell,NextRow,SameCell);
+
+  // Properties to control Grid Cell editing
   TGridEditing=class(TPersistentChange)
   private
     FActive: Boolean;
     FAlwaysVisible : Boolean;
+    FAutoEdit: Boolean;
     FClass : TClass;
     FDoubleClick : Boolean;
+    FEnterKey: TEditingEnter;
   public
     Constructor Create(const AChanged:TNotifyEvent); override;
 
@@ -53,15 +58,20 @@ type
 
     function ClassOf(const AColumn:TColumn):TClass;
 
+    // True when there is a visible editor control to edit cell contents
     property Active:Boolean read FActive write FActive default False;
-    property EditorClass:TClass read FClass write FClass;
+
+    property EditorClass:TClass read FClass write FClass;  // default = TEdit
   published
     property AlwaysVisible:Boolean read FAlwaysVisible write FAlwaysVisible default False;
+    property AutoEdit:Boolean read FAutoEdit write FAutoEdit default False;
     property DoubleClick:Boolean read FDoubleClick write FDoubleClick default True;
+    property EnterKey:TEditingEnter read FEnterKey write FEnterKey default TEditingEnter.NextCell;
   end;
 
   TScroll=TPointF;
 
+  // Base-agnostic grid class
   TCustomTeeGrid=class(TCustomTeeControl)
   private
     FData : TVirtualData;
@@ -111,6 +121,8 @@ type
     procedure SetSelected(const Value: TGridSelection);
     function GetMargins: TMargins;
   protected
+    ILoading : Boolean;
+
     procedure ChangeHorizScroll(const Value:Single);
     procedure ChangeVertScroll(const Value:Single);
     procedure DataChanged; virtual;
@@ -124,10 +136,11 @@ type
     procedure ReadFooter(Reader: TReader);
     procedure ReadHeaders(Reader: TReader);
     property Root:TRowGroup read FRoot;
-    procedure StartEditor(const AColumn:TColumn; const ARow:Integer); overload; virtual; abstract;
-    procedure StartEditor; overload;
+    procedure StartEditor(const AColumn:TColumn; const ARow:Integer;
+                          const AutoEdit:Boolean=False); overload; virtual; abstract;
+    procedure StartEditor(const AutoEdit:Boolean=False); overload;
     procedure StopEditor; virtual;
-    procedure TryStartEditor;
+    procedure TryStartEditor(const AutoEdit:Boolean=False);
     function VertScrollBarWidth:Single; virtual; abstract;
     procedure VertScrollChanged; virtual; abstract;
     procedure WriteFooter(Writer: TWriter);
@@ -148,6 +161,7 @@ type
     procedure Loaded; override;
     procedure MouseLeave;
     procedure Paint; override;
+    procedure PasteSelected; virtual; abstract;
     procedure RefreshData;
 
     // Focused rows group

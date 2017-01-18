@@ -160,6 +160,7 @@ begin
   begin
     tmp:=TeeGrid1.Columns[Col];
 
+    tmp.ParentFormat:=False;
     tmp.TextAlignment:=TColumnTextAlign.Custom;
     tmp.TextAlign.Horizontal:=THorizontalAlign.Right;
   end;

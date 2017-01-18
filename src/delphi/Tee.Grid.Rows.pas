@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  TRows class                                }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Grid.Rows;
@@ -51,10 +51,13 @@ type
 
   TRowsBands=class(TGridBands)
   private
+    procedure DeleteRow(const AItem: TCollectionItem);
     function GetRow(const Index:Integer):TGridBand;
     procedure SetRow(const Index:Integer; const ABand:TGridBand);
   protected
     Rows : Array of TGridBand;
+
+    procedure Notify(Item: TCollectionItem; Action: TCollectionNotification); override;
   public
     function Height(const ARow: Integer): Single;
     function Hit(const X,Y:Single):TGridBand;
@@ -69,6 +72,7 @@ type
   private
     FAlternate: TAlternateFormat;
     FBack : TFormat;
+    FDefaultHeight : Single;
     FHeight: TCoordinate;
     FHover: TCellHover;
     FRowLines: TStroke;
@@ -92,10 +96,10 @@ type
     procedure SetHover(const Value: TCellHover);
     procedure SetSpacing(const Value: TCoordinate);
     procedure SetRowLines(const Value: TStroke);
+    procedure SetDefaultHeight(const Value: Single);
   protected
     procedure PaintRow(var AData:TRenderData; const ARender: TRender);
   public
-    DefaultHeight : Single;
     Painter : TPainter;
 
     // Temporary:
@@ -117,8 +121,7 @@ type
     procedure CalcYSpacing(const AHeight:Single);
     procedure Clear;
     function Count:Integer;
-    function DraggedColumn(const X:Single; const AColumn:TColumn):TColumn;
-    function FirstVisible:Integer;
+    function FirstVisible(const AOffset:Single=0):Integer;
     function FontOf(const AColumn:TColumn):TFont;
     function HeightOf(const ARow:Integer):Single;
     function IsChildrenVisible(const Sender:TRender; const ARow: Integer): Boolean;
@@ -135,6 +138,7 @@ type
 
     property Children:TRowsBands read FChildren;
     property Data:TVirtualData read IData write IData;
+    property DefaultHeight:Single read FDefaultHeight write SetDefaultHeight;
     property Heights[const Index:Integer]:Single read GetHeights write SetHeights;
     property SubBands:TRowsBands read FSubBands;
     property VisibleColumns:TVisibleColumns read FVisibleColumns;

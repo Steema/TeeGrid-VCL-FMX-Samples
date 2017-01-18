@@ -14,7 +14,6 @@ type
   TSampleData = class(TDataModule)
     Sqlite_demoConnection: TFDConnection;
     CustomersTable: TFDQuery;
-    DataSource1: TDataSource;
     OrdersTable: TFDQuery;
     FDStanStorageBinLink1: TFDStanStorageBinLink;
   private

@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  Master -> Detail sub-grid rows             }
-{  Copyright (c) 2015-2016 by Steema Software }
+{  Copyright (c) 2015-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Unit_Customer_Orders;
@@ -60,6 +60,8 @@ implementation
 {$R *.dfm}
 
 uses
+  {System.}UITypes,
+
   BI.DataSource, BI.Persist, BI.Grid.Data,
   Tee.Grid.Header, Tee.Grid.Totals, Tee.Grid.Themes, Tee.Grid.Bands, Tee.Grid,
   Tee.Format;
@@ -100,7 +102,7 @@ begin
   (AGroup.Data as TBIGridData).Detail:=ADetail;
 
   // Set the "+/-" icon to a column to enable expand / collapse
-  Expander:=TeeGrid1.NewExpander(AGroup);
+  Expander:=AGroup.NewExpander;
 
   Expander.Style:=TExpanderStyle(CBExpander.ItemIndex);
 
@@ -121,8 +123,6 @@ begin
   tmp.Calculation.Add(NewGroup.Columns['Quantity'],TColumnCalculation.Sum);
 
   tmp.Format.Font.Style:=[fsBold];
-
-//  TGridThemes.iOS.ApplyTo(NewGroup);
 end;
 
 // Optional event.
@@ -146,6 +146,7 @@ begin
   OrderItems:=Demo['"Order Details"'];
 end;
 
+// Return a new simple Title band
 function TitleSample(const ACollection:TCollection):TTextBand;
 begin
   result:=TTextBand.Create(ACollection);
@@ -169,6 +170,7 @@ begin
 
   AddMainTotals;
 
+  // Example, insert a subband at row position 10
   TeeGrid1.Rows.SubBands.Row[10]:=TitleSample(TeeGrid1.Rows.SubBands);
 end;
 

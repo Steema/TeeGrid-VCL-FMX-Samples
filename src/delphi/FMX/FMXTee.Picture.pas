@@ -4,7 +4,7 @@ unit FMXTee.Picture;
 interface
 
 uses
-  FMX.Types,
+  FMX.Types, FMX.Controls,
 
   {$IF CompilerVersion<=25}
   {$DEFINE HASFMX20}

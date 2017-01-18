@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  VCL TeeGrid                                }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit VCLTee.Grid;
@@ -14,6 +14,8 @@ uses
   {$IFNDEF FPC}
   {System.}Types,
   {$ENDIF}
+
+  Tee.Grid.Data.DB, // <--- Forced always (so this unit is not needed at every project "uses")
 
   {$IFDEF MSWINDOWS}
   Windows, Messages,
@@ -45,6 +47,7 @@ type
     procedure EditorKeyUp(Sender: TObject; var AKey: Word; Shift: TShiftState);
     function EditorShowing:Boolean;
     procedure TryChangeEditorData;
+    procedure TryPaste(const Value:String);
     procedure TryShowEditor(const AColumn:TColumn; const ARow:Integer);
   protected
     procedure DataChanged; override;
@@ -52,7 +55,8 @@ type
     function HorizScrollBarHeight:Single; override;
     procedure HorizScrollChanged; override;
 
-    procedure StartEditor(const AColumn:TColumn; const ARow:Integer); override;
+    procedure StartEditor(const AColumn:TColumn; const ARow:Integer;
+                          const AutoEdit:Boolean=False); override;
     procedure StopEditor; override;
 
     function VertScrollBarWidth:Single; override;
@@ -61,6 +65,7 @@ type
     procedure CopySelected; override;
     function Height:Single; override;
     function Painter:TPainter; override;
+    procedure PasteSelected; override;
     function Width:Single; override;
   end;
 
@@ -86,6 +91,7 @@ type
     {$ENDIF}
 
     ICanvas : TControlCanvas;
+    IDataSource : TComponent;
 
     procedure ChangePainter(const Value: TPainter);
     procedure ColumnResized(Sender:TObject);
@@ -141,6 +147,8 @@ type
     function GetDataSource: TComponent;
     procedure SetDataSource(const Value: TComponent);
 
+    procedure TryClearColumns;
+
     procedure ReadPainter(Reader: TReader);
     procedure WritePainter(Writer: TWriter);
   protected
@@ -186,7 +194,6 @@ type
     procedure Assign(Source: TPersistent); override;
 
     procedure DoChanged(Sender:TObject);
-    function NewExpander(const AGroup:TRowGroup):TExpanderRender;
 
     property Canvas:TControlCanvas read ICanvas;
     property Data:TVirtualData read GetData write SetData;

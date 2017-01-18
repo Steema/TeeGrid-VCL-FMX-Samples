@@ -106,13 +106,13 @@ procedure TStringGridForm.FormCreate(Sender: TObject);
 var t : Integer;
 begin
   // Create data
-  Data:=TStringsData.Create;
+  Data:=TStringsData.Create(1000,100000,60);
 
   // Initialize size
   //Data.Columns:=1000;
   //Data.Rows:=100000;
 
-  Data.Resize(1000,100000);
+//  Data.Resize(1000,100000);
 
   // Set header texts
   Data.Headers[0]:='A'#13#10'Text';

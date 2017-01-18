@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  VCL THeader Editor                         }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit VCLTee.Editor.Header;
@@ -27,11 +27,8 @@ type
     TabFormat: TTabSheet;
     TabRowLines: TTabSheet;
     TabMargins: TTabSheet;
-    Panel1: TPanel;
-    CBAllowResize: TCheckBox;
     procedure PageHeaderChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure CBAllowResizeClick(Sender: TObject);
   private
     { Private declarations }
 

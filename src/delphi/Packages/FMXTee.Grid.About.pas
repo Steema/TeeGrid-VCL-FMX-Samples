@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  FMX About TeeGrid...                       }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit FMXTee.Grid.About;
@@ -48,6 +48,7 @@ type
     Button1: TButton;
     TeeGrid1: TTeeGrid;
     Timer1: TTimer;
+    LVersion: TLabel;
     procedure Timer1Timer(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -69,8 +70,5 @@ type
 
     class procedure Show(const AOwner:TComponent); static;
   end;
-
-var
-  FMXGridAbout: TFMXGridAbout;
 
 implementation

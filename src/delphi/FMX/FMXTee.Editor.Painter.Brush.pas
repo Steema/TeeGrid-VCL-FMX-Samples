@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  TBrush Editor for Firemonkey               }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit FMXTee.Editor.Painter.Brush;
@@ -39,7 +39,9 @@ uses
 
   FMX.Dialogs, Tee.Format,
   FMX.Colors, FMX.TabControl,
-  FMX.Layouts;
+  FMX.Layouts,
+
+  FMXTee.Editor.Painter.Gradient;
 
 type
   TBrushEditor = class(TForm)
@@ -52,10 +54,13 @@ type
     CBColor: TColorPanel;
     procedure CBVisibleChange(Sender: TObject);
     procedure CBColorChange(Sender: TObject);
+    procedure TabBrushChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
 
     IBrush : TBrush;
+    IGradient : TGradientEditor;
 
     FOnColorChange : TNotifyEvent;
 

@@ -1,11 +1,12 @@
 object FormVirtualMode: TFormVirtualMode
   Left = 0
   Top = 0
-  Caption = 'Form43'
+  Caption = 'TeeGrid - Virtual Mode Example'
   ClientHeight = 480
   ClientWidth = 640
   Fill.Color = xFFE9E6D8
   Fill.Kind = Solid
+  Position = OwnerFormCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]

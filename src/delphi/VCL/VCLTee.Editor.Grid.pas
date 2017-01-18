@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  VCL TTeeGrid Editor                        }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit VCLTee.Editor.Grid;
@@ -20,13 +20,13 @@ uses
   {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}ComCtrls, {Vcl.}StdCtrls, {Vcl.}ExtCtrls,
   {Vcl.}Buttons,
 
-  Tee.Renders, Tee.Grid.Columns, Tee.Grid.Selection,
+  Tee.Renders, Tee.Grid.Columns, Tee.Grid.Selection, Tee.Grid,
 
   VCLTee.Grid, VCLTee.Control,
 
   VCLTee.Editor.Format, VCLTee.Editor.Stroke, VCLTee.Editor.Column,
   VCLTee.Editor.Coordinate, VCLTee.Editor.Margins,
-  VCLTee.Editor.Render.Text, VCLTee.Editor.Grid.Bands;
+  VCLTee.Editor.Render.Text, VCLTee.Editor.Grid.Bands, VCLTee.Editor.Selected;
 
 type
   TTeeGridEditor = class(TForm)
@@ -66,9 +66,6 @@ type
     TabTheme: TTabSheet;
     LBThemes: TListBox;
     TabSelection: TTabSheet;
-    Panel2: TPanel;
-    CBFullRow: TCheckBox;
-    CBSelectedParentFont: TCheckBox;
     Panel4: TPanel;
     CBAlternateVisible: TCheckBox;
     PageIndicator: TPageControl;
@@ -82,28 +79,27 @@ type
     Label4: TLabel;
     TBVertSpacing: TTrackBar;
     LVertSpacing: TLabel;
-    CBSelectedRange: TCheckBox;
-    PageSelected: TPageControl;
-    TabSelectedFocused: TTabSheet;
-    TabSelectedUnfocused: TTabSheet;
     Label3: TLabel;
     TBHorizSpacing: TTrackBar;
     LHorizSpacing: TLabel;
     RGPainter: TRadioGroup;
     TabScrollBars: TTabSheet;
-    CBScrollBars: TCheckBox;
     PageBands: TPageControl;
     TabHeaders: TTabSheet;
     TabFooter: TTabSheet;
     TabRowsBack: TTabSheet;
     SBAdd: TSpeedButton;
     TabSubBands: TTabSheet;
+    Label6: TLabel;
+    CBEnterKey: TComboBox;
+    CBAutoEdit: TCheckBox;
+    GroupBox1: TGroupBox;
     Label2: TLabel;
-    CBHorizScrollBar: TComboBox;
     Label5: TLabel;
+    CBScrollBars: TCheckBox;
+    CBHorizScrollBar: TComboBox;
     CBVertScrollBar: TComboBox;
     procedure TreeColumnsChange(Sender: TObject; Node: TTreeNode);
-    procedure CBFullRowClick(Sender: TObject);
     procedure SBDeleteColumnClick(Sender: TObject);
     procedure PageGridChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -118,33 +114,36 @@ type
     procedure PageRowsChange(Sender: TObject);
     procedure PageCellsChange(Sender: TObject);
     procedure LBThemesClick(Sender: TObject);
-    procedure CBSelectedParentFontClick(Sender: TObject);
     procedure CBAlternateVisibleClick(Sender: TObject);
     procedure TBHorizSpacingChange(Sender: TObject);
     procedure TBVertSpacingChange(Sender: TObject);
     procedure PageIndicatorChange(Sender: TObject);
     procedure CBDoubleClickClick(Sender: TObject);
     procedure CBEditingAlwaysClick(Sender: TObject);
-    procedure CBSelectedRangeClick(Sender: TObject);
     procedure RGPainterClick(Sender: TObject);
     procedure CBScrollBarsClick(Sender: TObject);
     procedure PageBandsChange(Sender: TObject);
     procedure SBAddClick(Sender: TObject);
     procedure CBHorizScrollBarChange(Sender: TObject);
     procedure CBVertScrollBarChange(Sender: TObject);
+    procedure CBEnterKeyChange(Sender: TObject);
+    procedure CBAutoEditClick(Sender: TObject);
+    procedure TreeColumnsDeletion(Sender: TObject; Node: TTreeNode);
+    procedure TreeColumnsKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
 
     Grid : TTeeGrid;
 
     ICells,
-    ICellsHover,
-    ISelectedFocused,
-    ISelectedUnfocused : TTextRenderEditor;
+    ICellsHover : TTextRenderEditor;
 
     ISubBands,
     IFooters,
     IHeaders : TGridBandsEditor;
+
+    ISelected : TSelectedEditor;
 
     IRowAlternate,
     IRowsBack,
@@ -168,9 +167,9 @@ type
     procedure EnableUpDown;
     procedure FillThemes;
     procedure MoveColumn(const Delta:Integer);
-    procedure RefreshScrollSettings;
+    procedure RefreshEditingSettings(const AEditing:TGridEditing);
     procedure RefreshMargins(const AMargins:TMargins);
-    procedure RefreshSelected(const ASelected:TGridSelection);
+    procedure RefreshScrollSettings;
     procedure SetSpacingSettings;
     procedure ShowColumns(const ATree:TTreeView; const AColumns:TColumns);
   public

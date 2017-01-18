@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  TStringGrid emulation data class           }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Grid.Data.Strings;
@@ -96,14 +96,14 @@ type
   protected
     procedure InternalResize; virtual;
   public
-    Constructor Create(const AColumns:Integer=0; const ARows:Integer=0; const DefaultWidth:Single=0);
+    Constructor Create(const AColumns:Integer=0; const ARows:Integer=0; const DefaultWidth:Single=0); virtual;
 
     procedure AddColumns(const AColumns:TColumns); override;
     function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; override;
     function Count:Integer; override;
     function IndexOf(const AColumn: TColumn):Integer; inline;
-    procedure Load; override;
+    procedure Load(const AColumns:TColumns); override;
     procedure Resize(const AColumns,ARows:Integer);
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
 
@@ -121,14 +121,15 @@ type
 
   { TStringsData }
 
-  TStringsData=class(TVirtualModeData)
-  private
-    IData : Array of TStringArray;
+  TStringArrays=Array of TStringArray;
 
-    function GetCell(const AColumn,ARow: Integer): String;
-    procedure SetCell(const AColumn,ARow: Integer; const Value: String);
+  TStringsData=class(TVirtualModeData)
   protected
+    IData : TStringArrays;
+
+    function GetCell(const AColumn,ARow: Integer): String; virtual;
     procedure InternalResize; override;
+    procedure SetCell(const AColumn,ARow: Integer; const Value: String); virtual;
   public
     function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;

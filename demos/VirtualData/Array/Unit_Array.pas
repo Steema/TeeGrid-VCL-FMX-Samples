@@ -8,7 +8,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
   VCLTee.Editor.Grid, Vcl.StdCtrls, Vcl.ExtCtrls, System.UITypes,
 
-  Tee.Renders, Tee.Grid.Columns, VCLTee.Editor.Render.Text, Tee.Grid.Rows;
+  Tee.Renders, Tee.Grid.Columns, VCLTee.Editor.Render.Text, Tee.Grid.Rows,
+  Tee.Grid.Bands;
 
 type
   TFormArray = class(TForm)
@@ -40,6 +41,8 @@ type
   private
     { Private declarations }
 
+    SampleHeader : TTextBand;
+
     procedure AddSampleFooter;
     procedure GDIPlusChanged(Sender: TObject);
     procedure GridShowEditor(const Sender:TObject; const AEditor:TControl;
@@ -62,8 +65,7 @@ uses
 
   VCLTee.Painter.GdiPlus, VCLTee.Painter, Tee.Format,
 
-  Tee.Grid.Totals, Tee.Grid.Bands, VCLTee.Editor.Grid.Bands,
-  VCLTee.Editor.Painter.GDIPlus;
+  Tee.Grid.Totals, VCLTee.Editor.Grid.Bands, VCLTee.Editor.Painter.GDIPlus;
 
 // Show the TeeGrid editor dialog
 procedure TFormArray.Button1Click(Sender: TObject);
@@ -255,8 +257,14 @@ begin
   // Add a simple Title band to footer
   AddSampleFooter;
 
+  // Destroy the previously created SampleHeader, if any
+  SampleHeader.Free;
+
   // Add a simple Title band to headers
-  NewTitle(TeeGrid1.Headers,'Header Sample'#13#10'Text').Index:=0;
+  SampleHeader:=NewTitle(TeeGrid1.Headers,'Header Sample'#13#10'Text');
+
+  // Move it to top
+  SampleHeader.Index:=0;
 
   // Use a TDateTimePicker as editor control for "BirthDate" column
   TeeGrid1.Columns['BirthDate'].EditorClass:=TDateTimePicker;

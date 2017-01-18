@@ -8,16 +8,20 @@ object BrushEditor: TBrushEditor
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
   DesignerMasterStyle = 0
   object LayoutTop: TLayout
     Align = Top
     Size.Width = 273.000000000000000000
-    Size.Height = 50.000000000000000000
+    Size.Height = 33.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
     object CBVisible: TCheckBox
       Position.X = 16.000000000000000000
-      Position.Y = 16.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 169.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
       TabOrder = 0
       Text = '&Visible'
       OnChange = CBVisibleChange
@@ -26,18 +30,19 @@ object BrushEditor: TBrushEditor
   object TabBrush: TTabControl
     Align = Client
     Size.Width = 273.000000000000000000
-    Size.Height = 220.000000000000000000
+    Size.Height = 237.000000000000000000
     Size.PlatformDefault = False
     TabIndex = 0
     TabOrder = 1
     TabPosition = PlatformDefault
+    OnChange = TabBrushChange
     Sizes = (
       273s
-      194s
+      211s
       273s
-      194s
+      211s
       273s
-      194s)
+      211s)
     object TabColor: TTabItem
       CustomIcon = <
         item
@@ -55,7 +60,7 @@ object BrushEditor: TBrushEditor
         Align = Client
         Color = claWhite
         Size.Width = 273.000000000000000000
-        Size.Height = 194.000000000000000000
+        Size.Height = 211.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 0
         OnChange = CBColorChange

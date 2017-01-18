@@ -23,13 +23,18 @@ object TickerForm: TTickerForm
     Width = 389
     Height = 215
     Columns = <>
-    Footer = <>
     ReadOnly = False
     Align = alClient
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
   end
   object PanelEditor: TPanel
     Left = 0

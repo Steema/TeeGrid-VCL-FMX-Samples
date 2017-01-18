@@ -18,11 +18,6 @@ object SampleData: TSampleData
     Left = 47
     Top = 85
   end
-  object DataSource1: TDataSource
-    DataSet = CustomersTable
-    Left = 144
-    Top = 85
-  end
   object OrdersTable: TFDQuery
     Connection = Sqlite_demoConnection
     SQL.Strings = (
@@ -37,7 +32,7 @@ object SampleData: TSampleData
       end>
   end
   object FDStanStorageBinLink1: TFDStanStorageBinLink
-    Left = 48
+    Left = 120
     Top = 216
   end
 end

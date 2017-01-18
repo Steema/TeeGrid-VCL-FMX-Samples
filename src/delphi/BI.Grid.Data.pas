@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  TeeBI Virtual Data class                   }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit BI.Grid.Data;
@@ -81,7 +81,7 @@ type
     class function IsNumeric(const AColumn:TColumn):Boolean; override;
     function IsSorted(const AColumn:TColumn; out Ascending:Boolean):Boolean; override;
 
-    procedure Load; override;
+    procedure Load(const AColumns:TColumns); override;
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
     procedure SortBy(const AColumn:TColumn); override;
 

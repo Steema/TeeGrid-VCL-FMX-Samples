@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  Grid Header class                          }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Grid.Header;
@@ -19,6 +19,7 @@ interface
       Provides:
 
          Column mouse-dragging
+         Column mouse-resizing
          Mouse-hover highlighting
          Horizontal scrolling
 
@@ -49,39 +50,61 @@ uses
   Tee.Grid.Columns, Tee.Grid.Bands, Tee.Grid.Data;
 
 type
+  TSelectedRender=class(THover)
+  public
+    Constructor Create(const AChanged:TNotifyEvent); override;
+  end;
+
   // Grid band with Columns
   TColumnBand=class(TGridBandLines)
   private
+    FAllowDrag : Boolean;
     FAllowResize : Boolean;
     FHover: THover;
     FOnColumnResized: TNotifyEvent;
+    FSelected : TSelectedRender;
 
     IDragging,
-    IHighLight : TColumn;
+    IHighLight,
+    IResizing,
+    ISelected : TColumn;
 
+    MouseColumn : TColumn; // current column under mouse XY
+
+    NewDragX,
     OldWidth,
     OldX : Single;
 
+    IHeights : Array of Single;
+
+    function BoundsOf(const AColumn:TColumn):TRectF;
     procedure ChangeDraggedWidth(const AValue:Single);
     procedure DoChangedRepaint;
+    function DragHit(const ARect:TRectF; out HitRect:TRectF):TColumn;
+    function DragRectangle:TRectF;
     function GetMargins: TMargins;
+    function HeaderRender(const AColumn:TColumn):TRender;
+    function MaxColumnHeight(const APainter:TPainter; const ATotal:Single):Single;
     procedure PaintLines(var AData:TRenderData; const DrawFirst:Boolean);
     procedure SetColumns(const Value: TColumns);
     procedure SetHighLight(const Value: TColumn);
     procedure SetHover(const Value: THover);
     procedure SetMargins(const Value: TMargins);
+    procedure SetSelected(const Value: TSelectedRender);
+    procedure SetSelectedColumn(const Value: TColumn);
   protected
     IColumns : TColumns;
     IData : TVirtualData;
     IJustRepaint : Boolean;
     IVisible : TVisibleColumns;
 
-    function AdjustBounds(const AColumn:TColumn; const R:TRectF):TRectF; virtual;
+    ISingleRow : Boolean;
+
+    function AdjustBounds(const AColumn:TColumn; const R:TRectF):TRectF;
     function AsString(const AColumn:TColumn):String; virtual; abstract;
+    function LevelTop(const ALevel:Integer):Single;
     procedure DoClick; virtual;
   public
-    MouseColumn : TColumn; // current column under mouse XY
-
     Width : Single;
 
     // Temporary
@@ -98,24 +121,33 @@ type
     procedure Assign(Source:TPersistent); override;
 
     function CalcFont(const AColumn:TColumn; const AFont:TFont):TFont;
+    procedure CalcHeight(const APainter:TPainter; const ATotal:Single); override;
     procedure InitFormat;
-
     function Mouse(var AState:TMouseState; const AWidth,AHeight:Single):Boolean; override;
-
     procedure Paint(var AData:TRenderData; const ARender:TRender); override;
+    function RowCount:Integer;
 
     property Columns:TColumns read IColumns write SetColumns;
     property Data:TVirtualData read IData write IData;
 
-    // Current column being dragged or resized
-    property Dragging:TColumn read IDragging write IDragging;
+    // Current column being dragged (moved)
+    property Dragging:TColumn read IDragging;
 
-    // Current column to highlight
+    // Current column being resized
+    property Resizing:TColumn read IResizing;
+
+    // Current column to highlight (on mouse hover)
     property HighLight:TColumn read IHighLight write SetHighLight;
+
+    // Current column to highlight (on selected cell)
+    property SelectedColumn:TColumn read ISelected write SetSelectedColumn;
   published
+    property AllowDrag:Boolean read FAllowDrag write FAllowDrag default True;
     property AllowResize:Boolean read FAllowResize write FAllowResize default True;
     property Hover:THover read FHover write SetHover;
     property Margins:TMargins read GetMargins write SetMargins;
+    property Selected:TSelectedRender read FSelected write SetSelected;
+
     property OnColumnResized:TNotifyEvent read FOnColumnResized write FOnColumnResized;
   end;
 
@@ -148,16 +180,10 @@ type
     FRowLines : TStroke;
     FSortable: Boolean;
 
-    IHeights : Array of Single;
-
-    function HeaderRender(const AColumn:TColumn):TRender;
-    function LevelTop(const ALevel:Integer):Single;
-    function MaxColumnHeight(const APainter:TPainter; const ATotal:Single):Single;
     procedure PaintRowLines(const APainter:TPainter; const AColumns:TColumns; const ALevel:Integer);
     procedure SetRowLines(const Value: TStroke);
     procedure SetSortable(const Value: Boolean);
   protected
-    function AdjustBounds(const AColumn:TColumn; const R:TRectF):TRectF; override;
     function AsString(const AColumn:TColumn):String; override;
     procedure DoClick; override;
   public
@@ -171,13 +197,10 @@ type
     {$ENDIF}
 
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single;
-    procedure CalcHeight(const APainter:TPainter; const ATotal:Single); override;
     function CanSort(const AColumn:TColumn):Boolean;
     class function Description:String; override;
-
+    function Mouse(var AState:TMouseState; const AWidth,AHeight:Single):Boolean; override;
     procedure Paint(var AData:TRenderData; const ARender:TRender); override;
-
-    function RowCount:Integer;
   published
     property RowLines:TStroke read FRowLines write SetRowLines;
     property Sortable:Boolean read FSortable write SetSortable default True;

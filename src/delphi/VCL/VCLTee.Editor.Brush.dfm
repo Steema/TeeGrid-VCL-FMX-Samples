@@ -1,12 +1,12 @@
 object BrushEditor: TBrushEditor
-  Left = 0
-  Top = 0
+  Left = 65
+  Top = 24
   Caption = 'Brush Editor'
   ClientHeight = 267
   ClientWidth = 285
   Color = clWhite
   ParentFont = True
-  OldCreateOrder = False
+  OldCreateOrder = True
   Position = poOwnerFormCenter
   OnShow = FormShow
   PixelsPerInch = 96
@@ -16,22 +16,20 @@ object BrushEditor: TBrushEditor
     Top = 41
     Width = 285
     Height = 226
-    ActivePage = TabPicture
+    ActivePage = TabSolid
     Align = alClient
     TabOrder = 0
     OnChange = PageBrushChange
     object TabSolid: TTabSheet
       Caption = 'Color'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 12
         Top = 56
         Width = 41
         Height = 13
         Caption = '&Opacity:'
+        Color = clWhite
+        ParentColor = False
       end
       object LOpacity: TLabel
         Left = 155
@@ -39,6 +37,8 @@ object BrushEditor: TBrushEditor
         Width = 29
         Height = 13
         Caption = '100%'
+        Color = clWhite
+        ParentColor = False
       end
       object CBColor: TColorBox
         Left = 11
@@ -59,25 +59,16 @@ object BrushEditor: TBrushEditor
         Frequency = 5
         Position = 100
         TabOrder = 1
-        ThumbLength = 14
         OnChange = TBOpacityChange
       end
     end
     object TabGradient: TTabSheet
       Caption = 'Gradient'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object TabPicture: TTabSheet
       Caption = 'Picture'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Image1: TImage
         Left = 12
         Top = 16
@@ -97,12 +88,16 @@ object BrushEditor: TBrushEditor
         Top = 16
         Width = 3
         Height = 13
+        Color = clWhite
+        ParentColor = False
       end
       object LPictureType: TLabel
         Left = 88
         Top = 46
         Width = 3
         Height = 13
+        Color = clWhite
+        ParentColor = False
       end
       object BClearPicture: TButton
         Left = 12
@@ -126,8 +121,8 @@ object BrushEditor: TBrushEditor
       object CBStretch: TCheckBox
         Left = 12
         Top = 163
-        Width = 97
-        Height = 17
+        Width = 76
+        Height = 24
         Caption = '&Stretch'
         TabOrder = 2
         OnClick = CBStretchClick
@@ -144,9 +139,9 @@ object BrushEditor: TBrushEditor
     TabOrder = 1
     object CBVisible: TCheckBox
       Left = 16
-      Top = 14
-      Width = 97
-      Height = 17
+      Top = 10
+      Width = 72
+      Height = 24
       Caption = '&Visible'
       TabOrder = 0
       OnClick = CBVisibleClick

@@ -5,10 +5,9 @@ object FMXGridAbout: TFMXGridAbout
   Caption = 'About TeeGrid'
   ClientHeight = 327
   ClientWidth = 355
-  Position = OwnerFormCenter
   FormFactor.Width = 320
   FormFactor.Height = 480
-  FormFactor.Devices = [Desktop]
+  FormFactor.Devices = [Desktop, iPhone, iPad]
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
@@ -19,37 +18,50 @@ object FMXGridAbout: TFMXGridAbout
     Size.Width = 355.000000000000000000
     Size.Height = 50.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 0
     object Layout2: TLayout
       Align = Right
-      Position.X = 259.000000000000000000
-      Size.Width = 96.000000000000000000
+      Position.X = 252.000000000000000000
+      Size.Width = 103.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 0
       object Button1: TButton
         Cancel = True
         Default = True
         ModalResult = 8
         Position.X = 8.000000000000000000
         Position.Y = 16.000000000000000000
+        Size.Width = 80.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
         TabOrder = 0
         Text = '&Close'
         OnClick = Button1Click
       end
     end
+    object LVersion: TLabel
+      Position.X = 24.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 225.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'TeeGrid v1.0 for Firemonkey'
+    end
   end
   object TeeGrid1: TTeeGrid
     Columns = <>
-    Footer = <>
     ReadOnly = False
-    Rows.Height.Automatic = False
     Position.X = 16.000000000000000000
     Position.Y = 16.000000000000000000
-    Size.Width = 321.000000000000000000
-    Size.Height = 249.000000000000000000
+    Size.Width = 324.000000000000000000
+    Size.Height = 250.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
   end
   object Timer1: TTimer
     Interval = 150

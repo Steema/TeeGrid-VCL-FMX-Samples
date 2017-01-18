@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  Basic Grid "Bands"                         }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Grid.Bands;
@@ -47,12 +47,15 @@ type
     Button : TGridMouseButton;
     Event : TGridMouseEvent;
     Cursor : TMouseCursor;
+
+    function IsDoubleLeft:Boolean;
   end;
 
   TGridKeyEvent=(Down,Up);
 
   TKeyState=record
     Key : Word;
+    KeyChar : {Wide}Char;
     Shift : TShiftState;
     Event : TGridKeyEvent;
   end;

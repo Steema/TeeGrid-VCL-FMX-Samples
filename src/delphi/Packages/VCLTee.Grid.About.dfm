@@ -27,7 +27,6 @@ object VCLGridAbout: TVCLGridAbout
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 339
     object LVersion: TLabel
       Left = 16
       Top = 16
@@ -42,7 +41,6 @@ object VCLGridAbout: TVCLGridAbout
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitLeft = 218
       object Button1: TButton
         Left = 24
         Top = 8
@@ -64,12 +62,17 @@ object VCLGridAbout: TVCLGridAbout
     Back.Brush.Gradient.Visible = True
     Back.Brush.Gradient.Inverted = True
     Columns = <>
-    Footer = <>
     ReadOnly = False
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
   end
   object Timer1: TTimer
     Enabled = False

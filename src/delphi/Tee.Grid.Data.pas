@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  Abstract TVirtualData class                }
-{  Copyright (c) 2016 by Steema Software      }
+{  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Grid.Data;
@@ -60,6 +60,7 @@ type
     procedure AddColumns(const AColumns:TColumns); virtual; abstract;
     function AsFloat(const AColumn:TColumn; const ARow:Integer):TFloat; virtual;
     function AsString(const AColumn:TColumn; const ARow:Integer):String; virtual; abstract;
+    function AutoHeight(const APainter:TPainter; const AColumn:TColumn; const ARow:Integer; out AHeight:Single):Boolean; virtual;
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; virtual; abstract;
     function Calculate(const AColumn:TColumn; const ACalculation:TColumnCalculation):TFloat;
     function CanExpand(const Sender:TRender; const ARow:Integer):Boolean; virtual;
@@ -70,15 +71,17 @@ type
     function HasDetail(const ARow:Integer):Boolean; virtual;
     class function IsNumeric(const AColumn:TColumn):Boolean; overload; virtual;
     function IsSorted(const AColumn:TColumn; out Ascending:Boolean):Boolean; virtual;
-    procedure Load; virtual; abstract;
+    procedure Load(const AColumns:TColumns); virtual; abstract;
     function LongestString(const APainter:TPainter; const AColumn:TColumn):Single;
     function ReadOnly(const AColumn:TColumn):Boolean; virtual;
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); virtual; abstract;
     procedure SortBy(const AColumn:TColumn); virtual;
+    procedure ToggleBoolean(const AColumn:TColumn; const ARow:Integer);
   end;
 
   TVirtualDataClass=class of TVirtualData;
 
+  // List of current registered VirtualData classes
   TVirtualDataClasses=record
   private
     class var

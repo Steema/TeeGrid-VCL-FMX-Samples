@@ -24,14 +24,8 @@ object GridTickerEditor: TGridTickerEditor
     Align = alClient
     TabOrder = 0
     OnChange = PageTickerChange
-    ExplicitLeft = 8
-    ExplicitTop = 112
-    ExplicitWidth = 289
-    ExplicitHeight = 193
     object TabOptions: TTabSheet
       Caption = 'Options'
-      ExplicitWidth = 281
-      ExplicitHeight = 165
       object Label2: TLabel
         Left = 8
         Top = 67
@@ -87,14 +81,10 @@ object GridTickerEditor: TGridTickerEditor
     object TabHigher: TTabSheet
       Caption = 'Higher'
       ImageIndex = 1
-      ExplicitWidth = 281
-      ExplicitHeight = 165
     end
     object TabLower: TTabSheet
       Caption = 'Lower'
       ImageIndex = 2
-      ExplicitWidth = 281
-      ExplicitHeight = 165
     end
   end
 end
