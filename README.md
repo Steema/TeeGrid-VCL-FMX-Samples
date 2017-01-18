@@ -5,7 +5,7 @@
 
 ## Lightweight full-featured Grid / Tabular control
 
-### For Embarcadero RAD Studio, Delphi and C++, VCL and Firemonkey frameworks (all platforms), and Lazarus FreePascal (Windows, Linux, etc)
+### For Embarcadero RAD Studio, Delphi and C++, VCL and Firemonkey frameworks (all platforms: Windows 32 and 64 bit, Mac OSX, Android and iOS), and Lazarus FreePascal (Windows, Linux, etc)
 
 Written from scratch (not derived from TCustomGrid or TGrid), aprox 10K lines of code and 100K compiled size.
 
