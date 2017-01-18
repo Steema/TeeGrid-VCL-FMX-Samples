@@ -1,7 +1,7 @@
 # TeeGrid
 <www.steebi.com>
 
-### Full **source code** and **automatic installer**: [Download latest version](http://www.steebi.com/files/code/beta/vcl_fmx/teegrid/index.htm) **Dec-12th, v0.4 Beta**
+### Full **source code** and **automatic installer**: [Download latest version](http://www.steebi.com/files/code/beta/vcl_fmx/teegrid/index.htm) **Jan-18th 2017, v0.5 Beta**
 
 ## Lightweight full-featured Grid / Tabular control
 
@@ -257,6 +257,10 @@ Columns and sub-columns can be re-positioned:
 TeeGrid1.Columns[2].Index:= 0;  // move 2nd column to first (left-most) position
 ```
 
+- Column dragging
+
+Column headers can be mouse-dragged to move or re-order them to new positions
+
 - Grid Header formatting (font, back fill, stroke)
 
 ```delphi
@@ -410,11 +414,12 @@ Update grid cell changes using a background thread with optional fade-out colors
 
 ![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_Ticker.gif)
 
+- TSheet component ("alpha" experimental version)
+
+An Excel-like spreadsheet component with per-cell custom formatting and formula (using TeeBI TExpression class), and automatic recursive recalculation of cell values that depend on other cell values
 
 
 ### Wish-List, Pending Features
-
-- Using TStringGrid with TeeBI expressions to build a Spreadsheet (Excel like) control
 
 - TreeColumn class (to display a tree inside a column, to expand / collapse rows)
 
@@ -427,8 +432,6 @@ Update grid cell changes using a background thread with optional fade-out colors
 ![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_embedded_TeeChart.png)
 
 - Compositions (several texts, images, etc inside the same cell)
-
-- Column mouse-drag to reorder columns
 
 - Buttons at header to expand / collapse sub-columns
 
