@@ -1,0 +1,86 @@
+object GradientEditor: TGradientEditor
+  Left = 0
+  Top = 0
+  Caption = 'Gradient Editor'
+  ClientHeight = 188
+  ClientWidth = 286
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Align = Top
+    Size.Width = 286.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object CBVisible: TCheckBox
+      Position.X = 8.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 81.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = '&Visible'
+      OnChange = CBVisibleChange
+    end
+    object Label1: TLabel
+      FocusControl = CBDirection
+      Position.X = 88.000000000000000000
+      Position.Y = 10.000000000000000000
+      Size.Width = 65.000000000000000000
+      Size.Height = 15.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.HorzAlign = Trailing
+      Text = '&Direction:'
+    end
+    object CBDirection: TComboBox
+      DropDownCount = 10
+      Items.Strings = (
+        'Vertical'
+        'Horizontal'
+        'Diagonal'
+        'Back Diagonal'
+        'Radial')
+      Position.X = 160.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 100.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      OnChange = CBDirectionChange
+    end
+  end
+  object ColorButton1: TComboColorBox
+    Color = claBlack
+    Position.X = 16.000000000000000000
+    Position.Y = 48.000000000000000000
+    Size.Width = 80.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'comboboxstyle'
+    TabOrder = 2
+    OnChange = ColorButton1Change
+  end
+  object ColorButton2: TComboColorBox
+    Color = claBlack
+    Position.X = 16.000000000000000000
+    Position.Y = 88.000000000000000000
+    Size.Width = 80.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'comboboxstyle'
+    TabOrder = 3
+    OnChange = ColorButton2Change
+  end
+  object CBInverted: TCheckBox
+    Position.X = 16.000000000000000000
+    Position.Y = 128.000000000000000000
+    Size.Width = 161.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = '&Inverted'
+    OnChange = CBInvertedChange
+  end
+end

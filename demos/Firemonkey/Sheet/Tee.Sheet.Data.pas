@@ -88,9 +88,13 @@ end;
 
 procedure TSheetCell.SetExpression(const Value: TExpression);
 begin
-  FExpression.Free;
-  FExpression:=Value;
-  ValidValue:=False;
+  if FExpression<>Value then
+  begin
+    FExpression.Free;
+    FExpression:=Value;
+
+    ValidValue:=False;
+  end;
 end;
 
 procedure TSheetCell.SetRender(const Value: TRender);

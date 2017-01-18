@@ -274,7 +274,7 @@ end;
 
 function TSheet.ParseError(const APos:Integer; const AMessage:String):Boolean;
 begin
-  result:=True;
+  result:=False;
 end;
 
 

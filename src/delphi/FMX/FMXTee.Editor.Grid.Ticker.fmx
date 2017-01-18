@@ -1,0 +1,113 @@
+object GridTickerEditor: TGridTickerEditor
+  Left = 0
+  Top = 0
+  Caption = 'TeeGrid Ticker Editor'
+  ClientHeight = 290
+  ClientWidth = 359
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object PageTicker: TTabControl
+    Align = Client
+    Size.Width = 359.000000000000000000
+    Size.Height = 290.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 0
+    TabPosition = PlatformDefault
+    OnChange = PageTickerChange
+    Sizes = (
+      359s
+      264s
+      359s
+      264s
+      359s
+      264s)
+    object TabOptions: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 62.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Options'
+      ExplicitSize.cx = 62.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object CBEnabled: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 14.000000000000000000
+        TabOrder = 0
+        Text = '&Enabled'
+        OnChange = CBEnabledChange
+      end
+      object CBFade: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 40.000000000000000000
+        TabOrder = 1
+        Text = '&Fade Colors'
+        OnChange = CBFadeChange
+      end
+      object Label1: TLabel
+        FocusControl = TBDelay
+        Position.X = 16.000000000000000000
+        Position.Y = 78.000000000000000000
+        Text = '&Delay:'
+      end
+      object TBDelay: TTrackBar
+        CanParentFocus = True
+        Max = 5000.000000000000000000
+        Min = 100.000000000000000000
+        Orientation = Horizontal
+        Position.X = 16.000000000000000000
+        Position.Y = 101.000000000000000000
+        Size.Width = 145.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Value = 100.000000000000000000
+        OnChange = TBDelayChange
+      end
+      object LDelay: TLabel
+        Position.X = 176.000000000000000000
+        Position.Y = 101.000000000000000000
+        Size.Width = 153.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        Text = '0'
+      end
+    end
+    object TabHigher: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 56.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Higher'
+      ExplicitSize.cx = 56.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+    object TabLower: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 52.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'Lower'
+      ExplicitSize.cx = 52.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+  end
+end

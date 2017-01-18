@@ -111,7 +111,10 @@ end;
 function TFormSheet.CurrentGrid: TGridSheet;
 var tmp : TObject;
 begin
-  tmp:=TabSheets.ActiveTab.TagObject;
+  if TabSheets.ActiveTab=nil then
+     tmp:=nil
+  else
+     tmp:=TabSheets.ActiveTab.TagObject;
 
   if tmp=nil then
      result:=nil
