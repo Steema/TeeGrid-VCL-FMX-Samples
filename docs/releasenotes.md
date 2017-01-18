@@ -1,5 +1,60 @@
 # TeeGrid Release Notes
 
+##Version: 0.5 Beta, Jan-18th 2017
+
+### Demos
+
+* [New demo](https://github.com/Steema/TeeGrid/tree/master/demos/VirtualData/DataSet/Master_Detail_FireDAC) showing master-detail subgrids (grid inside grid) for any standard TDataSet (FireDAC or any other)
+
+### Virtual Data
+
+* Updated [generic TList example](https://github.com/Steema/TeeGrid/tree/master/demos/VirtualData/TList) using the new "Ancestor" importing feature. TeeGrid can optionally show columns with fields or properties that belong to the ancestor classes of your objects.
+
+### Column dragging
+
+* Column headers can be mouse-dragged to move the column to other positions (column re-ordering). The column AllowDrag property (boolean, default True) can be set to false to disable drag for that column
+
+### Grid Editing
+
+* New TeeGrid.Editing.AutoEdit property (boolean, default False). When True, changing the focused selected cell in edit mode will automatically enter edit mode for the new selected cell
+* New TeeGrid.Editing.EnterKey property (default: NextCell) controls what to do when pressing the Enter key in edit mode. NextCell selects the cell at right of the currently edited. NewRow selects the cell under current. SameCell does not change selection.
+* Pressing ctrl+v pastes clipboard contents to current cell
+
+### Sub-Grids (master-detail)
+
+* Master-detail subgrids are now more generic allowing any custom "virtual" data, with less amount of custom user code. See the new DataSet demo above. The next step is automatic subgrids when TList or TArray objects or records contain sub-arrays of sub-lists
+
+### Grid Selection
+
+* New TeeGrid.Selected.Range.Enabled property (boolean, default True). When False, dragging the mouse or using shift with arrow keys will not select multiple cells
+* New TeeGrid.Selected.ScrollToView property (boolean, default False). When True, selecting a cell will automatically scroll the grid both horizontally and/or vertically to make sure the selected cell is not outside the grid boundaries
+
+### TSheet component
+
+A very early "alpha" experimental version of [TSheet](https://github.com/Steema/TeeGrid/tree/master/demos/Firemonkey/Sheet) component, which is derived from TeeGrid to implement an Excel-like spreadsheet for both VCL and Firemonkey.
+
+TSheet adds per-cell formatting (font, colors, etc), per-cell formula property (using TeeBI [TExpression](https://github.com/Steema/BI/tree/master/demos/delphi/firemonkey/Expressions) capabilities), recursive recalculation (cell formulas might depend on another cell values), and several tweaks to resemble Excel characteristics, both for cosmetic and editing aspects.
+
+### Bug fixes
+
+* Small fix in Grid [Ticker demo](https://github.com/Steema/TeeGrid/tree/master/demos/VCL/Ticker) to allow reordering columns
+* Fixed unnecessary persistence of Gradient property values in dmf / fmx form files
+* FreePascal / Lazarus fix for inverted RGB colors
+* Fixed keeping and using the TeeGrid DataSource property set at design-time
+* Fixed startup crash in Android / iOS apps (wrong use of TagObject instead of Tag property to store numbers)
+
+### Improvements
+
+* The automatic calculation of column's width (column autosize) uses a maximum of 10 thousand rows per-column, instead of considering all rows. This is to avoid a slow performance if the grid data contains millions of rows.
+* New TColumn Selectable property (boolean, default True).  When False, clicking or using the arrow or tab or shift+tab keys do not focus that column (it is skipped)
+* New TColumns collection OnMoved event, called when a column has been dragged (re-ordered) to a new position
+* Support for virtual data (Rtti) for older ides (2009, 2010)
+* New optional Ancestor parameter in TVirtualData class, to show grid columns for inherited fields and properties
+* New TColumn Selected property, contains formatting properties to paint the selected cells for that column
+* New TColumn Show and Hide methods (just to change the Visible boolean property)
+* Improved column header highlighting, for "sub-columns" and their parents (columns that are children of other columns)
+* New editor dialogs (VCL for TGridSelection, FMX for Gradient and Ticker classes)
+
 ##Version: 0.4 Beta, Dec-12th 2016
 
 ### Virtual Data
