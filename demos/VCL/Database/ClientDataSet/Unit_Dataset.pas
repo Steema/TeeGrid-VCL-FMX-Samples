@@ -23,10 +23,10 @@ type
     CheckBox1: TCheckBox;
     Button1: TButton;
     DBNavigator1: TDBNavigator;
-    Panel2: TPanel;
-    DBGrid1: TDBGrid;
     Splitter1: TSplitter;
     ComboSource: TComboBox;
+    Label1: TLabel;
+    ClientDataSet2: TClientDataSet;
     procedure CheckBox1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure ComboSourceChange(Sender: TObject);
@@ -59,10 +59,21 @@ begin
 end;
 
 procedure TFormGridDataset.ComboSourceChange(Sender: TObject);
+var i : integer;
 begin
   case ComboSource.ItemIndex of
     0: TeeGrid1.DataSource:=nil;
-    1: TeeGrid1.DataSource:=ClientDataSet1;
+    1: begin
+        TeeGrid1.DataSource:=ClientDataSet1;
+        TeeGrid1.Rows.DefaultHeight := 18;
+       end;
+    2: begin
+        TeeGrid1.DataSource:=ClientDataSet2;
+        for i := 0 to TeeGrid1.Rows.Count-1 do
+          TeeGrid1.Rows.Heights[i] := 100;
+        // Follwing line does not work, workaround above.
+        //TeeGrid1.Rows.DefaultHeight := 100;
+       end
   else
     TeeGrid1.DataSource:=DataSource1;
   end;
