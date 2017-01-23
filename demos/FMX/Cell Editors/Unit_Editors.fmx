@@ -13,6 +13,7 @@ object FormCellEditors: TFormCellEditors
     Columns = <>
     ReadOnly = False
     OnCellEditing = TeeGrid1CellEditing
+    OnCellEdited = TeeGrid1CellEdited
     Align = Client
     Size.Width = 640.000000000000000000
     Size.Height = 241.000000000000000000

@@ -140,6 +140,7 @@ procedure TFormCellEditors.TeeGrid1CellEdited(const Sender: TObject;
   const AEditor: TControl; const AColumn: TColumn; const ARow: Integer);
 var tmp : TComboBox;
     tmpValue : String;
+    tmpDate : TDateTime;
 begin
   if AEditor is TComboBox then
   begin
@@ -150,8 +151,13 @@ begin
     else
        tmpValue:=tmp.Items[tmp.ItemIndex];
 
-    // Bug with Rtti data:
-    // TeeGrid1.Data.SetValue(AColumn,ARow,tmpValue);
+    TeeGrid1.Data.SetValue(AColumn,ARow,tmpValue);
+  end
+  else
+  if AEditor is TDateTimePicker then
+  begin
+    tmpDate:=TDateTimePicker(AEditor).DateTime;
+    TeeGrid1.Data.SetValue(AColumn,ARow,DateTimeToStr(tmpDate));
   end;
 end;
 

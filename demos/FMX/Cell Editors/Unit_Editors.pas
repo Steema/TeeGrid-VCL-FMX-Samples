@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMXTee.Control,
   FMXTee.Grid, FMX.Objects, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts,
 
-  FMX.DateTimeCtrls, FMX.ListBox, FMX.Colors, FMX.NumberBox,
+  FMX.DateTimeCtrls, FMX.ListBox, FMX.Colors, FMX.NumberBox, FMX.Text,
 
   Tee.Grid.Columns;
 
@@ -35,6 +35,8 @@ type
     procedure CBEnterKeyChange(Sender: TObject);
     procedure TeeGrid1CellEditing(const Sender: TObject;
       const AEditor: TControl; const AColumn: TColumn; const ARow: Integer);
+    procedure TeeGrid1CellEdited(const Sender: TObject; const AEditor: TControl;
+      const AColumn: TColumn; const ARow: Integer);
   private
     { Private declarations }
 
@@ -121,6 +123,13 @@ begin
   TeeGrid1.Columns['Happiness'].EditorClass:=TNumberBox;
 end;
 
+procedure TFormCellEditors.TeeGrid1CellEdited(const Sender: TObject;
+  const AEditor: TControl; const AColumn: TColumn; const ARow: Integer);
+begin
+  if AEditor is TComboBox then
+     TeeGrid1.Data.SetValue(AColumn,ARow,TComboBox(AEditor).Selected.Text);
+end;
+
 procedure TFormCellEditors.TeeGrid1CellEditing(const Sender: TObject;
   const AEditor: TControl; const AColumn: TColumn; const ARow: Integer);
 var tmpValue : String;
@@ -135,19 +144,25 @@ begin
     if AColumn=TeeGrid1.Columns['Vehicle'] then
        FillCombo(TComboBox(AEditor),
                  ['None','Bicycle','MotorBike','Car','Caravan','Truck','Boat','Plane'],
-                 tmpValue)
-    else
-    if AColumn=TeeGrid1.Columns['EyeColor'] then
-       FillCombo(TComboBox(AEditor),
-                 ['Black','Brown','Green','Blue'],
-                 ColorOf(StrToInt(tmpValue)));
-  end;
-
+                 tmpValue);
+  end
+  else
+  if AColumn=TeeGrid1.Columns['EyeColor'] then
+     TComboColorBox(AEditor).Color:=Round(TeeGrid1.Data.AsFloat(AColumn,ARow))
+  else
   if AColumn=TeeGrid1.Columns['Height'] then
   begin
     TTrackBar(AEditor).Min:=400;
     TTrackBar(AEditor).Max:=700;
     TTrackBar(AEditor).Value:=100*TeeGrid1.Data.AsFloat(AColumn,ARow);
+  end
+  else
+  if AColumn=TeeGrid1.Columns['Happiness'] then
+  begin
+    TNumberBox(AEditor).ValueType:=TNumValueType.Float;
+    TNumberBox(AEditor).Min:=0;
+    TNumberBox(AEditor).Max:=1;
+    TNumberBox(AEditor).DecimalDigits:=2;
   end;
 end;
 

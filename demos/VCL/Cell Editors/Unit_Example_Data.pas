@@ -41,8 +41,8 @@ begin
   APerson.Name:=RandomNames[Random(High(RandomNames))];
   APerson.Height:=5+(Random(100)*0.01);
   APerson.BirthDate:=EncodeDate(1930+Random(80),1+Random(12),1+Random(28));
-  APerson.Vehicle:=TVehicle(Random(Ord(High(TVehicle))));
-  APerson.EyeColor:=RandomColors[Random(High(RandomColors))];
+  APerson.Vehicle:=TVehicle(Random(1+Ord(High(TVehicle))));
+  APerson.EyeColor:=RandomColors[Random(Length(RandomColors))];
   APerson.Happiness:=Random(100)*0.01;
   APerson.Holidays:=Random(100)<50;
 end;
