@@ -22,6 +22,8 @@ type
 
 function SampleData:TVirtualData;
 
+function ColorOf(const AColor:TColor):String;
+
 implementation
 
 uses
@@ -63,6 +65,17 @@ begin
   CreatePersons;
 
   result:=TVirtualArrayData<TPerson>.Create(Persons);
+end;
+
+function ColorOf(const AColor:TColor):String;
+begin
+  case AColor of
+    TColors.Black : result:='Black';
+    TColors.Brown : result:='Brown';
+    TColors.Green : result:='Green';
+  else
+    result:='Blue';
+  end;
 end;
 
 end.
