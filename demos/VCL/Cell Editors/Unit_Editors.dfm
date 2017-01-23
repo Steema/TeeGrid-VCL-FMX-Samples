@@ -29,7 +29,6 @@ object FormCellEditors: TFormCellEditors
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    ExplicitHeight = 321
     _Headers = (
       1
       'TColumnHeaderBand'
