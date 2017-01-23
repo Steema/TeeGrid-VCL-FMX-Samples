@@ -45,8 +45,8 @@ type
 
     procedure AddSampleFooter;
     procedure GDIPlusChanged(Sender: TObject);
-    procedure GridShowEditor(const Sender:TObject; const AEditor:TControl;
-                             const AColumn:TColumn; const ARow:Integer);
+    procedure GridCellEditing(const Sender:TObject; const AEditor:TControl;
+                              const AColumn:TColumn; const ARow:Integer);
 
     procedure SetExpander(const AColumn:String; const ARows:TRows);
   public
@@ -273,7 +273,7 @@ begin
   TeeGrid1.Columns['Children'].EditorClass:=TComboBox;
 
   // Event to initialize the combobox when it is about being to show
-  TeeGrid1.OnShowEditor:=GridShowEditor;
+  TeeGrid1.OnCellEditing:=GridCellEditing;
 end;
 
 // Example, just fill the combobox with numbers
@@ -291,7 +291,7 @@ end;
 
 // Event called when the grid is going to show an editor control.
 // For "Children" column, prepare the editor control as a combobox.
-procedure TFormArray.GridShowEditor(const Sender:TObject; const AEditor:TControl;
+procedure TFormArray.GridCellEditing(const Sender:TObject; const AEditor:TControl;
                                  const AColumn:TColumn; const ARow:Integer);
 begin
   if AColumn=TeeGrid1.Columns['Children'] then

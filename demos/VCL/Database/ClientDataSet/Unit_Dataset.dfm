@@ -1,7 +1,7 @@
 object FormGridDataset: TFormGridDataset
   Left = 0
   Top = 0
-  Caption = 'FormGridDataset'
+  Caption = 'TeeGrid - TDataSet'
   ClientHeight = 570
   ClientWidth = 634
   Color = clBtnFace
@@ -88,8 +88,8 @@ object FormGridDataset: TFormGridDataset
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    ExplicitWidth = 589
-    ExplicitHeight = 459
+    ExplicitLeft = -64
+    ExplicitTop = 89
     _Headers = (
       1
       'TColumnHeaderBand'
@@ -104,15 +104,12 @@ object FormGridDataset: TFormGridDataset
     Height = 41
     Align = alTop
     TabOrder = 1
-    ExplicitLeft = 32
-    ExplicitTop = -6
-    ExplicitWidth = 1114
     object Label1: TLabel
       Left = 164
       Top = 15
-      Width = 90
+      Width = 27
       Height = 13
-      Caption = 'Data from srouce :'
+      Caption = 'Data:'
     end
     object CheckBox1: TCheckBox
       Left = 19
@@ -135,9 +132,9 @@ object FormGridDataset: TFormGridDataset
       OnClick = Button1Click
     end
     object ComboSource: TComboBox
-      Left = 260
+      Left = 197
       Top = 11
-      Width = 145
+      Width = 180
       Height = 21
       Style = csDropDownList
       ItemIndex = 1
@@ -159,8 +156,6 @@ object FormGridDataset: TFormGridDataset
     DataSource = DataSource1
     Align = alBottom
     TabOrder = 2
-    ExplicitTop = 500
-    ExplicitWidth = 1114
   end
   object ClientDataSet1: TClientDataSet
     PersistDataPacket.Data = {

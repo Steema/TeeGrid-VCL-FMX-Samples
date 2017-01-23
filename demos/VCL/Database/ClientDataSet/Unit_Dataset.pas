@@ -5,7 +5,11 @@ interface
 {
   Linking a TeeGrid with a TDataSource or TDataSet:
 
+  uses Tee.Grid.Data.DB;
+
   TeeGrid1.DataSource:= DataSource1;
+
+  TeeGrid1.DataSource:= ClientDataset1;
 }
 
 uses
@@ -59,23 +63,33 @@ begin
 end;
 
 procedure TFormGridDataset.ComboSourceChange(Sender: TObject);
-var i : integer;
 begin
   case ComboSource.ItemIndex of
     0: TeeGrid1.DataSource:=nil;
+
     1: begin
-        TeeGrid1.DataSource:=ClientDataSet1;
-        TeeGrid1.Rows.DefaultHeight := 18;
+         TeeGrid1.DataSource:=ClientDataSet1;
+
+         // Just a test, set a custom row Height
+         TeeGrid1.Rows.Height.Automatic:=False;
+         TeeGrid1.Rows.Height.Pixels:= 18;
        end;
+
     2: begin
-        TeeGrid1.DataSource:=ClientDataSet2;
-        for i := 0 to TeeGrid1.Rows.Count-1 do
-          TeeGrid1.Rows.Heights[i] := 100;
-        // Follwing line does not work, workaround above.
-        //TeeGrid1.Rows.DefaultHeight := 100;
-       end
+         TeeGrid1.DataSource:=ClientDataSet2;
+
+         // Just a test, set a custom row Height
+         TeeGrid1.Rows.Height.Automatic:=False;
+         TeeGrid1.Rows.Height.Pixels:= 100;
+       end;
   else
-    TeeGrid1.DataSource:=DataSource1;
+    begin
+      // "Automatic=True" means row height will be recalculated for
+      // every row, so considering possible multi-line text in cells
+      TeeGrid1.Rows.Height.Automatic:=True;
+
+      TeeGrid1.DataSource:=DataSource1;
+    end;
   end;
 end;
 

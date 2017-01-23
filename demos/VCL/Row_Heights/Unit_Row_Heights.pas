@@ -97,6 +97,8 @@ begin
 
 //  TeeGrid1.Columns[1].Format.Stroke.Show;
 //  TeeGrid1.Columns[1].Format.Stroke.Size:=4;
+
+  TeeGrid1.Editing.Text.Selected:=False;
 end;
 
 end.

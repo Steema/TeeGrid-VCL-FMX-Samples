@@ -141,6 +141,12 @@ begin
   TeeGrid1.Rows.SubBands.Row[18]:=NewTitle('West');
 
   AddBandsToCombo(TeeGrid1.Rows.SubBands);
+
+  // Do not select cell editor text when editing a cell
+  TeeGrid1.Editing.Text.Selected:=False;
+
+  // Keep cell editor active when changing the selected cell
+  TeeGrid1.Editing.AutoEdit:=True;
 end;
 
 // Fill a ComboBox with all Bands
