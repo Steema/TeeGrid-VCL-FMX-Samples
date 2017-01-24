@@ -151,6 +151,9 @@ begin
     else
        tmpValue:=tmp.Items[tmp.ItemIndex];
 
+    if AColumn=TeeGrid1.Columns['EyeColor'] then
+       tmpValue:=IntToStr(ColorFromString(tmpValue));
+
     TeeGrid1.Data.SetValue(AColumn,ARow,tmpValue);
   end
   else

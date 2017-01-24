@@ -23,6 +23,7 @@ type
 function SampleData:TVirtualData;
 
 function ColorOf(const AColor:TColor):String;
+function ColorFromString(const AColor:String):TColor;
 
 implementation
 
@@ -76,6 +77,23 @@ begin
   else
     result:='Blue';
   end;
+end;
+
+function ColorFromString(const AColor:String):TColor;
+begin
+  if SameText(AColor,'Brown') then
+     result:=TColors.Brown
+  else
+  if SameText(AColor,'Black') then
+     result:=TColors.Black
+  else
+  if SameText(AColor,'Green') then
+     result:=TColors.Green
+  else
+  if SameText(AColor,'Blue') then
+     result:=TColors.Blue
+  else
+     result:=TColors.Null;
 end;
 
 end.
