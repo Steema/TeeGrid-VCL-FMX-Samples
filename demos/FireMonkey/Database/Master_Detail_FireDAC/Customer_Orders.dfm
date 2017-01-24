@@ -13,6 +13,8 @@ object SampleData: TSampleData
   object CustomersTable: TFDQuery
     Active = True
     Connection = Sqlite_demoConnection
+    FetchOptions.AssignedValues = [evRecordCountMode]
+    FetchOptions.RecordCountMode = cmTotal
     SQL.Strings = (
       'SELECT * FROM Customers')
     Left = 47
@@ -20,6 +22,8 @@ object SampleData: TSampleData
   end
   object OrdersTable: TFDQuery
     Connection = Sqlite_demoConnection
+    FetchOptions.AssignedValues = [evRecordCountMode]
+    FetchOptions.RecordCountMode = cmTotal
     SQL.Strings = (
       'SELECT * FROM Orders'
       'where CustomerID = :Cust')
