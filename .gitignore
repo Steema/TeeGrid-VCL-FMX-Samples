@@ -17,7 +17,6 @@ demos/VCL/Row_Heights/Win32/
 demos/Firemonkey/TStringGrid/Win32/
 demos/Firemonkey/Ticker/Win64/Debug/TeeGrid_FMX_Ticker.rsm
 *.bak
-*.lpi
 demos/VCL/C++/Basic/Win32/
 demos/VCL/Header_Footer/Win32/
 demos/VirtualData/Array/Win32/
