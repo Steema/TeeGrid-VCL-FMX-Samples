@@ -31,3 +31,6 @@ demos/Firemonkey/Row_SubTitles/iOSDevice32/
 demos/Firemonkey/Ticker/iOSDevice32/
 demos/VCL/C++/Basic/Win64/
 demos/FMX/Row_SubTitles/iOSDevice32/
+demos/Lazarus/Database/ClientDataSet/lib/
+demos/FireMonkey/TStringGrid/iOSDevice64/
+demos/FireMonkey/TStringGrid/Android/
