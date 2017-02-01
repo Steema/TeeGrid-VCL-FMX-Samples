@@ -1,7 +1,7 @@
 # TeeGrid
 <www.steebi.com>
 
-### Full **source code** and **automatic installer**: [Download latest version](http://www.steebi.com/files/code/beta/vcl_fmx/teegrid/index.htm) **Jan-18th 2017, v0.5 Beta**
+### Release candidate **binary installer**: [Download latest version](http://www.teechart.net/files/teegrid/install/TeeGrid-1.0-RC.exe **Jan-31st 2017, v1.0 Release Candidate**
 
 ## Lightweight full-featured Grid / Tabular control
 
