@@ -375,7 +375,8 @@ TeeGrid1.Scrolling.Horizontal:= TScrollDirection.Normal; // or Inverted, Disable
 - Copy selected cells to clipboard in CSV format, pressing Ctrl+C or Ctrl+Insert key and also by code:
 
 ```delphi
-Clipboard.AsText:= TCSVData.From(TeeGrid1.Grid, TeeGrid1.Selected);  // <-- "nil" selects the full grid data cells
+// The second parameter can be omitted to use all cells in the grid
+Clipboard.AsText:= TCSVData.From(TeeGrid1.Grid, TeeGrid1.Selected);
 ```
 
 - Full selected row highlight
@@ -468,18 +469,26 @@ TeeGrid1.Rows.Alternate.Stroke.Visible:= True;
 
 The usual Onxxx events:
 
-  * OnAfterDraw
-  * OnCellEditing
-  * OnCellEdited
-  * OnClickedHeader
-  * OnColumnResized
+  OnAfterDraw
+  
+  OnCellEditing
+  
+  OnCellEdited
+  
+  OnClickedHeader
+  
+  OnColumnResized
 
 **TeeGrid-specific events:**
 
-  * OnMoved (at TeeGrid.Columns, called when a column is dragged)
-  * OnNewDetail (called when a row is expanded to show a sub-grid)
-  * OnPaint (at TColumn class, to custom paint individual cells)
-  * OnSelect (called when the grid selected cell is changed)
+  OnMoved (at TeeGrid.Columns, called when a column is dragged)
+  
+  OnNewDetail (called when a row is expanded to show a sub-grid)
+  
+  OnPaint (at TColumn class, to custom paint individual cells)
+  
+  OnSelect (called when the grid selected cell is changed)
+
 
 - Abstract Grid "Painter" (canvas) 
 
