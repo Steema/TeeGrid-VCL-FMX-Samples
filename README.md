@@ -5,10 +5,11 @@
 
 ## Lightweight full-featured Grid / Tabular control
 
-### For Embarcadero RAD Studio, Delphi and C++, VCL and Firemonkey frameworks (all platforms: Windows 32 and 64 bit, Mac OSX, Android and iOS), and Lazarus FreePascal (Windows, Linux, etc)
+### For Embarcadero RAD Studio 2009 and up to Berlin Update 2, Delphi and C++, VCL and Firemonkey frameworks (all platforms: Windows 32 and 64 bit, Mac OSX, Android and iOS), and Lazarus FreePascal (Windows, Linux, etc)
 
 Written from scratch (not derived from TCustomGrid or TGrid), aprox 10K lines of code and 100K compiled size.
 
+### Free for non-commercial use (in binary format)
 
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_FMX.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_FMX.png)
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_VCL.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_VCL.png)
@@ -48,17 +49,17 @@ Custom Data can also be set to TeeGrid using a data provider class, manually cre
 
 TeeGrid has no dependencies on database units (DB.pas) or any TDataset component.
 
-This enables linking a TeeGrid to any kind of data, like a TDataset, TDataSource, arrays of objects or records or a generic TList using Rtti, a TCollection, TeeBI TDataItem structures, pure "Virtual Mode" or any other source, including your own custom "virtual data" class.
+This enables linking a TeeGrid to any kind of data, like a TDataset, TDataSource, arrays of objects or records or a generic TList using Rtti, a TCollection, TStrings, TeeBI TDataItem structures, pure "Virtual Mode" or any other source, including your own custom "virtual data" class.
 
-Several classes are provided to bind data to TeeGrid, like:
+Several classes are already provided to bind data to TeeGrid, like:
 
-- TVirtualModeData in [Tee.Grid.Data.Strings](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.Strings.pas) unit, to use OnGet and OnSet events
+- TVirtualModeData in [Tee.Grid.Data.Strings](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.Strings.pas) unit, to use OnGet and OnSet events (pure virtual mode)
 
 - TVirtualData<T> in [Tee.Grid.Data.Rtti](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.Rtti.pas) unit (for records, arrays, generic TList, collections etc)
 
 - TVirtualDBData in [Tee.Grid.Data.DB](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.DB.pas) unit (for TDataSource and TDataSet)
 
-- TBIGridData in [BI.Grid.Data](https://github.com/Steema/TeeGrid/blob/master/src/delphi/BI.Grid.Data.pas) unit (for [TeeBI](https://github.com/Steema/BI) TDataItem objects)
+- TBIGridData in [BI.Grid.Data](https://github.com/Steema/TeeGrid/blob/master/src/delphi/BI.Grid.Data.pas) unit (for [TeeBI](https://github.com/Steema/BI) TDataItem objects, ultra-fast big-data)
 
 - TStringData in [Tee.Grid.Data.Strings](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.Strings.pas) unit (to emulate a TStringGrid with "Cells[col,row]" property)
 
@@ -66,12 +67,12 @@ Examples:
 
 ```delphi
 // From a TDataSource or TDataSet:
-TeeGrid1.DataSource:= DataSource1;  // <-- FDQuery1 etc
+TeeGrid1.DataSource:= DataSource1;  // <-- or any dataset, FDQuery1, ClientDataSet1 etc
 
 // From a TDataSource creating a class:
 TeeGrid1.Data:= TVirtualDBData.From(DataSource1);
 
-// From an array:
+// From an array of records or classes:
 var MyData : Array of TPerson; 
 ... fill array...
 TeeGrid1.Data:=TVirtualArrayData<TPerson>.Create(MyData);
@@ -100,13 +101,13 @@ For example **1 billion** cells ( 1000 columns by 1 million rows ).
 
 The only limit is the memory used by your own data, (compile for the 64bit platform for more than 2GB/3GB).
 
-- Virtual data 
+- Virtual data mode
 
 TVirtualModeData class to automatically create columns and provide cell values using OnGet and OnSet events.
 
 - TStringGrid emulation
 
-TeeGrid can be used like a TStringGrid with a TStringsData object:
+TeeGrid can be used like a TStringGrid using a TStringsData object:
 
 ```delphi
 var Data : TStringsData;
@@ -125,7 +126,7 @@ Data[0,0]:= 'A0';
 Data[1,0]:= 'B0';
 
 // Set data to grid
-TeeGrid1.Data:=Data;
+TeeGrid1.Data:= Data;
 ```
 
 - Sub-columns (any column can have children columns)
@@ -134,18 +135,21 @@ TeeGrid1.Data:=Data;
 TeeGrid1.Columns.AddColumn('My Column 1').Items.AddColumn('Sub-Column 1')...
 ```
 
-- Per-column formatting (font, back fill, stroke, text alignment)
+- Per-column formatting (font, back fill, stroke, text alignment, margins)
 
 ```delphi
+TeeGrid1.Columns[3].ParentFormat:= False;
 TeeGrid1.Columns[3].Format.Font.Size:= 14;
+
+TeeGrid1.Columns[3].TextAlignment:= TColumnTextAlign.Custom;
+TeeGrid1.Columns[3].TextAlign:= TTextAlign.Center; // or Left or Right
 ```
 
-
-- Per-cell custom paint using OnPaint event
+- Per-cell custom paint using the column OnPaint event
 
 ![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_Custom_Cell_Paint.png)
 
-- Locked columns to left or right grid edges
+- Lock columns to left or right grid edges
 
 ```delphi
 TeeGrid1.Columns[4].Locked:= TColumnLocked.Left;
@@ -167,16 +171,28 @@ TeeGrid1.Rows.Height.Automatic:= True;  // <-- every row can be of different hei
 
 ![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_multiline_text.png)
 
+
+- Custom rows height (same height for all rows)
+
+```delphi
+TeeGrid1.Rows.Height.Automatic:= False;
+TeeGrid1.Rows.Height.Value:= 50;
+```
+
 - Row groups
 
-Any row can be expanded to show its detail sub-grid rows (recursive grids-in-grids)
+Any row can be expanded to show a detail sub-grid (recursive grids-in-grids)
 The grid Data class must support master-detail relationships.
 
-For example, the TBIGridData class is provided to link TeeBI TDataItem data objects supporting master-detail.
+For example, the TBIGridData class can link TeeBI TDataItem data objects supporting master-detail.
 
 See ["TeeBI_Customer_Orders"](https://github.com/Steema/TeeGrid/tree/master/demos/VCL/TeeBI/Customer_Orders) example.
 
 ![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_DetailRows.png)
+
+Master-detail sub-grids using standard TDataSet components is also supported:
+
+See ["Master-Detail FireDAC"](https://github.com/Steema/TeeGrid/tree/master/demos/FireMonkey/Database/Master_Detail_FireDAC) example.
 
 - Totals and SubTotals
 
@@ -188,13 +204,13 @@ Totals:= TColumnTotals.Create(TeeGrid1.Footer);
 
 Totals.Calculation.Add( 'Quantity', TColumnCalculation.Sum);
 
-// Add also a band with total names
+// Add also another band with header names for the totals band:
 TTotalsHeader.CreateTotals( TeeGrid1.Footer, Totals ) );
 ```
 
 - Row "Sub-Bands"
 
-Any row might display a grid band above the row.
+Any row might display a grid band above that row.
 The "band" can be anything, from a simple TTextBand to a complex group of bands or rows.
 
 ```delphi
@@ -202,38 +218,52 @@ var Title: TTextBand;
 Title:= TTextBand.Create(TeeGrid1.Rows.SubBands);
 Title.Text:='My Rows';
 
-TeeGrid1.Rows.SubBands[23]:= Title;
+TeeGrid1.Rows.SubBands[23]:= Title;  // <-- only for row 23
 ```
 
 ![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_SubTitle_Rows.png)
 
 - Custom cell rendering
 
-Default class for cell rendering is TCellRender. Other classes can be used or created to override the default behaviour, like for example to show check-boxes in columns with boolean (True/False) values:
+The default class for cell rendering is TCellRender. Other classes can be used or created to override the default behaviour, like for example the TBooleanRender class to show check-boxes in columns that have boolean (True/False) values:
 
 ```delphi
 TeeGrid1.Columns[7].Render:= TBooleanRender.Create; 
 ```
 
-- Cell text format (float, date-time formatting strings)
+- Cell text custom formatting (float, date-time formatting strings)
 
 ```delphi
-TeeGrid1.Columns[0].FloatFormat:= '0.###'; 
+TeeGrid1.Columns[0].DataFormat.Float:= '0.###';  // also Date, Time, DateTime formats
 ```
+
+- Automatic display of Bitmap and Picture data
+
+Cells are filled with pictures when columns data is for example a TDataSet TField Blob type
 
 - Column Visible and Expanded (for sub-columns)
 
 ```delphi
 TeeGrid1.Columns[0].Visible:= False; 
 TeeGrid1.Columns[0].Items[3].Expanded:= False; // visible, but collapsed
+
+TeeGrid1.Columns[3].Hide; // <-- same as Visible:= False
 ```
 
-- Automatic column width (or fixed, in pixels or % percent of grid width)
+- Column Selectable (enable or disable focusing cells of that column)
+
+```delphi
+TeeGrid1.Columns[1].Selectable:= False; 
+```
+
+- Automatic column width
+
+Column width is automatically adjusted by default. It can also be set to a custom fixed value, in pixels or as % percent of total grid width.
 
 ```delphi
 TeeGrid1.Columns[0].Width.Automatic:= False; 
 TeeGrid1.Columns[0].Width.Value:= 40; 
-TeeGrid1.Columns[0].Width.Units:= TSizeUnits.Percent;
+TeeGrid1.Columns[0].Width.Units:= TSizeUnits.Percent;  // or Pixels
 ```
 
 - Column mouse drag resizing
@@ -245,7 +275,7 @@ Dragging the left mouse button in a column header edge resizes it
 Scrollbars are automatically displayed when necessary, or they can be forced visible or hidden.
 
 ```delphi
-TeeGrid1.ScrollBars.Vertical.Width:=50;
+TeeGrid1.ScrollBars.Vertical.Width:= 50;
 TeeGrid1.ScrollBars.Horizontal.Visible:= TScrollBarVisible.Hide; // <-- Automatic, Show or Hide
 ```
 
@@ -261,7 +291,7 @@ TeeGrid1.Columns[2].Index:= 0;  // move 2nd column to first (left-most) position
 
 Column headers can be mouse-dragged to move or re-order them to new positions
 
-- Grid Header formatting (font, back fill, stroke)
+- Grid Header formatting (font, back fill, stroke, margins, text alignment)
 
 ```delphi
 TeeGrid1.Columns[0].Header.Text:= 'My Column';
@@ -280,26 +310,40 @@ TeeGrid1.Header.Hover.Format.Brush.Color:= TAlphaColors.Green;
 - Grid "indicator" column (left-most column with symbol for current row)
 
 ```delphi
-TeeGrid1.Indicator.Visible:= True; // <-- False to hide indicator
+TeeGrid1.Indicator.Visible:= True; // <-- set to False to hide indicator
 TeeGrid1.Indicator.Width:= 20;
 ```
 
 - Row highlighting (mouse-hover and selected row formatting)
 
+Cells can be selected by mouse clicking them or using the arrow, enter and tab keys to navigate among them.
+
+Selecting by mouse happens at mouse down or mouse up depending on grid scrolling and range selection, see below.
+
 ```delphi
-// selection
+// selecting a single cell
 TeeGrid1.Selected.Column:= TeeGrid1.Columns[3];
 TeeGrid1.Selected.Row:= 5;
   
-// formatting
+// formatting of selected cells
 TeeGrid1.Selected.ParentFont:= False;
 TeeGrid1.Selected.Format.Font.Style:= [TFontStyle.fsBold];
 ```
 
-- Multi-cell range selection (by mouse and arrow keys)
+- Unfocused selected format
+
+Selected cells can be displayed using different formatting settings when the grid is not the focused control
+
+```delphi
+TeeGrid1.Selected.UnFocused.Format.Brush.Color:= TColors.Red;
+```
+
+- Multi-cell range selection (by mouse and/or arrow keys, or by code)
 
 ```delphi
 // range selection
+TeeGrid1.Selected.Range.Enabled:= True; // <-- It is disabled by default
+
 TeeGrid1.Selected.Range.FromColumn:= TeeGrid1.Columns[3];
 TeeGrid1.Selected.Range.ToColumn:= TeeGrid1.Columns[6];
 
@@ -309,19 +353,40 @@ TeeGrid1.Selected.Range.ToRow:= 15;
 
 ![](https://github.com/Steema/TeeGrid/blob/master/docs/img/TeeGrid_SubTotals_Range_Select_CSV_Footer.png)
 
+- Automatic grid scrolling when selecting cells
+
+Grid can be automatically scrolled when selecting cells so the selected cell is always visible
+
+```delphi
+TeeGrid1.Selected.ScrollToView:= True; // default is False
+```
+
+- Grid scrolling
+
+Horizontal and / or vertical scrolling can be performed using the grid scrollbars or arrow keys, and also optionally dragging the grid  using the mouse left button or panning via finger touch for touch devices.
+
+Note: Cell range selection is disabled when mouse or touch scrolling is enabled
+
+```delphi
+TeeGrid1.Scrolling.Mode:= TScrollingMode.Touch; // or Mouse, Both, None
+TeeGrid1.Scrolling.Horizontal:= TScrollDirection.Normal; // or Inverted, Disabled
+```
+
 - Copy selected cells to clipboard in CSV format, pressing Ctrl+C or Ctrl+Insert key and also by code:
 
 ```delphi
-Clipboard.AsText:= TCSVData.From(TeeGrid1.Grid, TeeGrid1.Selected);
+Clipboard.AsText:= TCSVData.From(TeeGrid1.Grid, TeeGrid1.Selected);  // <-- "nil" selects the full grid data cells
 ```
 
 - Full selected row highlight
 
 ```delphi
-TeeGrid1.Selected.FullRow:=True;
+TeeGrid1.Selected.FullRow:= True;
 ```
 
 - Grid and Columns ReadOnly
+
+Note: If grid data is readonly (for example a TDataSet), it cannot be overriden
 
 ```delphi
 TeeGrid1.ReadOnly:= False;
@@ -330,21 +395,49 @@ TeeGrid1.Columns[0].ReadOnly:= True;
 
 - Custom Grid editors 
 
+The EditorClass property controls which editor control to use to edit cells data.
+
+See ["Cell Editors"](https://github.com/Steema/TeeGrid/tree/master/demos/FireMonkey/Cell%20Editors) VCL and FMX examples.
+
 ```delphi
 TeeGrid1.Columns[1].EditorClass:= TCalendarEditor;
+```
+
+- Grid Editing properties
+
+Several properties control grid cell editing features.
+
+Selected cells can be edited by pressing the F2 key or by other means.
+
+```delphi
+TeeGrid1.Editing.AutoEdit:= True; // start editing cells when typing any letter or number
+
+TeeGrid1.Editing.AlwaysVisible:= True; // keep cell editor active when moving to other cells
+
+TeeGrid1.Editing.DoubleClick:= True; // start editing cells when double-clicking them
+
+TeeGrid1.Editing.EnterKey:= NextCell; // move to other cells when finishing editing them pressing the Enter key
+
+TeeGrid1.Editing.Text.Selected:= True; // select all cell text when starting editing it
 ```
 
 - Rows and Columns lines separators (stroke settings)
 
 ```delphi
+
+// row line dividers
 TeeGrid1.Rows.RowLines.Visible:= True;
 TeeGrid1.Rows.RowLines.Size:= 3;
 TeeGrid1.Rows.RowLines.Color:= TAlphaColors.Skyblue;
+
+// column line dividers
+TeeGrid1.Rows.Lines.Visible:= False;
+TeeGrid1.Rows.Lines.Size:= 2;
 ```
 
 - Cell mouse-hover (highlights cell under mouse cursor)
 
-Cell (or all cells in row) under mouse cursor can be highlighted:
+The Cell (or all cells in a row) under the mouse cursor can be highlighted:
 
 ```delphi
 TeeGrid1.Cells.Hover.Visible:= True;
@@ -354,7 +447,9 @@ TeeGrid1.Cells.Hover.Format.Stroke.Size:= 2;
 
 - All coordinates as floats
 
-For sub-pixel finetuning, Firemonkey only. VCL always rounds to integer pixels.
+For sub-pixel finetuning. 
+
+Note: For VCL, using the old "GDI" canvas always rounds to integer pixels
 
 ```delphi
 TeeGrid1.Header.Height.Automatic:=False;
@@ -374,26 +469,29 @@ TeeGrid1.Rows.Alternate.Stroke.Visible:= True;
 The usual Onxxx events:
 
   * OnAfterDraw
+  * OnCellEditing
+  * OnCellEdited
   * OnClickedHeader
   * OnColumnResized
-  * OnEditing
-  * OnEdited
 
 **TeeGrid-specific events:**
 
+  * OnMoved (at TeeGrid.Columns, called when a column is dragged)
   * OnNewDetail (called when a row is expanded to show a sub-grid)
-  * OnPaint (at TColumn class, to paint individual cells)
-  * OnShowEditor (called when a cell editor is about to be displayed)
-
+  * OnPaint (at TColumn class, to custom paint individual cells)
+  * OnSelect (called when the grid selected cell is changed)
 
 - Abstract Grid "Painter" (canvas) 
 
 TeeGrid Painter property is of TPainter class.
-This is an abstract class that can be overriden, for example to use GDI+ in VCL:
+
+This is an abstract class that can be overriden, for example to use the old GDI in VCL:
 
 ```delphi
-TeeGrid1.Painter:= TGDIPlusPainter.Create;
+TeeGrid1.Painter:= TGDIPainter.Create;
 ```
+
+Note: The default painter class in VCL is TGdiPlusPainter (Windows GDI+)
 
 - Design-time editor dialog to modify all settings and properties
 
@@ -423,7 +521,7 @@ An Excel-like spreadsheet component with per-cell custom formatting and formula 
 
 - TreeColumn class (to display a tree inside a column, to expand / collapse rows)
 
-- Improve TVirtualDBData class to support DB buffering and events
+- Improve TVirtualDBData class to support DB buffering and insert/append events
 
 - Easy embeddable controls in cells or rows.
 
