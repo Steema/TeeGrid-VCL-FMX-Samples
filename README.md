@@ -11,6 +11,9 @@ Written from scratch (not derived from TCustomGrid or TGrid), aprox 10K lines of
 
 ### Free for non-commercial use (in binary format)
 
+See full [License](https://github.com/Steema/TeeGrid/blob/master/docs/license.txt) document
+
+
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_FMX.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_FMX.png)
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_VCL.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_VCL.png)
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_Lazarus.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_Lazarus.png)
