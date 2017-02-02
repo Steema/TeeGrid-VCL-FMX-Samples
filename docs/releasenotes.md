@@ -1,5 +1,15 @@
 # TeeGrid Release Notes
 
+##Version: Release Candidate 1.1, Feb-2nd 2017
+
+### Improvements
+
+* Grid Editor now offer configurable Column source
+  Grid->edit->Columns-> select column -> Data -> Source
+
+* Changed FireDAC RecordCountMode to "cmTotal" to obtain the real total number of dataset records
+
+
 ##Version: 0.5 Beta, Jan-18th 2017
 
 ### Demos
