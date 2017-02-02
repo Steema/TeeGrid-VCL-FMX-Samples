@@ -1,7 +1,7 @@
 # TeeGrid
 <www.steebi.com>
 
-### Release candidate **binary installer**: [Download latest version](http://www.teechart.net/files/teegrid/install/TeeGrid-1.0-RC.exe **Jan-31st 2017, v1.0 Release Candidate**
+### Release candidate **binary installer**: [Download latest version](http://www.teechart.net/files/teegrid/install/TeeGrid-1.0-RC.exe) **Jan-31st 2017, v1.0 Release Candidate**
 
 ## Lightweight full-featured Grid / Tabular control
 
