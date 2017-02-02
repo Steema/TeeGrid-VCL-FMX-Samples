@@ -1,6 +1,6 @@
 # TeeGrid Release Notes
 
-##Version: Release Candidate 1.1, Feb-2nd 2017
+##Version: Release Candidate 1.0, Feb-2nd 2017
 
 ### Improvements
 
