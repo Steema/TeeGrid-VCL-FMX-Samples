@@ -96,7 +96,7 @@ end;
 // Copy the selected cells contents to clipboard (in CSV format)
 procedure TForm43.BCopyClick(Sender: TObject);
 begin
-  TeeGrid1.Grid.CopySelected;
+  TeeGrid1.Grid.Copy;
 end;
 
 // Show or hide all "Sub-Bands"

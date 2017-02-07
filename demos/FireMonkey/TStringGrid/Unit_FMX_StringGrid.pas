@@ -209,11 +209,11 @@ end;
 procedure TStringGridForm.PaintPicture(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean);
 var tmp : TRectF;
 begin
-  DefaultPaint:=not SameText(AData.Text,'OK');
+  DefaultPaint:=not SameText(AData.Data,'OK');
 
   if not DefaultPaint then
   begin
-    tmp:=AData.Rect;
+    tmp:=AData.Bounds;
     tmp.Inflate(-8,-6);
 
     AData.Painter.Draw(OkPicture,tmp);
