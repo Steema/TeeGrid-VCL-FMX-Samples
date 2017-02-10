@@ -21,13 +21,17 @@ uses
 
   FMXTee.Control, FMXTee.Grid,
 
-  Tee.Renders, Tee.Grid.RowGroup, Customer_Orders;
+  Tee.Renders, Tee.Grid.RowGroup, Customer_Orders, Data.Bind.Controls,
+  Data.Bind.Components, Data.Bind.DBScope, Data.DB, Fmx.Bind.Navigator;
 
 type
   TMasterDetail = class(TForm)
     TeeGrid1: TTeeGrid;
     Layout1: TLayout;
     CBEnabled: TCheckBox;
+    BindNavigator1: TBindNavigator;
+    DataSource1: TDataSource;
+    BindSourceDB1: TBindSourceDB;
     procedure FormCreate(Sender: TObject);
     procedure CBEnabledChange(Sender: TObject);
   private

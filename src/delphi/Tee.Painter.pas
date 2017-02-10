@@ -54,6 +54,7 @@ type
 
     function CenterPoint:TPointF;
     function Contains(const P:TPointF):Boolean;
+    class function Empty:TRectF; inline; static;
     procedure Inflate(const X,Y:Single);
     function Height:Single; inline;
     function Round:TRect;

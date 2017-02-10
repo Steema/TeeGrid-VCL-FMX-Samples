@@ -5,6 +5,7 @@
 {  All Rights Reserved                        }
 {*********************************************}
 unit Tee.Grid.Data.Rtti;
+{$I Tee.inc}
 
 interface
 
@@ -68,8 +69,7 @@ type
                          const APainter:TPainter;
                          const AColumn:TColumn):Single;
 
-    procedure DoSetValue(const AColumn:TColumn; const ADest:TValue; const Value:TValue);
-
+    function FinalPointer(const AColumn: TColumn; P:Pointer):Pointer;
     function FinalValue(const AColumn: TColumn; const AValue:TValue):TValue; overload;
 
     class function IsBoolean(const AType:TRttiType):Boolean; static;
@@ -83,6 +83,8 @@ type
     class function TypeOf(const AColumn: TColumn): TRttiType; static;
     class function ValueOf(const AMember:TRttiMember; const P:Pointer):TValue; overload; static;
     class function ValueOf(const AColumn:TColumn; const P:Pointer):TValue; overload; static; inline;
+  public
+    function DataType(const AColumn:TColumn):PTypeInfo; override;
   end;
 
   TVisibility=set of TMemberVisibility;
@@ -114,6 +116,7 @@ type
     procedure AddProperties(const AColumns:TColumns; const AType:TRttiType);
 
     procedure DoAddColumns(const AColumns:TColumns; const AType:TRttiType);
+    procedure DoSetValue(const AColumn:TColumn; const ARow:Integer; const Value:TValue);
     procedure GuessArrayItems;
 
     procedure InternalAddType(const AColumns:TColumns;
@@ -124,9 +127,6 @@ type
 
     class function NameOf(const AType:TRttiOrdinalType):String; overload; static;
     class function NameOf(const AType:TRttiFloatType):String; overload; static;
-
-    procedure TrySetInt64(const AColumn: TColumn; const ARow: Integer; const AText: String);
-    procedure TrySetFloat(const AColumn: TColumn; const ARow: Integer; const AText: String);
   protected
     function RowValue(const ARow:Integer):TValue; virtual;
     function RttiType:TRttiType; inline;
@@ -137,6 +137,7 @@ type
                        const AAncestor:Boolean=False); overload;
 
     procedure AddColumns(const AColumns:TColumns); override;
+    function AsFloat(const AColumn: TColumn; const ARow: Integer): TFloat; override;
     function AsString(const AColumn:TColumn; const ARow:Integer):String; override;
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; override;
     function Count:Integer; override;

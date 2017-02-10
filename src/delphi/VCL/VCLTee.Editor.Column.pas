@@ -5,6 +5,7 @@
 {  All Rights Reserved                        }
 {*********************************************}
 unit VCLTee.Editor.Column;
+{$I Tee.inc}
 
 interface
 

@@ -67,8 +67,12 @@ end;
 
 procedure TFormHeaderFooter.FormCreate(Sender: TObject);
 //var tmp : TBandGroup;
+var tmpBand : TGridBand;
+    tmpFooter : TTextBand;
 begin
-  TeeGrid1.Footer.AddText('Footer 1').Format.Font.Color:=clRed;
+  tmpFooter:=TeeGrid1.Footer.AddText('Footer 1');
+
+  tmpFooter.Format.Font.Color:=clRed;
 
   TeeGrid1.Footer.AddText('Footer 2'#13'SubFooter 2');
 
@@ -80,7 +84,7 @@ begin
     Gradient.Show;
   end;
 
-  TeeGrid1.Headers.AddText('Header 2'); //.Width.Value:=50;
+  tmpBand:=TeeGrid1.Headers.AddText('Header 2'); //.Width.Value:=50;
 
   TeeGrid1.Headers.AddText('Header 3').Format.Stroke.Show;
 
@@ -102,6 +106,11 @@ begin
   TTextBand.Create(tmp.Bands).Text:='SubHeader 2';
   TTextBand.Create(tmp.Bands).Text:='SubHeader 3';
   }
+
+  // Move "Header 2" to top (position = 0)
+  tmpBand.Index:=0;
+
+  tmpFooter.TextRender.TextAlign.Horizontal:=THorizontalAlign.Center;
 end;
 
 end.

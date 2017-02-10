@@ -13,10 +13,10 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    TeeGrid1: TTeeGrid;
     procedure FormCreate(Sender: TObject);
   private
     { private declarations }
-    Grid1 : TTeeGrid;
   public
     { public declarations }
   end;
@@ -37,10 +37,6 @@ procedure TForm1.FormCreate(Sender: TObject);
 var tmp : TStringsData;
     t : Integer;
 begin
-  Grid1:=TTeeGrid.Create(Self);
-  Grid1.Align:=alClient;
-  Grid1.Parent:=Self;
-
   tmp:=TStringsData.Create;
   tmp.Rows:=10000;
   tmp.Columns:=12;
@@ -51,9 +47,7 @@ begin
   for t:=0 to tmp.Rows-1 do
       tmp.Cells[0,t]:=IntToStr(t);
 
-  Grid1.Data:=tmp;
-
-
+  TeeGrid1.Data:=tmp;
 end;
 
 end.

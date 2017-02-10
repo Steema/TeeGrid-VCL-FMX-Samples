@@ -72,7 +72,6 @@ type
   private
     FAlternate: TAlternateFormat;
     FBack : TFormat;
-    FDefaultHeight : Single;
     FHeight: TCoordinate;
     FHover: TCellHover;
     FRowLines: TStroke;
@@ -96,7 +95,6 @@ type
     procedure SetHover(const Value: TCellHover);
     procedure SetSpacing(const Value: TCoordinate);
     procedure SetRowLines(const Value: TStroke);
-    procedure SetDefaultHeight(const Value: Single);
   protected
     procedure PaintRow(var AData:TRenderData; const ARender: TRender);
   public
@@ -138,7 +136,6 @@ type
 
     property Children:TRowsBands read FChildren;
     property Data:TVirtualData read IData write IData;
-    property DefaultHeight:Single read FDefaultHeight write SetDefaultHeight;
     property Heights[const Index:Integer]:Single read GetHeights write SetHeights;
     property SubBands:TRowsBands read FSubBands;
     property VisibleColumns:TVisibleColumns read FVisibleColumns;

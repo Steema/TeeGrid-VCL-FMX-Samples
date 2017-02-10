@@ -98,14 +98,16 @@ end;
 procedure TFormDetailRows.AddDetail(const AGroup:TRowGroup; const ADetail:TDataItem; const AColumn:TColumn);
 var Expander : TExpanderRender;
 begin
-  // Set the detail item
+  // Set the detail data item
   (AGroup.Data as TBIGridData).Detail:=ADetail;
 
-  // Set the "+/-" icon to a column to enable expand / collapse
+  // Create a new expander ("+/-" icon) render
   Expander:=AGroup.NewExpander;
 
+  // Customize the expander style ("+"/"-", arrows, etc)
   Expander.Style:=TExpanderStyle(CBExpander.ItemIndex);
 
+  // Set the column Render to be the expander, to enable expand / collapse
   AColumn.Render:=Expander;
 end;
 

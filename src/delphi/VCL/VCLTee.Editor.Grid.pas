@@ -5,6 +5,7 @@
 {  All Rights Reserved                        }
 {*********************************************}
 unit VCLTee.Editor.Grid;
+{$I Tee.inc}
 
 interface
 
@@ -64,7 +65,6 @@ type
     TabBack: TTabSheet;
     TabMargins: TTabSheet;
     TabTheme: TTabSheet;
-    LBThemes: TListBox;
     TabSelection: TTabSheet;
     Panel4: TPanel;
     CBAlternateVisible: TCheckBox;
@@ -99,6 +99,9 @@ type
     CBScrollBars: TCheckBox;
     CBHorizScrollBar: TComboBox;
     CBVertScrollBar: TComboBox;
+    GBText: TGroupBox;
+    CBSelectText: TCheckBox;
+    LBThemes: TListBox;
     procedure TreeColumnsChange(Sender: TObject; Node: TTreeNode);
     procedure SBDeleteColumnClick(Sender: TObject);
     procedure PageGridChange(Sender: TObject);
@@ -131,6 +134,7 @@ type
     procedure TreeColumnsDeletion(Sender: TObject; Node: TTreeNode);
     procedure TreeColumnsKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure CBSelectTextClick(Sender: TObject);
   private
     { Private declarations }
 

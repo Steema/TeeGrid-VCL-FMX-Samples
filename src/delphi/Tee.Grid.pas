@@ -40,6 +40,19 @@ uses
   Tee.Grid.Selection, Tee.Grid.Data, Tee.Grid.RowGroup;
 
 type
+  TTextEditing=class(TPersistentChange)
+  private
+    FSelected : Boolean;
+
+    procedure SetSelected(const Value:Boolean);
+  public
+    Constructor Create(const AChanged:TNotifyEvent); override;
+
+    procedure Assign(Source:TPersistent); override;
+  published
+    property Selected:Boolean read FSelected write SetSelected default True;
+  end;
+
   TEditingEnter=(NextCell,NextRow,SameCell);
 
   // Properties to control Grid Cell editing
@@ -51,8 +64,15 @@ type
     FClass : TClass;
     FDoubleClick : Boolean;
     FEnterKey: TEditingEnter;
+    FText : TTextEditing;
+
+    procedure SetText(const Value:TTextEditing);
   public
     Constructor Create(const AChanged:TNotifyEvent); override;
+
+    {$IFNDEF AUTOREFCOUNT}
+    Destructor Destroy; override;
+    {$ENDIF}
 
     procedure Assign(Source:TPersistent); override;
 
@@ -67,6 +87,7 @@ type
     property AutoEdit:Boolean read FAutoEdit write FAutoEdit default False;
     property DoubleClick:Boolean read FDoubleClick write FDoubleClick default True;
     property EnterKey:TEditingEnter read FEnterKey write FEnterKey default TEditingEnter.NextCell;
+    property Text:TTextEditing read FText write SetText;
   end;
 
   TScroll=TPointF;
@@ -123,10 +144,12 @@ type
   protected
     ILoading : Boolean;
 
+    procedure CancelEditor; virtual;
     procedure ChangeHorizScroll(const Value:Single);
     procedure ChangeVertScroll(const Value:Single);
     procedure DataChanged; virtual;
     procedure DataSourceChanged;
+    procedure DoEditing(const Sender:TObject; const IsEditing:Boolean);
     procedure Key(const AState:TKeyState);
     function HorizScrollBarHeight:Single; virtual; abstract;
     procedure HorizScrollChanged; virtual; abstract;
@@ -137,12 +160,13 @@ type
     procedure ReadHeaders(Reader: TReader);
     property Root:TRowGroup read FRoot;
     procedure StartEditor(const AColumn:TColumn; const ARow:Integer;
-                          const AutoEdit:Boolean=False); overload; virtual; abstract;
-    procedure StartEditor(const AutoEdit:Boolean=False); overload;
+                          const AutoEdit:String=''); overload; virtual; abstract;
+    procedure StartEditor(const AutoEdit:String=''); overload;
     procedure StopEditor; virtual;
-    procedure TryStartEditor(const AutoEdit:Boolean=False);
+    procedure TryStartEditor(const AutoEdit:String='');
     function VertScrollBarWidth:Single; virtual; abstract;
     procedure VertScrollChanged; virtual; abstract;
+    function WidthForColumns(const AGroup:TRowGroup; const AWidth:Single):Single;
     procedure WriteFooter(Writer: TWriter);
     procedure WriteHeaders(Writer: TWriter);
   public
@@ -157,7 +181,7 @@ type
     function CanExpand(const Sender:TRender; const ARow:Integer):Boolean;
     function ClientHeight:Single; override;
     function ClientWidth:Single; override;
-    procedure CopySelected; virtual; abstract;
+    procedure Copy(const ASelection:TGridSelection=nil); virtual; abstract;
     procedure Loaded; override;
     procedure MouseLeave;
     procedure Paint; override;

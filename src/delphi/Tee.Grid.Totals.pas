@@ -12,7 +12,7 @@ interface
 {
    Classes to paint "Totals" (or "SubTotals") grid bands.
 
-   Automatic:  (all numeric visible columns as Sum)
+   Automatic:  (Default "Sum" of all numeric visible columns values)
 
      TeeGrid1.Footer.Add( TColumnTotals.From( TeeGrid.Data, TeeGrid1.Columns ) );
 

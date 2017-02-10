@@ -41,6 +41,7 @@ contains
   VCLTee.Painter.GdiPlus in '..\VCL\VCLTee.Painter.GdiPlus.pas',
   VCLTee.Control in '..\VCL\VCLTee.Control.pas',
   VCLTee.Grid in '..\VCL\VCLTee.Grid.pas',
+  VCLTee.Grid.Themes in '..\VCL\VCLTee.Grid.Themes.pas',
   VCLTee.Picture in '..\VCL\VCLTee.Picture.pas',
   VCLTee.Editor.Column in '..\VCL\VCLTee.Editor.Column.pas',
   VCLTee.Editor.ColumnBand in '..\VCL\VCLTee.Editor.ColumnBand.pas' {ColumnBandEditor},

@@ -45,6 +45,8 @@ type
   FMXTBrush=FMX.Graphics.TBrush;
   {$IFEND}
 
+  TBitmapQuality=(Quality,Speed);
+
   TFMXPainter=class(TPainter)
   private
     ICanvas : TCanvas;
@@ -62,6 +64,7 @@ type
     FOpacity : Single;
     FVertAlign : TVerticalAlign;
 
+    procedure DrawBitmap(const ABitmap:TBitmap; const ADest:TRectF);
     function GraphicOf(const APicture: TPicture):TBitmap;
     procedure TextSize(const AText:String; out AWidth,AHeight:Single);
 
@@ -71,6 +74,8 @@ type
   protected
     procedure SetCanvas(const ACanvas:TCanvas); inline;
   public
+    BitmapQuality : TBitmapQuality;
+
     Constructor Create(const ACanvas:TCanvas);
     Destructor Destroy; override;
 

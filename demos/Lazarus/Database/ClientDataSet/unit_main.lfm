@@ -14,7 +14,9 @@ object Form1: TForm1
     Top = 50
     Width = 779
     Columns = <>
+    DataSource = DataSource1
     ReadOnly = False
+    Rows.Height.Value = 24
     Align = alClient
     UseDockManager = False
     ParentBackground = False
@@ -53,6 +55,7 @@ object Form1: TForm1
     top = 64
   end
   object Dbf1: TDbf
+    FilePath = 'C:\root\TeeBee\Sources\Grid\github\demos\Lazarus\Database\ClientDataSet\'
     IndexDefs = <>
     TableLevel = 4
     FilterOptions = []

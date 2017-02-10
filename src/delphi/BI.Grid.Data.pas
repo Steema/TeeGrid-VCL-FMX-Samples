@@ -31,9 +31,10 @@ interface
 }
 
 uses
-  System.Classes,
+  System.Classes, System.TypInfo, System.Generics.Collections,
+
   Tee.Grid, Tee.Grid.Columns, Tee.Painter, Tee.Renders, Tee.Grid.Data,
-  BI.Data, BI.DataSource, BI.Data.RTTI, System.Generics.Collections;
+  BI.Data, BI.DataSource, BI.Data.RTTI;
 
 type
   TBIGridData=class(TVirtualData)
@@ -84,6 +85,7 @@ type
     procedure Load(const AColumns:TColumns); override;
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
     procedure SortBy(const AColumn:TColumn); override;
+    function DataType(const AColumn:TColumn):PTypeInfo; override;
 
     property Data:TDataItem read GetData write SetData;
     property Sortable:Boolean read FSortable write SetSortable default True;

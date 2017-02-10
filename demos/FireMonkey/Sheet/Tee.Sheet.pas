@@ -82,6 +82,8 @@ begin
 
   // Automatically start the cell editing mode when pressing a letter or number key
   IGrid.Editing.AutoEdit:=True;
+
+  IGrid.Selected.Range.Enabled:=True;
 end;
 
 procedure TSheet.InitSheetBorder(const ABorder:TBorder);
@@ -123,7 +125,7 @@ begin
 
   if DefaultPaint then
   begin
-    if AData.Text<>'' then
+    if AData.Data<>'' then
        AData.Painter.SetFont(IGrid.Cells.Format.Font);
   end
   else
@@ -142,7 +144,7 @@ begin
   (Sender.Render as TFormatRender).Borders.Right.InitVisible(AData.Row=IGrid.Selected.Row);
 
   if AData.Row=IGrid.Selected.Row then
-     AData.Painter.Fill(AData.Rect,TColors.Darkgray);
+     AData.Painter.Fill(AData.Bounds,TColors.Darkgray);
 end;
 
 procedure TSheet.InitRowNumbers(const AColumn:TColumn);

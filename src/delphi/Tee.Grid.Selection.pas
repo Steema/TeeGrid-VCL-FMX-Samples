@@ -28,6 +28,8 @@ interface
 
      // Multi-cell range:
 
+     TeeGrid1.Selected.Range.Enabled:= True; // <--- ENABLE
+
      TeeGrid1.Selected.Range.FromRow:= 10;
      TeeGrid1.Selected.Range.ToRow:= 10;
 
@@ -53,17 +55,17 @@ uses
 type
   TSelectionRange=class(TPersistentChange)
   private
+    FEnabled: Boolean;
     FFromRow: Integer;
     FFromColumn: TColumn;
     FToRow: Integer;
     FToColumn: TColumn;
-    FEnabled: Boolean;
 
+    procedure SetEnabled(const Value: Boolean);
     procedure SetFromColumn(const Value: TColumn);
     procedure SetFromRow(const Value: Integer);
     procedure SetToColumn(const Value: TColumn);
     procedure SetToRow(const Value: Integer);
-    procedure SetEnabled(const Value: Boolean);
   public
     Constructor Create(const AChanged:TNotifyEvent); override;
 
@@ -74,7 +76,7 @@ type
     property ToColumn:TColumn read FToColumn write SetToColumn;
     property ToRow:Integer read FToRow write SetToRow default -1;
   published
-    property Enabled:Boolean read FEnabled write SetEnabled default True;
+    property Enabled:Boolean read FEnabled write SetEnabled default False;
   end;
 
   TGridSelection=class(TVisibleTextRender)

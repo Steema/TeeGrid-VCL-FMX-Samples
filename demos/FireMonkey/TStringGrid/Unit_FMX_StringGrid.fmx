@@ -368,6 +368,9 @@ object StringGridForm: TStringGridForm
     object LCells: TLabel
       Position.X = 264.000000000000000000
       Position.Y = 19.000000000000000000
+      Size.Width = 209.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
       Text = 'LCells'
     end
   end
@@ -400,8 +403,8 @@ object StringGridForm: TStringGridForm
     object Label1: TLabel
       Position.X = 32.000000000000000000
       Position.Y = 16.000000000000000000
-      Size.Width = 352.000000000000000000
-      Size.Height = 17.000000000000000000
+      Size.Width = 433.000000000000000000
+      Size.Height = 25.000000000000000000
       Size.PlatformDefault = False
     end
   end

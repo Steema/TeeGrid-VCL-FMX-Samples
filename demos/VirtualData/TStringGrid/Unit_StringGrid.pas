@@ -244,7 +244,7 @@ begin
   else
     Exit;
 
-  AData.Painter.Paint(CustomFormat,AData.Rect);
+  AData.Painter.Paint(CustomFormat,AData.Bounds);
 end;
 
 // Speed performance, disable cosmetic effects:
@@ -268,11 +268,11 @@ procedure TStringGridForm.PaintPicture(const Sender:TColumn; var AData:TRenderDa
 var tmp : TRectF;
 begin
   // We'll replace "OK" text with a picture
-  DefaultPaint:=not SameText(AData.Text,'OK');
+  DefaultPaint:=not SameText(AData.Data,'OK');
 
   if not DefaultPaint then
   begin
-    tmp:=AData.Rect;
+    tmp:=AData.Bounds;
     tmp.Inflate(-8,-6);
 
     AData.Painter.Draw(OkPicture,tmp);

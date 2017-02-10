@@ -64,10 +64,14 @@ interface
 
 uses
   {System.}Classes,
+
   Tee.Grid.Columns, Tee.Grid.Data, Tee.Painter;
 
 type
-  TOnVirtualData=procedure(Sender:TObject; const AColumn:TColumn; const ARow:Integer; var AValue:String) of object;
+  TOnVirtualData=procedure(Sender:TObject;
+                           const AColumn:TColumn;
+                           const ARow:Integer;
+                           var AValue:String {Variant}) of object;
 
   TStringArray=Array of String;
 

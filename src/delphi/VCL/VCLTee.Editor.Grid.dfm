@@ -20,12 +20,16 @@ object TeeGridEditor: TTeeGridEditor
     Top = 0
     Width = 494
     Height = 424
-    ActivePage = TabOptions
+    ActivePage = TabTheme
     Align = alClient
     TabOrder = 0
     OnChange = PageGridChange
     object TabColumns: TTabSheet
       Caption = 'Columns'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Splitter1: TSplitter
         Left = 124
         Top = 41
@@ -136,6 +140,10 @@ object TeeGridEditor: TTeeGridEditor
     object TabBands: TTabSheet
       Caption = 'Bands'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PageBands: TPageControl
         Left = 0
         Top = 0
@@ -147,27 +155,43 @@ object TeeGridEditor: TTeeGridEditor
         OnChange = PageBandsChange
         object TabHeaders: TTabSheet
           Caption = 'Headers'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabFooter: TTabSheet
           Caption = 'Footer'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
       end
     end
     object TabOptions: TTabSheet
       Caption = 'Options'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PageOptions: TPageControl
         Left = 0
         Top = 0
         Width = 486
         Height = 396
-        ActivePage = TabSelection
+        ActivePage = TabIndicator
         Align = alClient
         TabOrder = 0
         OnChange = PageOptionsChange
         object TabIndicator: TTabSheet
           Caption = 'Indicator'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Panel3: TPanel
             Left = 0
             Top = 0
@@ -199,28 +223,52 @@ object TeeGridEditor: TTeeGridEditor
             OnChange = PageIndicatorChange
             object TabIndicatorFormat: TTabSheet
               Caption = 'Format'
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
             end
             object TabIndicatorWidth: TTabSheet
               Caption = 'Width'
               ImageIndex = 1
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
             end
           end
         end
         object TabBack: TTabSheet
           Caption = 'Back'
           ImageIndex = 3
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabMargins: TTabSheet
           Caption = 'Margins'
           ImageIndex = 4
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabSelection: TTabSheet
           Caption = 'Selected'
           ImageIndex = 5
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabEditing: TTabSheet
           Caption = 'Editing'
           ImageIndex = 5
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Label6: TLabel
             Left = 16
             Top = 112
@@ -284,10 +332,31 @@ object TeeGridEditor: TTeeGridEditor
             TabOrder = 4
             OnClick = CBAutoEditClick
           end
+          object GBText: TGroupBox
+            Left = 16
+            Top = 200
+            Width = 145
+            Height = 57
+            Caption = 'Text Editor:'
+            TabOrder = 5
+            object CBSelectText: TCheckBox
+              Left = 16
+              Top = 24
+              Width = 113
+              Height = 17
+              Caption = 'Select Text'
+              TabOrder = 0
+              OnClick = CBSelectTextClick
+            end
+          end
         end
         object TabScrollBars: TTabSheet
           Caption = 'Scrolling'
           ImageIndex = 5
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object GroupBox1: TGroupBox
             Left = 11
             Top = 11
@@ -353,31 +422,51 @@ object TeeGridEditor: TTeeGridEditor
     object TabCells: TTabSheet
       Caption = 'Cells'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PageCells: TPageControl
         Left = 0
         Top = 0
         Width = 486
         Height = 396
-        ActivePage = TabCellsFormat
+        ActivePage = TabColumnLines
         Align = alClient
         TabOrder = 0
         OnChange = PageCellsChange
         object TabCellsFormat: TTabSheet
           Caption = 'Format'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabCellsHover: TTabSheet
           Caption = 'Hover'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabColumnLines: TTabSheet
           Caption = 'Column Lines'
           ImageIndex = 2
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
       end
     end
     object TabRows: TTabSheet
       Caption = 'Rows'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PageRows: TPageControl
         Left = 0
         Top = 0
@@ -390,6 +479,10 @@ object TeeGridEditor: TTeeGridEditor
         object TabRowsGeneral: TTabSheet
           Caption = 'General'
           ImageIndex = 2
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Label1: TLabel
             Left = 9
             Top = 15
@@ -454,10 +547,18 @@ object TeeGridEditor: TTeeGridEditor
         end
         object TabRowLines: TTabSheet
           Caption = 'Lines'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabRowAlternate: TTabSheet
           Caption = 'Alternate'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Panel4: TPanel
             Left = 0
             Top = 0
@@ -482,37 +583,45 @@ object TeeGridEditor: TTeeGridEditor
         object TabRowsBack: TTabSheet
           Caption = 'Back'
           ImageIndex = 3
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabSubBands: TTabSheet
           Caption = 'Bands'
           ImageIndex = 4
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
       end
     end
     object TabTheme: TTabSheet
       Caption = 'Theme'
       ImageIndex = 5
-      object LBThemes: TListBox
-        Left = 16
-        Top = 16
-        Width = 145
-        Height = 177
-        ItemHeight = 13
-        TabOrder = 0
-        OnClick = LBThemesClick
-      end
       object RGPainter: TRadioGroup
         Left = 16
         Top = 208
         Width = 145
-        Height = 81
+        Height = 65
         Caption = '&Painter:'
         ItemIndex = 0
         Items.Strings = (
           'GDI+'
           'GDI')
-        TabOrder = 1
+        TabOrder = 0
         OnClick = RGPainterClick
+      end
+      object LBThemes: TListBox
+        Left = 16
+        Top = 12
+        Width = 145
+        Height = 177
+        ItemHeight = 13
+        TabOrder = 1
+        OnClick = LBThemesClick
       end
     end
   end

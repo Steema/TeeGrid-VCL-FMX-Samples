@@ -35,10 +35,14 @@ type
   // Internal
   TRenderData=record
   public
+    Bounds  : TRectF;
+    Data    : String; // Variant
     Painter : TPainter;
-    Rect : TRectF;
-    Row : Integer;
-    Text : String;
+    Row     : Integer;
+
+    function AsBoolean:Boolean;
+    procedure ClearData;
+    function IsEmpty:Boolean;
   end;
 
   // Base class

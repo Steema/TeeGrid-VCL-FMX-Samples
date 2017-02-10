@@ -2,6 +2,28 @@ unit Unit_Array;
 
 interface
 
+{
+  Example showing how to display and edit different kinds of Arrays using
+  TeeGrid.
+
+  1) Array of records:
+
+     TeeGrid1.Data:= TVirtualData<TArray<TPerson>>.Create(MyPersons);
+
+  2) Array of simple types:
+
+      TeeGrid1.Data:= TVirtualData<TArray<Integer>>.Create(MyIntegers);
+
+      TeeGrid1.Data:= TVirtualData<TArray<Single>>.Create(MyFloats);
+
+      TeeGrid1.Data:= TVirtualData<TArray<String>>.Create(MyStrings);
+
+  3) Array of object instances:
+
+     TeeGrid1.Data:= TVirtualData<TArray<TCar>>.Create(MyCars);
+
+}
+
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes, Vcl.Graphics,
   Vcl.ComCtrls,

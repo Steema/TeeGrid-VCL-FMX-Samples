@@ -62,6 +62,7 @@ type
     procedure AddedBand(Sender:TObject);
     function CalcAutoWidth(const APainter:TPainter; const AColumn:TColumn;
                            const AWidth:Single):Single;
+    procedure ChangedBands(Sender: TObject);
     procedure ChangedCellFormat(Sender: TObject);
     procedure ChangedHeadersFooter(Sender:TObject);
     function CreateHeader:TColumnHeaderBand;
@@ -99,6 +100,7 @@ type
   protected
     OwnsData : Boolean;
 
+    procedure CalculateHeight(var AData:TRenderData);
     procedure Loaded;
   public
     ParentColumn : TColumn;

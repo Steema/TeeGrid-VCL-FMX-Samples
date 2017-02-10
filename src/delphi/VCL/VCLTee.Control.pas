@@ -5,12 +5,13 @@
 {  All Rights Reserved                        }
 {*********************************************}
 unit VCLTee.Control;
+{$I Tee.inc}
 
 interface
 
 uses
   Messages, {System.}Classes,
-  {VCL.}Controls, Tee.Control;
+  {VCL.}Controls, {VCL.}Forms, Tee.Control;
 
 type
   TScrollableControl=class(TCustomControl)

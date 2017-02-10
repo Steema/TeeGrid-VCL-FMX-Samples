@@ -1,11 +1,19 @@
 unit Unit_FMX_Themes;
 
+{
+  This example shows how to use Firemonkey system themes (styles) with
+  TeeGrid.
+
+  The standard TeeGrid themes are also available at top listbox.
+}
+
 interface
 
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.Layouts,
-  FMX.ListBox, FMX.Objects, FMXTee.Control, FMXTee.Grid;
+  FMX.ListBox, FMX.Objects, FMXTee.Control, FMXTee.Grid,
+  FMX.Controls.Presentation, FMX.StdCtrls;
 
 type
   TFormGridThemes = class(TForm)
@@ -45,14 +53,16 @@ implementation
 {$R *.fmx}
 
 uses
-  Tee.Grid.Themes, Unit_MyData, Tee.Grid.Data.Rtti,
+  Tee.Grid, Tee.Grid.Themes, Unit_MyData, Tee.Grid.Data.Rtti, Tee.Grid.RowGroup,
 
   FMXTee.Grid.Themes, Fmx.Styles, System.IOUtils;
 
+// Returns a sorted list of Firemonkey theme files found in \users\public\xxx
 function GetAvailableStyles:TStringList;
 begin
   result:=TStringList.Create;
   TFMXGridThemes.Available(result);
+
   result.Sort;
 end;
 
@@ -63,21 +73,27 @@ begin
       LBFMXThemes.Items.Add(Styles.ValueFromIndex[t]);
 end;
 
+// Just sample data to fill the TeeGrid
 var
   Persons : TArray<TPerson>;
 
 procedure TFormGridThemes.FormCreate(Sender: TObject);
 begin
+  // Set sample data to TeeGrid
   SetLength(Persons,100);
   FillMyData(Persons);
 
   TeeGrid1.Data:=TVirtualArrayData<TPerson>.Create(Persons);
 
+  // Find and add styles to listbox
   LBTheme.ItemIndex:=0;
 
   Styles:=GetAvailableStyles;
 
   AddStylesToList;
+
+  // Just a test, enable grid mouse scrolling
+  TeeGrid1.Scrolling.Mode:=TScrollingMode.Both;
 end;
 
 procedure TFormGridThemes.FormDestroy(Sender: TObject);
@@ -95,6 +111,7 @@ begin
   result:=Styles.ValueFromIndex[LBFMXThemes.ItemIndex];
 end;
 
+// Returns the file name corresponding to the selected Firemonkey style
 function TFormGridThemes.SelectedStyleFile:String;
 var tmp : Integer;
 begin
@@ -104,6 +121,7 @@ begin
   result:=TPath.Combine(result,Styles.ValueFromIndex[tmp]);
 end;
 
+// Load a Firemonkey style and apply it to this application
 procedure TFormGridThemes.ChangeFiremonkeyStyle;
 var tmp,
     tmpExt : String;
@@ -123,6 +141,7 @@ begin
   end;
 end;
 
+// Change system theme and apply it to TeeGrid
 procedure TFormGridThemes.LBFMXThemesChange(Sender: TObject);
 begin
   if LBFMXThemes.ItemIndex<>-1 then
@@ -135,6 +154,7 @@ begin
   end;
 end;
 
+// Change TeeGrid theme to one of the standard TeeGrid themes
 procedure TFormGridThemes.LBThemeChange(Sender: TObject);
 begin
   if LBTheme.ItemIndex<>-1 then

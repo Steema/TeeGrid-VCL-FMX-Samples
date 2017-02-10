@@ -2,8 +2,8 @@ object FormGridDataset: TFormGridDataset
   Left = 0
   Top = 0
   Caption = 'TeeGrid - TDataSet'
-  ClientHeight = 570
-  ClientWidth = 634
+  ClientHeight = 528
+  ClientWidth = 647
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,12 +12,13 @@ object FormGridDataset: TFormGridDataset
   Font.Style = []
   OldCreateOrder = False
   Position = poOwnerFormCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
-    Left = 631
+    Left = 644
     Top = 41
-    Height = 504
+    Height = 462
     Align = alRight
     ExplicitLeft = 568
     ExplicitTop = 232
@@ -26,10 +27,12 @@ object FormGridDataset: TFormGridDataset
   object TeeGrid1: TTeeGrid
     Left = 0
     Top = 41
-    Width = 631
-    Height = 504
+    Width = 644
+    Height = 462
+    Columns.Spacing.Automatic = False
     Columns = <
       item
+        Header.Format.Font.Style = [fsBold]
         Header.Text = 'CustNo'
         Link = 'CustNo'
       end
@@ -87,9 +90,9 @@ object FormGridDataset: TFormGridDataset
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
+    ParentShowHint = False
+    ShowHint = False
     TabOrder = 0
-    ExplicitLeft = -64
-    ExplicitTop = 89
     _Headers = (
       1
       'TColumnHeaderBand'
@@ -100,7 +103,7 @@ object FormGridDataset: TFormGridDataset
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 634
+    Width = 647
     Height = 41
     Align = alTop
     TabOrder = 1
@@ -145,13 +148,23 @@ object FormGridDataset: TFormGridDataset
         '(none)'
         'Customers ClientDataSet'
         'Animals ClientDataSet'
-        'DataSource1')
+        'DataSource1'
+        'Big Dataset')
+    end
+    object Button2: TButton
+      Left = 448
+      Top = 10
+      Width = 75
+      Height = 25
+      Caption = 'Copy'
+      TabOrder = 3
+      OnClick = Button2Click
     end
   end
   object DBNavigator1: TDBNavigator
     Left = 0
-    Top = 545
-    Width = 634
+    Top = 503
+    Width = 647
     Height = 25
     DataSource = DataSource1
     Align = alBottom
@@ -397,12 +410,12 @@ object FormGridDataset: TFormGridDataset
     Active = True
     Aggregates = <>
     Params = <>
-    Left = 40
+    Left = 296
     Top = 80
   end
   object DataSource1: TDataSource
     DataSet = ClientDataSet1
-    Left = 136
+    Left = 368
     Top = 80
   end
   object ClientDataSet2: TClientDataSet
@@ -3951,7 +3964,39 @@ object FormGridDataset: TFormGridDataset
     Active = True
     Aggregates = <>
     Params = <>
-    Left = 40
-    Top = 136
+    Left = 288
+    Top = 168
+  end
+  object DataSource2: TDataSource
+    DataSet = ClientDataSet2
+    Left = 368
+    Top = 168
+  end
+  object ClientDataSet3: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 288
+    Top = 249
+    object ClientDataSet3Name: TStringField
+      DisplayWidth = 10
+      FieldName = 'Name'
+      Size = 10
+    end
+    object ClientDataSet3Height: TSingleField
+      FieldName = 'Height'
+    end
+    object ClientDataSet3Address: TStringField
+      DisplayWidth = 12
+      FieldName = 'Address'
+      Size = 12
+    end
+    object ClientDataSet3Children: TIntegerField
+      FieldName = 'Children'
+    end
+  end
+  object DataSource3: TDataSource
+    DataSet = ClientDataSet3
+    Left = 368
+    Top = 249
   end
 end

@@ -56,7 +56,7 @@ implementation
 
 uses
   System.Diagnostics, Tee.Grid.Bands, Tee.Grid.Selection, Tee.Grid,
-  Tee.Grid.RowGroup;
+  Tee.Grid.RowGroup, FMXTee.Painter;
 
 // Repaint the grid 1000 times to benchmark painting speed
 procedure TStringGridForm.Button1Click(Sender: TObject);
@@ -105,14 +105,17 @@ procedure TStringGridForm.FormCreate(Sender: TObject);
 
 var t : Integer;
 begin
+  // TeeGrid1.Selected.Range.Enabled:=True;  // <-- for non-touch screen devices
+
   // Create data
   Data:=TStringsData.Create(1000,100000,60);
 
-  // Initialize size
-  //Data.Columns:=1000;
-  //Data.Rows:=100000;
+  // Other ways to initialize size:
 
-//  Data.Resize(1000,100000);
+  // Data.Columns:=1000;
+  // Data.Rows:=100000;
+
+  // Data.Resize(1000,100000);
 
   // Set header texts
   Data.Headers[0]:='A'#13#10'Text';
@@ -155,13 +158,22 @@ begin
   // Set the default row height (same height for all rows)
   TeeGrid1.Rows.Height.Pixels:=32;
 
+  // Set picture column width to match bitmap picture aspect ratio (width to height)
+  TeeGrid1.Columns[3].Width.Pixels:=40;
+
+  // Example: Set cell editing to auto-start when typing a character key
+  TeeGrid1.Editing.AutoEdit:=True;
+
   OptimizePaintSpeed;
 end;
 
+// Several options to increase painting speed
 procedure TStringGridForm.OptimizePaintSpeed;
 begin
   // Speed optimization, disable scrollbars
-  TeeGrid1.ScrollBars.Visible:=False;
+//  TeeGrid1.ScrollBars.Visible:=False;
+
+  TeeGrid1.Painter.BitmapQuality:=TBitmapQuality.Speed;
 
   TeeGrid1.Rows.Alternate.Hide;
   TeeGrid1.Header.Format.Brush.Gradient.Hide;
@@ -209,11 +221,11 @@ end;
 procedure TStringGridForm.PaintPicture(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean);
 var tmp : TRectF;
 begin
-  DefaultPaint:=not SameText(AData.Text,'OK');
+  DefaultPaint:=not SameText(AData.Data,'OK');
 
   if not DefaultPaint then
   begin
-    tmp:=AData.Rect;
+    tmp:=AData.Bounds;
     tmp.Inflate(-8,-6);
 
     AData.Painter.Draw(OkPicture,tmp);

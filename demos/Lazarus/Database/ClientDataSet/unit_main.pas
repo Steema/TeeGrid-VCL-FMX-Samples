@@ -34,18 +34,23 @@ implementation
 {$R *.lfm}
 
 uses
-  VCLTee.Editor.Grid,
-  Tee.Grid.Data.DB;
+  VCLTee.Editor.Grid;
 
 { TForm1 }
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  TeeGrid1.Data:=TVirtualDBData.From(DataSource1);
+  // Not necessary, DataSource property already set at design-time:
+  // TeeGrid1.Data:=TVirtualDBData.From(DataSource1);
 
+  // Increase speed when scrolling a grid with a dataset:
+  TeeGrid1.Selected.ScrollToView:=True;
+
+  // Open table:
   Dbf1.TableName:='disco.dbf';
   Dbf1.Open;
 
+  // Testing cell editor:
 //  TeeGrid1.Columns.FindFirst('Last_Sell').EditorClass:=TDateTimePicker;
 end;
 

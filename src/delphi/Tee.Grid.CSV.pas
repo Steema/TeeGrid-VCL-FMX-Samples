@@ -19,7 +19,11 @@ interface
 
     var S : String;
 
+    S:= TCSVData.From( TeeGrid1.Grid );  // <-- whole grid
+
     S:= TCSVData.From( TeeGrid1.Grid, TeeGrid1.Selected );
+
+    S:= TCSVData.From( TeeGrid1.Grid, TeeGrid1.Selected, #9, #10, '"' );
 }
 
 uses
@@ -28,7 +32,11 @@ uses
 type
   TCSVData=record
   public
-    class function From(const AGrid:TCustomTeeGrid; const ASelected:TGridSelection):String; static;
+    class function From(const AGrid:TCustomTeeGrid;
+                        const ASelected:TGridSelection=nil;
+                        const ASeparator:String=',';
+                        const ALineFeed:String=#13#10;
+                        const ADelimiter:String='"'):String; static;
   end;
 
 implementation

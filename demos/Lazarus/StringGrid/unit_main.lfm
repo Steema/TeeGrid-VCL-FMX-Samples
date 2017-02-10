@@ -3,7 +3,30 @@ object Form1: TForm1
   Height = 700
   Top = 150
   Width = 1085
-  Caption = 'Form1'
+  Caption = 'TeeGrid for Lazarus - TStringGrid emulation'
+  ClientHeight = 700
+  ClientWidth = 1085
   OnCreate = FormCreate
+  Position = poScreenCenter
   LCLVersion = '1.6.2.0'
+  object TeeGrid1: TTeeGrid
+    Left = 0
+    Height = 700
+    Top = 0
+    Width = 1085
+    Columns = <>
+    ReadOnly = False
+    Align = alClient
+    UseDockManager = False
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <      
+        item
+        end>
+    )
+  end
 end

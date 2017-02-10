@@ -18,12 +18,17 @@ interface
 }
 
 uses
-  Tee.Grid, Tee.Grid.RowGroup;
+  {$IFNDEF NOUITYPES}
+  System.UITypes,
+  {$ENDIF}
+
+  Tee.Format, Tee.Grid.RowGroup, Tee.Grid, Tee.Grid.Columns;
 
 type
   TDefaultTheme=record
   public
     class procedure ApplyTo(const AGrid:TCustomTeeGrid); static;
+    class procedure CheckRenders(const AColumns:TColumns; const AColor:TColor); static;
   end;
 
   TBlackTheme=record
@@ -55,6 +60,31 @@ type
       Black : TBlackTheme;
       iOS : TiOSTheme;
       Android : TAndroidTheme;
+  end;
+
+  TCustomTheme=class
+  public
+  type
+    TThemeFont=record
+    public
+      Name : String;
+      Size : Single;
+      Color : TColor;
+    end;
+
+    THeaderTheme=record
+    public
+      Brush : TColor;
+      Font : TColor;
+    end;
+
+  var
+    Font : TThemeFont;
+    Brush : TColor;
+    Stroke : TColor;
+    Header : THeaderTheme;
+
+    procedure ApplyTo(const AGrid:TCustomTeeGrid);
   end;
 
 implementation

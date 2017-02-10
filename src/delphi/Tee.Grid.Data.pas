@@ -25,21 +25,26 @@ interface
 }
 
 uses
-  {System.}Classes,
+  {System.}Classes, {System.}TypInfo,
   Tee.Grid.Columns, Tee.Painter, Tee.Renders;
 
 type
   TFloat=Double;
 
+  TDataEditingEvent=procedure(const Sender:TObject; const IsEditing:Boolean) of object;
+
   TRowChangedEvent=procedure(const Sender:TObject; const ARow:Integer) of object;
+
+  TEditMode=(Start,Cancel,Finish);
 
   TColumnCalculation=(Count,Sum,Min,Max,Average);
 
   TVirtualData=class abstract
   protected
     FOnChangeRow : TRowChangedEvent;
+    FOnEditing   : TDataEditingEvent;
     FOnRepaint,
-    FOnRefresh : TNotifyEvent;
+    FOnRefresh   : TNotifyEvent;
 
     PictureClass : TPersistentClass;
 
@@ -48,6 +53,7 @@ type
     procedure ChangeSelectedRow(const ARow:Integer);
 
     class procedure DoError(const AText:String); static;
+    procedure EditingChanged(const IsEditing:Boolean); virtual;
 
     procedure Refresh;
     procedure RowChanged(const ARow:Integer); virtual;
@@ -63,9 +69,11 @@ type
     function AutoHeight(const APainter:TPainter; const AColumn:TColumn; const ARow:Integer; out AHeight:Single):Boolean; virtual;
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; virtual; abstract;
     function Calculate(const AColumn:TColumn; const ACalculation:TColumnCalculation):TFloat;
+    procedure EditMode(const AMode:TEditMode); virtual;
     function CanExpand(const Sender:TRender; const ARow:Integer):Boolean; virtual;
     function CanSortBy(const AColumn:TColumn):Boolean; virtual;
     function Count:Integer; virtual; abstract;
+    function DataType(const AColumn:TColumn):PTypeInfo; virtual;
     class function From(const ASource:TComponent):TVirtualData; overload; virtual;
     function GetDetail(const ARow:Integer; const AColumns:TColumns; out AParent:TColumn):TVirtualData; virtual;
     function HasDetail(const ARow:Integer):Boolean; virtual;

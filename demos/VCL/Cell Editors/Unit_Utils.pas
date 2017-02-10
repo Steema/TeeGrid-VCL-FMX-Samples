@@ -16,7 +16,9 @@ procedure FillCombo(const ACombo:TComboBox; const Values:Array of String; const 
 implementation
 
 uses
-  Tee.Grid.Columns, {System.}SysUtils;
+  {System.}Classes, {System.}SysUtils,
+
+  Tee.Grid.Columns;
 
 // Set all grid columns EditorClass to nil (to default using a TEdit control)
 procedure ResetCustomEditors(const AGrid:TTeeGrid);

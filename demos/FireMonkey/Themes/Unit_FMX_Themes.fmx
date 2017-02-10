@@ -42,7 +42,7 @@ object FormGridThemes: TFormGridThemes
       Align = Top
       Position.Y = 33.000000000000000000
       Size.Width = 169.000000000000000000
-      Size.Height = 88.000000000000000000
+      Size.Height = 184.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 2
       DisableFocusEffect = True
@@ -55,12 +55,12 @@ object FormGridThemes: TFormGridThemes
       DefaultItemStyles.GroupHeaderStyle = ''
       DefaultItemStyles.GroupFooterStyle = ''
       OnChange = LBThemeChange
-      Viewport.Width = 169.000000000000000000
-      Viewport.Height = 88.000000000000000000
+      Viewport.Width = 165.000000000000000000
+      Viewport.Height = 180.000000000000000000
     end
     object Layout4: TLayout
       Align = Top
-      Position.Y = 121.000000000000000000
+      Position.Y = 217.000000000000000000
       Size.Width = 169.000000000000000000
       Size.Height = 33.000000000000000000
       Size.PlatformDefault = False
@@ -76,7 +76,7 @@ object FormGridThemes: TFormGridThemes
     object LBFMXThemes: TListBox
       Align = Client
       Size.Width = 169.000000000000000000
-      Size.Height = 377.000000000000000000
+      Size.Height = 281.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 3
       DisableFocusEffect = True
@@ -84,8 +84,8 @@ object FormGridThemes: TFormGridThemes
       DefaultItemStyles.GroupHeaderStyle = ''
       DefaultItemStyles.GroupFooterStyle = ''
       OnChange = LBFMXThemesChange
-      Viewport.Width = 169.000000000000000000
-      Viewport.Height = 377.000000000000000000
+      Viewport.Width = 165.000000000000000000
+      Viewport.Height = 277.000000000000000000
     end
   end
   object TeeGrid1: TTeeGrid

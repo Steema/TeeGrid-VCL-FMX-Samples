@@ -76,7 +76,15 @@ type
       DefaultFloat='0.###';
   public
     Constructor Create(const AChanged:TNotifyEvent); override;
+
     procedure Assign(Source:TPersistent); override;
+
+    function Format(const AValue:Single):String; overload;
+    function Format(const AValue:Double):String; overload;
+
+    {$IF SizeOf(Extended)=10}
+    function Format(const AValue:Extended):String; overload;
+    {$IFEND}
   published
     property Date:String read FDate write SetDate;
     property DateTime:String read FDateTime write SetDateTime;
@@ -238,8 +246,9 @@ type
     procedure Put(const Index: Integer; const Value: TColumn); {$IFNDEF FPC}inline;{$ENDIF}
     procedure SetSpacing(const Value: TCoordinate);
   protected
-    procedure Notify(Item: TCollectionItem; Action: TCollectionNotification); override;
+    function AnyPercentWidth:Boolean;
     procedure Moved(const AColumn:TColumn; const AOld,ANew:Integer);
+    procedure Notify(Item: TCollectionItem; Action: TCollectionNotification); override;
   public
     ValidWidth : Boolean;
 

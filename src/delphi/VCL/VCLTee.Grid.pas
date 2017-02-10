@@ -5,6 +5,7 @@
 {  All Rights Reserved                        }
 {*********************************************}
 unit VCLTee.Grid;
+{$I Tee.inc}
 
 interface
 
@@ -43,33 +44,37 @@ type
     IEditorColumn : TColumn;
     IEditorRow : Integer;
 
+    function CanHideEditor:Boolean;
     procedure CreateEditor(const AColumn:TColumn);
+    procedure DoHideEditor(const CallEvent:Boolean);
     procedure EditorKeyUp(Sender: TObject; var AKey: Word; Shift: TShiftState);
     function EditorShowing:Boolean;
+    procedure SetEditorBounds(const PositionOnly:Boolean);
     procedure TryChangeEditorData;
     procedure TryPaste(const Value:String);
-    procedure TryShowEditor(const AColumn:TColumn; const ARow:Integer);
+    procedure TryShowEditor(const AColumn:TColumn; const ARow:Integer; const AutoEdit:String);
   protected
+    procedure CancelEditor; override;
     procedure DataChanged; override;
 
     function HorizScrollBarHeight:Single; override;
     procedure HorizScrollChanged; override;
 
     procedure StartEditor(const AColumn:TColumn; const ARow:Integer;
-                          const AutoEdit:Boolean=False); override;
+                          const AutoEdit:String=''); override;
     procedure StopEditor; override;
 
     function VertScrollBarWidth:Single; override;
     procedure VertScrollChanged; override;
   public
-    procedure CopySelected; override;
+    procedure Copy(const ASelection:TGridSelection=nil); override;
     function Height:Single; override;
     function Painter:TPainter; override;
     procedure PasteSelected; override;
     function Width:Single; override;
   end;
 
-  TShowEditorEvent=procedure(const Sender:TObject; const AEditor:TControl;
+  TCellEditorEvent=procedure(const Sender:TObject; const AEditor:TControl;
                              const AColumn:TColumn; const ARow:Integer) of object;
 
   {$IFNDEF FPC}
@@ -83,8 +88,11 @@ type
   private
     FGrid : TVCLTeeGrid;
     FPainter : TPainter;
+
     FOnColumnResized: TColumnEvent;
-    FOnShowEditor: TShowEditorEvent;
+
+    FOnCellEditing,
+    FOnCellEdited: TCellEditorEvent;
 
     {$IFDEF FPC}
     FParentBack : Boolean;
@@ -95,6 +103,7 @@ type
 
     procedure ChangePainter(const Value: TPainter);
     procedure ColumnResized(Sender:TObject);
+    procedure DoPaint(const DC:HDC);
     function MouseStateFrom(const Button: TMouseButton; const Shift: TShiftState;
                             const X,Y: Integer; const AEvent:TGridMouseEvent):TMouseState;
     procedure ProcessWheel(const AKey:Word);
@@ -184,6 +193,7 @@ type
     procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
     procedure MouseMove(Shift: TShiftState; X, Y: Integer); override;
     procedure MouseUp(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
+
     procedure PaintWindow(DC: HDC); override;
 
     procedure ResetScrollBars; override;
@@ -227,11 +237,12 @@ type
     {$ENDIF}
 
     property OnAfterDraw:TNotifyEvent read GetAfterDraw write SetAfterDraw;
+    property OnCellEditing:TCellEditorEvent read FOnCellEditing write FOnCellEditing;
+    property OnCellEdited:TCellEditorEvent read FOnCellEdited write FOnCellEdited;
     property OnClickedHeader:TNotifyEvent read GetClickedHeader write SetClickedHeader;
     property OnColumnResized:TColumnEvent read FOnColumnResized write FOnColumnResized;
     property OnNewDetail:TNewDetailEvent read GetOnNewDetail write SetOnNewDetail;
     property OnSelect:TNotifyEvent read GetOnSelect write SetOnSelect;
-    property OnShowEditor:TShowEditorEvent read FOnShowEditor write FOnShowEditor;
 
     // inherited
 
@@ -311,6 +322,7 @@ type
     {$ENDIF}
 
     property OnGetSiteInfo;
+
     {$IFNDEF FPC}
     property OnMouseActivate;
     {$ENDIF}

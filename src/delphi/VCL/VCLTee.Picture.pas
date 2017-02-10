@@ -1,4 +1,5 @@
 unit VCLTee.Picture;
+{$I Tee.inc}
 
 interface
 

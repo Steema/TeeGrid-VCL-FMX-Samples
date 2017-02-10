@@ -61,27 +61,31 @@ type
     IEditorColumn : TColumn;
     IEditorRow : Integer;
 
+    function CanHideEditor:Boolean;
     procedure CreateEditor(const AColumn:TColumn);
+    procedure DoHideEditor(const CallEvent:Boolean);
     procedure EditorKeyUp(Sender: TObject; var Key: Word; var KeyChar: WideChar; Shift: TShiftState);
     function EditorShowing:Boolean;
     procedure EditorTracking(Sender: TObject);
+    procedure SetEditorBounds(const PositionOnly:Boolean);
     procedure TryChangeEditorData;
     procedure TryPaste(const Value:String);
-    procedure TryShowEditor(const AColumn: TColumn; const ARow: Integer);
+    procedure TryShowEditor(const AColumn: TColumn; const ARow: Integer; const AutoEdit:String);
   protected
+    procedure CancelEditor; override;
     procedure DataChanged; override;
 
     function HorizScrollBarHeight:Single; override;
     procedure HorizScrollChanged; override;
 
     procedure StartEditor(const AColumn:TColumn; const ARow:Integer;
-                          const AutoEdit:Boolean=False); override;
+                          const AutoEdit:String=''); override;
     procedure StopEditor; override;
 
     function VertScrollBarWidth:Single; override;
     procedure VertScrollChanged; override;
   public
-    procedure CopySelected; override;
+    procedure Copy(const ASelection:TGridSelection=nil); override;
     function Height:Single; override;
     function Painter:TPainter; override;
     procedure PasteSelected; override;
@@ -90,7 +94,7 @@ type
     property OnTyping:TNotifyEvent read FOnTyping write FOnTyping;
   end;
 
-  TShowEditorEvent=procedure(const Sender:TObject; const AEditor:TControl;
+  TCellEditorEvent=procedure(const Sender:TObject; const AEditor:TControl;
                              const AColumn:TColumn; const ARow:Integer) of object;
 
   {$IFNDEF FPC}
@@ -106,8 +110,11 @@ type
   private
     FGrid : TFMXTeeGrid;
     FPainter : TFMXPainter;
+
     FOnColumnResized: TColumnEvent;
-    FOnShowEditor: TShowEditorEvent;
+
+    FOnCellEditing,
+    FOnCellEdited: TCellEditorEvent;
 
     IDataSource : TComponent;
 
@@ -207,11 +214,12 @@ type
     property Selected:TGridSelection read GetSelected write SetSelected;
 
     property OnAfterDraw:TNotifyEvent read GetAfterDraw write SetAfterDraw;
+    property OnCellEditing:TCellEditorEvent read FOnCellEditing write FOnCellEditing;
+    property OnCellEdited:TCellEditorEvent read FOnCellEdited write FOnCellEdited;
     property OnClickedHeader:TNotifyEvent read GetClickedHeader write SetClickedHeader;
     property OnColumnResized:TColumnEvent read FOnColumnResized write FOnColumnResized;
     property OnNewDetail:TNewDetailEvent read GetOnNewDetail write SetOnNewDetail;
     property OnSelect:TNotifyEvent read GetOnSelect write SetOnSelect;
-    property OnShowEditor:TShowEditorEvent read FOnShowEditor write FOnShowEditor;
 
     // inherited
     property Align;
