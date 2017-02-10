@@ -1,5 +1,26 @@
 # TeeGrid Release Notes
 
+##Version: First Release v1.0, 8th Feb 2017
+
+First official release.
+
+### Bug fixes/Improvements
+
+* Fixed returning empty "detail" TDataItem (when it has zero records)
+* More fixes to enable correct mouse / touch scrolling (like Twitter, always scroll from current mouse or finger xy position, not from the original first touch or mouse down)
+* Fixed calculating the "top" Y position of a sub-grid, when the master grid has sub-bands in other rows above it
+* Fixes to correctly scroll sub-grids
+* Fixed problem when Selected.ScrollToView=True (selected row was always moving to top)
+* Replacing / removing all "TUpdown" from editor dialogs, to enable editing floating point "Single" properties without applying Round to integer
+* Firemonkey support for "Long Tap" and "Double Tap" finger touch events, to start editing grid cells. Pending: scroll grid so the cell is not obscured by the device keyboard editor panel
+* Mac OSX FMX issue: avoid "beep" every time a key is pressed
+* Enable GridEditor dialog to edit a TCustomTeeGrid (agnostic). ie: Not always necessarily a VCL TeeGrid
+* Fixed offering valid items for "Source", when the column is a children column (ie. has a Parent)
+* Fixed returning zero when trying to calculate a Total of a non-numeric column (better to raise exception?)
+* Fixed resetting horiz text align when changing a column source
+* Improving system themes (VCL and FMX), added Hover and Selected colors
+* Fixes to correctly scroll sub-grids
+
 ##Version: Release Candidate 1.0, Feb-2nd 2017
 
 ### Improvements
