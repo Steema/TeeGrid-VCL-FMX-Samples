@@ -159,6 +159,9 @@ procedure TFormMatrixGrid.RttiMode;
 begin
   TeeGrid1.Data:= TVirtualArrayData<TMatrixColumn>.Create(Matrix);
 
+// Alternative way:
+//  TeeGrid1.Data:= TVirtualArray2DData<Double>.Create(Matrix);
+
   // cosmetic, optional
   AllColumnsFixedWidth(50);
 end;
