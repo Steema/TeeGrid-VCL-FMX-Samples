@@ -70,7 +70,7 @@ implementation
 uses
   VCLTee.Editor.Grid, Tee.Grid.Bands, Tee.Grid, Tee.Painter,
   VCLTee.Painter.GDIPlus, VCLTee.Painter,
-  Tee.Grid.Selection, System.Diagnostics, VCLTee.Picture;
+  Tee.Grid.Selection, System.Diagnostics, VCLTee.Picture, Tee.Grid.Data;
 
 // Shows the TeeGrid editor dialog
 procedure TStringGridForm.Button1Click(Sender: TObject);
