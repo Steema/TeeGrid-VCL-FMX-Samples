@@ -2,7 +2,6 @@ unit Unit_Grid_Charts;
 
 {
   Example showing how to paint static TeeChart controls inside TeeGrid cells.
-
 }
 
 interface
@@ -26,13 +25,16 @@ type
     Panel1: TPanel;
     Button1: TButton;
     Button2: TButton;
+    PanelBottom: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure TeeGrid1ClickedHeader(Sender: TObject);
   private
     { Private declarations }
 
     function CreateChart(const ARow,AWidth,AHeight:Integer):TBitmap;
+
     procedure PaintChart(const Sender:TColumn; var AData:TRenderData; var DefaultPaint:Boolean);
     procedure PrepareChartColumn;
   public
@@ -46,6 +48,7 @@ implementation
 
 {$R *.dfm}
 
+// Sample data type
 type
   TTemperatures = Array[0..3] of Integer;
 
@@ -59,7 +62,7 @@ type
 
 { TLocation }
 
-procedure TLocation.SetRandom;
+procedure TLocation.SetRandom; // initialize "Temperatures" array
 var t: Integer;
 begin
   for t:=0 to High(Temperatures) do
@@ -96,8 +99,8 @@ begin
 
   PrepareChartColumn;
 
-
   TeeGrid1.ScrollBars.Vertical.Visible:=TScrollBarVisible.Show;
+
   Chart1.Hide;
 end;
 
@@ -113,6 +116,18 @@ begin
   Temp.Width.Value:=300;
 
   Temp.ReadOnly:=True;
+end;
+
+// Just to show using the TeeGrid "OnClickedHeader" event
+procedure TFormGridCharts.TeeGrid1ClickedHeader(Sender: TObject);
+var S : String;
+begin
+  S:='Clicked header: '+Sender.ClassName;
+
+  if Sender is TColumn then
+     S:=S+' '+TColumn(Sender).Header.Text+' '+IntToStr(TColumn(Sender).Index);
+
+  PanelBottom.Caption:=S;
 end;
 
 procedure TFormGridCharts.Button1Click(Sender: TObject);
@@ -136,6 +151,8 @@ begin
   ASeries.Add(AValues[2]);
   ASeries.Add(AValues[3]);
 end;
+
+// CHART
 
 function TFormGridCharts.CreateChart(const ARow,AWidth,AHeight:Integer):TBitmap;
 var R : TRect;

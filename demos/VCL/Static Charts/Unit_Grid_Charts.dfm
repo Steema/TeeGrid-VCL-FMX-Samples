@@ -19,23 +19,23 @@ object FormGridCharts: TFormGridCharts
     Left = 0
     Top = 41
     Width = 443
-    Height = 606
+    Height = 565
     Columns = <>
+    Header.OnClick = TeeGrid1ClickedHeader
     ReadOnly = False
+    OnClickedHeader = TeeGrid1ClickedHeader
     Align = alClient
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
-    ExplicitLeft = 16
-    ExplicitTop = 72
-    ExplicitWidth = 329
-    ExplicitHeight = 537
+    ExplicitHeight = 606
     _Headers = (
       1
       'TColumnHeaderBand'
       <
         item
+          OnClick = TeeGrid1ClickedHeader
         end>)
   end
   object Chart1: TChart
@@ -113,9 +113,6 @@ object FormGridCharts: TFormGridCharts
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitLeft = 104
-    ExplicitTop = 320
-    ExplicitWidth = 185
     object Button1: TButton
       Left = 16
       Top = 10
@@ -134,5 +131,16 @@ object FormGridCharts: TFormGridCharts
       TabOrder = 1
       OnClick = Button2Click
     end
+  end
+  object PanelBottom: TPanel
+    Left = 0
+    Top = 606
+    Width = 443
+    Height = 41
+    Align = alBottom
+    TabOrder = 3
+    ExplicitLeft = 136
+    ExplicitTop = 320
+    ExplicitWidth = 185
   end
 end
