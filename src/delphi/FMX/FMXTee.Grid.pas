@@ -7,10 +7,6 @@
 unit FMXTee.Grid;
 {$I Tee.inc}
 
-//{$IF CompilerVersion>23}
-//{$LEGACYIFEND ON}
-//{$IFEND}
-
 interface
 
 {
@@ -69,21 +65,21 @@ type
     procedure EditorTracking(Sender: TObject);
     procedure SetEditorBounds(const PositionOnly:Boolean);
     procedure TryChangeEditorData;
-    procedure TryPaste(const Value:String);
     procedure TryShowEditor(const AColumn: TColumn; const ARow: Integer; const AutoEdit:String);
   protected
     procedure CancelEditor; override;
+    procedure CheckScrollLimits(var X,Y:Single); override;
     procedure DataChanged; override;
 
     function HorizScrollBarHeight:Single; override;
-    procedure HorizScrollChanged; override;
+    procedure HorizScrollChanged(Sender:TObject); override;
 
     procedure StartEditor(const AColumn:TColumn; const ARow:Integer;
                           const AutoEdit:String=''); override;
     procedure StopEditor; override;
 
     function VertScrollBarWidth:Single; override;
-    procedure VertScrollChanged; override;
+    procedure VertScrollChanged(Sender:TObject); override;
   public
     procedure Copy(const ASelection:TGridSelection=nil); override;
     function Height:Single; override;
@@ -123,6 +119,8 @@ type
     function CurrentRows: TRows;
     procedure SetDataItem(const Value: TVirtualData);
 
+    procedure InitializeCanvas;
+
     function GetColumns: TColumns;
     function GetScrollX: Single;
     function GetScrollY: Single;
@@ -159,14 +157,26 @@ type
     procedure SetHeaders(const Value: TGridBands);
     function GetDataSource: TComponent;
     procedure SetDataSource(const Value: TComponent);
+    function GetScrolling: TGridScrolling;
+    procedure SetScrolling(const Value: TGridScrolling);
 
     function MouseStateFrom(const Button: TMouseButton; const Shift: TShiftState;
                             const X,Y: Single; const AEvent:TGridMouseEvent):TMouseState;
+
+    procedure SetupTouch;
     procedure TryClearColumns;
+    procedure TryStartEditing(const P:TPointF);
   protected
+    {$IF CompilerVersion>24}
+    procedure CMGesture(var EventInfo: TGestureEventInfo); override;
+    {$IFEND}
+
+    procedure DblClick; override;
     procedure DefineProperties(Filer: TFiler); override;
 
     procedure DoMouseLeave; override;
+
+    function GetCursorPos:TPointF;
 
     function GetMaxBottom:Single; override;
     function GetMaxRight:Single; override;
@@ -211,6 +221,7 @@ type
     property ReadOnly:Boolean read GetReadOnly write SetReadOnly default True;
     property Rows:TRows read GetRows write SetRows;
     property ScrollBars;
+    property Scrolling:TGridScrolling read GetScrolling write SetScrolling;
     property Selected:TGridSelection read GetSelected write SetSelected;
 
     property OnAfterDraw:TNotifyEvent read GetAfterDraw write SetAfterDraw;

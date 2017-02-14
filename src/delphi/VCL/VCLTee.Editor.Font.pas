@@ -45,6 +45,7 @@ type
     IFont : TFont;
 
     procedure ChangeFontStyle(const Enable:Boolean; const AStyle:TFontStyle);
+    procedure RefreshSizeLabel;
   public
     { Public declarations }
 

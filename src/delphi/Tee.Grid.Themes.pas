@@ -27,13 +27,15 @@ uses
 type
   TDefaultTheme=record
   public
-    class procedure ApplyTo(const AGrid:TCustomTeeGrid); static;
+    class procedure ApplyTo(const AGroup:TRowGroup); overload; static;
+    class procedure ApplyTo(const AGrid:TCustomTeeGrid); overload; static;
     class procedure CheckRenders(const AColumns:TColumns; const AColor:TColor); static;
   end;
 
   TBlackTheme=record
   public
-    class procedure ApplyTo(const AGrid:TCustomTeeGrid); static;
+    class procedure ApplyTo(const AGroup:TRowGroup); overload; static;
+    class procedure ApplyTo(const AGrid:TCustomTeeGrid); overload; static;
   end;
 
   TiOSTheme=record
@@ -53,7 +55,7 @@ type
 
   TGridThemes=record
   private
-    class procedure CheckScrollBars(const AGrid:TCustomTeeGrid); static;
+    class procedure CheckScrollBars(const AGroup:TRowGroup); static;
   public
     class var
       Default : TDefaultTheme;
@@ -79,12 +81,17 @@ type
     end;
 
   var
-    Font : TThemeFont;
     Brush : TColor;
-    Stroke : TColor;
+    Font : TThemeFont;
     Header : THeaderTheme;
+    Hover : TColor;
+    HoverFont : TColor;
+    Selected : TColor;
+    SelectedFont : TColor;
+    Stroke : TColor;
 
-    procedure ApplyTo(const AGrid:TCustomTeeGrid);
+    procedure ApplyTo(const AGroup:TRowGroup); overload;
+    procedure ApplyTo(const AGrid:TCustomTeeGrid); overload;
   end;
 
 implementation

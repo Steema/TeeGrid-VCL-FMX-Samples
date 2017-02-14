@@ -87,6 +87,7 @@ type
     FSubBands : TRowsBands;
 
     function CalcColumnHeight(const AColumn:TColumn; const AText:String): Single;
+    procedure ChangedHover(Sender: TObject);
     function GetHeights(const Index: Integer): Single;
     procedure SetAlternate(const Value: TAlternateFormat);
     procedure SetBack(const Value: TFormat);
@@ -96,6 +97,14 @@ type
     procedure SetSpacing(const Value: TCoordinate);
     procedure SetRowLines(const Value: TStroke);
   protected
+    FOnHorizScroll,
+    FOnVertScroll : TNotifyEvent;
+
+    IJustRepaint : Boolean;
+
+    function ChangeHorizScroll(const Value:Single):Boolean;
+    function ChangeVertScroll(const Value:Single):Boolean;
+    function MaxRight:Single;
     procedure PaintRow(var AData:TRenderData; const ARender: TRender);
   public
     Painter : TPainter;

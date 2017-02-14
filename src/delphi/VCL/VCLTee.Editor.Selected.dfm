@@ -23,14 +23,9 @@ object SelectedEditor: TSelectedEditor
     Align = alClient
     TabOrder = 0
     OnChange = PageSelectedChange
-    ExplicitTop = -69
-    ExplicitWidth = 478
-    ExplicitHeight = 368
     object TabOptions: TTabSheet
       Caption = 'Options'
       ImageIndex = 2
-      ExplicitWidth = 470
-      ExplicitHeight = 340
       object CBFullRow: TCheckBox
         Left = 19
         Top = 13
@@ -97,12 +92,18 @@ object SelectedEditor: TSelectedEditor
         ExplicitHeight = 307
         object TabFocused: TTabSheet
           Caption = 'Focused'
+          ExplicitLeft = 0
+          ExplicitTop = 0
           ExplicitWidth = 462
           ExplicitHeight = 279
         end
         object TabUnfocused: TTabSheet
           Caption = 'Unfocused'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
       end
     end

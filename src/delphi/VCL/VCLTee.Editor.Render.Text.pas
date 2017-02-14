@@ -37,7 +37,7 @@ type
     IAlign : TTextAlignEditor;
     IBorders : TBordersEditor;
     IFormat : TTextFormatEditor;
-    IMargins : TMarginsEditor;
+    IMargins : TTeeMarginsEditor;
   public
     { Public declarations }
 

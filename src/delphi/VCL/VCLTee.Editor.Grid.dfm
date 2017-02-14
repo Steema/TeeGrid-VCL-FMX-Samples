@@ -12,7 +12,9 @@ object TeeGridEditor: TTeeGridEditor
   Font.Style = []
   OldCreateOrder = False
   Position = poOwnerFormCenter
+  OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object PageGrid: TPageControl
@@ -20,7 +22,7 @@ object TeeGridEditor: TTeeGridEditor
     Top = 0
     Width = 494
     Height = 424
-    ActivePage = TabTheme
+    ActivePage = TabRows
     Align = alClient
     TabOrder = 0
     OnChange = PageGridChange
@@ -350,72 +352,13 @@ object TeeGridEditor: TTeeGridEditor
             end
           end
         end
-        object TabScrollBars: TTabSheet
+        object TabScrolling: TTabSheet
           Caption = 'Scrolling'
           ImageIndex = 5
           ExplicitLeft = 0
           ExplicitTop = 0
           ExplicitWidth = 0
           ExplicitHeight = 0
-          object GroupBox1: TGroupBox
-            Left = 11
-            Top = 11
-            Width = 150
-            Height = 161
-            Caption = 'Scroll Bars:'
-            TabOrder = 0
-            object Label2: TLabel
-              Left = 16
-              Top = 48
-              Width = 52
-              Height = 13
-              Caption = '&Horizontal:'
-              FocusControl = CBHorizScrollBar
-            end
-            object Label5: TLabel
-              Left = 16
-              Top = 96
-              Width = 39
-              Height = 13
-              Caption = '&Vertical:'
-              FocusControl = CBVertScrollBar
-            end
-            object CBScrollBars: TCheckBox
-              Left = 16
-              Top = 25
-              Width = 97
-              Height = 17
-              Caption = '&Visible'
-              TabOrder = 0
-              OnClick = CBScrollBarsClick
-            end
-            object CBHorizScrollBar: TComboBox
-              Left = 16
-              Top = 67
-              Width = 113
-              Height = 21
-              Style = csDropDownList
-              TabOrder = 1
-              OnChange = CBHorizScrollBarChange
-              Items.Strings = (
-                'Automatic'
-                'Show'
-                'Hide')
-            end
-            object CBVertScrollBar: TComboBox
-              Left = 16
-              Top = 115
-              Width = 113
-              Height = 21
-              Style = csDropDownList
-              TabOrder = 2
-              OnChange = CBVertScrollBarChange
-              Items.Strings = (
-                'Automatic'
-                'Show'
-                'Hide')
-            end
-          end
         end
       end
     end
@@ -431,7 +374,7 @@ object TeeGridEditor: TTeeGridEditor
         Top = 0
         Width = 486
         Height = 396
-        ActivePage = TabColumnLines
+        ActivePage = TabCellsFormat
         Align = alClient
         TabOrder = 0
         OnChange = PageCellsChange
@@ -515,21 +458,13 @@ object TeeGridEditor: TTeeGridEditor
             Text = '0'
             OnChange = ERowHeightChange
           end
-          object UDRowHeight: TUpDown
-            Left = 118
-            Top = 12
-            Width = 16
-            Height = 21
-            Associate = ERowHeight
-            TabOrder = 1
-          end
           object CBRowHeightAuto: TCheckBox
-            Left = 152
+            Left = 136
             Top = 14
             Width = 97
             Height = 17
             Caption = '&Automatic'
-            TabOrder = 2
+            TabOrder = 1
             OnClick = CBRowHeightAutoClick
           end
           object TBVertSpacing: TTrackBar
@@ -540,7 +475,7 @@ object TeeGridEditor: TTeeGridEditor
             Max = 50
             Frequency = 5
             Position = 10
-            TabOrder = 3
+            TabOrder = 2
             ThumbLength = 12
             OnChange = TBVertSpacingChange
           end
@@ -601,6 +536,10 @@ object TeeGridEditor: TTeeGridEditor
     object TabTheme: TTabSheet
       Caption = 'Theme'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object RGPainter: TRadioGroup
         Left = 16
         Top = 208

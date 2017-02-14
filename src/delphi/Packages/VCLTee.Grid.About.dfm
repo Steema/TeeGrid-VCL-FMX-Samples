@@ -67,6 +67,7 @@ object VCLGridAbout: TVCLGridAbout
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
+    OnDblClick = TeeGrid1DblClick
     _Headers = (
       1
       'TColumnHeaderBand'

@@ -20,13 +20,17 @@ object ColumnEditor: TColumnEditor
     Top = 0
     Width = 360
     Height = 304
-    ActivePage = TabGeneral
+    ActivePage = TabData
     Align = alClient
     TabOrder = 0
     OnChange = PageFormatChange
     object TabGeneral: TTabSheet
       Caption = 'General'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label5: TLabel
         Left = 13
         Top = 4
@@ -98,74 +102,147 @@ object ColumnEditor: TColumnEditor
     object TabWidth: TTabSheet
       Caption = 'Width'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabData: TTabSheet
       Caption = 'Data'
       ImageIndex = 5
-      object Label3: TLabel
-        Left = 10
-        Top = 8
-        Width = 72
-        Height = 13
-        Caption = 'Fl&oat numbers:'
-      end
-      object Label4: TLabel
-        Left = 10
-        Top = 56
-        Width = 52
-        Height = 13
-        Caption = '&Date Time:'
-      end
-      object Label6: TLabel
-        Left = 10
-        Top = 104
-        Width = 27
-        Height = 13
-        Caption = '&Date:'
-      end
-      object Label7: TLabel
-        Left = 10
-        Top = 152
-        Width = 26
-        Height = 13
-        Caption = '&Time:'
-      end
-      object EFloatFormat: TEdit
-        Left = 10
-        Top = 27
-        Width = 183
-        Height = 21
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object PageData: TPageControl
+        Left = 0
+        Top = 0
+        Width = 352
+        Height = 276
+        ActivePage = TabSource
+        Align = alClient
         TabOrder = 0
-        OnChange = EFloatFormatChange
-      end
-      object EDateTimeFormat: TEdit
-        Left = 10
-        Top = 75
-        Width = 183
-        Height = 21
-        TabOrder = 1
-        OnChange = EDateTimeFormatChange
-      end
-      object EDateFormat: TEdit
-        Left = 10
-        Top = 123
-        Width = 183
-        Height = 21
-        TabOrder = 2
-        OnChange = EDateFormatChange
-      end
-      object ETimeFormat: TEdit
-        Left = 10
-        Top = 171
-        Width = 183
-        Height = 21
-        TabOrder = 3
-        OnChange = ETimeFormatChange
+        object TabSource: TTabSheet
+          Caption = 'Source'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
+          object Panel4: TPanel
+            Left = 0
+            Top = 17
+            Width = 17
+            Height = 207
+            Align = alLeft
+            BevelOuter = bvNone
+            TabOrder = 0
+          end
+          object Panel5: TPanel
+            Left = 0
+            Top = 0
+            Width = 344
+            Height = 17
+            Align = alTop
+            BevelOuter = bvNone
+            TabOrder = 1
+          end
+          object Panel6: TPanel
+            Left = 0
+            Top = 224
+            Width = 344
+            Height = 24
+            Align = alBottom
+            BevelOuter = bvNone
+            TabOrder = 2
+          end
+          object LBSource: TListBox
+            Left = 17
+            Top = 17
+            Width = 121
+            Height = 207
+            Align = alLeft
+            ItemHeight = 13
+            TabOrder = 3
+            OnClick = LBSourceClick
+          end
+        end
+        object TabFormatting: TTabSheet
+          Caption = 'Formatting'
+          ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
+          object Label3: TLabel
+            Left = 10
+            Top = 8
+            Width = 72
+            Height = 13
+            Caption = 'Fl&oat numbers:'
+          end
+          object Label4: TLabel
+            Left = 10
+            Top = 56
+            Width = 52
+            Height = 13
+            Caption = '&Date Time:'
+          end
+          object Label6: TLabel
+            Left = 10
+            Top = 104
+            Width = 27
+            Height = 13
+            Caption = '&Date:'
+          end
+          object Label7: TLabel
+            Left = 10
+            Top = 152
+            Width = 26
+            Height = 13
+            Caption = '&Time:'
+          end
+          object EFloatFormat: TEdit
+            Left = 10
+            Top = 27
+            Width = 183
+            Height = 21
+            TabOrder = 0
+            OnChange = EFloatFormatChange
+          end
+          object EDateTimeFormat: TEdit
+            Left = 10
+            Top = 75
+            Width = 183
+            Height = 21
+            TabOrder = 1
+            OnChange = EDateTimeFormatChange
+          end
+          object EDateFormat: TEdit
+            Left = 10
+            Top = 123
+            Width = 183
+            Height = 21
+            TabOrder = 2
+            OnChange = EDateFormatChange
+          end
+          object ETimeFormat: TEdit
+            Left = 10
+            Top = 171
+            Width = 183
+            Height = 21
+            TabOrder = 3
+            OnChange = ETimeFormatChange
+          end
+        end
       end
     end
     object TabFormat: TTabSheet
       Caption = 'Format'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -188,6 +265,10 @@ object ColumnEditor: TColumnEditor
     object TabAlign: TTabSheet
       Caption = 'Text Align'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel3: TPanel
         Left = 0
         Top = 0
@@ -210,10 +291,18 @@ object ColumnEditor: TColumnEditor
     object TabMargins: TTabSheet
       Caption = 'Margins'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabHeader: TTabSheet
       Caption = 'Header'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 0

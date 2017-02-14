@@ -45,11 +45,14 @@ type
     class function DataOf(const AColumn:TColumn):TDataItem; inline; static;
 
     function GetData: TDataItem;
+    class procedure LinkTo(const AColumn: TColumn; const AItem:TDataItem); static;
     function RowOf(const ARow:Integer):Integer;
     procedure SetData(const Value: TDataItem);
     procedure SetSortable(const Value: Boolean);
   protected
     Master : TDataItem;
+
+    procedure SetField(const AColumn:TColumn; const ASource:TObject); override;
   public
     Detail : TDataItem;
 

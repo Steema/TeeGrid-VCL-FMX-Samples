@@ -20,7 +20,6 @@ type
   TCoordinateEditor = class(TForm)
     Label5: TLabel;
     CBAuto: TCheckBox;
-    UDValue: TUpDown;
     EValue: TEdit;
     RGUnits: TRadioGroup;
     procedure CBAutoClick(Sender: TObject);

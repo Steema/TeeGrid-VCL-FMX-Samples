@@ -19,24 +19,7 @@ uses
   FMX.Types, FMX.Controls, Tee.Format, Tee.Control;
 
 type
-  TFMXScrollBar=FMX.{$IF CompilerVersion>24}StdCtrls{$ELSE}Controls{$IFEND}.TScrollBar;
-
-  TFMXScrollBars=class
-  private
-    function Calc(const Horiz:Boolean; const AValue:Single):Single;
-    procedure Reset(const W,H,AWidth,AHeight:Single; const AScrollBars:TScrollBars);
-    function ThumbSize(const ABar:TFMXScrollBar):Single;
-  public
-    Horizontal,
-    Vertical : TFMXScrollBar;
-
-    Constructor CreateParent(const AParent:TControl);
-
-    {$IFNDEF AUTOREFCOUNT}
-    Destructor Destroy; override;
-    {$ENDIF}
-  end;
-
+  // Base class of a Control with optional scrollbars
   TScrollableControl=class(TStyledControl)
   private
     FScrollBars : TScrollBars;
@@ -49,6 +32,26 @@ type
     procedure SetScrollBars(const Value: TScrollBars);
     function VertScrollWidth:Single;
   protected
+    type
+    TFMXScrollBar=FMX.{$IF CompilerVersion>24}StdCtrls{$ELSE}Controls{$IFEND}.TScrollBar;
+
+    TFMXScrollBars=class
+    private
+      function Calc(const Horiz:Boolean; const AValue:Single):Single;
+      procedure Reset(const W,H,AWidth,AHeight:Single; const AScrollBars:TScrollBars);
+      function ThumbSize(const ABar:TFMXScrollBar):Single;
+    public
+      Horizontal,
+      Vertical : TFMXScrollBar;
+
+      Constructor CreateParent(const AParent:TControl);
+
+      {$IFNDEF AUTOREFCOUNT}
+      Destructor Destroy; override;
+      {$ENDIF}
+    end;
+
+    var
     IFMXScrollBars : TFMXScrollBars;
 
     function GetMaxBottom:Single; virtual; abstract;
@@ -65,7 +68,7 @@ type
     Destructor Destroy; override;
     {$ENDIF}
 
-    // Assign
+    procedure Assign(Source:TPersistent); override;
 
     property ScrollBars:TScrollBars read FScrollBars write SetScrollBars;
   end;

@@ -147,11 +147,11 @@ type
     function GetAlign: TTextAlign;
     function GetItems: TColumns;
     function GetMargins: TMargins;
-    function GetParent: TColumn;
+    function GetParent: TColumn; inline;
     procedure GetTopParent;
-    function IsItemsStored: Boolean;
+    function IsItemsStored: Boolean; inline;
     function MaxLevel:Integer;
-    procedure ReadLink(Reader: TReader);
+    procedure ReadLink(Reader: TReader); inline;
 
     procedure SetAlign(const Value: TTextAlign);
     procedure SetDataFormat(const Value: TDataFormat);
@@ -197,7 +197,7 @@ type
 
     function HorizAlign:THorizontalAlign; inline;
 
-    procedure InitAlign(const AHorizontal:THorizontalAlign);
+    procedure InitAlign(const AHorizontal:THorizontalAlign); inline;
     function Level:Integer;
     function Right:Single; inline;
 
@@ -240,12 +240,21 @@ type
     IParent : TColumn;
 
     function Get(const Index: Integer): TColumn; {$IFNDEF FPC}inline;{$ENDIF}
-    function GetByName(const AName:String): TColumn;
+    function GetByName(const AName:String): TColumn; {$IFNDEF FPC}inline;{$ENDIF}
     function GetSpacing:TCoordinate;
     function MaxLevel:Integer;
     procedure Put(const Index: Integer; const Value: TColumn); {$IFNDEF FPC}inline;{$ENDIF}
     procedure SetSpacing(const Value: TCoordinate);
   protected
+    type
+      TGetFieldsEvent=function:TColumns of object;
+      TSetFieldEvent=procedure(const AColumn:TColumn; const ASource:TObject) of object;
+
+    var
+      // internal, to get/set and supply fields to column editor dialog and design-time
+      OnGetFields : TGetFieldsEvent;
+      OnSetField  : TSetFieldEvent;
+
     function AnyPercentWidth:Boolean;
     procedure Moved(const AColumn:TColumn; const AOld,ANew:Integer);
     procedure Notify(Item: TCollectionItem; Action: TCollectionNotification); override;

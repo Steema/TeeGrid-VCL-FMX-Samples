@@ -20,24 +20,40 @@ object TextRenderEditor: TTextRenderEditor
     Top = 0
     Width = 431
     Height = 484
-    ActivePage = TabAlign
+    ActivePage = TabFormat
     Align = alClient
     TabOrder = 0
     OnChange = PageSelectedChange
     object TabFormat: TTabSheet
       Caption = 'Format'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabBorders: TTabSheet
       Caption = 'Borders'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabMargins: TTabSheet
       Caption = 'Margins'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabAlign: TTabSheet
       Caption = 'Text Align'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
   end
 end

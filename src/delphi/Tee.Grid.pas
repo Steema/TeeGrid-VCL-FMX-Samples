@@ -118,9 +118,10 @@ type
     function GetHeader:TColumnHeaderBand;
     function GetHeaders: TGridBands;
     function GetIndicator: TIndicator;
+    function GetMargins: TMargins;
     function GetReadOnly: Boolean;
-    function GetSelected: TGridSelection;
     function GetRows:TRows;
+    function GetSelected: TGridSelection;
 
     function IsColumnsStored: Boolean;
 
@@ -140,7 +141,6 @@ type
     procedure SetReadOnly(const Value: Boolean);
     procedure SetRows(const Value: TRows);
     procedure SetSelected(const Value: TGridSelection);
-    function GetMargins: TMargins;
   protected
     ILoading : Boolean;
 
@@ -150,22 +150,22 @@ type
     procedure DataChanged; virtual;
     procedure DataSourceChanged;
     procedure DoEditing(const Sender:TObject; const IsEditing:Boolean);
+    procedure CheckScrollLimits(var X,Y:Single); virtual; abstract;
     procedure Key(const AState:TKeyState);
     function HorizScrollBarHeight:Single; virtual; abstract;
-    procedure HorizScrollChanged; virtual; abstract;
+    procedure HorizScrollChanged(Sender:TObject); virtual; abstract;
     procedure Mouse(var AState:TMouseState);
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure FinishPaint(const IsDesign:Boolean);
     procedure ReadFooter(Reader: TReader);
     procedure ReadHeaders(Reader: TReader);
-    property Root:TRowGroup read FRoot;
     procedure StartEditor(const AColumn:TColumn; const ARow:Integer;
                           const AutoEdit:String=''); overload; virtual; abstract;
     procedure StartEditor(const AutoEdit:String=''); overload;
     procedure StopEditor; virtual;
     procedure TryStartEditor(const AutoEdit:String='');
     function VertScrollBarWidth:Single; virtual; abstract;
-    procedure VertScrollChanged; virtual; abstract;
+    procedure VertScrollChanged(Sender:TObject); virtual; abstract;
     function WidthForColumns(const AGroup:TRowGroup; const AWidth:Single):Single;
     procedure WriteFooter(Writer: TWriter);
     procedure WriteHeaders(Writer: TWriter);
@@ -194,6 +194,9 @@ type
     // Data for main rows
     property Data:TVirtualData read FData write SetData;
 
+    // Main Group
+    property Root:TRowGroup read FRoot;
+
     // Main rows
     property Rows:TRows read GetRows write SetRows;
   published
@@ -212,6 +215,15 @@ type
     // Events
     property OnAfterDraw:TNotifyEvent read FOnAfterDraw write FOnAfterDraw;
     property OnSelect:TNotifyEvent read FOnSelect write FOnSelect;
+  end;
+
+  TCustomTeeGridEditor=class
+  public
+  type
+    TEditGrid=procedure(const Sender:TCustomTeeGrid);
+
+  class var
+    OnEdit : TEditGrid;
   end;
 
 implementation

@@ -51,21 +51,22 @@ type
     function EditorShowing:Boolean;
     procedure SetEditorBounds(const PositionOnly:Boolean);
     procedure TryChangeEditorData;
-    procedure TryPaste(const Value:String);
     procedure TryShowEditor(const AColumn:TColumn; const ARow:Integer; const AutoEdit:String);
   protected
     procedure CancelEditor; override;
     procedure DataChanged; override;
 
+    procedure CheckScrollLimits(var X,Y:Single); override;
+
     function HorizScrollBarHeight:Single; override;
-    procedure HorizScrollChanged; override;
+    procedure HorizScrollChanged(Sender:TObject); override;
 
     procedure StartEditor(const AColumn:TColumn; const ARow:Integer;
                           const AutoEdit:String=''); override;
     procedure StopEditor; override;
 
     function VertScrollBarWidth:Single; override;
-    procedure VertScrollChanged; override;
+    procedure VertScrollChanged(Sender:TObject); override;
   public
     procedure Copy(const ASelection:TGridSelection=nil); override;
     function Height:Single; override;
@@ -160,6 +161,8 @@ type
 
     procedure ReadPainter(Reader: TReader);
     procedure WritePainter(Writer: TWriter);
+    function GetScrolling: TGridScrolling;
+    procedure SetScrolling(const Value: TGridScrolling);
   protected
     {$IFDEF FPC}
     procedure MouseLeave; override;
@@ -224,6 +227,7 @@ type
     property ReadOnly:Boolean read GetReadOnly write SetReadOnly default True;
     property Rows:TRows read GetRows write SetRows;
     property ScrollBars;
+    property Scrolling:TGridScrolling read GetScrolling write SetScrolling;
     property Selected:TGridSelection read GetSelected write SetSelected;
 
     {$IFDEF FPC}

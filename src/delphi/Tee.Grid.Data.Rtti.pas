@@ -55,6 +55,8 @@ interface
 }
 
 uses
+  {System.}Classes,
+
   Tee.Grid.Data, Tee.Grid.Columns, Tee.Painter,
   {System.}Generics.Collections, {System.}Rtti, {System.}TypInfo;
 
@@ -78,9 +80,18 @@ type
     class function IsDateTime(const AType:TRttiType):Boolean; static;
     class function IsNumeric(const AType:TRttiType):Boolean; overload; static;
 
-    class function MemberOf(const AColumn:TColumn):TRttiMember; inline; static;
+    class procedure LinkTo(const AColumn:TColumn; const AMember:TRttiMember;
+                           const AType:TRttiType); overload; static;
+
+    class procedure LinkTo(const AColumn:TColumn;
+                           const AName:String;
+                           const AObject:TObject;
+                           const AType:TRttiType); overload; static;
+
+    class function MemberOf(const AColumn:TColumn):TRttiMember; static; inline;
     class function PointerOf(const AValue:TValue):Pointer; static;
-    class function TypeOf(const AColumn: TColumn): TRttiType; static;
+    class function TypeOf(const AColumn: TColumn): TRttiType; overload; static;
+    class function TypeOf(const AMember:TRttiMember):TRttiType; overload; static;
     class function ValueOf(const AMember:TRttiMember; const P:Pointer):TValue; overload; static;
     class function ValueOf(const AColumn:TColumn; const P:Pointer):TValue; overload; static; inline;
   public
@@ -91,14 +102,13 @@ type
 
   TRttiMembers=(Both, Fields, Properties);
 
-  TVirtualData<T>=class(TVirtualDataRtti)
+  TBaseVirtualData=class(TVirtualDataRtti)
   private
   class var
     Context : TRttiContext;
 
   var
     FAncestor : Boolean;
-    FData : ^T;
     FMembers : TRttiMembers;
     FTypeInfo : PTypeInfo;
     FVisibility : TVisibility;
@@ -110,28 +120,36 @@ type
     {$ENDIF}
 
     ICount : TRttiProperty;
+    IFixedCount : Integer;
     IObject : TObject;
 
-    procedure AddFields(const AColumns:TColumns; const AType:TRttiType);
-    procedure AddProperties(const AColumns:TColumns; const AType:TRttiType);
+    procedure AddFields(const AColumns:TColumns; const AType:TRttiType); overload;
+    procedure AddProperties(const AColumns:TColumns; const AType:TRttiType); overload;
 
+    procedure DoAddArrayColumns(const AColumns:TColumns; const ARow:TValue);
     procedure DoAddColumns(const AColumns:TColumns; const AType:TRttiType);
     procedure DoSetValue(const AColumn:TColumn; const ARow:Integer; const Value:TValue);
-    procedure GuessArrayItems;
 
+    function FinalType:TRttiType;
+    function FinalTypeIsArray:Boolean;
     procedure InternalAddType(const AColumns:TColumns;
                               const AMember:TRttiMember;
                               const AType:TRttiType);
 
-    function IsVisible(const AMember:TRttiMember):Boolean; inline;
-
+    function IsVisible(const AMember: TRttiMember): Boolean; inline;
+    class procedure LinkTo(const AColumn:TColumn; const AType:TRttiType); overload; static;
     class function NameOf(const AType:TRttiOrdinalType):String; overload; static;
     class function NameOf(const AType:TRttiFloatType):String; overload; static;
-  protected
-    function RowValue(const ARow:Integer):TValue; virtual;
     function RttiType:TRttiType; inline;
+  protected
+    procedure DoSetArrayValue(const AColumn:TColumn; const ARow:Integer; const Value:TValue); virtual;
+    function GetPointerOf(const AColumn:TColumn; const ARow:Integer):Pointer; virtual;
+    function RowValue(const ARow:Integer):TValue; virtual;
+    procedure SetField(const AColumn:TColumn; const ASource:TObject); override;
   public
-    Constructor Create(var AData:T;
+    Constructor Create(const AObject:TObject;
+                       const AProperty:String;
+                       const ACount:Integer;
                        const AVisibility:TVisibility=[mvPublic,mvPublished];
                        const AMembers:TRttiMembers=TRttiMembers.Both;
                        const AAncestor:Boolean=False); overload;
@@ -145,8 +163,32 @@ type
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
   end;
 
+  TVirtualData<T>=class(TBaseVirtualData)
+  private
+    FData : ^T;
+
+    procedure AddArrayColumns(const AColumns:TColumns);
+    function Data:TValue; inline;
+    procedure GuessArrayItems;
+    procedure GuessItemsProperty(const AType:TRttiType);
+  protected
+    procedure DoSetArrayValue(const AColumn:TColumn; const ARow:Integer; const Value:TValue); override;
+    function GetPointerOf(const AColumn:TColumn; const ARow:Integer):Pointer; override;
+    function RowValue(const ARow:Integer):TValue; override;
+  public
+    Constructor Create(var AData:T;
+                       const AVisibility:TVisibility=[mvPublic,mvPublished];
+                       const AMembers:TRttiMembers=TRttiMembers.Both;
+                       const AAncestor:Boolean=False); overload;
+
+    procedure AddColumns(const AColumns:TColumns); override;
+    function Count:Integer; override;
+  end;
+
   // Helper classes, just aliases:
-  TVirtualArrayData<T>=class(TVirtualData<TArray<T>>);
+  TVirtualArrayData<T>=class(TVirtualData<TArray<T>>);         // Array of T
+  TVirtualArray2DData<T>=class(TVirtualArrayData<TArray<T>>);  // Array of Array of T
+
   TVirtualListData<T>=class(TVirtualData<TList<T>>);
 
 implementation

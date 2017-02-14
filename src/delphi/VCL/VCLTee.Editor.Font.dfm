@@ -52,9 +52,10 @@ object FontEditor: TFontEditor
         Top = 26
         Width = 150
         Height = 21
-        Max = 50
-        Frequency = 5
-        Position = 10
+        LineSize = 10
+        Max = 500
+        Frequency = 50
+        Position = 100
         TabOrder = 0
         ThumbLength = 12
         OnChange = TBSizeChange

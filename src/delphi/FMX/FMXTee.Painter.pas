@@ -65,7 +65,8 @@ type
     FVertAlign : TVerticalAlign;
 
     procedure DrawBitmap(const ABitmap:TBitmap; const ADest:TRectF);
-    function GraphicOf(const APicture: TPicture):TBitmap;
+    class function GraphicOf(const APicture: TPicture):TBitmap; static;
+    class function PathOf(const P: TPointsF):TPathData; static;
     procedure TextSize(const AText:String; out AWidth,AHeight:Single);
 
     {$IFDEF USELAYOUT}

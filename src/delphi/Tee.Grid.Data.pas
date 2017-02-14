@@ -62,6 +62,8 @@ type
     function SampleDate(const AColumn:TColumn): String;
     function SampleDateTime(const AColumn:TColumn):String;
     function SampleTime(const AColumn:TColumn):String;
+
+    procedure SetField(const AColumn:TColumn; const ASource:TObject); virtual;
   public
     procedure AddColumns(const AColumns:TColumns); virtual; abstract;
     function AsFloat(const AColumn:TColumn; const ARow:Integer):TFloat; virtual;
@@ -82,6 +84,7 @@ type
     procedure Load(const AColumns:TColumns); virtual; abstract;
     function LongestString(const APainter:TPainter; const AColumn:TColumn):Single;
     function ReadOnly(const AColumn:TColumn):Boolean; virtual;
+    procedure SetFirstRow(const ARow:Integer); virtual;
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); virtual; abstract;
     procedure SortBy(const AColumn:TColumn); virtual;
     procedure ToggleBoolean(const AColumn:TColumn; const ARow:Integer);

@@ -21,7 +21,7 @@ uses
   VCLTee.Editor.Stroke, VCLTee.Editor.Brush;
 
 type
-  TFormatEditor = class(TForm)
+  TTeeFormatEditor = class(TForm)
     PageFormat: TPageControl;
     TabStroke: TTabSheet;
     TabBrush: TTabSheet;
@@ -43,7 +43,7 @@ type
     class function Edit(const AOwner:TComponent; const AFormat:TFormat):Boolean; static;
 
     class function Embedd(const AOwner:TComponent; const AParent:TWinControl;
-                          const AFormat:TFormat):TFormatEditor; static;
+                          const AFormat:TFormat):TTeeFormatEditor; static;
   end;
 
 implementation

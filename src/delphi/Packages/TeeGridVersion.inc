@@ -1,4 +1,4 @@
 const
-  TeeGrid_Version='v0.6 beta';
-  TeeGrid_Version_Numeric=006;
+  TeeGrid_Version='v1.01 Beta';
+  TeeGrid_Version_Numeric=101;
 

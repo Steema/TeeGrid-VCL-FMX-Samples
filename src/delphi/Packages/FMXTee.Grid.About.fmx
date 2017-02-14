@@ -4,7 +4,7 @@ object FMXGridAbout: TFMXGridAbout
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'About TeeGrid'
   ClientHeight = 327
-  ClientWidth = 355
+  ClientWidth = 380
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop, iPhone, iPad]
@@ -15,12 +15,12 @@ object FMXGridAbout: TFMXGridAbout
   object Layout1: TLayout
     Align = Bottom
     Position.Y = 277.000000000000000000
-    Size.Width = 355.000000000000000000
+    Size.Width = 380.000000000000000000
     Size.Height = 50.000000000000000000
     Size.PlatformDefault = False
     object Layout2: TLayout
       Align = Right
-      Position.X = 252.000000000000000000
+      Position.X = 277.000000000000000000
       Size.Width = 103.000000000000000000
       Size.Height = 50.000000000000000000
       Size.PlatformDefault = False
@@ -52,7 +52,7 @@ object FMXGridAbout: TFMXGridAbout
     ReadOnly = False
     Position.X = 16.000000000000000000
     Position.Y = 16.000000000000000000
-    Size.Width = 324.000000000000000000
+    Size.Width = 345.000000000000000000
     Size.Height = 250.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 1

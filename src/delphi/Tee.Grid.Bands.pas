@@ -72,7 +72,8 @@ type
     procedure Changed(Sender: TObject);
     procedure SetHeight(const Value: TBandHeight);
   protected
-    Top : Single;
+    Top,
+    Bottom : Single;
   public
     Constructor Create(ACollection:TCollection); override;
 
@@ -132,8 +133,8 @@ type
   private
     FVisible : Boolean;
 
-    function Get(Index: Integer): TGridBand;
-    procedure Put(Index: Integer; const Value: TGridBand);
+    function Get(Index: Integer): TGridBand; {$IFNDEF FPC}inline;{$ENDIF}
+    procedure Put(Index: Integer; const Value: TGridBand); {$IFNDEF FPC}inline;{$ENDIF}
     procedure SetVisible(const Value: Boolean);
   public
     const

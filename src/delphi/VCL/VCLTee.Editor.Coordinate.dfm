@@ -33,21 +33,12 @@ object CoordinateEditor: TCoordinateEditor
     TabOrder = 0
     OnClick = CBAutoClick
   end
-  object UDValue: TUpDown
-    Left = 84
-    Top = 66
-    Width = 16
-    Height = 21
-    Associate = EValue
-    Max = 10000
-    TabOrder = 1
-  end
   object EValue: TEdit
     Left = 16
     Top = 66
     Width = 68
     Height = 21
-    TabOrder = 2
+    TabOrder = 1
     Text = '0'
     OnChange = EValueChange
   end
@@ -61,7 +52,7 @@ object CoordinateEditor: TCoordinateEditor
     Items.Strings = (
       '&Pixels'
       'P&ercent')
-    TabOrder = 3
+    TabOrder = 2
     OnClick = RGUnitsClick
   end
 end

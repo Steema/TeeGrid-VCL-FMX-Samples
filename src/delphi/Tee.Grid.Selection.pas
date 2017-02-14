@@ -53,6 +53,7 @@ uses
   Tee.Painter, Tee.Format, Tee.Grid.Columns, Tee.Renders;
 
 type
+  // Represents a square range of cells (From Column-Row / To Column-Row)
   TSelectionRange=class(TPersistentChange)
   private
     FEnabled: Boolean;
@@ -79,6 +80,7 @@ type
     property Enabled:Boolean read FEnabled write SetEnabled default False;
   end;
 
+  // Properties to control grid cell selection (single cell, range of cells, etc)
   TGridSelection=class(TVisibleTextRender)
   private
     FColumn : TColumn;
@@ -92,6 +94,7 @@ type
 
     procedure ChangeColumn(const Value:TColumn);
     procedure DoChanged;
+    procedure DoChangeRow(const Value:Integer);
     procedure ResetRange;
     procedure SetColumn(const Value: TColumn);
     procedure SetRange(const Value: TSelectionRange);
@@ -101,10 +104,10 @@ type
     procedure SetScrollToView(const Value: Boolean);
     procedure SetUnfocused(const Value: TVisibleTextRender);
   protected
-    CheckScroll : Boolean;
-  public
-    Dragging : Integer;
+    Dragging : Integer; // Index of row that started mouse drag selection
 
+    PreviousRow : Integer; // Keeps the last selected row index
+  public
     Constructor Create(const AChanged:TNotifyEvent); override;
 
     {$IFNDEF AUTOREFCOUNT}

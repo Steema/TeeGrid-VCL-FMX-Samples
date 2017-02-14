@@ -29,7 +29,6 @@ type
     procedure WMHScroll(var Msg: TWMHScroll); message WM_HSCROLL;
     procedure WMVScroll(var Msg: TWMVScroll); message WM_VSCROLL;
 
-    function RemainSize(const Bar:Word):Single;
     procedure SetScrollBars(const Value: TScrollBars);
   protected
     function GetMaxBottom:Single; virtual; abstract;
@@ -41,6 +40,7 @@ type
     function HorizScrollHeight:Integer;
     function VertScrollWidth:Integer;
 
+    function RemainSize(const Horizontal:Boolean):Single;
     procedure ResetScrollBars; virtual;
 
     procedure SetScrollX(const Value:Single); virtual; abstract;

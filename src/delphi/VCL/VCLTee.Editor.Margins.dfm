@@ -1,4 +1,4 @@
-object MarginsEditor: TMarginsEditor
+object TeeMarginsEditor: TTeeMarginsEditor
   Left = 0
   Top = 0
   Caption = 'Margins Editor'
@@ -25,14 +25,8 @@ object MarginsEditor: TMarginsEditor
     Align = alClient
     TabOrder = 0
     OnChange = PageControl1Change
-    ExplicitWidth = 635
-    ExplicitHeight = 299
     object TabLeft: TTabSheet
       Caption = 'Left'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 627
-      ExplicitHeight = 271
     end
     object TabTop: TTabSheet
       Caption = 'Top'

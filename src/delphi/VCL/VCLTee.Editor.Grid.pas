@@ -23,11 +23,12 @@ uses
 
   Tee.Renders, Tee.Grid.Columns, Tee.Grid.Selection, Tee.Grid,
 
-  VCLTee.Grid, VCLTee.Control,
+  VCLTee.Grid, VCLTee.Control, Tee.Control,
 
   VCLTee.Editor.Format, VCLTee.Editor.Stroke, VCLTee.Editor.Column,
   VCLTee.Editor.Coordinate, VCLTee.Editor.Margins,
-  VCLTee.Editor.Render.Text, VCLTee.Editor.Grid.Bands, VCLTee.Editor.Selected;
+  VCLTee.Editor.Render.Text, VCLTee.Editor.Grid.Bands, VCLTee.Editor.Selected,
+  VCLTee.Editor.Scrolling;
 
 type
   TTeeGridEditor = class(TForm)
@@ -57,7 +58,6 @@ type
     TabRowsGeneral: TTabSheet;
     Label1: TLabel;
     ERowHeight: TEdit;
-    UDRowHeight: TUpDown;
     CBRowHeightAuto: TCheckBox;
     PanelButtons: TPanel;
     PanelOk: TPanel;
@@ -83,7 +83,7 @@ type
     TBHorizSpacing: TTrackBar;
     LHorizSpacing: TLabel;
     RGPainter: TRadioGroup;
-    TabScrollBars: TTabSheet;
+    TabScrolling: TTabSheet;
     PageBands: TPageControl;
     TabHeaders: TTabSheet;
     TabFooter: TTabSheet;
@@ -93,12 +93,6 @@ type
     Label6: TLabel;
     CBEnterKey: TComboBox;
     CBAutoEdit: TCheckBox;
-    GroupBox1: TGroupBox;
-    Label2: TLabel;
-    Label5: TLabel;
-    CBScrollBars: TCheckBox;
-    CBHorizScrollBar: TComboBox;
-    CBVertScrollBar: TComboBox;
     GBText: TGroupBox;
     CBSelectText: TCheckBox;
     LBThemes: TListBox;
@@ -124,21 +118,22 @@ type
     procedure CBDoubleClickClick(Sender: TObject);
     procedure CBEditingAlwaysClick(Sender: TObject);
     procedure RGPainterClick(Sender: TObject);
-    procedure CBScrollBarsClick(Sender: TObject);
     procedure PageBandsChange(Sender: TObject);
     procedure SBAddClick(Sender: TObject);
-    procedure CBHorizScrollBarChange(Sender: TObject);
-    procedure CBVertScrollBarChange(Sender: TObject);
     procedure CBEnterKeyChange(Sender: TObject);
     procedure CBAutoEditClick(Sender: TObject);
     procedure TreeColumnsDeletion(Sender: TObject; Node: TTreeNode);
     procedure TreeColumnsKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure CBSelectTextClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
 
-    Grid : TTeeGrid;
+    Grid : TCustomTeeGrid;
+
+    VCLGrid : TTeeGrid;
 
     ICells,
     ICellsHover : TTextRenderEditor;
@@ -149,17 +144,19 @@ type
 
     ISelected : TSelectedEditor;
 
+    IScrolling : TScrollingEditor;
+
     IRowAlternate,
     IRowsBack,
-    IIndicatorFormat : TFormatEditor;
+    IIndicatorFormat : TTeeFormatEditor;
 
     IIndicatorWidth : TCoordinateEditor;
 
     IColumnEditor : TColumnEditor;
 
-    IBack : TFormatEditor;
+    IBack : TTeeFormatEditor;
 
-    IMargins : TMarginsEditor;
+    IMargins : TTeeMarginsEditor;
 
     IRowLines,
     IColumnLines : TStrokeEditor;
@@ -172,14 +169,15 @@ type
     procedure FillThemes;
     procedure MoveColumn(const Delta:Integer);
     procedure RefreshEditingSettings(const AEditing:TGridEditing);
+    procedure RefreshGrid(const AGrid: TCustomTeeGrid); overload;
     procedure RefreshMargins(const AMargins:TMargins);
-    procedure RefreshScrollSettings;
     procedure SetSpacingSettings;
     procedure ShowColumns(const ATree:TTreeView; const AColumns:TColumns);
+    function VCLScrollBars:TScrollBars;
   public
     { Public declarations }
 
-    procedure RefreshGrid(const AGrid:TTeeGrid);
+    procedure RefreshGrid(const AGrid:TTeeGrid); overload;
 
     class function Edit(const AOwner:TComponent; const AGrid:TTeeGrid):Boolean; static;
 

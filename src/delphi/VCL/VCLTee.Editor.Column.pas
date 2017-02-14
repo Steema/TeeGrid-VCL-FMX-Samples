@@ -33,14 +33,6 @@ type
     TabData: TTabSheet;
     Label5: TLabel;
     MemoHeader: TMemo;
-    Label3: TLabel;
-    Label4: TLabel;
-    EFloatFormat: TEdit;
-    EDateTimeFormat: TEdit;
-    Label6: TLabel;
-    EDateFormat: TEdit;
-    Label7: TLabel;
-    ETimeFormat: TEdit;
     TabFormat: TTabSheet;
     TabAlign: TTabSheet;
     TabMargins: TTabSheet;
@@ -54,6 +46,21 @@ type
     CBAutoAlign: TCheckBox;
     Label1: TLabel;
     CBLocked: TComboBox;
+    PageData: TPageControl;
+    TabSource: TTabSheet;
+    TabFormatting: TTabSheet;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    EFloatFormat: TEdit;
+    EDateTimeFormat: TEdit;
+    EDateFormat: TEdit;
+    ETimeFormat: TEdit;
+    Panel4: TPanel;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    LBSource: TListBox;
     procedure CBVisibleClick(Sender: TObject);
     procedure CBExpandedClick(Sender: TObject);
     procedure EFloatFormatChange(Sender: TObject);
@@ -70,6 +77,7 @@ type
     procedure CBHeaderParentClick(Sender: TObject);
     procedure CBHeaderVisibleClick(Sender: TObject);
     procedure CBLockedChange(Sender: TObject);
+    procedure LBSourceClick(Sender: TObject);
   private
     { Private declarations }
 
@@ -77,7 +85,7 @@ type
 
     IHeader : TTextRenderEditor;
     IFormat : TTextFormatEditor;
-    IMargins : TMarginsEditor;
+    IMargins : TTeeMarginsEditor;
     ITextAlign : TTextAlignEditor;
     IWidth : TCoordinateEditor;
 
@@ -85,9 +93,11 @@ type
 
     FOnChangedHeader : TNotifyEvent;
 
+    procedure AddFields;
     procedure ChangedTextAlign(Sender: TObject);
     procedure RefreshColumnFormat(const AFormat: TDataFormat);
     procedure TryHeaderFormat;
+    procedure TryRefreshData;
   public
     { Public declarations }
 

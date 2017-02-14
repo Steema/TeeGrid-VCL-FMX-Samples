@@ -22,6 +22,10 @@ object StrokeEditor: TStrokeEditor
     OnChange = PageStrokeChange
     object TabPen: TTabSheet
       Caption = 'Options'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label3: TLabel
         Left = 8
         Top = 77
@@ -71,10 +75,18 @@ object StrokeEditor: TStrokeEditor
     object TabBrush: TTabSheet
       Caption = 'Fill'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
     end
     object TabStyle: TTabSheet
       Caption = 'Style'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label4: TLabel
         Left = 9
         Top = 5

@@ -18,7 +18,7 @@ uses
   Tee.Format, Tee.Renders;
 
 type
-  TMarginsEditor = class(TForm)
+  TTeeMarginsEditor = class(TForm)
     PageControl1: TPageControl;
     TabLeft: TTabSheet;
     TabTop: TTabSheet;
@@ -44,7 +44,7 @@ type
     class function Edit(const AOwner:TComponent; const AMargins:TMargins):Boolean; static;
 
     class function Embedd(const AOwner:TComponent; const AParent:TWinControl;
-                          const AMargins:TMargins):TMarginsEditor; static;
+                          const AMargins:TMargins):TTeeMarginsEditor; static;
   end;
 
 implementation

@@ -109,7 +109,7 @@ type
 
     // Temporary
     MinX,
-    OffsetX,
+    //OffsetX,
     StartX : Single;
 
     Constructor Create(ACollection:TCollection); override;
@@ -151,7 +151,13 @@ type
     property OnColumnResized:TNotifyEvent read FOnColumnResized write FOnColumnResized;
   end;
 
+  TCanSortEvent=procedure(const AColumn:TColumn; var CanSort:Boolean) of object;
+
   TSortState=(None,Ascending,Descending);
+
+  TSortByEvent=TColumnEvent;
+
+  TSortStateEvent=procedure(const AColumn:TColumn; var State:TSortState) of object;
 
   TSortableHeader=class(TFormatRender)
   private
@@ -159,37 +165,43 @@ type
       DefaultSize=6;
 
     var
+      FOnCanSort : TCanSortEvent;
+      FOnSortBy : TSortByEvent;
+      FOnSortState : TSortStateEvent;
       FSize: Single;
+
+      IState : TSortState;
 
     function IsSizeStored: Boolean;
     procedure SetSize(const Value: Single);
   public
-    State : TSortState;
-
     Constructor Create(const AChanged:TNotifyEvent); override;
 
     function Hit(const R:TRectF; const X,Y:Single):Boolean; override;
     procedure Paint(var AData:TRenderData); override;
   published
     property Size:Single read FSize write SetSize stored IsSizeStored;
+
+    property OnCanSort:TCanSortEvent read FOnCanSort write FOnCanSort;
+    property OnSortBy:TSortByEvent read FOnSortBy write FOnSortBy;
+    property OnSortState:TSortStateEvent read FOnSortState write FOnSortState;
   end;
 
   // Grid Header main class
   TColumnHeaderBand=class(TColumnBand)
   private
+    FSortRender : TRender;
     FRowLines : TStroke;
     FSortable: Boolean;
 
     procedure PaintRowLines(const APainter:TPainter; const AColumns:TColumns; const ALevel:Integer);
     procedure SetRowLines(const Value: TStroke);
     procedure SetSortable(const Value: Boolean);
+    procedure SetSortRender(const Value: TRender);
   protected
     function AsString(const AColumn:TColumn):String; override;
     procedure DoClick; override;
   public
-    var
-      SortRender : TSortableHeader;
-
     Constructor Create(ACollection:TCollection); override;
 
     {$IFNDEF AUTOREFCOUNT}
@@ -201,6 +213,8 @@ type
     class function Description:String; override;
     function Mouse(var AState:TMouseState; const AWidth,AHeight:Single):Boolean; override;
     procedure Paint(var AData:TRenderData; const ARender:TRender); override;
+
+    property SortRender:TRender read FSortRender write SetSortRender;
   published
     property RowLines:TStroke read FRowLines write SetRowLines;
     property Sortable:Boolean read FSortable write SetSortable default True;

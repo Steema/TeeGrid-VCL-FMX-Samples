@@ -32,6 +32,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure TeeGrid1DblClick(Sender: TObject);
   private
     { Private declarations }
 

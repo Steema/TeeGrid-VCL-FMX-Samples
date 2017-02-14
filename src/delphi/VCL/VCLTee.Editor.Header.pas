@@ -34,7 +34,7 @@ type
 
     IHeader : TColumnHeaderBand;
     IFormat : TColumnBandEditor;
-    IMargins : TMarginsEditor;
+    IMargins : TTeeMarginsEditor;
     IRowLines : TStrokeEditor;
   public
     { Public declarations }

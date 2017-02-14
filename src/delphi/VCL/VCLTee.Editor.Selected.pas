@@ -1,4 +1,11 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  VCL TGridSelection Editor                  }
+{  Copyright (c) 2016-2017 by Steema Software }
+{  All Rights Reserved                        }
+{*********************************************}
 unit VCLTee.Editor.Selected;
+{$I Tee.inc}
 
 interface
 
