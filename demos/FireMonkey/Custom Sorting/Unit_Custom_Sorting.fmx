@@ -1,0 +1,28 @@
+object FormCustomSorting: TFormCustomSorting
+  Left = 0
+  Top = 0
+  Caption = 'TeeGrid - Custom Sorting by code'
+  ClientHeight = 480
+  ClientWidth = 640
+  Position = OwnerFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object TeeGrid1: TTeeGrid
+    Columns = <>
+    ReadOnly = False
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
+end
