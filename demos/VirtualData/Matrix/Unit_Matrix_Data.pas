@@ -52,6 +52,9 @@ type
   private
     { Private declarations }
 
+    const
+      DefaultColumnWidth=30;
+
     procedure GetValue(Sender:TObject;
                        const AColumn:TColumn;
                        const ARow:Integer;
@@ -163,7 +166,7 @@ begin
 //  TeeGrid1.Data:= TVirtualArray2DData<Double>.Create(Matrix);
 
   // cosmetic, optional
-  AllColumnsFixedWidth(50);
+  AllColumnsFixedWidth(DefaultColumnWidth);
 end;
 
 // Use virtual-mode events
@@ -171,7 +174,7 @@ procedure TFormMatrixGrid.VirtualMode;
 var Data : TVirtualModeData;
     t : Integer;
 begin
-  Data:= TVirtualModeData.Create(NumColumns,NumRows,50);  // 50 = column width
+  Data:= TVirtualModeData.Create(NumColumns,NumRows,DefaultColumnWidth);
 
   // Set initial text for column headers
   for t:=0 to NumColumns-1 do
