@@ -115,6 +115,10 @@ begin
   for t:=0 to NumRows-1 do
       Matrix[t,0]:=t;
 
+  // Sample data at diagonal cells
+  for t:=0 to NumRows-1 do
+      Matrix[t,t]:=t;
+
   // Bind data to grid
   RGModeClick(Self);
 end;
