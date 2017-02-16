@@ -15,7 +15,7 @@ object FormCustomSorting: TFormCustomSorting
     ReadOnly = False
     Align = Client
     Size.Width = 640.000000000000000000
-    Size.Height = 480.000000000000000000
+    Size.Height = 430.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
     _Headers = (
@@ -24,5 +24,21 @@ object FormCustomSorting: TFormCustomSorting
       <
         item
         end>)
+  end
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object Label1: TLabel
+      AutoSize = True
+      Position.X = 16.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 361.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Click grid column headers to sort rows'
+    end
   end
 end

@@ -16,7 +16,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
 
   Tee.Grid.Header, Tee.Grid.Columns, FMXTee.Control, FMXTee.Grid,
-  Tee.Grid.Data.Rtti;
+  Tee.Grid.Data.Rtti, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts;
 
 type
   // Remember the last sorted column and order
@@ -28,6 +28,8 @@ type
 
   TFormCustomSorting = class(TForm)
     TeeGrid1: TTeeGrid;
+    Layout1: TLayout;
+    Label1: TLabel;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
