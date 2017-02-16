@@ -190,6 +190,10 @@ type
     Destructor Destroy; override;
 
     procedure Clear;
+
+    // Workaround for FMX TBitmap issue, see FMXTee.Grid.pas
+    class function NewPicture:TPersistent; virtual;
+
     procedure SetGraphic(const AObject:TObject);
   end;
 
@@ -380,9 +384,9 @@ type
     procedure SetAutomatic(const Value: Boolean);
     procedure SetUnits(const Value: TSizeUnits);
     procedure SetValue(const AValue: Single);
+  protected
+    IPixels : Single;
   public
-    Pixels : Single; // <-- calculated
-
     Constructor Create(const AChanged:TNotifyEvent); override;
 
     procedure Assign(Source:TPersistent); override;
@@ -390,6 +394,8 @@ type
     function Calculate(const ATotal:Single):Single;
     procedure InitValue(const AValue:Single);
     procedure Prepare(const ATotal:Single);
+
+    property Pixels:Single read IPixels; // <-- calculated, read-only
   published
     property Automatic:Boolean read FAutomatic write SetAutomatic stored IsAutomaticStored;
     property Units:TSizeUnits read FUnits write SetUnits default TSizeUnits.Pixels;

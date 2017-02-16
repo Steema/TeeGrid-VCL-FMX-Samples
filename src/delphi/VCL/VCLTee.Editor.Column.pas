@@ -89,6 +89,7 @@ type
     ITextAlign : TTextAlignEditor;
     IWidth : TCoordinateEditor;
 
+    IRefreshingAlign,
     IChangingAlign : Boolean;
 
     FOnChangedHeader : TNotifyEvent;
@@ -96,8 +97,12 @@ type
     procedure AddFields;
     procedure ChangedTextAlign(Sender: TObject);
     procedure RefreshColumnFormat(const AFormat: TDataFormat);
+
     procedure TryHeaderFormat;
+    procedure TryRefreshAlign;
     procedure TryRefreshData;
+    procedure TryRefreshMargins;
+    procedure TryRefreshWidth;
   public
     { Public declarations }
 

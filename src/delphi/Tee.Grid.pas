@@ -145,6 +145,7 @@ type
     ILoading : Boolean;
 
     procedure CancelEditor; virtual;
+    procedure ChangeEditing(const AState:TIndicatorState);
     procedure ChangeHorizScroll(const Value:Single);
     procedure ChangeVertScroll(const Value:Single);
     procedure DataChanged; virtual;

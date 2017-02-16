@@ -70,6 +70,8 @@ type
   TPainter=class
   protected
   public
+    class function CalcTextLines(const AText:String):Integer; static;
+
     procedure Clip(const R:TRectF); overload; virtual; abstract;
     procedure UnClip; virtual; abstract;
 

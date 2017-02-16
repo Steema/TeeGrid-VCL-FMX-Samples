@@ -1,0 +1,123 @@
+object Form54: TForm54
+  Left = 0
+  Top = 0
+  Caption = 'Form54'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object TeeGrid1: TTeeGrid
+    Columns = <
+      item
+        Header.Text = 'CustomerID'
+        Link = 'CustomerID'
+      end
+      item
+        Header.Text = 'CompanyName'
+        Link = 'CompanyName'
+      end
+      item
+        Header.Text = 'ContactName'
+        Link = 'ContactName'
+      end
+      item
+        Header.Text = 'ContactTitle'
+        Link = 'ContactTitle'
+      end
+      item
+        Header.Text = 'Address'
+        Link = 'Address'
+      end
+      item
+        Header.Text = 'City'
+        Link = 'City'
+      end
+      item
+        Header.Text = 'Region'
+        Link = 'Region'
+      end
+      item
+        Header.Text = 'PostalCode'
+        Link = 'PostalCode'
+      end
+      item
+        Header.Text = 'Country'
+        Link = 'Country'
+      end
+      item
+        Header.Text = 'Phone'
+        Link = 'Phone'
+      end
+      item
+        Header.Text = 'Fax'
+        Link = 'Fax'
+      end>
+    DataSource = DataSource1
+    ReadOnly = False
+    Position.X = 16.000000000000000000
+    Position.Y = 16.000000000000000000
+    Size.Width = 601.000000000000000000
+    Size.Height = 225.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
+  object TeeGrid2: TTeeGrid
+    Columns = <>
+    ReadOnly = False
+    Position.X = 16.000000000000000000
+    Position.Y = 248.000000000000000000
+    Size.Width = 601.000000000000000000
+    Size.Height = 209.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
+  object Sqlite_demoConnection: TFDConnection
+    Params.Strings = (
+      'ConnectionDef=SQLite_Demo')
+    Connected = True
+    LoginPrompt = False
+    Left = 489
+    Top = 32
+  end
+  object CustomersTable: TFDQuery
+    Active = True
+    Connection = Sqlite_demoConnection
+    SQL.Strings = (
+      'SELECT * FROM Customers')
+    Left = 489
+    Top = 88
+  end
+  object DataSource1: TDataSource
+    DataSet = CustomersTable
+    Left = 360
+    Top = 88
+  end
+  object DataSource2: TDataSource
+    DataSet = OrdersTable
+    Left = 360
+    Top = 144
+  end
+  object OrdersTable: TFDTable
+    Active = True
+    Connection = Sqlite_demoConnection
+    UpdateOptions.UpdateTableName = 'Orders'
+    TableName = 'Orders'
+    Left = 496
+    Top = 136
+  end
+end

@@ -171,12 +171,19 @@ type
   // Rectangle shape with Text, Margins and Alignments
   TTextRender=class(TFormatRender)
   private
+  const
+    DefaultHorizontalMargin=4;
+    DefaultVerticalMargin=2;
+
+  var
     FAlign : TTextAlign;
     FMargins : TMargins;
 
+    function GetMargins:TMargins;
     procedure SetAlign(const Value: TTextAlign);
     procedure SetMargins(const Value: TMargins);
   protected
+    function VerticalMargin:Single;
   public
     PaintText : Boolean;
     TextLines : Integer;
@@ -191,10 +198,9 @@ type
 
     function CalcHeight(const APainter:TPainter):Single; overload;
     function CalcHeight(const APainter:TPainter; const AText:String):Single; overload;
-    function CalcTextLines(const AText:String):Integer;
     procedure Paint(var AData:TRenderData); override;
   published
-    property Margins:TMargins read FMargins write SetMargins;
+    property Margins:TMargins read GetMargins write SetMargins;
     property TextAlign:TTextAlign read FAlign write SetAlign;
   end;
 

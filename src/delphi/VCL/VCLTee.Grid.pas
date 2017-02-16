@@ -115,6 +115,9 @@ type
     procedure WMGetDlgCode(var Message: TWMGetDlgCode); message WM_GETDLGCODE;
     {$ENDIF}
 
+    procedure WMSetFocus(var Message: TWMSetFocus); message WM_SETFOCUS;
+    procedure WMKillFocus(var Message: TWMKillFocus); message WM_KILLFOCUS;
+
     {$IFDEF FPC}
     procedure WMSize(var Message: TLMSize); message LM_SIZE;
     {$ELSE}

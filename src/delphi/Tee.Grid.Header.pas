@@ -102,15 +102,18 @@ type
 
     function AdjustBounds(const AColumn:TColumn; const R:TRectF):TRectF;
     function AsString(const AColumn:TColumn):String; virtual; abstract;
+    procedure InitFormat(const AFormat:TTextFormat); overload;
     function LevelTop(const ALevel:Integer):Single;
     procedure DoClick; virtual;
   public
     Width : Single;
 
-    // Temporary
+    // Temporary:
     MinX,
-    //OffsetX,
     StartX : Single;
+
+    class var
+      ResizeTolerance : Single;
 
     Constructor Create(ACollection:TCollection); override;
 
@@ -122,7 +125,7 @@ type
 
     function CalcFont(const AColumn:TColumn; const AFont:TFont):TFont;
     procedure CalcHeight(const APainter:TPainter; const ATotal:Single); override;
-    procedure InitFormat;
+    procedure InitFormat; overload;
     function Mouse(var AState:TMouseState; const AWidth,AHeight:Single):Boolean; override;
     procedure Paint(var AData:TRenderData; const ARender:TRender); override;
     function RowCount:Integer;

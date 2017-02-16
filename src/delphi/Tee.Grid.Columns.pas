@@ -317,7 +317,7 @@ type
     procedure Add(const AColumns:TColumns); overload;
     function AllSameFormat:Boolean;
     function AnyLocked: Boolean;
-    function AtEdge(const X:Single; const AColumn:TColumn):TColumn;
+    function AtEdge(const X:Single; const AColumn:TColumn; const Tolerance:Single=3):TColumn;
     procedure Clear; inline;
     function Count:Integer; inline;
     function First:TColumn;
@@ -331,6 +331,8 @@ type
     property Items[const Index:Integer]:TColumn read Get; default;
   end;
 
+  TIndicatorState=(Browse,Edit,Insert);
+
   // Special column class.
   // Rectangle shape with symbols, to optionally paint as left-most first column
   TIndicator=class(TVisibleTextRender)
@@ -339,6 +341,8 @@ type
 
     procedure SetWidth(const Value: TColumnWidth);
     function Triangle(const R:TRectF):TPointsF;
+  protected
+    State : TIndicatorState;
   public
     const
       DefaultWidth=10;

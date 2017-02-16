@@ -64,6 +64,7 @@ type
   private
     class procedure AddFields(const AColumns: TColumns; const AFields: TFields); static;
     function BeginRow(const ARow:Integer):Integer;
+    function DataSetRecNo:Integer;
     procedure EndRow(const ARow:Integer);
     function HasFields:Boolean;
   protected

@@ -167,12 +167,13 @@ type
     procedure TryClearColumns;
     procedure TryStartEditing(const P:TPointF);
   protected
-    {$IF CompilerVersion>24}
-    procedure CMGesture(var EventInfo: TGestureEventInfo); override;
-    {$IFEND}
-
     procedure DblClick; override;
     procedure DefineProperties(Filer: TFiler); override;
+
+    procedure DialogKey(var Key: Word; Shift: TShiftState); override;
+
+    procedure DoEnter; override;
+    procedure DoExit; override;
 
     procedure DoMouseLeave; override;
 
@@ -202,6 +203,10 @@ type
 
     procedure ApplyStyle; override;
     procedure Changed(Sender:TObject);
+
+    {$IF CompilerVersion>24}
+    procedure CMGesture(var EventInfo: TGestureEventInfo); override;
+    {$IFEND}
 
     procedure Loaded; override;
 

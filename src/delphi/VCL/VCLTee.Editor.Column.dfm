@@ -20,17 +20,13 @@ object ColumnEditor: TColumnEditor
     Top = 0
     Width = 360
     Height = 304
-    ActivePage = TabData
+    ActivePage = TabAlign
     Align = alClient
     TabOrder = 0
     OnChange = PageFormatChange
     object TabGeneral: TTabSheet
       Caption = 'General'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label5: TLabel
         Left = 13
         Top = 4
@@ -102,18 +98,10 @@ object ColumnEditor: TColumnEditor
     object TabWidth: TTabSheet
       Caption = 'Width'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object TabData: TTabSheet
       Caption = 'Data'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object PageData: TPageControl
         Left = 0
         Top = 0
@@ -124,10 +112,6 @@ object ColumnEditor: TColumnEditor
         TabOrder = 0
         object TabSource: TTabSheet
           Caption = 'Source'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Panel4: TPanel
             Left = 0
             Top = 17
@@ -169,10 +153,6 @@ object ColumnEditor: TColumnEditor
         object TabFormatting: TTabSheet
           Caption = 'Formatting'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object Label3: TLabel
             Left = 10
             Top = 8
@@ -239,10 +219,6 @@ object ColumnEditor: TColumnEditor
     object TabFormat: TTabSheet
       Caption = 'Format'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel1: TPanel
         Left = 0
         Top = 0
@@ -265,10 +241,6 @@ object ColumnEditor: TColumnEditor
     object TabAlign: TTabSheet
       Caption = 'Text Align'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel3: TPanel
         Left = 0
         Top = 0
@@ -291,18 +263,10 @@ object ColumnEditor: TColumnEditor
     object TabMargins: TTabSheet
       Caption = 'Margins'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object TabHeader: TTabSheet
       Caption = 'Header'
       ImageIndex = 6
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 0
