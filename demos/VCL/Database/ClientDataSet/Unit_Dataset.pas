@@ -124,7 +124,7 @@ begin
 
          // Just a test, set a custom row Height
          TeeGrid1.Rows.Height.Automatic:=False;
-         TeeGrid1.Rows.Height.Pixels:= 18;
+         TeeGrid1.Rows.Height.Value:= 18;
 
          DBNavigator1.DataSource:=DataSource1;
        end;
@@ -134,7 +134,7 @@ begin
 
          // Just a test, set a custom row Height
          TeeGrid1.Rows.Height.Automatic:=False;
-         TeeGrid1.Rows.Height.Pixels:=100;
+         TeeGrid1.Rows.Height.Value:=100;
 
          DBNavigator1.DataSource:=DataSource2;
        end;
@@ -152,7 +152,7 @@ begin
       CheckBigDataSet;
 
       TeeGrid1.Rows.Height.Automatic:=False;
-      TeeGrid1.Rows.Height.Pixels:=0;
+      TeeGrid1.Rows.Height.Value:=0;
 
       TeeGrid1.DataSource:=DataSource3;
       DBNavigator1.DataSource:=DataSource3;

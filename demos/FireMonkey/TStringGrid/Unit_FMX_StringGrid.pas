@@ -56,7 +56,7 @@ implementation
 
 uses
   System.Diagnostics, Tee.Grid.Bands, Tee.Grid.Selection, Tee.Grid,
-  Tee.Grid.RowGroup, FMXTee.Painter;
+  Tee.Grid.RowGroup, FMXTee.Painter, Tee.Grid.Rows, Tee.Grid.Data;
 
 // Repaint the grid 1000 times to benchmark painting speed
 procedure TStringGridForm.Button1Click(Sender: TObject);
@@ -156,10 +156,10 @@ begin
   OkPicture:=TFMXPicture.From(OkImage);
 
   // Set the default row height (same height for all rows)
-  TeeGrid1.Rows.Height.Pixels:=32;
+  TeeGrid1.Rows.Height.Value:=32;
 
   // Set picture column width to match bitmap picture aspect ratio (width to height)
-  TeeGrid1.Columns[3].Width.Pixels:=40;
+  TeeGrid1.Columns[3].Width.Value:=40;
 
   // Example: Set cell editing to auto-start when typing a character key
   TeeGrid1.Editing.AutoEdit:=True;
