@@ -45,7 +45,7 @@ implementation
 uses
   {System.}TypInfo,
 
-  Tee.Grid.Data, Tee.Grid.Data.Rtti, Tee.Grid.Columns, Tee.Control,
+  Tee.GridData, Tee.GridData.Rtti, Tee.Grid.Columns, Tee.Control,
 
   Unit_MyData, System.Generics.Collections, Tee.Grid.Themes;
 

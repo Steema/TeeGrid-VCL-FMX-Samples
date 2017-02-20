@@ -37,7 +37,7 @@ uses
 
   Tee.Painter, Tee.Format, Tee.Renders, Tee.Control,
   Tee.Grid.Columns, Tee.Grid.Header, Tee.Grid.Bands, Tee.Grid.Rows,
-  Tee.Grid.Selection, Tee.Grid.Data, Tee.Grid.RowGroup;
+  Tee.Grid.Selection, Tee.GridData, Tee.Grid.RowGroup;
 
 type
   TTextEditing=class(TPersistentChange)

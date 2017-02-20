@@ -128,10 +128,6 @@ object Form224: TForm224
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
-    ExplicitLeft = 640
-    ExplicitTop = 96
-    ExplicitWidth = 400
-    ExplicitHeight = 250
     _Headers = (
       1
       'TColumnHeaderBand'

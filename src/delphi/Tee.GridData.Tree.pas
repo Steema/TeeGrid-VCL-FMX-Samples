@@ -4,14 +4,14 @@
 {  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
-unit Tee.Grid.Data.Tree;
+unit Tee.GridData.Tree;
 {$I Tee.inc}
 
 interface
 
 uses
   {System.}Classes,
-  Tee.Grid, Tee.Grid.Columns, Tee.Painter, Tee.Renders, Tee.Grid.Data;
+  Tee.Grid, Tee.Grid.Columns, Tee.Painter, Tee.Renders, Tee.GridData;
 
 type
   TTreeColumn=class;

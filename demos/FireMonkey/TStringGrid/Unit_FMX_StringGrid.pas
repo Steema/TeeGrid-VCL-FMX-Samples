@@ -12,7 +12,7 @@ uses
   FMX.Controls.Presentation, FMX.StdCtrls, FMXTee.Control, FMXTee.Grid,
   FMX.Layouts, FMX.Edit, FMX.EditBox, FMX.NumberBox,
 
-  Tee.Grid.Data.Strings, Tee.Grid.Columns, Tee.Renders, Tee.Format, Tee.Painter,
+  Tee.GridData.Strings, Tee.Grid.Columns, Tee.Renders, Tee.Format, Tee.Painter,
   FMX.Objects, FMXTee.Picture;
 
 type
@@ -56,7 +56,7 @@ implementation
 
 uses
   System.Diagnostics, Tee.Grid.Bands, Tee.Grid.Selection, Tee.Grid,
-  Tee.Grid.RowGroup, FMXTee.Painter, Tee.Grid.Rows, Tee.Grid.Data;
+  Tee.Grid.RowGroup, FMXTee.Painter, Tee.Grid.Rows, Tee.GridData;
 
 // Repaint the grid 1000 times to benchmark painting speed
 procedure TStringGridForm.Button1Click(Sender: TObject);

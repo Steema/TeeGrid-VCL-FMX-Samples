@@ -20,7 +20,7 @@ interface
 uses
   System.Classes, System.Types, System.UITypes,
 
-  Tee.Grid.Data.DB, // <--- Forced always (so this unit is not needed at every project "uses")
+  Tee.GridData.DB, // <--- Forced always (so this unit is not needed at every project "uses")
 
   FMX.Types, FMX.Controls,
 
@@ -38,7 +38,7 @@ uses
 
   Tee.Painter, Tee.Format, Tee.Renders,
 
-  Tee.Control, Tee.Grid.Columns, Tee.Grid.Data, Tee.Grid.Rows,
+  Tee.Control, Tee.Grid.Columns, Tee.GridData, Tee.Grid.Rows,
   Tee.Grid.RowGroup, Tee.Grid.Header, Tee.Grid.Selection, Tee.Grid.Bands,
   Tee.Grid,
 

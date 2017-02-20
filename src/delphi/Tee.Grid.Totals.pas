@@ -36,7 +36,7 @@ uses
   {$ENDIF}
 
   Tee.Grid.Columns, Tee.Format, Tee.Renders,
-  Tee.Grid.Data, Tee.Grid.Header;
+  Tee.GridData, Tee.Grid.Header;
 
 type
   TBaseTotals=class(TColumnBand)

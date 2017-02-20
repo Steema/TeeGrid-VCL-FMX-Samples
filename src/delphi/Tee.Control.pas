@@ -37,8 +37,6 @@ type
   public
     procedure Assign(Source:TPersistent); override;
 
-    procedure PrepareVisible(const Needed:Boolean);
-
     property IsVisible:Boolean read FIsVisible write FIsVisible;
     property ThumbSize:Integer read FThumbSize write FThumbSize;
   published

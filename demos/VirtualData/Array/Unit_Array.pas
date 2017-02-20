@@ -83,7 +83,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Unit_MyData, Tee.Grid.Data, Tee.Grid.Data.Rtti,
+  Unit_MyData, Tee.GridData, Tee.GridData.Rtti,
 
   VCLTee.Painter.GdiPlus, VCLTee.Painter, Tee.Format,
 
@@ -107,7 +107,7 @@ var
 procedure TFormArray.BIntegerClick(Sender: TObject);
 var t : Integer;
 begin
-  SetLength(MyIntegers,10);
+  SetLength(MyIntegers,100);
 
   for t:=0 to High(MyIntegers) do
       MyIntegers[t]:=Random(1000);
@@ -124,7 +124,7 @@ var
 procedure TFormArray.BFloatClick(Sender: TObject);
 var t : Integer;
 begin
-  SetLength(MyFloats,10);
+  SetLength(MyFloats,200);
 
   for t:=0 to High(MyFloats) do
       MyFloats[t]:=Random(1000)*0.01;

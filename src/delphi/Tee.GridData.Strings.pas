@@ -4,7 +4,7 @@
 {  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
-unit Tee.Grid.Data.Strings;
+unit Tee.GridData.Strings;
 {$I Tee.inc}
 
 // Force range-checking in Debug mode
@@ -65,7 +65,7 @@ interface
 uses
   {System.}Classes,
 
-  Tee.Grid.Columns, Tee.Grid.Data, Tee.Painter;
+  Tee.Grid.Columns, Tee.GridData, Tee.Painter;
 
 type
   TOnVirtualData=procedure(Sender:TObject;
@@ -98,7 +98,9 @@ type
     procedure RangeCheck(const Column,Row: Integer);
     {$ENDIF}
   protected
+    function Empty:Boolean; override;
     procedure InternalResize; virtual;
+    function KnownCount: Boolean; override;
   public
     Constructor Create(const AColumns:Integer=0; const ARows:Integer=0; const DefaultWidth:Single=0); virtual;
 

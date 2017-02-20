@@ -69,7 +69,7 @@ implementation
 {$R *.fmx}
 
 uses
-  Tee.Grid.Data.Strings, Tee.Format, Unit_Sample, Tee.Grid.CSV;
+  Tee.GridData.Strings, Tee.Format, Unit_Sample, Tee.Grid.CSV;
 
 // Create a new Title grid-band
 function TForm43.NewTitle(const AText:String):TTextBand;

@@ -3,7 +3,7 @@ unit Unit_Main;
 {
   Linking a TeeGrid with a TDataSource or TDataSet:
 
-  uses Tee.Grid.Data.DB;
+  uses Tee.GridData.DB;
 
   TeeGrid1.DataSource:= DataSource1;
 
@@ -74,8 +74,10 @@ procedure TFormGridDataSet.FormCreate(Sender: TObject);
 begin
   CheckBigDataSet;
 
+  // Enable using the mouse to drag and scroll grid contents
   TeeGrid1.Scrolling.Mode:=TScrollingMode.Both;
 
+  // Set data
   TeeGrid1.DataSource:=DataSource1;
 end;
 

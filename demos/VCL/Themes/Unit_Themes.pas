@@ -47,7 +47,7 @@ implementation
 
 uses
   Tee.Painter, Tee.Grid.Themes, Unit_MyData, Tee.Grid.Columns,
-  Tee.Grid.Data.Rtti, VCLTee.Editor.Grid,
+  Tee.GridData.Rtti, VCLTee.Editor.Grid,
 
   VCLTee.Grid.Themes, Vcl.Themes;
 

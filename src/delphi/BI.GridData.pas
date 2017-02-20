@@ -4,7 +4,7 @@
 {  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
-unit BI.Grid.Data;
+unit BI.GridData;
 
 interface
 
@@ -13,7 +13,7 @@ interface
 
   Example:
 
-  uses BI.Persist, BI.DataSource, BI.Grid.Data;
+  uses BI.Persist, BI.DataSource, BI.GridData;
   var Customers : TDataItem;
       Data : TBIGridData;
 
@@ -33,7 +33,7 @@ interface
 uses
   System.Classes, System.TypInfo, System.Generics.Collections,
 
-  Tee.Grid, Tee.Grid.Columns, Tee.Painter, Tee.Renders, Tee.Grid.Data,
+  Tee.Grid, Tee.Grid.Columns, Tee.Painter, Tee.Renders, Tee.GridData,
   BI.Data, BI.DataSource, BI.Data.RTTI;
 
 type
@@ -52,6 +52,8 @@ type
   protected
     Master : TDataItem;
 
+    function Empty:Boolean; override;
+    function KnownCount: Boolean; override;
     procedure SetField(const AColumn:TColumn; const ASource:TObject); override;
   public
     Detail : TDataItem;

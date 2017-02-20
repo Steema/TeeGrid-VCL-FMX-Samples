@@ -30,7 +30,7 @@ uses
   {System.}SysUtils,
 
   Tee.Format, Tee.Painter, Tee.Renders,
-  Tee.Grid.Data, Tee.Grid.Columns, Tee.Grid.Bands,
+  Tee.GridData, Tee.Grid.Columns, Tee.Grid.Bands,
   Tee.Grid.Selection;
 
 type
@@ -127,7 +127,7 @@ type
     procedure CalcDefaultHeight;
     procedure CalcYSpacing(const AHeight:Single);
     procedure Clear;
-    function Count:Integer;
+    function Empty:Boolean;
     function FirstVisible(const AOffset:Single=0):Integer;
     function FontOf(const AColumn:TColumn):TFont;
     function HeightOf(const ARow:Integer):Single;

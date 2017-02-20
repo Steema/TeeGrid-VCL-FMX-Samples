@@ -39,7 +39,7 @@ implementation
 
 uses
   System.Diagnostics,
-  Tee.Grid.Data.Strings, Tee.Grid.Columns, Tee.Painter;
+  Tee.GridData.Strings, Tee.Grid.Columns, Tee.Painter;
 
 procedure TFormRowHeights.Button1Click(Sender: TObject);
 begin

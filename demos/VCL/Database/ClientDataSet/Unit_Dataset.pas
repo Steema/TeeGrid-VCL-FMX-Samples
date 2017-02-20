@@ -5,7 +5,7 @@ interface
 {
   Linking a TeeGrid with a TDataSource or TDataSet:
 
-  uses Tee.Grid.Data.DB;
+  uses Tee.GridData.DB;
 
   TeeGrid1.DataSource:= DataSource1;
 

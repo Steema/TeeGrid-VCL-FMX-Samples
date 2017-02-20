@@ -13,7 +13,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
 
-  Tee.Grid.Data.Strings, FMXTee.Control, FMXTee.Grid, Tee.Grid.Columns;
+  Tee.GridData.Strings, FMXTee.Control, FMXTee.Grid, Tee.Grid.Columns;
 
 type
   TFormVirtualMode = class(TForm)

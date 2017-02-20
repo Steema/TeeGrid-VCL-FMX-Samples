@@ -38,6 +38,9 @@ type
     function GetScrollY:Single; virtual; abstract;
 
     function HorizScrollHeight:Integer;
+
+    function VerticalScrollBarAlwaysVisible:Boolean; virtual; abstract;
+
     function VertScrollWidth:Integer;
 
     function RemainSize(const Horizontal:Boolean):Single;

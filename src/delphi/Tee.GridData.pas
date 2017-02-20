@@ -4,7 +4,7 @@
 {  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
-unit Tee.Grid.Data;
+unit Tee.GridData;
 {$I Tee.inc}
 
 interface
@@ -16,11 +16,11 @@ interface
 
   See concrete implementations at the following units:
 
-  Tee.Grid.Data.Rtti     (for generic TArray<T> or TList<T> data)
-  Tee.Grid.Data.DB       (for TDataSet and TDataSource)
-  Tee.Grid.Data.Strings  (to emulate a TStringGrid with Cells[Col,Row] property)
+  Tee.GridData.Rtti     (for generic TArray<T> or TList<T> data)
+  Tee.GridData.DB       (for TDataSet and TDataSource)
+  Tee.GridData.Strings  (to emulate a TStringGrid with Cells[Col,Row] property)
 
-  BI.Grid.Data           (for any TeeBI TDataItem data structure)
+  BI.GridData           (for any TeeBI TDataItem data structure)
 
 }
 
@@ -55,7 +55,12 @@ type
     class procedure DoError(const AText:String); static;
     procedure EditingChanged(const IsEditing:Boolean); virtual;
 
-    procedure Refresh;
+    function Empty:Boolean; virtual; abstract;
+    function EOF(const ARow:Integer):Boolean; virtual;
+
+    function KnownCount: Boolean; virtual; abstract;
+
+    procedure Refresh; virtual;
     procedure RowChanged(const ARow:Integer); virtual;
     procedure Repaint;
 
@@ -84,7 +89,6 @@ type
     procedure Load(const AColumns:TColumns); virtual; abstract;
     function LongestString(const APainter:TPainter; const AColumn:TColumn):Single;
     function ReadOnly(const AColumn:TColumn):Boolean; virtual;
-    procedure SetFirstRow(const ARow:Integer); virtual;
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); virtual; abstract;
     procedure SortBy(const AColumn:TColumn); virtual;
     procedure ToggleBoolean(const AColumn:TColumn; const ARow:Integer);

@@ -4,7 +4,7 @@
 {  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
-unit Tee.Grid.Data.DB;
+unit Tee.GridData.DB;
 {$I Tee.inc}
 
 interface
@@ -24,7 +24,7 @@ interface
 
   Manual Usage examples:
 
-    uses Tee.Grid.Data.DB;
+    uses Tee.GridData.DB;
 
       TeeGrid1.Data:= TVirtualDBData.From(DataSource1);
 
@@ -35,7 +35,7 @@ interface
 uses
   {System.}Classes, {System.}TypInfo, {Data.}DB,
 
-  Tee.Grid.Columns, Tee.Grid.Data, Tee.Painter;
+  Tee.Grid.Columns, Tee.GridData, Tee.Painter;
 
 type
   TVirtualDBData=class;
@@ -49,7 +49,6 @@ type
     IFirstRow : Integer;
 
     procedure ChangeRow(const ARow:Integer);
-    function TotalRecordCount:Integer;
     procedure TrySetBufferCount;
   protected
     procedure ActiveChanged; override;
@@ -59,14 +58,20 @@ type
     procedure UpdateData; override;
   end;
 
+  TVirtualFetchMode=(Automatic,All,Visible);
+
   // TeeGrid data class to link with a TDataSet or TDataSource component
   TVirtualDBData=class(TVirtualData)
   private
+    FFetchMode : TVirtualFetchMode;
+
     class procedure AddFields(const AColumns: TColumns; const AFields: TFields); static;
     function BeginRow(const ARow:Integer):Integer;
     function DataSetRecNo:Integer;
     procedure EndRow(const ARow:Integer);
+    procedure FetchAllRecords;
     function HasFields:Boolean;
+    procedure SetFetchMode(const Value:TVirtualFetchMode);
   protected
     IDataSet : TDataSet;
     IDataSource : TDataSource;
@@ -77,8 +82,12 @@ type
 
     class function Add(const AColumns:TColumns; const AField:TField):TColumn;
     procedure CreateLink;
+    function Empty:Boolean; override;
+    function EOF(const ARow:Integer):Boolean; override;
     function FieldOf(const AColumn:TColumn):TField; inline;
     class function HorizAlignOf(const AField:TField):THorizontalAlign; static;
+    function KnownCount: Boolean; override;
+    procedure Refresh; override;
     procedure RowChanged(const ARow:Integer); override;
     procedure SetField(const AColumn:TColumn; const ASource:TObject); override;
   public
@@ -92,6 +101,7 @@ type
     function AutoWidth(const APainter:TPainter; const AColumn:TColumn):Single; override;
     procedure EditMode(const AMode:TEditMode); override;
     function Count:Integer; override;
+    function DataType(const AColumn:TColumn):PTypeInfo; override;
 
     class function From(const ASource:TComponent):TVirtualData; override;
     class procedure LinkTo(const AColumn:TColumn; const AField:TField); static;
@@ -99,10 +109,12 @@ type
     procedure Load(const AColumns:TColumns); override;
     function ReadOnly(const AColumn:TColumn):Boolean; override;
 
-    //procedure SetFirstRow(const ARow:Integer); override;
     procedure SetValue(const AColumn:TColumn; const ARow:Integer; const AText:String); override;
 
-    function DataType(const AColumn:TColumn):PTypeInfo; override;
+    property DataSet:TDataSet read IDataSet;
+
+  // published
+    property FetchMode:TVirtualFetchMode read FFetchMode write SetFetchMode default TVirtualFetchMode.Automatic;
   end;
 
 implementation

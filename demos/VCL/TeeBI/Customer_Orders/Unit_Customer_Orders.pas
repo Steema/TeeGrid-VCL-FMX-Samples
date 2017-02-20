@@ -22,7 +22,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
   Tee.Renders, BI.DataSet, VCLTee.Editor.Grid, Vcl.StdCtrls, Vcl.ExtCtrls,
 
-  BI.Data, Tee.Grid.Rows, Tee.Grid.Columns, Tee.Grid.Data, Tee.Grid.RowGroup;
+  BI.Data, Tee.Grid.Rows, Tee.Grid.Columns, Tee.GridData, Tee.Grid.RowGroup;
 
 type
   TFormDetailRows = class(TForm)
@@ -62,7 +62,7 @@ implementation
 uses
   {System.}UITypes,
 
-  BI.DataSource, BI.Persist, BI.Grid.Data,
+  BI.DataSource, BI.Persist, BI.GridData,
   Tee.Grid.Header, Tee.Grid.Totals, Tee.Grid.Themes, Tee.Grid.Bands, Tee.Grid,
   Tee.Format;
 

@@ -58,7 +58,7 @@ uses
   System.UITypes,
   {$ENDIF}
 
-  Tee.Grid.Data, Tee.Grid.Columns, Tee.Grid.RowGroup, Tee.Renders, Tee.Format;
+  Tee.GridData, Tee.Grid.Columns, Tee.Grid.RowGroup, Tee.Renders, Tee.Format;
 
 type
   TTickerCell=record

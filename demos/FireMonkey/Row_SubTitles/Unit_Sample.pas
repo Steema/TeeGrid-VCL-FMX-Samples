@@ -3,7 +3,7 @@ unit Unit_Sample;
 interface
 
 uses
-  Tee.Grid.Data.Strings;
+  Tee.GridData.Strings;
 
 procedure FillSamples(const AData:TStringsData);
 

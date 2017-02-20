@@ -31,7 +31,7 @@ implementation
 { TForm1 }
 
 uses
-  Tee.Grid.Data.Strings;
+  Tee.GridData.Strings;
 
 procedure TForm1.FormCreate(Sender: TObject);
 var tmp : TStringsData;

@@ -12,9 +12,13 @@ interface
 uses
   System.Classes,
 
-  {$IF CompilerVersion>24}
-  FMX.StdCtrls,
+  {$IF CompilerVersion<25}
+  {$DEFINE HASFMX21}
   {$IFEND}
+
+  {$IFNDEF HASFMX21}
+  FMX.StdCtrls,
+  {$ENDIF}
 
   FMX.Types, FMX.Controls, Tee.Format, Tee.Control;
 

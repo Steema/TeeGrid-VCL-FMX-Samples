@@ -14,7 +14,7 @@ uses
 
   VCLTee.Control, VCLTee.Grid, VCLTee.Editor.Grid.Ticker,
 
-  Tee.Grid.Data.Strings, Tee.Grid.Ticker, Tee.Painter,
+  Tee.GridData.Strings, Tee.Grid.Ticker, Tee.Painter,
   Tee.Grid.Columns, Tee.Format, Tee.Renders;
 
 type

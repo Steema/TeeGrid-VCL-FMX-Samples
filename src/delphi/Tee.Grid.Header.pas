@@ -47,7 +47,7 @@ uses
   {$ENDIF}
 
   Tee.Painter, Tee.Format, Tee.Renders,
-  Tee.Grid.Columns, Tee.Grid.Bands, Tee.Grid.Data;
+  Tee.Grid.Columns, Tee.Grid.Bands, Tee.GridData;
 
 type
   TSelectedRender=class(THover)

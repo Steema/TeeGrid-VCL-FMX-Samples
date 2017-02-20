@@ -18,7 +18,7 @@ uses
   {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}StdCtrls, {Vcl.}ExtCtrls,
   VCLTee.Control, VCLTee.Grid,
 
-  Tee.Grid.Data.Strings, Tee.Grid.Ticker;
+  Tee.GridData.Strings, Tee.Grid.Ticker;
 
 type
   TVCLGridAbout = class(TForm)

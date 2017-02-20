@@ -12,7 +12,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMXTee.Control,
   FMXTee.Grid, FMX.StdCtrls, FMX.Controls.Presentation, FMX.Layouts,
 
-  Tee.Grid.Data.Strings, Tee.Grid.Ticker;
+  Tee.GridData.Strings, Tee.Grid.Ticker;
 
 type
   TTickerForm = class(TForm)

@@ -17,7 +17,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
 
   Vcl.ExtCtrls, Tee.Grid.RowGroup, Vcl.StdCtrls,
-  Tee.Grid.Data.Strings, Tee.Grid.Columns, Tee.Renders, Vcl.Imaging.pngimage,
+  Tee.GridData.Strings, Tee.Grid.Columns, Tee.Renders, Vcl.Imaging.pngimage,
   Tee.Format;
 
 type
@@ -70,7 +70,7 @@ implementation
 uses
   VCLTee.Editor.Grid, Tee.Grid.Bands, Tee.Grid, Tee.Painter,
   VCLTee.Painter.GDIPlus, VCLTee.Painter,
-  Tee.Grid.Selection, System.Diagnostics, VCLTee.Picture, Tee.Grid.Data,
+  Tee.Grid.Selection, System.Diagnostics, VCLTee.Picture, Tee.GridData,
   Tee.Grid.Rows;
 
 // Shows the TeeGrid editor dialog

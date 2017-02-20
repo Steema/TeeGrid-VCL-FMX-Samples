@@ -16,7 +16,7 @@ uses
   {System.}Types,
   {$ENDIF}
 
-  Tee.Grid.Data.DB, // <--- Forced always (so this unit is not needed at every project "uses")
+  Tee.GridData.DB, // <--- Forced always (so this unit is not needed at every project "uses")
 
   {$IFDEF MSWINDOWS}
   Windows, Messages,
@@ -28,7 +28,7 @@ uses
   {$ENDIF}
 
   Tee.Control, Tee.Grid, Tee.Grid.Columns, Tee.Painter, Tee.Renders,
-  Tee.Format, Tee.Grid.Header, Tee.Grid.Data, Tee.Grid.Bands,
+  Tee.Format, Tee.Grid.Header, Tee.GridData, Tee.Grid.Bands,
   Tee.Grid.Selection, Tee.Grid.Rows, Tee.Grid.RowGroup,
 
   VCLTee.Painter, VCLTee.Control;
@@ -203,6 +203,8 @@ type
     procedure PaintWindow(DC: HDC); override;
 
     procedure ResetScrollBars; override;
+
+    function VerticalScrollBarAlwaysVisible:Boolean; override;
   public
     Constructor Create(AOwner:TComponent); override;
     Destructor Destroy; override;

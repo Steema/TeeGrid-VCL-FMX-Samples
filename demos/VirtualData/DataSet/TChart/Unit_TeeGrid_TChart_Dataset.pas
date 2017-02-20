@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, VCLTee.Grid, TeeGDIPlus, TeEngine, Series, ExtCtrls, TeeProcs, Chart,
 
-  // Tee.Grid.Data.DB,
+  // Tee.GridData.DB,
 
   DB, TeeData, VCLTee.Control;
 

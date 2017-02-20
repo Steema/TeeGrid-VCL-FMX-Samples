@@ -34,7 +34,7 @@ implementation
 uses
   UITypes,
   Tee.Grid.Bands, Tee.Painter, VCLTee.Editor.Grid.Bands,
-  Tee.Format, Tee.Grid.Data.Rtti;
+  Tee.Format, Tee.GridData.Rtti;
 
 procedure TFormHeaderFooter.Button1Click(Sender: TObject);
 var tmp : TTeeGrid;

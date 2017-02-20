@@ -39,7 +39,7 @@ uses
 
   FMX.Dialogs, FMX.Layouts,
 
-  Tee.Grid.Data.Strings, Tee.Grid.Ticker, FMXTee.Control, FMXTee.Grid;
+  Tee.GridData.Strings, Tee.Grid.Ticker, FMXTee.Control, FMXTee.Grid;
 
 type
   TFMXGridAbout = class(TForm)

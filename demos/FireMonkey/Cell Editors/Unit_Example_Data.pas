@@ -3,7 +3,7 @@ unit Unit_Example_Data;
 interface
 
 uses
-  {System.}UITypes, Tee.Grid.Data;
+  {System.}UITypes, Tee.GridData;
 
 type
   TVehicle=(None,Bicycle,MotorBike,Car,Caravan,Truck,Boat,Plane);
@@ -27,7 +27,7 @@ function ColorOf(const AColor:TColor):String;
 implementation
 
 uses
-  Tee.Grid.Data.Rtti, {System.}SysUtils;
+  Tee.GridData.Rtti, {System.}SysUtils;
 
 var
   Persons : TArray<TPerson>;

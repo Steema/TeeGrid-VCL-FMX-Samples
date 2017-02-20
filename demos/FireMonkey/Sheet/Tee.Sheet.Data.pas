@@ -4,7 +4,7 @@ interface
 
 uses
   {System.}Classes,
-  Tee.Renders, Tee.Grid.Data.Strings, Tee.Grid.Columns, Tee.Painter,
+  Tee.Renders, Tee.GridData.Strings, Tee.Grid.Columns, Tee.Painter,
   BI.Expression;
 
 type

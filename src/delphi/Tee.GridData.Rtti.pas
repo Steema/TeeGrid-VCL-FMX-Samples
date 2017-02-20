@@ -4,7 +4,7 @@
 {  Copyright (c) 2016-2017 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
-unit Tee.Grid.Data.Rtti;
+unit Tee.GridData.Rtti;
 {$I Tee.inc}
 
 interface
@@ -57,7 +57,7 @@ interface
 uses
   {System.}Classes,
 
-  Tee.Grid.Data, Tee.Grid.Columns, Tee.Painter,
+  Tee.GridData, Tee.Grid.Columns, Tee.Painter,
   {System.}Generics.Collections, {System.}Rtti, {System.}TypInfo;
 
 type
@@ -94,6 +94,9 @@ type
     class function TypeOf(const AMember:TRttiMember):TRttiType; overload; static;
     class function ValueOf(const AMember:TRttiMember; const P:Pointer):TValue; overload; static;
     class function ValueOf(const AColumn:TColumn; const P:Pointer):TValue; overload; static; inline;
+  protected
+    function Empty:Boolean; override;
+    function KnownCount: Boolean; override;
   public
     function DataType(const AColumn:TColumn):PTypeInfo; override;
   end;
@@ -117,11 +120,10 @@ type
 
     {$IFDEF NEWRTTI}
     IItems : TRttiIndexedProperty;
-    {$ENDIF}
-
     ICount : TRttiProperty;
     IFixedCount : Integer;
     IObject : TObject;
+    {$ENDIF}
 
     procedure AddFields(const AColumns:TColumns; const AType:TRttiType); overload;
     procedure AddProperties(const AColumns:TColumns; const AType:TRttiType); overload;
@@ -147,12 +149,14 @@ type
     function RowValue(const ARow:Integer):TValue; virtual;
     procedure SetField(const AColumn:TColumn; const ASource:TObject); override;
   public
+    {$IFDEF NEWRTTI}
     Constructor Create(const AObject:TObject;
                        const AProperty:String;
                        const ACount:Integer;
                        const AVisibility:TVisibility=[mvPublic,mvPublished];
                        const AMembers:TRttiMembers=TRttiMembers.Both;
                        const AAncestor:Boolean=False); overload;
+    {$ENDIF}
 
     procedure AddColumns(const AColumns:TColumns); override;
     function AsFloat(const AColumn: TColumn; const ARow: Integer): TFloat; override;
@@ -189,6 +193,7 @@ type
   TVirtualArrayData<T>=class(TVirtualData<TArray<T>>);         // Array of T
   TVirtualArray2DData<T>=class(TVirtualArrayData<TArray<T>>);  // Array of Array of T
 
-  TVirtualListData<T>=class(TVirtualData<TList<T>>);
+  TVirtualListData<T>=class(TVirtualData<TList<T>>);           // TList<T>
+  TVirtualObjectListData<T:class>=class(TVirtualData<TObjectList<T>>); // TObjectList<T>
 
 implementation

@@ -8,7 +8,7 @@ interface
 
   Note:
     For automatic sorting (no code), see TeeGrid TeeBI demos.
-    The "BI.Grid.Data.pas" unit already provides automatic sorting.
+    The "BI.GridData.pas" unit already provides automatic sorting.
 }
 
 uses
@@ -16,7 +16,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
 
   Tee.Grid.Header, Tee.Grid.Columns, FMXTee.Control, FMXTee.Grid,
-  Tee.Grid.Data.Rtti, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts;
+  Tee.GridData.Rtti, FMX.Controls.Presentation, FMX.StdCtrls, FMX.Layouts;
 
 type
   // Remember the last sorted column and order

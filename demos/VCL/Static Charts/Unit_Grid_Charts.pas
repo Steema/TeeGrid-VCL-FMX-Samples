@@ -14,7 +14,7 @@ uses
   VCLTee.Series, VCLTee.Control, VCLTee.Grid, Vcl.ExtCtrls, VCLTee.TeeProcs,
   VCLTee.Chart,
 
-  Tee.Grid.Data.Rtti, Tee.Grid.Columns, Tee.Renders, VCLTee.Picture,
+  Tee.GridData.Rtti, Tee.Grid.Columns, Tee.Renders, VCLTee.Picture,
   VCLTee.EditChar, VCLTee.Editor.Grid, Tee.Control;
 
 type

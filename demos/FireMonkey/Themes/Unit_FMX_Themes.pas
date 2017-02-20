@@ -53,7 +53,7 @@ implementation
 {$R *.fmx}
 
 uses
-  Tee.Grid, Tee.Grid.Themes, Unit_MyData, Tee.Grid.Data.Rtti, Tee.Grid.RowGroup,
+  Tee.Grid, Tee.Grid.Themes, Unit_MyData, Tee.GridData.Rtti, Tee.Grid.RowGroup,
 
   FMXTee.Grid.Themes, Fmx.Styles, System.IOUtils;
 

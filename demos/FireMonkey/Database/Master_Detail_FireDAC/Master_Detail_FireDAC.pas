@@ -54,7 +54,7 @@ implementation
 {$R *.fmx}
 
 uses
-  Tee.Grid.Totals, Tee.Grid.Data.DB, Tee.Grid.Columns, Tee.Grid, Tee.Grid.Data;
+  Tee.Grid.Totals, Tee.GridData.DB, Tee.Grid.Columns, Tee.Grid, Tee.GridData;
 
 procedure TMasterDetail.FormCreate(Sender: TObject);
 begin

@@ -86,7 +86,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Tee.Grid.Data.Strings, Tee.Grid.Data.Rtti, Tee.Painter,
+  Tee.GridData.Strings, Tee.GridData.Rtti, Tee.Painter,
   VCLTee.Editor.Grid;
 
 type

@@ -34,7 +34,7 @@ uses
   {System.}SysUtils,
 
   Tee.Format, Tee.Painter, Tee.Renders,
-  Tee.Grid.Data, Tee.Grid.Columns, Tee.Grid.Bands, Tee.Grid.Header,
+  Tee.GridData, Tee.Grid.Columns, Tee.Grid.Bands, Tee.Grid.Header,
   Tee.Grid.Selection, Tee.Grid.Rows;
 
 type

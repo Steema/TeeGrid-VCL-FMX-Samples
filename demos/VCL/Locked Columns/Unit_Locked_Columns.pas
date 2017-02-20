@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
   Vcl.StdCtrls, Vcl.ExtCtrls,
 
-  Tee.Grid.Data.Strings, Tee.Grid.Columns, VCLTee.Painter;
+  Tee.GridData.Strings, Tee.Grid.Columns, VCLTee.Painter;
 
 type
   TFormLocked = class(TForm)
