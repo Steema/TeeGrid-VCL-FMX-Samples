@@ -46,7 +46,7 @@ type
 
     function CanHideEditor:Boolean;
     procedure CreateEditor(const AColumn:TColumn);
-    procedure DoHideEditor(const CallEvent:Boolean);
+    procedure DoHideEditor;
     procedure EditorKeyUp(Sender: TObject; var AKey: Word; Shift: TShiftState);
     function EditorShowing:Boolean;
     procedure SetEditorBounds(const PositionOnly:Boolean);
@@ -75,8 +75,13 @@ type
     function Width:Single; override;
   end;
 
-  TCellEditorEvent=procedure(const Sender:TObject; const AEditor:TControl;
-                             const AColumn:TColumn; const ARow:Integer) of object;
+  TCellEditingEvent=procedure(const Sender:TObject; const AEditor:TControl;
+                              const AColumn:TColumn; const ARow:Integer) of object;
+
+  TCellEditedEvent=procedure(const Sender:TObject; const AEditor:TControl;
+                             const AColumn:TColumn; const ARow:Integer;
+                             var ChangeData:Boolean;
+                             var NewData:String) of object;
 
   {$IFNDEF FPC}
   {$IFDEF CONDITIONALEXPRESSIONS}
@@ -92,8 +97,8 @@ type
 
     FOnColumnResized: TColumnEvent;
 
-    FOnCellEditing,
-    FOnCellEdited: TCellEditorEvent;
+    FOnCellEditing: TCellEditingEvent;
+    FOnCellEdited: TCellEditedEvent;
 
     {$IFDEF FPC}
     FParentBack : Boolean;
@@ -104,7 +109,9 @@ type
 
     procedure ChangePainter(const Value: TPainter);
     procedure ColumnResized(Sender:TObject);
+    procedure CreateInnerGrid;
     procedure DoPaint(const DC:HDC);
+    function IsColumnsStored: Boolean;
     function MouseStateFrom(const Button: TMouseButton; const Shift: TShiftState;
                             const X,Y: Integer; const AEvent:TGridMouseEvent):TMouseState;
     procedure ProcessWheel(const AKey:Word);
@@ -159,13 +166,14 @@ type
     procedure SetHeaders(const Value: TGridBands);
     function GetDataSource: TComponent;
     procedure SetDataSource(const Value: TComponent);
+    function GetScrolling: TGridScrolling;
+    procedure SetScrolling(const Value: TGridScrolling);
 
     procedure TryClearColumns;
+    procedure TryGDIPainter(const Plus:Boolean);
 
     procedure ReadPainter(Reader: TReader);
     procedure WritePainter(Writer: TWriter);
-    function GetScrolling: TGridScrolling;
-    procedure SetScrolling(const Value: TGridScrolling);
   protected
     {$IFDEF FPC}
     procedure MouseLeave; override;
@@ -201,10 +209,9 @@ type
     procedure MouseUp(Button: TMouseButton; Shift: TShiftState; X, Y: Integer); override;
 
     procedure PaintWindow(DC: HDC); override;
+    function PerfectScrollBar(const Vertical:Boolean):Boolean; override;
 
     procedure ResetScrollBars; override;
-
-    function VerticalScrollBarAlwaysVisible:Boolean; override;
   public
     Constructor Create(AOwner:TComponent); override;
     Destructor Destroy; override;
@@ -221,7 +228,7 @@ type
     property Back:TFormat read GetBack write SetBack;
     property Cells:TTextRender read GetCells write SetCells;
     property Color default clWhite;
-    property Columns:TColumns read GetColumns write SetColumns;
+    property Columns:TColumns read GetColumns write SetColumns stored IsColumnsStored;
     property DataSource:TComponent read GetDataSource write SetDataSource;
     property DoubleBuffered default True;
     property Editing:TGridEditing read GetEditing write SetEditing;
@@ -246,8 +253,8 @@ type
     {$ENDIF}
 
     property OnAfterDraw:TNotifyEvent read GetAfterDraw write SetAfterDraw;
-    property OnCellEditing:TCellEditorEvent read FOnCellEditing write FOnCellEditing;
-    property OnCellEdited:TCellEditorEvent read FOnCellEdited write FOnCellEdited;
+    property OnCellEditing:TCellEditingEvent read FOnCellEditing write FOnCellEditing;
+    property OnCellEdited:TCellEditedEvent read FOnCellEdited write FOnCellEdited;
     property OnClickedHeader:TNotifyEvent read GetClickedHeader write SetClickedHeader;
     property OnColumnResized:TColumnEvent read FOnColumnResized write FOnColumnResized;
     property OnNewDetail:TNewDetailEvent read GetOnNewDetail write SetOnNewDetail;

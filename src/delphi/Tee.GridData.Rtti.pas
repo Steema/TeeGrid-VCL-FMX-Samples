@@ -71,7 +71,7 @@ type
                          const APainter:TPainter;
                          const AColumn:TColumn):Single;
 
-    function FinalPointer(const AColumn: TColumn; P:Pointer):Pointer;
+    class function FinalPointer(const AColumn: TColumn; P:Pointer):Pointer; static;
     function FinalValue(const AColumn: TColumn; const AValue:TValue):TValue; overload;
 
     class function IsBoolean(const AType:TRttiType):Boolean; static;

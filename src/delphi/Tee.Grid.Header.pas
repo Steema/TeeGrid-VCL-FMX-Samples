@@ -55,16 +55,43 @@ type
     Constructor Create(const AChanged:TNotifyEvent); override;
   end;
 
+  // Properties related to dragging columns
+  TColumnDrag=class(TPersistentChange)
+  private
+    FAllow : Boolean;
+    FSource,
+    FTarget : TBrush;
+
+    IDragging : TColumn;
+
+    procedure SetSource(const Value: TBrush);
+    procedure SetTarget(const Value: TBrush);
+  public
+    Constructor Create(const AChanged:TNotifyEvent); override;
+
+    {$IFNDEF AUTOREFCOUNT}
+    Destructor Destroy; override;
+    {$ENDIF}
+
+    procedure Assign(Source:TPersistent); override;
+
+    // Current column being dragged (moved)
+    property Dragging:TColumn read IDragging;
+  published
+    property Allow:Boolean read FAllow write FAllow default True;
+    property Source:TBrush read FSource write SetSource;
+    property Target:TBrush read FTarget write SetTarget;
+  end;
+
   // Grid band with Columns
   TColumnBand=class(TGridBandLines)
   private
-    FAllowDrag : Boolean;
     FAllowResize : Boolean;
+    FDrag : TColumnDrag;
     FHover: THover;
     FOnColumnResized: TNotifyEvent;
     FSelected : TSelectedRender;
 
-    IDragging,
     IHighLight,
     IResizing,
     ISelected : TColumn;
@@ -92,10 +119,10 @@ type
     procedure SetMargins(const Value: TMargins);
     procedure SetSelected(const Value: TSelectedRender);
     procedure SetSelectedColumn(const Value: TColumn);
+    procedure SetDrag(const Value: TColumnDrag);
   protected
     IColumns : TColumns;
     IData : TVirtualData;
-    IJustRepaint : Boolean;
     IVisible : TVisibleColumns;
 
     ISingleRow : Boolean;
@@ -133,9 +160,6 @@ type
     property Columns:TColumns read IColumns write SetColumns;
     property Data:TVirtualData read IData write IData;
 
-    // Current column being dragged (moved)
-    property Dragging:TColumn read IDragging;
-
     // Current column being resized
     property Resizing:TColumn read IResizing;
 
@@ -145,8 +169,8 @@ type
     // Current column to highlight (on selected cell)
     property SelectedColumn:TColumn read ISelected write SetSelectedColumn;
   published
-    property AllowDrag:Boolean read FAllowDrag write FAllowDrag default True;
     property AllowResize:Boolean read FAllowResize write FAllowResize default True;
+    property Drag:TColumnDrag read FDrag write SetDrag;
     property Hover:THover read FHover write SetHover;
     property Margins:TMargins read GetMargins write SetMargins;
     property Selected:TSelectedRender read FSelected write SetSelected;

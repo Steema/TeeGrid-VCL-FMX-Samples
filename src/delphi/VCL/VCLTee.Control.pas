@@ -39,7 +39,7 @@ type
 
     function HorizScrollHeight:Integer;
 
-    function VerticalScrollBarAlwaysVisible:Boolean; virtual; abstract;
+    function PerfectScrollBar(const Vertical:Boolean):Boolean; virtual; abstract;
 
     function VertScrollWidth:Integer;
 

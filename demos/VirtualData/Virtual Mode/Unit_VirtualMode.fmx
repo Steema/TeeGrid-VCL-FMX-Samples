@@ -15,10 +15,9 @@ object FormVirtualMode: TFormVirtualMode
   object TeeGrid1: TTeeGrid
     Columns = <>
     ReadOnly = False
-    Position.X = 16.000000000000000000
-    Position.Y = 16.000000000000000000
-    Size.Width = 592.000000000000000000
-    Size.Height = 448.000000000000000000
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
     _Headers = (

@@ -3,7 +3,7 @@ object FormArray: TFormArray
   Top = 0
   Caption = 'TeeGrid using Array as Data'
   ClientHeight = 501
-  ClientWidth = 635
+  ClientWidth = 637
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object FormArray: TFormArray
   object TeeGrid1: TTeeGrid
     Left = 0
     Top = 41
-    Width = 635
+    Width = 637
     Height = 419
     Columns = <>
     ReadOnly = False
@@ -28,6 +28,7 @@ object FormArray: TFormArray
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
+    ExplicitWidth = 635
     _Headers = (
       1
       'TColumnHeaderBand'
@@ -38,10 +39,11 @@ object FormArray: TFormArray
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 635
+    Width = 637
     Height = 41
     Align = alTop
     TabOrder = 1
+    ExplicitWidth = 635
     object Button1: TButton
       Left = 16
       Top = 9
@@ -88,7 +90,7 @@ object FormArray: TFormArray
       OnClick = BTObjectClick
     end
     object BRecord: TButton
-      Left = 186
+      Left = 190
       Top = 8
       Width = 75
       Height = 25
@@ -100,11 +102,12 @@ object FormArray: TFormArray
   object Panel2: TPanel
     Left = 0
     Top = 460
-    Width = 635
+    Width = 637
     Height = 41
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitWidth = 635
     object Button5: TButton
       Left = 120
       Top = 6

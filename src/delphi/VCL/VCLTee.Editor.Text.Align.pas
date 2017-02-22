@@ -1,3 +1,9 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  VCL Text Alignment Editor                  }
+{  Copyright (c) 2016-2017 by Steema Software }
+{  All Rights Reserved                        }
+{*********************************************}
 unit VCLTee.Editor.Text.Align;
 
 interface

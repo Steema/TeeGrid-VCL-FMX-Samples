@@ -59,7 +59,7 @@ type
 
     function CanHideEditor:Boolean;
     procedure CreateEditor(const AColumn:TColumn);
-    procedure DoHideEditor(const CallEvent:Boolean);
+    procedure DoHideEditor;
     procedure EditorKeyUp(Sender: TObject; var Key: Word; var KeyChar: WideChar; Shift: TShiftState);
     function EditorShowing:Boolean;
     procedure EditorTracking(Sender: TObject);
@@ -90,8 +90,13 @@ type
     property OnTyping:TNotifyEvent read FOnTyping write FOnTyping;
   end;
 
-  TCellEditorEvent=procedure(const Sender:TObject; const AEditor:TControl;
-                             const AColumn:TColumn; const ARow:Integer) of object;
+  TCellEditingEvent=procedure(const Sender:TObject; const AEditor:TControl;
+                              const AColumn:TColumn; const ARow:Integer) of object;
+
+  TCellEditedEvent=procedure(const Sender:TObject; const AEditor:TControl;
+                             const AColumn:TColumn; const ARow:Integer;
+                             var ChangeData:Boolean;
+                             var NewData:String) of object;
 
   {$IFNDEF FPC}
   {$IF CompilerVersion>=23}
@@ -109,17 +114,19 @@ type
 
     FOnColumnResized: TColumnEvent;
 
-    FOnCellEditing,
-    FOnCellEdited: TCellEditorEvent;
+    FOnCellEditing: TCellEditingEvent;
+    FOnCellEdited: TCellEditedEvent;
 
     IDataSource : TComponent;
 
     procedure ChangePainter(const APainter:TFMXPainter);
     procedure ColumnResized(Sender:TObject);
+    procedure CreateInnerGrid;
     function CurrentRows: TRows;
     procedure SetDataItem(const Value: TVirtualData);
 
     procedure InitializeCanvas;
+    function IsColumnsStored: Boolean;
 
     function GetColumns: TColumns;
     function GetScrollX: Single;
@@ -189,6 +196,8 @@ type
     procedure MouseWheel(Shift: TShiftState; WheelDelta: Integer; var Handled: Boolean); override;
     procedure Paint; override;
 
+    function PerfectScrollBar(const Vertical:Boolean):Boolean; override;
+
     procedure ResetScrollBars; override;
     procedure Resize; override;
 
@@ -216,7 +225,7 @@ type
   published
     property Back:TFormat read GetBack write SetBack;
     property Cells:TTextRender read GetCells write SetCells;
-    property Columns:TColumns read GetColumns write SetColumns;
+    property Columns:TColumns read GetColumns write SetColumns stored IsColumnsStored;
     property DataSource:TComponent read GetDataSource write SetDataSource;
     property Editing:TGridEditing read GetEditing write SetEditing;
     property Header:TColumnHeaderBand read GetHeader write SetHeader;
@@ -230,8 +239,8 @@ type
     property Selected:TGridSelection read GetSelected write SetSelected;
 
     property OnAfterDraw:TNotifyEvent read GetAfterDraw write SetAfterDraw;
-    property OnCellEditing:TCellEditorEvent read FOnCellEditing write FOnCellEditing;
-    property OnCellEdited:TCellEditorEvent read FOnCellEdited write FOnCellEdited;
+    property OnCellEditing:TCellEditingEvent read FOnCellEditing write FOnCellEditing;
+    property OnCellEdited:TCellEditedEvent read FOnCellEdited write FOnCellEdited;
     property OnClickedHeader:TNotifyEvent read GetClickedHeader write SetClickedHeader;
     property OnColumnResized:TColumnEvent read FOnColumnResized write FOnColumnResized;
     property OnNewDetail:TNewDetailEvent read GetOnNewDetail write SetOnNewDetail;

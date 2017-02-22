@@ -101,6 +101,7 @@ type
     procedure SetFontColor(const AColor:TColor); override;
     procedure SetHorizontalAlign(const Value:THorizontalAlign); override;
     procedure SetStroke(const AStroke:TStroke); override;
+    procedure SetTextTrimming(const ATrimming:TTrimmingMode; const Ellipsi:Boolean); override;
     procedure SetVerticalAlign(const Value:TVerticalAlign); override;
 
     procedure Draw(const R:TRectF); override;

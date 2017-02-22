@@ -124,9 +124,11 @@ type
     function GetHeaders: TGridBands;
     function GetMargins: TMargins;
 
+    class procedure InternalAddColumns(const AColumns:TColumns; const AData:TVirtualData); static;
+
     procedure PaintRest(var AData: TRenderData);
     function PositionOf(const AColumn:TColumn; const ARow:Integer):TPointF;
-    procedure RemovedColumn(Sender:TObject; const AColumn:TColumn);
+    procedure RemovedColumn(Sender:TObject);
     procedure RemoveHighLights(const ABands:TGridBands);
     procedure SetCells(const Value: TTextRender);
     procedure SetCurrent(const Value: TRowGroup);
@@ -174,6 +176,8 @@ type
 
     procedure Assign(Source:TPersistent); override;
 
+    procedure AutoScroll;
+
     procedure CalcHeight(const APainter:TPainter; const ATotal:Single); override;
     function CanEditRender(const AColumn:TColumn):Boolean;
     function CanStartEditor:Boolean;
@@ -200,7 +204,6 @@ type
     function SelectedContains(const X,Y:Single):Boolean; overload;
     function SelectedContains(const P:TPoint): Boolean; overload; inline;
     function ToggleDetail(const Sender:TRender; const ARow:Integer):Boolean;
-    procedure TryAutoScroll;
     procedure TrySelectColumn;
 
     property Columns:TColumns read FColumns;

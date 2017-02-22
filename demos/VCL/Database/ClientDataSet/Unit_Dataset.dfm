@@ -15,82 +15,19 @@ object FormGridDataset: TFormGridDataset
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Splitter1: TSplitter
-    Left = 644
-    Top = 41
-    Height = 462
-    Align = alRight
-    ExplicitLeft = 568
-    ExplicitTop = 232
-    ExplicitHeight = 100
-  end
   object TeeGrid1: TTeeGrid
     Left = 0
     Top = 41
-    Width = 644
+    Width = 647
     Height = 462
-    Columns.Spacing.Automatic = False
-    Columns = <
-      item
-        Header.Format.Font.Style = [fsBold]
-        Header.Text = 'CustNo'
-        Link = 'CustNo'
-      end
-      item
-        Header.Text = 'Company'
-        Link = 'Company'
-      end
-      item
-        Header.Text = 'Addr1'
-        Link = 'Addr1'
-      end
-      item
-        Header.Text = 'Addr2'
-        Link = 'Addr2'
-      end
-      item
-        Header.Text = 'City'
-        Link = 'City'
-      end
-      item
-        Header.Text = 'State'
-        Link = 'State'
-      end
-      item
-        Header.Text = 'Zip'
-        Link = 'Zip'
-      end
-      item
-        Header.Text = 'Country'
-        Link = 'Country'
-      end
-      item
-        Header.Text = 'Phone'
-        Link = 'Phone'
-      end
-      item
-        Header.Text = 'FAX'
-        Link = 'FAX'
-      end
-      item
-        Header.Text = 'TaxRate'
-        Link = 'TaxRate'
-      end
-      item
-        Header.Text = 'Contact'
-        Link = 'Contact'
-      end
-      item
-        Header.Text = 'LastInvoiceDate'
-        Link = 'LastInvoiceDate'
-      end>
-    DataSource = DataSource1
+    Columns = <>
     ReadOnly = False
     Align = alClient
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
     ParentShowHint = False
+    PopupMenu = PopupMenu1
     ShowHint = False
     TabOrder = 0
     _Headers = (
@@ -3998,5 +3935,13 @@ object FormGridDataset: TFormGridDataset
     DataSet = ClientDataSet3
     Left = 368
     Top = 249
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 312
+    Top = 344
+    object BenchmarkScrolling1: TMenuItem
+      Caption = 'Benchmark Scrolling'
+      OnClick = BenchmarkScrolling1Click
+    end
   end
 end

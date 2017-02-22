@@ -71,6 +71,7 @@ type
                               const AColumn:TColumn; const ARow:Integer);
 
     procedure SetExpander(const AColumn:String; const ARows:TRows);
+    procedure SetupCellEditors;
   public
     { Public declarations }
   end;
@@ -207,6 +208,8 @@ begin
   TeeGrid1.Data:=TVirtualData<TArray<TCar>>.Create(MyCars);
 
   TeeGrid1.Footer.Clear;
+
+  SetupCellEditors;
 end;
 
 // Return a new Totals grid-band
@@ -228,7 +231,9 @@ procedure TFormArray.SetExpander(const AColumn:String; const ARows:TRows);
 var tmp : TColumn;
 begin
   tmp:=TeeGrid1.Columns[AColumn];
+
   tmp.Render:=TExpanderRender.Create(tmp.Changed);
+
   TExpanderRender(tmp.Render).OnGetExpanded:=ARows.IsChildrenVisible;
 end;
 
@@ -288,11 +293,8 @@ begin
   // Move it to top
   SampleHeader.Index:=0;
 
-  // Use a TDateTimePicker as editor control for "BirthDate" column
-  TeeGrid1.Columns['BirthDate'].EditorClass:=TDateTimePicker;
-
-  // Use a TComboBox as editor control for "Children" column
-  TeeGrid1.Columns['Children'].EditorClass:=TComboBox;
+  // Just to show how to customize cell editing using combobox, datetime picker etc
+  SetupCellEditors;
 
   // Event to initialize the combobox when it is about being to show
   TeeGrid1.OnCellEditing:=GridCellEditing;
@@ -336,6 +338,15 @@ procedure TFormArray.FormDestroy(Sender: TObject);
 begin
   // Release memory, just in case
   Clean(MyCars);
+end;
+
+procedure TFormArray.SetupCellEditors;
+begin
+  // Use a TDateTimePicker as editor control for "BirthDate" column
+  TeeGrid1.Columns['BirthDate'].EditorClass:=TDateTimePicker;
+
+  // Use a TComboBox as editor control for "Children" column
+  TeeGrid1.Columns['Children'].EditorClass:=TComboBox;
 end;
 
 end.

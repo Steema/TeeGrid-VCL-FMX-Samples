@@ -33,6 +33,7 @@ type
     procedure DoUpdateScrollPosition(const Horiz:Boolean; const Value:Single);
     procedure DoVertScroll(Sender:TObject);
     function HorizScrollHeight:Single;
+    procedure Reset;
     procedure SetScrollBars(const Value: TScrollBars);
     function VertScrollWidth:Single;
   protected
@@ -42,7 +43,7 @@ type
     TFMXScrollBars=class
     private
       function Calc(const Horiz:Boolean; const AValue:Single):Single;
-      procedure Reset(const W,H,AWidth,AHeight:Single; const AScrollBars:TScrollBars);
+//     procedure Reset(const W,H,AWidth,AHeight:Single; const AScrollBars:TScrollBars);
       function ThumbSize(const ABar:TFMXScrollBar):Single;
     public
       Horizontal,
@@ -60,6 +61,9 @@ type
 
     function GetMaxBottom:Single; virtual; abstract;
     function GetMaxRight:Single; virtual; abstract;
+
+    function PerfectScrollBar(const Vertical:Boolean):Boolean; virtual; abstract;
+
     function RemainSize(const Horizontal:Boolean):Single;
     procedure ResetScrollBars; virtual;
     procedure SetScrollX(const Value:Single); virtual; abstract;

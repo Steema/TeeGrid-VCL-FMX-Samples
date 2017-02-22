@@ -45,7 +45,8 @@ type
     procedure TeeGrid1CellEditing(const Sender: TObject;
       const AEditor: TControl; const AColumn: TColumn; const ARow: Integer);
     procedure TeeGrid1CellEdited(const Sender: TObject; const AEditor: TControl;
-      const AColumn: TColumn; const ARow: Integer);
+      const AColumn: TColumn; const ARow: Integer;
+      var ChangeData:Boolean; var NewData:String);
   private
     { Private declarations }
 
@@ -133,34 +134,38 @@ begin
   TeeGrid1.Columns['Happiness'].EditorClass:=TSpinEdit;
 end;
 
-// Event called when a cell editor exits
+// Event called when a cell editor exits.
 // (By pressing the Enter key, or up/down arrow keys,
 // or clicking on another cell).
 procedure TFormCellEditors.TeeGrid1CellEdited(const Sender: TObject;
-  const AEditor: TControl; const AColumn: TColumn; const ARow: Integer);
-var tmp : TComboBox;
-    tmpValue : String;
-    tmpDate : TDateTime;
+  const AEditor: TControl; const AColumn: TColumn; const ARow: Integer;
+                             var ChangeData:Boolean;
+                             var NewData:String);
+var tmpValue : String;
+    tmp : Single;
 begin
+  // Example, retrieve position from TrackBar
+  if AColumn=TeeGrid1.Columns['Height'] then
+  begin
+    tmp:=0.01*TTrackBar(AEditor).Position;
+
+    TeeGrid1.Data.SetValue(AColumn,ARow,FloatToStr(tmp));
+
+    // Set to False, do not change grid cell data
+    ChangeData:=False;
+  end
+  else
   if AEditor is TComboBox then
   begin
-    tmp:=TComboBox(AEditor);
-
-    if tmp.ItemIndex=-1 then
-       tmpValue:=''
-    else
-       tmpValue:=tmp.Items[tmp.ItemIndex];
+    tmpValue:=SelectedCombo(TComboBox(AEditor));
 
     if AColumn=TeeGrid1.Columns['EyeColor'] then
        tmpValue:=IntToStr(ColorFromString(tmpValue));
 
     TeeGrid1.Data.SetValue(AColumn,ARow,tmpValue);
-  end
-  else
-  if AEditor is TDateTimePicker then
-  begin
-    tmpDate:=TDateTimePicker(AEditor).DateTime;
-    TeeGrid1.Data.SetValue(AColumn,ARow,DateTimeToStr(tmpDate));
+
+    // Set to False, do not change grid cell data
+    ChangeData:=False;
   end;
 end;
 
@@ -168,11 +173,18 @@ end;
 procedure TFormCellEditors.TeeGrid1CellEditing(const Sender: TObject;
   const AEditor: TControl; const AColumn: TColumn; const ARow: Integer);
 
+  procedure SetupTrackBar(const ATrack:TTrackBar);
+  begin
+    ATrack.Min:=400;
+    ATrack.Max:=700;
+    ATrack.Frequency:=50;
+
+    ATrack.Position:=Round(100*TeeGrid1.Data.AsFloat(AColumn,ARow));
+  end;
+
 var tmpValue : String;
 begin
-  if AEditor is TDateTimePicker then
-     TDateTimePicker(AEditor).DateTime:=TeeGrid1.Data.AsFloat(AColumn,ARow);
-
+  // Example, custom comboboxes as cell editors
   if AEditor is TComboBox then
   begin
     tmpValue:=TeeGrid1.Data.AsString(AColumn,ARow);
@@ -190,12 +202,9 @@ begin
                  ColorOf(StrToInt(tmpValue)));
   end;
 
+  // Example, use a trackbar as cell editor
   if AColumn=TeeGrid1.Columns['Height'] then
-  begin
-    TTrackBar(AEditor).Min:=400;
-    TTrackBar(AEditor).Max:=700;
-    TTrackBar(AEditor).Position:=Round(100*TeeGrid1.Data.AsFloat(AColumn,ARow));
-  end;
+     SetupTrackBar(TTrackBar(AEditor));
 end;
 
 end.

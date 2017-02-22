@@ -3,11 +3,11 @@ unit Unit_Main;
 {
   Linking a TeeGrid with a TDataSource or TDataSet:
 
-  uses Tee.GridData.DB;
+  uses Tee.GridData.DB;  // <-- not necessary, it is automatically used
 
-  TeeGrid1.DataSource:= DataSource1;
+    TeeGrid1.DataSource:= DataSource1;
 
-  TeeGrid1.DataSource:= ClientDataset1;
+    TeeGrid1.DataSource:= ClientDataset1;
 }
 
 interface
@@ -15,7 +15,7 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, Data.DB,
-  Datasnap.DBClient, FMXTee.Control, FMXTee.Grid;
+  Datasnap.DBClient, FMXTee.Control, FMXTee.Grid, Tee.Renders;
 
 type
   TFormGridDataSet = class(TForm)
@@ -43,14 +43,14 @@ implementation
 {$R *.fmx}
 
 uses
-  Tee.Grid.RowGroup;
+  Tee.Grid.RowGroup, Tee.Painter;
 
 procedure TFormGridDataSet.CheckBigDataset;
 
   procedure AddSampleRecords;
   var t : Integer;
   begin
-    for t:=1 to 50000 do
+    for t:=1 to 150 do
         ClientDataSet1.AppendRecord(['Abc',3.45,'Some St',t]);
   end;
 
@@ -70,6 +70,14 @@ begin
   end;
 end;
 
+procedure Cosmetic(const ARender:TTextRender);
+begin
+  ARender.Format.Font.Size:=10;
+
+  ARender.Margins.Bottom.Value:=0;
+  ARender.Margins.Top.Value:=0;
+end;
+
 procedure TFormGridDataSet.FormCreate(Sender: TObject);
 begin
   CheckBigDataSet;
@@ -79,6 +87,13 @@ begin
 
   // Set data
   TeeGrid1.DataSource:=DataSource1;
+
+  //Cosmetic(TeeGrid1.Cells);
+  //Cosmetic(TeeGrid1.Selected);
+
+  // TeeGrid1.Selected.ScrollToView:=True;
+
+  TeeGrid1.Cells.Trimming.Mode:=TTrimmingMode.Character;
 end;
 
 end.

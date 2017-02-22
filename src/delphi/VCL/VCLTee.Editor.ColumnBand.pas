@@ -33,12 +33,17 @@ type
     TabLines: TTabSheet;
     TabMouse: TTabSheet;
     CBAllowResize: TCheckBox;
+    GroupBox1: TGroupBox;
     CBAllowDrag: TCheckBox;
+    Button1: TButton;
+    Button2: TButton;
     procedure PageBandChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure CBHoverVisibleClick(Sender: TObject);
     procedure CBAllowResizeClick(Sender: TObject);
     procedure CBAllowDragClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
 

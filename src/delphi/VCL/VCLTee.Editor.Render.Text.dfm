@@ -20,40 +20,53 @@ object TextRenderEditor: TTextRenderEditor
     Top = 0
     Width = 431
     Height = 484
-    ActivePage = TabFormat
+    ActivePage = Options
     Align = alClient
     TabOrder = 0
     OnChange = PageSelectedChange
     object TabFormat: TTabSheet
       Caption = 'Format'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object TabBorders: TTabSheet
       Caption = 'Borders'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object TabMargins: TTabSheet
       Caption = 'Margins'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object TabAlign: TTabSheet
       Caption = 'Text Align'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+    end
+    object Options: TTabSheet
+      Caption = 'Options'
+      ImageIndex = 4
+      object RGTrimming: TRadioGroup
+        Left = 11
+        Top = 11
+        Width = 121
+        Height = 105
+        Caption = '&Trimming:'
+        ItemIndex = 0
+        Items.Strings = (
+          '&None'
+          '&Character'
+          '&Word')
+        TabOrder = 0
+        OnClick = RGTrimmingClick
+      end
+      object CBTrimEllipsi: TCheckBox
+        Left = 24
+        Top = 136
+        Width = 97
+        Height = 17
+        Caption = '&Ellipsi'
+        Checked = True
+        State = cbChecked
+        TabOrder = 1
+        OnClick = CBTrimEllipsiClick
+      end
     end
   end
 end

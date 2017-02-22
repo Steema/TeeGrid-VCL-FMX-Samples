@@ -40,6 +40,7 @@ object FormGridTList: TFormGridTList
       OnChange = CBScrollBarChange
     end
     object CBAncestor: TCheckBox
+      Enabled = False
       Position.X = 8.000000000000000000
       Position.Y = 16.000000000000000000
       Size.Width = 97.000000000000000000

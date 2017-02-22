@@ -165,6 +165,22 @@ type
     property Vertical:TVerticalAlign read FVertical write SetVertical stored IsVerticalStored;
   end;
 
+  TTextTrimming=class(TPersistentChange)
+  private
+    FEllipsi: Boolean;
+    FMode: TTrimmingMode;
+
+    procedure SetEllipsi(const Value: Boolean);
+    procedure SetMode(const Value: TTrimmingMode);
+  public
+    Constructor Create(const AChanged:TNotifyEvent); override;
+
+    procedure Assign(Source:TPersistent); override;
+  published
+    property Ellipsi:Boolean read FEllipsi write SetEllipsi default True;
+    property Mode:TTrimmingMode read FMode write SetMode default TTrimmingMode.None;
+  end;
+
   // Just an alias
   TTextAlign=class(TAlignments);
 
@@ -178,11 +194,16 @@ type
   var
     FAlign : TTextAlign;
     FMargins : TMargins;
+    FTrimming : TTextTrimming;
 
     function GetMargins:TMargins;
+    function GetTrimming:TTextTrimming;
+
     procedure SetAlign(const Value: TTextAlign);
     procedure SetMargins(const Value: TMargins);
+    procedure SetTrimming(const Value: TTextTrimming);
   protected
+    function HasMargins:Boolean; inline;
     function VerticalMargin:Single;
   public
     PaintText : Boolean;
@@ -202,6 +223,7 @@ type
   published
     property Margins:TMargins read GetMargins write SetMargins;
     property TextAlign:TTextAlign read FAlign write SetAlign;
+    property Trimming:TTextTrimming read GetTrimming write SetTrimming;
   end;
 
   // Rectangle Text shape with Visible:Boolean property

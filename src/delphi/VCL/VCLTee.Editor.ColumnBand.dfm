@@ -77,14 +77,40 @@ object ColumnBandEditor: TColumnBandEditor
         TabOrder = 0
         OnClick = CBAllowResizeClick
       end
-      object CBAllowDrag: TCheckBox
+      object GroupBox1: TGroupBox
         Left = 16
-        Top = 31
-        Width = 97
-        Height = 17
-        Caption = 'Allow &Drag'
+        Top = 40
+        Width = 129
+        Height = 129
+        Caption = '&Drag:'
         TabOrder = 1
-        OnClick = CBAllowDragClick
+        object CBAllowDrag: TCheckBox
+          Left = 16
+          Top = 23
+          Width = 97
+          Height = 17
+          Caption = '&Allow'
+          TabOrder = 0
+          OnClick = CBAllowDragClick
+        end
+        object Button1: TButton
+          Left = 16
+          Top = 56
+          Width = 75
+          Height = 25
+          Caption = '&Source...'
+          TabOrder = 1
+          OnClick = Button1Click
+        end
+        object Button2: TButton
+          Left = 16
+          Top = 87
+          Width = 75
+          Height = 25
+          Caption = '&Target...'
+          TabOrder = 2
+          OnClick = Button2Click
+        end
       end
     end
   end

@@ -27,8 +27,13 @@ type
     TabBorders: TTabSheet;
     TabMargins: TTabSheet;
     TabAlign: TTabSheet;
+    Options: TTabSheet;
+    RGTrimming: TRadioGroup;
+    CBTrimEllipsi: TCheckBox;
     procedure PageSelectedChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure RGTrimmingClick(Sender: TObject);
+    procedure CBTrimEllipsiClick(Sender: TObject);
   private
     { Private declarations }
 

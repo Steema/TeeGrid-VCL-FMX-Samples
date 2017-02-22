@@ -65,6 +65,8 @@ type
   THorizontalAlign=(Left,Center,Right);
   TVerticalAlign=(Top,Center,Bottom);
 
+  TTrimmingMode=(None,Character,Word);
+
   TPointsF=Array of TPointF;
 
   TPainter=class
@@ -82,6 +84,7 @@ type
     procedure SetFontColor(const AColor:TColor); virtual; abstract;
     procedure SetHorizontalAlign(const Align:THorizontalAlign); virtual; abstract;
     procedure SetStroke(const AStroke:TStroke); virtual; abstract;
+    procedure SetTextTrimming(const ATrimming:TTrimmingMode; const Ellipsi:Boolean); virtual; abstract;
     procedure SetVerticalAlign(const Align:TVerticalAlign); virtual; abstract;
 
     procedure Draw(const R:TRectF); overload; virtual; abstract;

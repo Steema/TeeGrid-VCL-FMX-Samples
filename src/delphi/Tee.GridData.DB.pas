@@ -52,19 +52,23 @@ type
     procedure TrySetBufferCount;
   protected
     procedure ActiveChanged; override;
+    procedure DataSetChanged; override;
     procedure EditingChanged; override;
     procedure LayoutChanged; override;
     procedure RecordChanged(Field: TField); override;
     procedure UpdateData; override;
   end;
 
-  TVirtualFetchMode=(Automatic,All,Visible);
+  TVirtualFetchMode=(Automatic,All,Partial);
 
   // TeeGrid data class to link with a TDataSet or TDataSource component
   TVirtualDBData=class(TVirtualData)
   private
     FFetchMode : TVirtualFetchMode;
 
+    IBuffered : Boolean;
+
+    function ActiveDataSet:Boolean; inline;
     class procedure AddFields(const AColumns: TColumns; const AFields: TFields); static;
     function BeginRow(const ARow:Integer):Integer;
     function DataSetRecNo:Integer;
@@ -90,6 +94,7 @@ type
     procedure Refresh; override;
     procedure RowChanged(const ARow:Integer); override;
     procedure SetField(const AColumn:TColumn; const ASource:TObject); override;
+    procedure SetFirstRow(const ARow:Integer); override;
   public
     OwnsData : Boolean;
 

@@ -22,7 +22,7 @@ object TeeGridEditor: TTeeGridEditor
     Top = 0
     Width = 494
     Height = 424
-    ActivePage = TabColumns
+    ActivePage = TabOptions
     Align = alClient
     TabOrder = 0
     OnChange = PageGridChange

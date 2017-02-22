@@ -100,6 +100,8 @@ type
     FLines : TStroke;
 
     procedure SetLines(const Value: TStroke);
+  protected
+    IJustRepaint : Boolean;
   public
     Constructor Create(ACollection:TCollection); override;
 

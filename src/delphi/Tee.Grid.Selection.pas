@@ -67,6 +67,8 @@ type
     procedure SetFromRow(const Value: Integer);
     procedure SetToColumn(const Value: TColumn);
     procedure SetToRow(const Value: Integer);
+  protected
+    procedure Reset(const AColumn:TColumn; const ARow:Integer);
   public
     Constructor Create(const AChanged:TNotifyEvent); override;
 

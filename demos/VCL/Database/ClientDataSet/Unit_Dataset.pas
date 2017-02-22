@@ -15,7 +15,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid, Data.DB,
-  Datasnap.DBClient, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.ExtCtrls;
+  Datasnap.DBClient, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.ExtCtrls, Vcl.Menus;
 
 type
   TFormGridDataset = class(TForm)
@@ -26,7 +26,6 @@ type
     CheckBox1: TCheckBox;
     Button1: TButton;
     DBNavigator1: TDBNavigator;
-    Splitter1: TSplitter;
     ComboSource: TComboBox;
     Label1: TLabel;
     ClientDataSet2: TClientDataSet;
@@ -38,11 +37,14 @@ type
     ClientDataSet3Height: TSingleField;
     ClientDataSet3Address: TStringField;
     ClientDataSet3Children: TIntegerField;
+    PopupMenu1: TPopupMenu;
+    BenchmarkScrolling1: TMenuItem;
     procedure CheckBox1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure ComboSourceChange(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure BenchmarkScrolling1Click(Sender: TObject);
   private
     { Private declarations }
 
@@ -59,6 +61,8 @@ implementation
 {$R *.dfm}
 
 uses
+  {System.}Diagnostics,
+
   VCLTee.Editor.Grid, Tee.Grid.RowGroup, Tee.Grid;
 
 // Show the TeeGrid editor dialog
@@ -113,6 +117,12 @@ end;
 
 procedure TFormGridDataset.ComboSourceChange(Sender: TObject);
 begin
+  // False = All rows same height
+  TeeGrid1.Rows.Height.Automatic:=False;
+
+  // 0 = Automatic row height (depends on Cells.Format.Font.Size)
+  TeeGrid1.Rows.Height.Value:=0;
+
   case ComboSource.ItemIndex of
     0: begin
          TeeGrid1.DataSource:=nil;
@@ -121,11 +131,6 @@ begin
 
     1: begin
          TeeGrid1.DataSource:=ClientDataSet1;
-
-         // Just a test, set a custom row Height
-         TeeGrid1.Rows.Height.Automatic:=False;
-         TeeGrid1.Rows.Height.Value:= 18;
-
          DBNavigator1.DataSource:=DataSource1;
        end;
 
@@ -133,7 +138,7 @@ begin
          TeeGrid1.DataSource:=ClientDataSet2;
 
          // Just a test, set a custom row Height
-         TeeGrid1.Rows.Height.Automatic:=False;
+         //TeeGrid1.Rows.Height.Automatic:=False;
          TeeGrid1.Rows.Height.Value:=100;
 
          DBNavigator1.DataSource:=DataSource2;
@@ -151,9 +156,6 @@ begin
     begin
       CheckBigDataSet;
 
-      TeeGrid1.Rows.Height.Automatic:=False;
-      TeeGrid1.Rows.Height.Value:=0;
-
       TeeGrid1.DataSource:=DataSource3;
       DBNavigator1.DataSource:=DataSource3;
     end;
@@ -169,7 +171,38 @@ begin
 //  TeeGrid1.Scrolling.Horizontal:=TScrollDirection.Disabled;
 
   // Change the selected row when scrolling the grid
-  TeeGrid1.Selected.ScrollToView:=True;
+  //TeeGrid1.Selected.ScrollToView:=True;
+
+  TeeGrid1.DataSource:=DataSource1;
+end;
+
+// Internal Test. Scrolling / repainting speed
+type
+  TRowGroupAccess=class(TRowGroup);
+
+procedure TFormGridDataset.BenchmarkScrolling1Click(Sender: TObject);
+var t1 : TStopWatch;
+    t,
+    tmp : Integer;
+    Y,
+    tmpHeight : Single;
+begin
+  t1:=TStopwatch.StartNew;
+  try
+    tmp:=TeeGrid1.Data.Count;
+
+    Y:=0;
+    tmpHeight:=TeeGrid1.Rows.UpToRowHeight(1);
+
+    for t:=0 to tmp-1 do
+    begin
+      TRowGroupAccess(TeeGrid1.Grid.Current).Scroll(0,Y);
+
+      Y:=Y+tmpHeight;
+    end;
+  finally
+    Caption:=t1.ElapsedMilliseconds.ToString;
+  end;
 end;
 
 end.

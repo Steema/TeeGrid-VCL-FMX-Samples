@@ -39,6 +39,9 @@ type
 
     TickerEditor : TGridTickerEditor;
 
+    const
+      Product='Product';
+
     procedure ColumnTextAlign;
     procedure CustomFormat;
     procedure FillNames;
@@ -102,7 +105,12 @@ end;
 // Return a random cell coordinate (Column and Row)
 procedure TTickerForm.RandomCell(out ACol,ARow:Integer);
 begin
-  ACol:=1+Random(TeeGrid1.Columns.Count-1);
+  // Choose a column different than the "Product" column
+  repeat
+    ACol:=Random(TeeGrid1.Columns.Count);
+  until TeeGrid1.Columns[ACol].Header.Text<>Product;
+
+  // Random row
   ARow:=Random(TeeGrid1.Data.Count);
 end;
 
@@ -116,16 +124,20 @@ end;
 procedure TTickerForm.Timer1Timer(Sender: TObject);
 var Col, Row : Integer;
 
+    tmp : TColumn;
+
     OldValue : Integer;
 begin
   // Choose a random cell
   RandomCell(Col,Row);
 
+  tmp:=TeeGrid1.Columns[Col];
+
   // Get current cell value
-  OldValue:=StrToInt(Data.AsString(TeeGrid1.Columns[Col],Row));
+  OldValue:=StrToInt(Data.AsString(tmp,Row));
 
   // Add some random and set new value to grid data
-  Data[Col,Row]:=IntToStr(OldValue+Random(100)-50);
+  Data.SetValue(tmp,Row,IntToStr(OldValue+Random(100)-50));
 
   // Update Ticker
   Ticker.Change(Col,Row,OldValue);
@@ -169,7 +181,7 @@ end;
 // Initialize data headers
 procedure TTickerForm.FillNames;
 begin
-  Data.Headers[0]:='Product';
+  Data.Headers[0]:=Product;
   Data.Headers[1]:='Sales';
   Data.Headers[2]:='Stock';
   Data.Headers[3]:='Orders';

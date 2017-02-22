@@ -72,8 +72,9 @@ type
     procedure Notify(Item: TCollectionItem; Action: TCollectionNotification); override;
     procedure Update(Item: TCollectionItem); override;
   public
-    procedure DoChanged(Sender:TObject);
-  published
+    procedure DoChanged(Sender:TObject); virtual;
+
+  // published <-- Events at design-time not allowed
     property OnAdded:TNotifyEvent read FOnAdded write FOnAdded;
     property OnChanged:TNotifyEvent read FOnChanged write FOnChanged;
     property OnRemoved:TNotifyEvent read FOnRemoved write FOnRemoved;
@@ -444,6 +445,7 @@ type
     Cream=clCream;
     DkGray=clDkGray;
     DarkGray=DkGray;
+    Gainsboro=$DCDCDC;
     Green=clGreen;
     LightGray=clLtGray;
     Lime=$00FF00;
@@ -458,6 +460,7 @@ type
     Cream=$F0FBFF;
     DkGray=$808080;
     DarkGray=DkGray;
+    Gainsboro=$DCDCDC;
     Green=$008000;
     LightGray=$D3D3D3;
     Lime=$00FF00;

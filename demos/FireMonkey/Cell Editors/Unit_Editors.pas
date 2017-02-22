@@ -36,7 +36,8 @@ type
     procedure TeeGrid1CellEditing(const Sender: TObject;
       const AEditor: TControl; const AColumn: TColumn; const ARow: Integer);
     procedure TeeGrid1CellEdited(const Sender: TObject; const AEditor: TControl;
-      const AColumn: TColumn; const ARow: Integer);
+      const AColumn: TColumn; const ARow: Integer; var ChangeData: Boolean;
+      var NewData: string);
   private
     { Private declarations }
 
@@ -124,10 +125,15 @@ begin
 end;
 
 procedure TFormCellEditors.TeeGrid1CellEdited(const Sender: TObject;
-  const AEditor: TControl; const AColumn: TColumn; const ARow: Integer);
+  const AEditor: TControl; const AColumn: TColumn; const ARow: Integer;
+  var ChangeData: Boolean; var NewData: string);
 begin
-  if AEditor is TComboBox then
-     TeeGrid1.Data.SetValue(AColumn,ARow,TComboBox(AEditor).Selected.Text);
+  if AColumn=TeeGrid1.Columns['Height'] then
+  begin
+    ChangeData:=False;
+
+    TeeGrid1.Data.SetValue(AColumn,ARow,FloatToStr(TTrackBar(AEditor).Value*0.01));
+  end;
 end;
 
 procedure TFormCellEditors.TeeGrid1CellEditing(const Sender: TObject;

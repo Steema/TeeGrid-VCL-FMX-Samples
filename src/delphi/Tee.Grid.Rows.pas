@@ -100,8 +100,6 @@ type
     FOnHorizScroll,
     FOnVertScroll : TNotifyEvent;
 
-    IJustRepaint : Boolean;
-
     function ChangeHorizScroll(const Value:Single):Boolean;
     function ChangeVertScroll(const Value:Single):Boolean;
     function MaxRight:Single;

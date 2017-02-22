@@ -55,6 +55,7 @@ type
 
     {$IFDEF USELAYOUT}
     ILayout : TTextLayout;
+    ITrimming : TTextTrimming;
     {$ENDIF}
 
     ISolidBrush : FMXTBrush;
@@ -67,11 +68,12 @@ type
     procedure DrawBitmap(const ABitmap:TBitmap; const ADest:TRectF);
     class function GraphicOf(const APicture: TPicture):TBitmap; static;
     class function PathOf(const P: TPointsF):TPathData; static;
-    procedure TextSize(const AText:String; out AWidth,AHeight:Single);
 
     {$IFDEF USELAYOUT}
     procedure PrepareLayout(const R:TRectF; const AText:String);
     {$ENDIF}
+
+    procedure TextSize(const AText:String; out AWidth,AHeight:Single);
   protected
     procedure SetCanvas(const ACanvas:TCanvas); inline;
   public
@@ -92,6 +94,7 @@ type
     procedure SetFontColor(const AColor:TColor); override;
     procedure SetHorizontalAlign(const Align:THorizontalAlign); override;
     procedure SetStroke(const AStroke:TStroke); override;
+    procedure SetTextTrimming(const ATrimming:TTrimmingMode; const Ellipsi:Boolean); override;
     procedure SetVerticalAlign(const Align:TVerticalAlign); override;
 
     procedure Draw(const R:TRectF); override;

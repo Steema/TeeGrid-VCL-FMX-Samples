@@ -13,7 +13,8 @@ uses
   {Winapi.}Windows, {Winapi.}Messages,
   {$ENDIF}
   {System.}SysUtils, {System.}Classes, {Vcl.}Graphics,
-  {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}StdCtrls, {Vcl.}ExtCtrls, {Vcl.}ComCtrls,
+  {Vcl.}Controls, {Vcl.}Forms, {Vcl.}Dialogs, {Vcl.}StdCtrls,
+  {Vcl.}ExtCtrls, {Vcl.}ComCtrls,
   Tee.Format;
 
 type

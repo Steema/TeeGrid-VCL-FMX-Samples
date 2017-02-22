@@ -69,6 +69,7 @@ type
     function SampleTime(const AColumn:TColumn):String;
 
     procedure SetField(const AColumn:TColumn; const ASource:TObject); virtual;
+    procedure SetFirstRow(const ARow:Integer); virtual;
   public
     procedure AddColumns(const AColumns:TColumns); virtual; abstract;
     function AsFloat(const AColumn:TColumn; const ARow:Integer):TFloat; virtual;
@@ -108,5 +109,12 @@ type
     class procedure Register(const AClass:TVirtualDataClass); static;
     class procedure UnRegister(const AClass:TVirtualDataClass); static;
   end;
+
+{$IFNDEF FPC}
+{$IF CompilerVersion<32}
+function TryStrToUInt(const S: string; out Value: Cardinal): Boolean;
+function TryStrToUInt64(const S: string; out Value: UInt64): Boolean;
+{$IFEND}
+{$ENDIF}
 
 implementation

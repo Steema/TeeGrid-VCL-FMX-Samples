@@ -150,6 +150,7 @@ type
     procedure ChangeVertScroll(const Value:Single);
     procedure DataChanged; virtual;
     procedure DataSourceChanged;
+    procedure DefineProperties(Filer: TFiler); override;
     procedure DoEditing(const Sender:TObject; const IsEditing:Boolean);
     procedure CheckScrollLimits(var X,Y:Single); virtual; abstract;
     procedure Key(const AState:TKeyState);
@@ -158,6 +159,7 @@ type
     procedure Mouse(var AState:TMouseState);
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure FinishPaint(const IsDesign:Boolean);
+    function PerfectScrollBar(const Vertical:Boolean):Boolean;
     procedure ReadFooter(Reader: TReader);
     procedure ReadHeaders(Reader: TReader);
     procedure StartEditor(const AColumn:TColumn; const ARow:Integer;

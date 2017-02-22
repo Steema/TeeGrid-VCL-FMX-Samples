@@ -234,7 +234,6 @@ type
   TColumns=class(TCollectionChange)
   private
     FOnMoved : TColumnMovedEvent;
-    FOnRemoved : TColumnEvent;
     FSpacing : TCoordinate;
 
     IParent : TColumn;
@@ -255,6 +254,8 @@ type
       OnGetFields : TGetFieldsEvent;
       OnSetField  : TSetFieldEvent;
 
+      IsDefault : Boolean;
+
     function AnyPercentWidth:Boolean;
     procedure Moved(const AColumn:TColumn; const AOld,ANew:Integer);
     procedure Notify(Item: TCollectionItem; Action: TCollectionNotification); override;
@@ -271,6 +272,8 @@ type
 
     function Add:TColumn; overload; {$IFNDEF FPC}inline;{$ENDIF} // not yet supported in FPC
     function Add(const AText:String):TColumn; overload;
+
+    procedure DoChanged(Sender:TObject); override;
 
     function FindAt(const X,MaxRight:Single):TColumn;
     function FindFirst(const AName:String):TColumn;
@@ -296,11 +299,10 @@ type
     {$ENDIF}
 
     property Parent:TColumn read IParent;
+
     property OnMoved:TColumnMovedEvent read FOnMoved write FOnMoved;
   published
     property Spacing: TCoordinate read GetSpacing write SetSpacing;
-
-    property OnRemoved:TColumnEvent read FOnRemoved write FOnRemoved;
   end;
 
   // Internal use.

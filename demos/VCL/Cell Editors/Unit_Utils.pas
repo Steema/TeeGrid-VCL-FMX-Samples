@@ -13,6 +13,9 @@ procedure ResetCustomEditors(const AGrid:TTeeGrid);
 // Add all Values to ACombo, and try to find ASelected to set ItemIndex
 procedure FillCombo(const ACombo:TComboBox; const Values:Array of String; const ASelected:String);
 
+// Returns the current Combo selected item as text, or empty string
+function SelectedCombo(const ACombo:TComboBox):String;
+
 implementation
 
 uses
@@ -64,6 +67,15 @@ begin
   end;
 
   ACombo.ItemIndex:=FindValue(ASelected);
+end;
+
+// Returns the current Combo selected item as text, or empty string
+function SelectedCombo(const ACombo:TComboBox):String;
+begin
+  if ACombo.ItemIndex=-1 then
+     result:=''
+  else
+     result:=ACombo.Items[ACombo.ItemIndex];
 end;
 
 end.
