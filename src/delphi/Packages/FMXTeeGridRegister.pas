@@ -5,6 +5,7 @@
 {  All Rights Reserved                        }
 {*********************************************}
 unit FMXTeeGridRegister;
+{$I Tee.inc}
 
 {
   Design-time registration and custom editor support for TeeGrid Firemonkey

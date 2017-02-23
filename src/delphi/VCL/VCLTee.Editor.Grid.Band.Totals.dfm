@@ -20,14 +20,12 @@ object ColumnTotalsEditor: TColumnTotalsEditor
     Top = 0
     Width = 359
     Height = 356
-    ActivePage = TabCalc
+    ActivePage = TabOptions
     Align = alClient
     TabOrder = 0
     OnChange = PageTotalsChange
     object TabCalc: TTabSheet
       Caption = 'Calculations'
-      ExplicitLeft = 8
-      ExplicitTop = 28
       object TreeColumns: TTreeView
         Left = 0
         Top = 0
@@ -37,9 +35,6 @@ object ColumnTotalsEditor: TColumnTotalsEditor
         Indent = 19
         TabOrder = 0
         OnChange = TreeColumnsChange
-        ExplicitLeft = 112
-        ExplicitTop = 120
-        ExplicitHeight = 97
       end
       object RGCalc: TRadioGroup
         Left = 143
@@ -68,47 +63,11 @@ object ColumnTotalsEditor: TColumnTotalsEditor
         OnClick = BNoneClick
       end
     end
-    object TabFormat: TTabSheet
-      Caption = 'Format'
+    object TabOptions: TTabSheet
+      Caption = 'Options'
       ImageIndex = 1
-      ExplicitWidth = 281
-      ExplicitHeight = 165
-    end
-    object TabHover: TTabSheet
-      Caption = 'Hover'
-      ImageIndex = 2
-      object Panel1: TPanel
-        Left = 0
-        Top = 0
-        Width = 351
-        Height = 41
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 0
-        ExplicitTop = 8
-        object CBHoverVisible: TCheckBox
-          Left = 16
-          Top = 16
-          Width = 97
-          Height = 17
-          Caption = '&Visible'
-          TabOrder = 0
-          OnClick = CBHoverVisibleClick
-        end
-        object CBHoverParentFont: TCheckBox
-          Left = 152
-          Top = 16
-          Width = 97
-          Height = 17
-          Caption = '&Parent Font'
-          TabOrder = 1
-          OnClick = CBHoverParentFontClick
-        end
-      end
-    end
-    object TabLines: TTabSheet
-      Caption = 'Lines'
-      ImageIndex = 3
+      ExplicitLeft = 8
+      ExplicitTop = 28
     end
   end
 end

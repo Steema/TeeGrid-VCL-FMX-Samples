@@ -26,26 +26,14 @@ object HeaderEditor: THeaderEditor
     OnChange = PageHeaderChange
     object TabFormat: TTabSheet
       Caption = 'Options'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object TabRowLines: TTabSheet
       Caption = 'Row Lines'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
     object TabMargins: TTabSheet
       Caption = 'Margins'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
     end
   end
 end

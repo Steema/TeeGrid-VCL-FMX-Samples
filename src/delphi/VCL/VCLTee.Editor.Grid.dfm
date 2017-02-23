@@ -28,6 +28,10 @@ object TeeGridEditor: TTeeGridEditor
     OnChange = PageGridChange
     object TabColumns: TTabSheet
       Caption = 'Columns'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Splitter1: TSplitter
         Left = 124
         Top = 41
@@ -138,6 +142,10 @@ object TeeGridEditor: TTeeGridEditor
     object TabBands: TTabSheet
       Caption = 'Bands'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PageBands: TPageControl
         Left = 0
         Top = 0
@@ -149,16 +157,28 @@ object TeeGridEditor: TTeeGridEditor
         OnChange = PageBandsChange
         object TabHeaders: TTabSheet
           Caption = 'Headers'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabFooter: TTabSheet
           Caption = 'Footer'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
       end
     end
     object TabOptions: TTabSheet
       Caption = 'Options'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PageOptions: TPageControl
         Left = 0
         Top = 0
@@ -170,6 +190,10 @@ object TeeGridEditor: TTeeGridEditor
         OnChange = PageOptionsChange
         object TabIndicator: TTabSheet
           Caption = 'Indicator'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Panel3: TPanel
             Left = 0
             Top = 0
@@ -201,28 +225,52 @@ object TeeGridEditor: TTeeGridEditor
             OnChange = PageIndicatorChange
             object TabIndicatorFormat: TTabSheet
               Caption = 'Format'
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
             end
             object TabIndicatorWidth: TTabSheet
               Caption = 'Width'
               ImageIndex = 1
+              ExplicitLeft = 0
+              ExplicitTop = 0
+              ExplicitWidth = 0
+              ExplicitHeight = 0
             end
           end
         end
         object TabBack: TTabSheet
           Caption = 'Back'
           ImageIndex = 3
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabMargins: TTabSheet
           Caption = 'Margins'
           ImageIndex = 4
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabSelection: TTabSheet
           Caption = 'Selected'
           ImageIndex = 5
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabEditing: TTabSheet
           Caption = 'Editing'
           ImageIndex = 5
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Label6: TLabel
             Left = 16
             Top = 112
@@ -307,12 +355,20 @@ object TeeGridEditor: TTeeGridEditor
         object TabScrolling: TTabSheet
           Caption = 'Scrolling'
           ImageIndex = 5
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
       end
     end
     object TabCells: TTabSheet
       Caption = 'Cells'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PageCells: TPageControl
         Left = 0
         Top = 0
@@ -324,20 +380,36 @@ object TeeGridEditor: TTeeGridEditor
         OnChange = PageCellsChange
         object TabCellsFormat: TTabSheet
           Caption = 'Format'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabCellsHover: TTabSheet
           Caption = 'Hover'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabColumnLines: TTabSheet
           Caption = 'Column Lines'
           ImageIndex = 2
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
       end
     end
     object TabRows: TTabSheet
       Caption = 'Rows'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PageRows: TPageControl
         Left = 0
         Top = 0
@@ -350,6 +422,10 @@ object TeeGridEditor: TTeeGridEditor
         object TabRowsGeneral: TTabSheet
           Caption = 'General'
           ImageIndex = 2
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Label1: TLabel
             Left = 9
             Top = 15
@@ -406,10 +482,18 @@ object TeeGridEditor: TTeeGridEditor
         end
         object TabRowLines: TTabSheet
           Caption = 'Lines'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabRowAlternate: TTabSheet
           Caption = 'Alternate'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object Panel4: TPanel
             Left = 0
             Top = 0
@@ -434,16 +518,28 @@ object TeeGridEditor: TTeeGridEditor
         object TabRowsBack: TTabSheet
           Caption = 'Back'
           ImageIndex = 3
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
         object TabSubBands: TTabSheet
           Caption = 'Bands'
           ImageIndex = 4
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
         end
       end
     end
     object TabTheme: TTabSheet
       Caption = 'Theme'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object RGPainter: TRadioGroup
         Left = 16
         Top = 208

@@ -48,10 +48,10 @@ type
     procedure AddBandToList(const ABand: TGridBand);
     function Current:TGridBand;
     procedure MoveBand(const Delta:Integer);
-    procedure RefreshUpDown;
-
   protected
     Header : TGridBand;
+
+    procedure RefreshUpDown;
   public
     { Public declarations }
 

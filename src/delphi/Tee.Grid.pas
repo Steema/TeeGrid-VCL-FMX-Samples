@@ -153,6 +153,7 @@ type
     procedure DefineProperties(Filer: TFiler); override;
     procedure DoEditing(const Sender:TObject; const IsEditing:Boolean);
     procedure CheckScrollLimits(var X,Y:Single); virtual; abstract;
+    function HasBandOfClass(const AClass:TGridBandClass):Boolean;
     procedure Key(const AState:TKeyState);
     function HorizScrollBarHeight:Single; virtual; abstract;
     procedure HorizScrollChanged(Sender:TObject); virtual; abstract;

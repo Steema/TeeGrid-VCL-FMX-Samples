@@ -95,6 +95,7 @@ type
 
   TGridBandClass=class of TGridBand;
 
+  // Basic grid band with a Lines property (Stroke)
   TGridBandLines=class(TGridBand)
   private
     FLines : TStroke;

@@ -11,24 +11,17 @@ uses
   {Vcl.}ComCtrls, {Vcl.}StdCtrls, {Vcl.}ExtCtrls,
 
   Tee.Grid.Columns, Tee.Grid.Totals,
-  VCLTee.Editor.Format.Text, VCLTee.Editor.Stroke;
+  VCLTee.Editor.ColumnBand, VCLTee.Editor.Stroke;
 
 type
   TColumnTotalsEditor = class(TForm)
     PageTotals: TPageControl;
     TabCalc: TTabSheet;
-    TabFormat: TTabSheet;
+    TabOptions: TTabSheet;
     TreeColumns: TTreeView;
-    TabHover: TTabSheet;
-    TabLines: TTabSheet;
-    Panel1: TPanel;
-    CBHoverVisible: TCheckBox;
-    CBHoverParentFont: TCheckBox;
     RGCalc: TRadioGroup;
     BNone: TButton;
     procedure PageTotalsChange(Sender: TObject);
-    procedure CBHoverVisibleClick(Sender: TObject);
-    procedure CBHoverParentFontClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure RGCalcClick(Sender: TObject);
     procedure TreeColumnsChange(Sender: TObject; Node: TTreeNode);
@@ -38,9 +31,7 @@ type
 
     ITotals : TColumnTotals;
 
-    IFormat : TTextFormatEditor;
-    IHover : TTextformatEditor;
-    ILines : TStrokeEditor;
+    IOptions : TColumnBandEditor;
 
     procedure AddColumns;
     function Current:TColumn;
