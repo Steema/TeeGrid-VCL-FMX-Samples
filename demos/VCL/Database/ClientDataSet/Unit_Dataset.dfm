@@ -20,7 +20,60 @@ object FormGridDataset: TFormGridDataset
     Top = 41
     Width = 647
     Height = 462
-    Columns = <>
+    Columns = <
+      item
+        Header.Text = 'CustNo'
+        Link = 'CustNo'
+      end
+      item
+        Header.Text = 'Company'
+        Link = 'Company'
+      end
+      item
+        Header.Text = 'Addr1'
+        Link = 'Addr1'
+      end
+      item
+        Header.Text = 'Addr2'
+        Link = 'Addr2'
+      end
+      item
+        Header.Text = 'City'
+        Link = 'City'
+      end
+      item
+        Header.Text = 'State'
+        Link = 'State'
+      end
+      item
+        Header.Text = 'Zip'
+        Link = 'Zip'
+      end
+      item
+        Header.Text = 'Country'
+        Link = 'Country'
+      end
+      item
+        Header.Text = 'Phone'
+        Link = 'Phone'
+      end
+      item
+        Header.Text = 'FAX'
+        Link = 'FAX'
+      end
+      item
+        Header.Text = 'TaxRate'
+        Link = 'TaxRate'
+      end
+      item
+        Header.Text = 'Contact'
+        Link = 'Contact'
+      end
+      item
+        Header.Text = 'LastInvoiceDate'
+        Link = 'LastInvoiceDate'
+      end>
+    DataSource = ClientDataSet1
     ReadOnly = False
     Align = alClient
     UseDockManager = False
@@ -3929,6 +3982,10 @@ object FormGridDataset: TFormGridDataset
     end
     object ClientDataSet3Children: TIntegerField
       FieldName = 'Children'
+    end
+    object ClientDataSet3Password: TStringField
+      FieldName = 'Password'
+      Size = 16
     end
   end
   object DataSource3: TDataSource

@@ -15,7 +15,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid, Data.DB,
-  Datasnap.DBClient, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.ExtCtrls, Vcl.Menus;
+  Datasnap.DBClient, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.ExtCtrls, Vcl.Menus,
+  Tee.Grid.Columns, Tee.Renders;
 
 type
   TFormGridDataset = class(TForm)
@@ -39,6 +40,7 @@ type
     ClientDataSet3Children: TIntegerField;
     PopupMenu1: TPopupMenu;
     BenchmarkScrolling1: TMenuItem;
+    ClientDataSet3Password: TStringField;
     procedure CheckBox1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure ComboSourceChange(Sender: TObject);
@@ -49,6 +51,9 @@ type
     { Private declarations }
 
     procedure CheckBigDataset;
+
+    procedure PaintPassword(const Sender:TColumn; var AData:TRenderData;
+                            var DefaultPaint:Boolean);
   public
     { Public declarations }
   end;
@@ -82,13 +87,20 @@ begin
   ClientDataSet1.Active:=CheckBox1.Checked;
 end;
 
+// Make sure our sample ClientDataSet3 is filled with data
 procedure TFormGridDataset.CheckBigDataset;
+
+  function RandomPassword:String;
+  const RandomPasswords:Array[0..3] of String=('1234','abracadabra','qwerty','dragon');
+  begin
+    result:=RandomPasswords[Random(1+High(RandomPasswords))];
+  end;
 
   procedure AddSampleRecords;
   var t : Integer;
   begin
     for t:=1 to 10000 do
-        ClientDataSet3.AppendRecord(['Abc',3.45,'Some St',t]);
+        ClientDataSet3.AppendRecord(['Abc',3.45,'Some St',t,RandomPassword]);
   end;
 
 begin
@@ -113,6 +125,11 @@ begin
       Screen.Cursor:=crDefault;
     end;
   end;
+end;
+
+procedure ChangeRender(const AColumn:TColumn; const ARender:TRenderClass);
+begin
+  AColumn.Render:=ARender.Create(AColumn.Changed);
 end;
 
 procedure TFormGridDataset.ComboSourceChange(Sender: TObject);
@@ -158,10 +175,23 @@ begin
 
       TeeGrid1.DataSource:=DataSource3;
       DBNavigator1.DataSource:=DataSource3;
+
+      // Use a render for password column:
+      ChangeRender(TeeGrid1.Columns['Password'],TPasswordRender);
+
+      // Alternative way:
+      // TeeGrid1.Columns['Password'].OnPaint:=PaintPassword;
     end;
   end;
 
   TeeGrid1.SetFocus;
+end;
+
+procedure TFormGridDataSet.PaintPassword(const Sender:TColumn; var AData:TRenderData;
+              var DefaultPaint:Boolean);
+begin
+  AData.Data:='######';
+  DefaultPaint:=True;
 end;
 
 procedure TFormGridDataset.FormCreate(Sender: TObject);
