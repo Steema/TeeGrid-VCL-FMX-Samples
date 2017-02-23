@@ -52,6 +52,8 @@ type
     procedure Paint(var AData:TRenderData); virtual;
   end;
 
+  TRenderClass=class of TRender;
+
   // Just an alias
   TBorder=class(THiddenStroke);
 
@@ -489,6 +491,11 @@ type
 
     class procedure Check(const APainter:TPainter; const ARect:TRectF); static;
     class procedure PlusMinus(const APainter:TPainter; const ARect:TRectF; const IsExpanded:Boolean); static;
+  end;
+
+  TPasswordRender=class(TTextRender)
+  public
+    procedure Paint(var AData:TRenderData); override;
   end;
 
 implementation
