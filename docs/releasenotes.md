@@ -1,5 +1,48 @@
 # TeeGrid Release Notes
 
+##Version: Release v1.01, 1st Mar 2017
+ 
+### BREAKING Changes
+
+* All units named "Tee.Grid.Data.XXX" have been renamed to "Tee.GridData.XXX" because C++ Builder has a limitation: https://quality.embarcadero.com/browse/RSP-15031
+* TeeGrid event "OnCellEdited" has new "ChangeData" and "NewData" parameters
+* TRenderData record renamed fields: "Rect" to "Bounds", and "Text" to "Data"
+* TRows "Count" function removed (renamed to "Empty" boolean)
+
+### New Examples
+
+* "Custom Sorting" shows how to use column header clicks to sort data
+* New simple demo using FireMonkey and FireDAC datasets
+* "ClientDataSet" example shows how to hide column contents
+(eg: to display "****" text in cells, like password fields)
+* New "Static Charts" example, shows how to paint TeeChart charts inside cells
+* New "VirtualData\Matrix" demo, shows to to link a grid with a 2D array using both rtti and "virtual mode" ways
+
+### Improvements
+
+* TeeGrid1.Grid.Copy method now can accept an optional selected cell parameter
+* TeeGrid1.Painter.BitmapQuality new property (used to paint bitmaps in cells)
+* New TVirtualObjectListData alias class, to link TObjectList<T> generic data to grids
+* New TColumnBand "Drag" property to customize column mouse drag 
+* New TTextRender "Trimming" property (to clip text using "..." elipsi)
+* New TPasswordRender (see "ClientDataSet" demo for usage example)
+* Two new Firemonkey editor dialogs (for Borders and TCoordinate classes)
+* Improved display and management of custom cell editor controls (combobox, calendar, etc)
+
+### Bug fixes
+
+* Fixed several minor painting and mouse/keyboard scrolling issues
+* Duplicate records with TDataSet sources
+* IDE crashes when connected DataSource has no DataSet assigned
+* Overlapped text in selected cell
+* Tee.Grid.Totals unit not added to "uses" automatically
+* TeeGrid Editor column propery pages are not in sync with selected column in the tree view of the editor
+* TeeGrid horizontal scrolling leads to AV
+* Assertion in the code when using the grid with an TMS Aurelius TDataSet
+* Fixed displaying bitmaps in cells for Firemonkey apps
+* Fixed editing cells linked to rtti data (read only issue)
+
+
 ##Version: First Release v1.0, 8th Feb 2017
 
 First official release.
