@@ -1,7 +1,7 @@
 # TeeGrid
 <www.steebi.com>
 
-### V1 **binary installer**: [Download latest version](http://www.teechart.net/files/teegrid/install/TeeGrid-Binary-1.0.exe) **8th Feb 2017, First release version, v1.0**
+### V1 **binary installer**: [Download latest version](http://www.teechart.net/files/teegrid/install/1.01/TeeGrid-Binary-1.01.exe) **1st March 2017, version, v1.01**
 
 ## Lightweight full-featured Grid / Tabular control
 
