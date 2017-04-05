@@ -27,9 +27,6 @@ object CustomBandForm: TCustomBandForm
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    ExplicitLeft = 296
-    ExplicitWidth = 492
-    ExplicitHeight = 550
     _Headers = (
       1
       'TColumnHeaderBand'
@@ -45,6 +42,5 @@ object CustomBandForm: TCustomBandForm
     Align = alLeft
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitHeight = 550
   end
 end
