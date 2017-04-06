@@ -1,11 +1,11 @@
 # TeeGrid
 <www.steebi.com>
 
-### V1 **binary installer**: [Download latest version](http://www.teechart.net/files/teegrid/install/1.01/TeeGrid-Binary-1.01.exe) **1st March 2017, version, v1.01**
+### V1 **binary installer**: [Download latest version](http://www.teechart.net/files/teegrid/install/1.02/TeeGrid-Binary-1.02.exe) **6th April 2017, version, v1.02**
 
 ## Lightweight full-featured Grid / Tabular control
 
-### For Embarcadero RAD Studio 2009 and up to Berlin Update 2, Delphi and C++, VCL and Firemonkey frameworks (all platforms: Windows 32 and 64 bit, Mac OSX, Android and iOS), and Lazarus FreePascal (Windows, Linux, etc)
+### For Embarcadero RAD Studio 2009 and up to Tokyo 10.2, Delphi and C++, VCL and Firemonkey frameworks (all platforms: Windows 32 and 64 bit, Mac OSX, Android and iOS), and Lazarus FreePascal (Windows, Linux, etc)
 
 Written from scratch (not derived from TCustomGrid or TGrid), aprox 10K lines of code and 100K compiled size.
 

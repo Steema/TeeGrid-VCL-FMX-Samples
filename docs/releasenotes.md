@@ -1,5 +1,22 @@
 # TeeGrid Release Notes
 
+##Version: Release v1.02, 6th April 2017
+
+### Improvements
+
+* Renamed EOF to PastEnd. C++ Builder fails with "EOF" (reserved use)
+* Added support for CrossVCL
+* Editor form improvements
+* new "band" class : TColumnsBand, to allow custom text per-column at, for example, header or footer. Is independent of Tee.Grid.Header.
+
+### Bug fixes
+
+* Alias "TArrayOfStrings" of TStringArray to avoid conflict for Lazarus 1.6.4.
+* Fixed TRows.GetHeights, Was AV when Index at -1
+* Pre-XE2 namespaces fix (commented Vcl.Buttons to {Vcl.}Buttons )
+* Resilience improvement for TTeeGrid.ResetScrollBars
+* Fix bug #1784 (http://bugs.teechart.net/show_bug.cgi?id=1784). Problem with Repaint of Grid when Datasource is Detail of MasterDetail data
+
 ##Version: Release v1.01, 1st Mar 2017
  
 ### BREAKING Changes
