@@ -56,15 +56,15 @@ This enables linking a TeeGrid to any kind of data, like a TDataset, TDataSource
 
 Several classes are already provided to bind data to TeeGrid, like:
 
-- TVirtualModeData in [Tee.Grid.Data.Strings](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.Strings.pas) unit, to use OnGet and OnSet events (pure virtual mode)
+- TVirtualModeData in [Tee.GridData.Strings](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.GridData.Strings.pas) unit, to use OnGet and OnSet events (pure virtual mode)
 
-- TVirtualData<T> in [Tee.Grid.Data.Rtti](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.Rtti.pas) unit (for records, arrays, generic TList, collections etc)
+- TVirtualData<T> in [Tee.GridData.Rtti](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.GridData.Rtti.pas) unit (for records, arrays, generic TList, collections etc)
 
-- TVirtualDBData in [Tee.Grid.Data.DB](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.DB.pas) unit (for TDataSource and TDataSet)
+- TVirtualDBData in [Tee.GridData.DB](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.GridData.DB.pas) unit (for TDataSource and TDataSet)
 
-- TBIGridData in [BI.Grid.Data](https://github.com/Steema/TeeGrid/blob/master/src/delphi/BI.Grid.Data.pas) unit (for [TeeBI](https://github.com/Steema/BI) TDataItem objects, ultra-fast big-data)
+- TBIGridData in [BI.GridData](https://github.com/Steema/TeeGrid/blob/master/src/delphi/BI.GridData.pas) unit (for [TeeBI](https://github.com/Steema/BI) TDataItem objects, ultra-fast big-data)
 
-- TStringData in [Tee.Grid.Data.Strings](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.Grid.Data.Strings.pas) unit (to emulate a TStringGrid with "Cells[col,row]" property)
+- TStringData in [Tee.GridData.Strings](https://github.com/Steema/TeeGrid/blob/master/src/delphi/Tee.GridData.Strings.pas) unit (to emulate a TStringGrid with "Cells[col,row]" property)
 
 Examples:
 
