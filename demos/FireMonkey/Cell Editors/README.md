@@ -55,3 +55,4 @@ We can choose a specific one by using the EnterKey property :
   TeeGrid1.Editing.EnterKey:=TEditingEnter(CBEnterKey.ItemIndex);
 ```
 
+[![](https://raw.githubusercontent.com/Steema/TeeGrid/master/demos/FireMonkey/Cell%20Editors/images/image1.png)
