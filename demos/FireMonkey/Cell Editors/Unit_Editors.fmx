@@ -127,7 +127,7 @@ object FormCellEditors: TFormCellEditors
     end
     object Label1: TLabel
       Position.X = 48.000000000000000000
-      Position.Y = 104.000000000000000000
+      Position.Y = 107.000000000000000000
       Size.Width = 89.000000000000000000
       Size.Height = 17.000000000000000000
       Size.PlatformDefault = False
