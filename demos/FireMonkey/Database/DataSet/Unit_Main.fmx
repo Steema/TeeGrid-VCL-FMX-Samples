@@ -14,7 +14,7 @@ object FormGridDataSet: TFormGridDataSet
     ReadOnly = False
     Align = Client
     Size.Width = 640.000000000000000000
-    Size.Height = 480.000000000000000000
+    Size.Height = 430.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
     _Headers = (
@@ -23,6 +23,43 @@ object FormGridDataSet: TFormGridDataSet
       <
         item
         end>)
+  end
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    object Edit1: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 0
+      Position.X = 136.000000000000000000
+      Position.Y = 16.000000000000000000
+      OnChangeTracking = Edit1ChangeTracking
+    end
+    object Label1: TLabel
+      FocusControl = Edit1
+      Position.X = 8.000000000000000000
+      Position.Y = 16.000000000000000000
+      Text = 'Filter "Name": '
+      TabOrder = 1
+    end
+    object CheckBox1: TCheckBox
+      IsChecked = True
+      Position.X = 264.000000000000000000
+      Position.Y = 16.000000000000000000
+      TabOrder = 2
+      Text = 'Case insensitive'
+      OnChange = CheckBox1Change
+    end
+    object CheckBox2: TCheckBox
+      IsChecked = True
+      Position.X = 416.000000000000000000
+      Position.Y = 16.000000000000000000
+      TabOrder = 3
+      Text = 'Partial'
+      OnChange = CheckBox2Change
+    end
   end
   object ClientDataSet1: TClientDataSet
     Aggregates = <>

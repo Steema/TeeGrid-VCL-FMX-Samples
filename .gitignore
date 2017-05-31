@@ -38,3 +38,4 @@ demos/FireMonkey/Database/DataSet/Android/
 demos/FireMonkey/Themes/Android/
 demos/FireMonkey/Themes/iOSDevice32/
 demos/FireMonkey/Themes/iOSDevice64/
+*.o

@@ -15,7 +15,8 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, Data.DB,
-  Datasnap.DBClient, FMXTee.Control, FMXTee.Grid, Tee.Renders;
+  Datasnap.DBClient, FMXTee.Control, FMXTee.Grid, Tee.Renders, FMX.StdCtrls,
+  FMX.Controls.Presentation, FMX.Edit, FMX.Layouts;
 
 type
   TFormGridDataSet = class(TForm)
@@ -26,7 +27,15 @@ type
     ClientDataSet1Address: TStringField;
     ClientDataSet1Children: TIntegerField;
     DataSource1: TDataSource;
+    Layout1: TLayout;
+    Edit1: TEdit;
+    Label1: TLabel;
+    CheckBox1: TCheckBox;
+    CheckBox2: TCheckBox;
     procedure FormCreate(Sender: TObject);
+    procedure Edit1ChangeTracking(Sender: TObject);
+    procedure CheckBox1Change(Sender: TObject);
+    procedure CheckBox2Change(Sender: TObject);
   private
     { Private declarations }
 
@@ -47,11 +56,18 @@ uses
 
 procedure TFormGridDataSet.CheckBigDataset;
 
+  function RandomName:String;
+  const Names:Array[0..4] of String=('Abc','Jim','Melissa','Spirit','Zune');
+  begin
+   result:=Names[Random(Length(Names))];
+  end;
+
   procedure AddSampleRecords;
   var t : Integer;
   begin
     for t:=1 to 150 do
-        ClientDataSet1.AppendRecord(['Abc',3.45,'Some St',t]);
+
+        ClientDataSet1.AppendRecord([RandomName,3.45,'Some St',t]);
   end;
 
 begin
@@ -76,6 +92,45 @@ begin
 
   ARender.Margins.Bottom.Value:=0;
   ARender.Margins.Top.Value:=0;
+end;
+
+procedure TFormGridDataSet.CheckBox1Change(Sender: TObject);
+begin
+  Edit1ChangeTracking(Self);
+end;
+
+procedure TFormGridDataSet.CheckBox2Change(Sender: TObject);
+begin
+  Edit1ChangeTracking(Self);
+end;
+
+procedure TFormGridDataSet.Edit1ChangeTracking(Sender: TObject);
+
+  function CalcFilterOptions:TFilterOptions;
+  begin
+    result:=[];
+
+    if CheckBox1.IsChecked then
+       Include(result,TFilterOption.foCaseInsensitive);
+
+    if not CheckBox2.IsChecked then
+       Include(result,TFilterOption.foNoPartialCompare);
+  end;
+
+var tmpS : String;
+begin
+  ClientDataSet1.Filtered:=False;
+
+  ClientDataSet1.FilterOptions:=CalcFilterOptions;
+
+  tmpS:=Trim(Edit1.Text);
+
+  if tmpS='' then
+     ClientDataSet1.Filter:=''
+  else
+     ClientDataSet1.Filter:='Name = '+QuotedStr(tmpS);
+
+  ClientDataSet1.Filtered:=ClientDataSet1.Filter<>'';
 end;
 
 procedure TFormGridDataSet.FormCreate(Sender: TObject);
