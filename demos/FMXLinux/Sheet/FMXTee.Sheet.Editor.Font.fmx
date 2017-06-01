@@ -1,0 +1,135 @@
+object SheetFontEditor: TSheetFontEditor
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 105
+  ClientWidth = 237
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object CBFamily: TComboEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 3
+    ItemHeight = 19.000000000000000000
+    ItemIndex = -1
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 113.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnChange = CBFamilyChange
+  end
+  object CBSize: TComboEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 0
+    ItemHeight = 19.000000000000000000
+    Items.Strings = (
+      '8'
+      '9'
+      '10'
+      '11'
+      '12'
+      '13'
+      '14'
+      '15'
+      '16'
+      '18'
+      '20'
+      '22'
+      '24'
+      '28'
+      '32'
+      '36'
+      '40'
+      '44'
+      '48'
+      '52'
+      '58'
+      '66'
+      '72')
+    ItemIndex = 3
+    Text = '11'
+    Position.X = 128.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 49.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnChangeTracking = CBSizeChangeTracking
+  end
+  object BColor: TComboColorBox
+    Color = claWhite
+    Position.X = 188.000000000000000000
+    Position.Y = 41.000000000000000000
+    Size.Width = 40.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    OnChange = BColorChange
+  end
+  object CBBack: TComboColorBox
+    Color = claWhite
+    Position.X = 140.000000000000000000
+    Position.Y = 41.000000000000000000
+    Size.Width = 40.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    OnChange = CBBackChange
+  end
+  object SpeedButton1: TSpeedButton
+    Position.X = 184.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 25.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    Text = '+'
+    OnClick = SpeedButton1Click
+  end
+  object SpeedButton2: TSpeedButton
+    Position.X = 208.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 25.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    Text = '-'
+    OnClick = SpeedButton2Click
+  end
+  object SBBold: TSpeedButton
+    StaysPressed = True
+    StyledSettings = [Family, Size, FontColor]
+    Position.X = 8.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 25.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'B'
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    OnClick = SBBoldClick
+  end
+  object SBItalic: TSpeedButton
+    StaysPressed = True
+    StyledSettings = [Size, FontColor]
+    Position.X = 33.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 25.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'I'
+    TextSettings.Font.Family = 'Tahoma'
+    TextSettings.Font.StyleExt = {00040000000200000004000000}
+    OnClick = SBItalicClick
+  end
+  object SBUnderline: TSpeedButton
+    StaysPressed = True
+    StyledSettings = [Size, FontColor]
+    Position.X = 59.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 25.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'U'
+    TextSettings.Font.StyleExt = {04040000000000000004000000}
+    OnClick = SBUnderlineClick
+  end
+end

@@ -1,0 +1,53 @@
+object FormGridDataSet: TFormGridDataSet
+  Left = 0
+  Top = 0
+  Caption = 'TeeGrid - FireMonkey DataSet Example'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object TeeGrid1: TTeeGrid
+    Columns = <>
+    ReadOnly = False
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
+  object ClientDataSet1: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 288
+    Top = 249
+    object ClientDataSet1Name: TStringField
+      DisplayWidth = 24
+      FieldName = 'Name'
+    end
+    object ClientDataSet1Height: TSingleField
+      FieldName = 'Height'
+    end
+    object ClientDataSet1Address: TStringField
+      DisplayWidth = 36
+      FieldName = 'Address'
+      Size = 30
+    end
+    object ClientDataSet1Children: TIntegerField
+      FieldName = 'Children'
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = ClientDataSet1
+    Left = 368
+    Top = 249
+  end
+end

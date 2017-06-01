@@ -1,0 +1,151 @@
+object FormCellEditors: TFormCellEditors
+  Left = 0
+  Top = 0
+  Caption = 'TeeGrid - Custom Cell Editor Controls'
+  ClientHeight = 430
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object TeeGrid1: TTeeGrid
+    Columns = <>
+    ReadOnly = False
+    OnCellEditing = TeeGrid1CellEditing
+    OnCellEdited = TeeGrid1CellEdited
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 241.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object CBCustomEditors: TCheckBox
+      IsChecked = True
+      Position.X = 16.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 225.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Use different controls to edit cells'
+      OnChange = CBCustomEditorsChange
+    end
+    object Text1: TText
+      Position.X = 264.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 329.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Double-Click a cell or press F2 to edit it'
+    end
+  end
+  object Layout2: TLayout
+    Align = Bottom
+    Position.Y = 291.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 139.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object Text2: TText
+      Position.X = 8.000000000000000000
+      Position.Y = 5.000000000000000000
+      Size.Width = 129.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Editing options:'
+      TextSettings.HorzAlign = Leading
+    end
+    object CBAutoEdit: TCheckBox
+      Position.X = 24.000000000000000000
+      Position.Y = 25.000000000000000000
+      Size.Width = 105.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Auto Edit'
+      OnChange = CBAutoEditChange
+    end
+    object Text3: TText
+      Position.X = 144.000000000000000000
+      Position.Y = 25.000000000000000000
+      Size.Width = 473.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 
+        'True = Type any key to start cell editing.   False = Double-clic' +
+        'k cell or press F2'
+      TextSettings.HorzAlign = Leading
+    end
+    object CBAlwaysVisible: TCheckBox
+      Position.X = 24.000000000000000000
+      Position.Y = 49.000000000000000000
+      TabOrder = 3
+      Text = 'Always Visible'
+      OnChange = CBAlwaysVisibleChange
+    end
+    object Text4: TText
+      Position.X = 144.000000000000000000
+      Position.Y = 49.000000000000000000
+      Size.Width = 473.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 
+        'True = Cell editing is always active when changing from one cell' +
+        ' to another cells'
+      TextSettings.HorzAlign = Leading
+    end
+    object CBSelectedText: TCheckBox
+      Position.X = 24.000000000000000000
+      Position.Y = 73.000000000000000000
+      TabOrder = 5
+      Text = 'Selected Text'
+      OnChange = CBSelectedTextChange
+    end
+    object Text5: TText
+      Position.X = 144.000000000000000000
+      Position.Y = 73.000000000000000000
+      Size.Width = 473.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 
+        'True = Cell editor using TEdit will select all text when showing' +
+        ' it'
+      TextSettings.HorzAlign = Leading
+    end
+    object Label1: TLabel
+      Position.X = 48.000000000000000000
+      Position.Y = 104.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Enter Key:'
+    end
+    object CBEnterKey: TComboBox
+      Items.Strings = (
+        'Move to next cell (at right)'
+        'Move to cell below'
+        'Keep on same cell')
+      ItemIndex = 0
+      Position.X = 144.000000000000000000
+      Position.Y = 104.000000000000000000
+      Size.Width = 193.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 8
+      OnChange = CBEnterKeyChange
+    end
+  end
+end

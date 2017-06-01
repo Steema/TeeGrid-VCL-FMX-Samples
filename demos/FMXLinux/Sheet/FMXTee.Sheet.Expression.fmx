@@ -1,0 +1,57 @@
+object SheetExpression: TSheetExpression
+  Left = 0
+  Top = 0
+  Caption = 'Sheet Expression'
+  ClientHeight = 34
+  ClientWidth = 726
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object CBCurrent: TComboEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Align = Left
+    TabOrder = 0
+    ItemHeight = 19.000000000000000000
+    ItemIndex = -1
+    Position.X = 4.000000000000000000
+    Position.Y = 4.000000000000000000
+    Margins.Left = 4.000000000000000000
+    Margins.Top = 4.000000000000000000
+    Margins.Right = 4.000000000000000000
+    Margins.Bottom = 4.000000000000000000
+    Size.Width = 100.000000000000000000
+    Size.Height = 26.000000000000000000
+    Size.PlatformDefault = False
+    KillFocusByReturn = True
+    OnChange = CBCurrentChange
+    OnExit = CBCurrentExit
+  end
+  object Splitter1: TSplitter
+    Align = Left
+    Cursor = crHSplit
+    MinSize = 20.000000000000000000
+    Position.X = 108.000000000000000000
+    Size.Width = 11.000000000000000000
+    Size.Height = 34.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object CBFormula: TComboEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Align = Client
+    TabOrder = 2
+    ItemHeight = 19.000000000000000000
+    ItemIndex = -1
+    Margins.Left = 4.000000000000000000
+    Margins.Top = 4.000000000000000000
+    Margins.Right = 4.000000000000000000
+    Margins.Bottom = 4.000000000000000000
+    Size.Width = 599.000000000000000000
+    Size.Height = 26.000000000000000000
+    Size.PlatformDefault = False
+    KillFocusByReturn = True
+    OnChange = CBFormulaChange
+    OnKeyUp = CBFormulaKeyUp
+    OnExit = CBFormulaExit
+  end
+end

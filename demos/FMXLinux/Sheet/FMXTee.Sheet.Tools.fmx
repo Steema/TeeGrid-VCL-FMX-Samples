@@ -1,0 +1,216 @@
+object SheetTools: TSheetTools
+  Left = 0
+  Top = 0
+  Caption = 'TeeGrid Sheet Tools'
+  ClientHeight = 117
+  ClientWidth = 830
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Tabs: TTabControl
+    Align = Client
+    Size.Width = 830.000000000000000000
+    Size.Height = 117.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 1
+    TabOrder = 0
+    TabPosition = PlatformDefault
+    Sizes = (
+      830s
+      91s
+      830s
+      91s
+      830s
+      91s)
+    object TabFile: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 41.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'FILE'
+      ExplicitSize.cx = 41.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+    object TabHome: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 55.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'HOME'
+      ExplicitSize.cx = 55.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+      object LayoutClipboard: TLayout
+        Align = Left
+        Size.Width = 145.000000000000000000
+        Size.Height = 91.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object BPaste: TButton
+          Position.X = 8.000000000000000000
+          Position.Y = 10.000000000000000000
+          Size.Width = 57.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          Text = 'Paste'
+          OnClick = BPasteClick
+        end
+        object BCut: TButton
+          Position.X = 72.000000000000000000
+          Position.Y = 10.000000000000000000
+          Size.Width = 57.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'Cut'
+          OnClick = BCutClick
+        end
+        object BCopy: TButton
+          Position.X = 72.000000000000000000
+          Position.Y = 42.000000000000000000
+          Size.Width = 57.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Copy'
+          OnClick = BCopyClick
+        end
+        object Text1: TText
+          Align = Bottom
+          Position.Y = 75.039062500000000000
+          Size.Width = 145.000000000000000000
+          Size.Height = 15.960937500000000000
+          Size.PlatformDefault = False
+          Text = 'Clipboard'
+          TextSettings.FontColor = claDimgray
+        end
+      end
+      object LayoutFont: TLayout
+        Align = Left
+        Position.X = 145.000000000000000000
+        Size.Width = 248.000000000000000000
+        Size.Height = 91.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        object Text2: TText
+          Align = Bottom
+          Position.Y = 75.039062500000000000
+          Size.Width = 248.000000000000000000
+          Size.Height = 15.960937500000000000
+          Size.PlatformDefault = False
+          Text = 'Font'
+          TextSettings.FontColor = claDimgray
+        end
+      end
+      object LayoutAlign: TLayout
+        Align = Left
+        Position.X = 393.000000000000000000
+        Size.Width = 152.000000000000000000
+        Size.Height = 91.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        object Text3: TText
+          Align = Bottom
+          Position.Y = 75.000000000000000000
+          Size.Width = 152.000000000000000000
+          Size.Height = 16.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Alignment'
+          TextSettings.FontColor = claDimgray
+        end
+        object SBTop: TSpeedButton
+          StaysPressed = True
+          GroupName = 'VAlign'
+          Position.X = 8.000000000000000000
+          Position.Y = 8.000000000000000000
+          Size.Width = 25.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Top'
+          OnClick = SBTopClick
+        end
+        object SBVCenter: TSpeedButton
+          StaysPressed = True
+          GroupName = 'VAlign'
+          Position.X = 40.000000000000000000
+          Position.Y = 8.000000000000000000
+          Size.Width = 49.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Center'
+          OnClick = SBVCenterClick
+        end
+        object SBBottom: TSpeedButton
+          StaysPressed = True
+          GroupName = 'VAlign'
+          Position.X = 96.000000000000000000
+          Position.Y = 8.000000000000000000
+          Size.Width = 49.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Bottom'
+          OnClick = SBBottomClick
+        end
+        object SBLeft: TSpeedButton
+          StaysPressed = True
+          GroupName = 'HAlign'
+          Position.X = 8.000000000000000000
+          Position.Y = 40.000000000000000000
+          Size.Width = 25.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Left'
+          OnClick = SBLeftClick
+        end
+        object SBCenter: TSpeedButton
+          StaysPressed = True
+          GroupName = 'HAlign'
+          Position.X = 40.000000000000000000
+          Position.Y = 40.000000000000000000
+          Size.Width = 49.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Center'
+          OnClick = SBCenterClick
+        end
+        object SBRight: TSpeedButton
+          StaysPressed = True
+          GroupName = 'HAlign'
+          Position.X = 95.000000000000000000
+          Position.Y = 40.000000000000000000
+          Size.Width = 49.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Right'
+          OnClick = SBRightClick
+        end
+      end
+    end
+    object TabInsert: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 58.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'INSERT'
+      ExplicitSize.cx = 58.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+  end
+end

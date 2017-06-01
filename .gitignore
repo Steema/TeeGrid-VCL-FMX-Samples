@@ -39,3 +39,6 @@ demos/FireMonkey/Themes/Android/
 demos/FireMonkey/Themes/iOSDevice32/
 demos/FireMonkey/Themes/iOSDevice64/
 *.o
+demos/FireMonkey/Database/DataSet/Linux64/
+demos/FMXLinux/Ticker/Linux64/
+demos/FMXLinux/TStringGrid/Linux64/

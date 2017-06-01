@@ -1,0 +1,106 @@
+object FormGridThemes: TFormGridThemes
+  Left = 0
+  Top = 0
+  Caption = 'TeeGrid - Firemonkey Themes'
+  ClientHeight = 581
+  ClientWidth = 801
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 801.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+  end
+  object Layout2: TLayout
+    Align = Left
+    Position.Y = 50.000000000000000000
+    Size.Width = 169.000000000000000000
+    Size.Height = 531.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object Layout3: TLayout
+      Align = Top
+      Size.Width = 169.000000000000000000
+      Size.Height = 33.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object Text1: TText
+        Align = Client
+        Size.Width = 169.000000000000000000
+        Size.Height = 33.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'TeeGrid Themes:'
+      end
+    end
+    object LBTheme: TListBox
+      Align = Top
+      Position.Y = 33.000000000000000000
+      Size.Width = 169.000000000000000000
+      Size.Height = 184.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      DisableFocusEffect = True
+      Items.Strings = (
+        'Default'
+        'iOS'
+        'Android'
+        'Black')
+      DefaultItemStyles.ItemStyle = ''
+      DefaultItemStyles.GroupHeaderStyle = ''
+      DefaultItemStyles.GroupFooterStyle = ''
+      OnChange = LBThemeChange
+      Viewport.Width = 165.000000000000000000
+      Viewport.Height = 180.000000000000000000
+    end
+    object Layout4: TLayout
+      Align = Top
+      Position.Y = 217.000000000000000000
+      Size.Width = 169.000000000000000000
+      Size.Height = 33.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object Text2: TText
+        Align = Client
+        Size.Width = 169.000000000000000000
+        Size.Height = 33.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'FMX System Themes:'
+      end
+    end
+    object LBFMXThemes: TListBox
+      Align = Client
+      Size.Width = 169.000000000000000000
+      Size.Height = 281.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      DisableFocusEffect = True
+      DefaultItemStyles.ItemStyle = ''
+      DefaultItemStyles.GroupHeaderStyle = ''
+      DefaultItemStyles.GroupFooterStyle = ''
+      OnChange = LBFMXThemesChange
+      Viewport.Width = 165.000000000000000000
+      Viewport.Height = 277.000000000000000000
+    end
+  end
+  object TeeGrid1: TTeeGrid
+    Columns = <>
+    ReadOnly = False
+    Align = Client
+    Size.Width = 632.000000000000000000
+    Size.Height = 531.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
+end
