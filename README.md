@@ -1,8 +1,7 @@
 # TeeGrid
-<www.steebi.com>
+<https://www.steema.com/product/gridvcl>
 
-### V1 **binary installer**: [Download latest version](http://www.teechart.net/files/teegrid/install/1.02/TeeGrid-Binary-1.02.exe) **6th April 2017, version, v1.02**
-
+### V1 **binary installer**: [Download latest version](https://www.steema.com/downloads/gridvcl)
 ## Lightweight full-featured Grid / Tabular control
 
 ### For Embarcadero RAD Studio 2009 and up to Tokyo 10.2, Delphi and C++, VCL and Firemonkey frameworks (all platforms: Windows 32 and 64 bit, Mac OSX, Android and iOS), and Lazarus FreePascal (Windows, Linux, etc)
@@ -25,7 +24,7 @@ See full [License](https://github.com/Steema/TeeGrid/blob/master/docs/license.tx
 
 [Google+ Community](https://plus.google.com/u/0/communities/117324086536146457211)
 
-Website: <http://www.steebi.com>
+Website: <https://www.steema.com/product/gridvcl>
 
 TeeBI data-mining: <https://github.com/Steema/BI>
 
@@ -34,7 +33,7 @@ TeeBI data-mining: <https://github.com/Steema/BI>
 
 Automatically:
 
-- Run TeeGridRecompile.exe
+- Run TeeGridInstall.exe
 
 Manually:
 
