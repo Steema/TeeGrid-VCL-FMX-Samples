@@ -2,7 +2,7 @@
 
 ## Version: Release v1.03, 31st October 2017
 
-## Modification & bugfix report:
+### Modification & bugfix report:
 
 ### Summarised:
 <a href="http://bugs.teechart.net/buglist.cgi?bug_status=RESOLVED&bug_status=VERIFIED&chfield=resolution&chfieldfrom=2017-04-06&chfieldto=2017-10-30&chfieldvalue=FIXED&list_id=8265&product=TeeGrid%20for%20Delphi&query_format=advanced&resolution=FIXED">Fixed bug report</a>
