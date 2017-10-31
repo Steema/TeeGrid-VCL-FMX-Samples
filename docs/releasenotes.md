@@ -1,6 +1,23 @@
 # TeeGrid Release Notes
 
-##Version: Release v1.02, 6th April 2017
+## Version: Release v1.03, 31st October 2017
+
+## Modification & bugfix report:
+
+### Summarised:
+<a href="http://bugs.teechart.net/buglist.cgi?bug_status=RESOLVED&bug_status=VERIFIED&chfield=resolution&chfieldfrom=2017-04-06&chfieldto=2017-10-30&chfieldvalue=FIXED&list_id=8265&product=TeeGrid%20for%20Delphi&query_format=advanced&resolution=FIXED">Fixed bug report</a>
+
+* #1784 Problem with Repaint of Grid when Datasource is Detail of MasterDetail data
+* #1851 Cells are not selected by clicking on them, two consecutive single clicks are required.
+* #1854 Grid doesn't scroll with the keyboard if no cell is selected
+* #1808 Unreproducable problems when TEdits are bound to data that TeeGrid is also bound
+* #1850 Grid doesn't scroll with the keyboard when connected to a DataSource/DataSet
+
+### Other items:
+* TeeGrid now activated as 'ideal' plugin for (<a href="https://www.steema.com/product/teebi">TeeBI</a>)
+
+
+## Version: Release v1.02, 6th April 2017
 
 ### Improvements
 
