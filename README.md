@@ -29,10 +29,10 @@ See full [License](https://github.com/Steema/TeeGrid/blob/master/docs/license.tx
 
 ### Links
 
-[Release Notes](https://github.com/Steema/TeeGrid/blob/master/docs/releasenotes.md) (What's new?)
+- [Website](https://www.steema.com/product/gridvcl)
 
-[Google+ Community](https://plus.google.com/u/0/communities/117324086536146457211)
+- [Release Notes](https://www.steema.com/version_info/gridvcl) (What's new?)
 
-[Website](https://www.steema.com/product/gridvcl)
+- [Google+ Community](https://plus.google.com/u/0/communities/117324086536146457211)
 
-TeeBI data-mining: <https://github.com/Steema/BI>
+- [TeeBI data-mining](https://www.steema.com/product/teebi)
