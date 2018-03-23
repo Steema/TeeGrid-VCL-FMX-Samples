@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeGrid Software Library                   }
 {  Master -> Detail sub-grid rows             }
-{  Copyright (c) 2015-2017 by Steema Software }
+{  Copyright (c) 2015-2018 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit Unit_Customer_Orders;

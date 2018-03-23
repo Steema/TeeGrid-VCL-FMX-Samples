@@ -1,5 +1,19 @@
 # TeeGrid Release Notes
 
+## Version: Release v1.05, 23th March 2018
+
+### Modification & bugfix report:
+
+### Summarised:
+
+* TeeGrid now is supported for Rad Studio 10.2 Tokyo update 3
+
+### Modification & bugfix report:
+
+### Summarised:
+https://tinyurl.com/TeeGrid-BugFixes-1-05
+
+
 ## Version: Release v1.04, 16th January 2018
 
 ### Modification & bugfix report:
