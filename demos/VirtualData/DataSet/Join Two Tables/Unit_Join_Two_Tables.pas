@@ -87,6 +87,12 @@ procedure TForm1.FillMyData(var AData: Array of TOrderByCustomer);
 
 var tmpItem: TOrderByCustomer;
 begin
+  FDConnection1.Params.DriverID:='ODBC';
+  FDConnection1.Params.Database:=GetEnvironmentVariable('DEMOSDIR')+'\Data';
+  FDConnection1.Params.Values['DataSource']:='DBDemosParadox';
+
+  FDQuery1.Connection:=FDConnection1;
+
   FDQuery1.SQL.Clear;
   FDQuery1.SQL.Add('SELECT orders.OrderNo, orders.SaleDate, orders.AmountPaid, customer.CustNo, customer.Company, customer.City ' +
                    'FROM customer ' +

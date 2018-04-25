@@ -34,12 +34,6 @@ object Form1: TForm1
         end>)
   end
   object FDConnection1: TFDConnection
-    Params.Strings = (
-      
-        'Database=E:\Users\Public\Documents\Embarcadero\Studio\19.0\Sampl' +
-        'es\Data'
-      'DataSource=DBDemosParadox'
-      'DriverID=ODBC')
     Left = 392
     Top = 16
   end
