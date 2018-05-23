@@ -10,7 +10,8 @@ uses
   {System.}Classes,
 
   Tee.Grid, Tee.Grid.Columns, Tee.Format, Tee.Grid.Header,
-  Tee.Renders, Tee.Painter, Tee.Sheet.Data, BI.Expression;
+  Tee.Renders, Tee.Painter, Tee.Sheet.Data, BI.Expression,
+  Tee.Grid.Bands.Columns;
 
 type
   TSheet=class
