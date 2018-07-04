@@ -1,0 +1,212 @@
+object MasterDetail2GridsForm: TMasterDetail2GridsForm
+  Left = 0
+  Top = 0
+  Caption = 'MasterDetail2GridsForm'
+  ClientHeight = 567
+  ClientWidth = 708
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Rectangle1: TRectangle
+    Align = Client
+    Fill.Color = xFF355A8E
+    Size.Width = 708.000000000000000000
+    Size.Height = 567.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object TeeGrid1: TTeeGrid
+      Columns = <
+        item
+          Header.Text = 'CustomerID'
+          Link = 'CustomerID'
+        end
+        item
+          Header.Text = 'CompanyName'
+          Link = 'CompanyName'
+        end
+        item
+          Header.Text = 'ContactName'
+          Link = 'ContactName'
+        end
+        item
+          Header.Text = 'ContactTitle'
+          Link = 'ContactTitle'
+        end
+        item
+          Header.Text = 'Address'
+          Link = 'Address'
+        end
+        item
+          Header.Text = 'City'
+          Link = 'City'
+        end
+        item
+          Header.Text = 'Region'
+          Link = 'Region'
+        end
+        item
+          Header.Text = 'PostalCode'
+          Link = 'PostalCode'
+        end
+        item
+          Header.Text = 'Country'
+          Link = 'Country'
+        end
+        item
+          Header.Text = 'Phone'
+          Link = 'Phone'
+        end
+        item
+          Header.Text = 'Fax'
+          Link = 'Fax'
+        end>
+      DataSource = DataSource1
+      ReadOnly = False
+      Selected.FullRow = True
+      Align = Top
+      Position.Y = 50.000000000000000000
+      Size.Width = 708.000000000000000000
+      Size.Height = 255.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      _Headers = (
+        1
+        'TColumnHeaderBand'
+        <
+          item
+          end>)
+    end
+    object TeeGrid2: TTeeGrid
+      Columns = <
+        item
+          Header.Text = 'OrderID'
+          Link = 'OrderID'
+        end
+        item
+          Header.Text = 'CustomerID'
+          Link = 'CustomerID'
+        end
+        item
+          Header.Text = 'EmployeeID'
+          Link = 'EmployeeID'
+        end
+        item
+          Header.Text = 'OrderDate'
+          Link = 'OrderDate'
+        end
+        item
+          Header.Text = 'RequiredDate'
+          Link = 'RequiredDate'
+        end
+        item
+          Header.Text = 'ShippedDate'
+          Link = 'ShippedDate'
+        end
+        item
+          Header.Text = 'ShipVia'
+          Link = 'ShipVia'
+        end
+        item
+          Header.Text = 'Freight'
+          Link = 'Freight'
+        end
+        item
+          Header.Text = 'ShipName'
+          Link = 'ShipName'
+        end
+        item
+          Header.Text = 'ShipAddress'
+          Link = 'ShipAddress'
+        end
+        item
+          Header.Text = 'ShipCity'
+          Link = 'ShipCity'
+        end
+        item
+          Header.Text = 'ShipRegion'
+          Link = 'ShipRegion'
+        end
+        item
+          Header.Text = 'ShipPostalCode'
+          Link = 'ShipPostalCode'
+        end
+        item
+          Header.Text = 'ShipCountry'
+          Link = 'ShipCountry'
+        end>
+      DataSource = DataSource2
+      ReadOnly = False
+      Align = Client
+      Margins.Top = 5.000000000000000000
+      Size.Width = 708.000000000000000000
+      Size.Height = 257.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      _Headers = (
+        1
+        'TColumnHeaderBand'
+        <
+          item
+          end>)
+    end
+    object Layout1: TLayout
+      Align = Top
+      Size.Width = 708.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      object cbConnect: TCheckBox
+        Align = MostLeft
+        StyledSettings = [Family, Size, Style]
+        Margins.Left = 15.000000000000000000
+        Position.X = 15.000000000000000000
+        Size.Width = 120.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Connect'
+        TextSettings.FontColor = claWhite
+        OnChange = cbConnectChange
+      end
+    end
+  end
+  object Sqlite_demoConnection: TFDConnection
+    Params.Strings = (
+      
+        'Database=d:\Users\Public\Documents\Embarcadero\Studio\19.0\Sampl' +
+        'es\data\FDDemo.sdb'
+      'ConnectionDef=SQLite_Demo')
+    Connected = True
+    LoginPrompt = False
+    Left = 489
+    Top = 32
+  end
+  object CustomersTable: TFDQuery
+    Connection = Sqlite_demoConnection
+    SQL.Strings = (
+      'SELECT * FROM Customers')
+    Left = 489
+    Top = 88
+  end
+  object DataSource1: TDataSource
+    DataSet = CustomersTable
+    Left = 360
+    Top = 88
+  end
+  object DataSource2: TDataSource
+    DataSet = OrdersTable
+    Left = 360
+    Top = 144
+  end
+  object OrdersTable: TFDTable
+    IndexFieldNames = 'CustomerID'
+    MasterSource = DataSource1
+    MasterFields = 'CustomerID'
+    Connection = Sqlite_demoConnection
+    UpdateOptions.UpdateTableName = 'Orders'
+    TableName = 'Orders'
+    Left = 496
+    Top = 136
+  end
+end

@@ -1,0 +1,72 @@
+object MasterDetail: TMasterDetail
+  Left = 0
+  Top = 0
+  Caption = 'TeeGrid - FireDAC Master-Detail Example'
+  ClientHeight = 629
+  ClientWidth = 817
+  Fill.Color = xFF355A8E
+  Fill.Kind = Solid
+  Position = OwnerFormCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 817.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    object CBEnabled: TCheckBox
+      StyledSettings = [Family, Size, Style]
+      IsChecked = True
+      Position.X = 16.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 185.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Enable Master-Detail'
+      TextSettings.FontColor = claWhite
+      OnChange = CBEnabledChange
+    end
+  end
+  object BindNavigator1: TBindNavigator
+    Align = Bottom
+    Position.Y = 604.000000000000000000
+    Size.Width = 817.000000000000000000
+    Size.Height = 25.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    DataSource = BindSourceDB1
+    xRadius = 4.000000000000000000
+    yRadius = 4.000000000000000000
+  end
+  object TeeGrid1: TTeeGrid
+    Columns = <>
+    ReadOnly = False
+    Align = Client
+    Size.Width = 817.000000000000000000
+    Size.Height = 554.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 10
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
+  object DataSource1: TDataSource
+    DataSet = SampleData.CustomersTable
+    Left = 344
+    Top = 538
+  end
+  object BindSourceDB1: TBindSourceDB
+    DataSource = DataSource1
+    ScopeMappings = <>
+    Left = 432
+    Top = 536
+  end
+end

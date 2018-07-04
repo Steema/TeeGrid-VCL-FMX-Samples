@@ -1,0 +1,91 @@
+object ArrayAsDataForm: TArrayAsDataForm
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 553
+  ClientWidth = 745
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Layout1: TLayout
+    Align = Client
+    Size.Width = 745.000000000000000000
+    Size.Height = 553.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object Rectangle1: TRectangle
+      Align = Top
+      Fill.Color = xFF355A8E
+      Size.Width = 745.000000000000000000
+      Size.Height = 137.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object BArrayRecords: TButton
+        Position.X = 16.000000000000000000
+        Position.Y = 11.000000000000000000
+        Size.Width = 353.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Adding Data by using Array of Records'
+        OnClick = BArrayRecordsClick
+      end
+    end
+    object TeeGrid1: TTeeGrid
+      Columns = <>
+      ReadOnly = False
+      Align = Client
+      Size.Width = 745.000000000000000000
+      Size.Height = 416.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+      _Headers = (
+        1
+        'TColumnHeaderBand'
+        <
+          item
+          end>)
+    end
+    object BArrayIntegers: TButton
+      Position.X = 16.000000000000000000
+      Position.Y = 43.000000000000000000
+      Size.Width = 353.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Adding Data by using Array of Integers'
+      OnClick = BArrayIntegersClick
+    end
+    object BArrayFloat: TButton
+      Position.X = 16.000000000000000000
+      Position.Y = 75.000000000000000000
+      Size.Width = 353.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Adding Data by using Array of Float'
+      OnClick = BArrayFloatClick
+    end
+    object BArrayString: TButton
+      Position.X = 392.000000000000000000
+      Position.Y = 11.000000000000000000
+      Size.Width = 337.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Adding Data by using Array of String'
+      OnClick = BArrayStringClick
+    end
+    object BArrayObject: TButton
+      Position.X = 392.000000000000000000
+      Position.Y = 43.000000000000000000
+      Size.Width = 337.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Adding Data by using Array of Objects'
+      OnClick = BArrayObjectClick
+    end
+  end
+end

@@ -1,0 +1,92 @@
+object ExportingForm: TExportingForm
+  Left = 0
+  Top = 0
+  Caption = 'Form7'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object TeeGrid1: TTeeGrid
+    Columns = <>
+    ReadOnly = False
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 140.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
+  object ColorBox1: TColorBox
+    Align = Top
+    Color = xFF355A8E
+    Size.Width = 640.000000000000000000
+    Size.Height = 52.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object CBExport: TComboBox
+      Items.Strings = (
+        'JSON'
+        'CSV')
+      Position.X = 80.000000000000000000
+      Position.Y = 13.000000000000000000
+      Size.Width = 121.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+    end
+    object Label1: TLabel
+      AutoSize = True
+      StyledSettings = [Family, Size, Style]
+      Position.X = 16.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 81.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.FontColor = claWhite
+      Text = 'Export To : '
+      TabOrder = 1
+    end
+    object BExport: TColorBox
+      Color = xFFEC304A
+      Position.X = 225.000000000000000000
+      Position.Y = 11.000000000000000000
+      Size.Width = 90.000000000000000000
+      Size.Height = 27.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      OnClick = BExportClick
+      object Label2: TLabel
+        Align = Client
+        StyledSettings = [Family, Size]
+        Size.Width = 90.000000000000000000
+        Size.Height = 27.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        TextSettings.HorzAlign = Center
+        Text = 'Export'
+        TabOrder = 0
+      end
+    end
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Align = Bottom
+    Position.Y = 192.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 288.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Viewport.Width = 636.000000000000000000
+    Viewport.Height = 284.000000000000000000
+  end
+end

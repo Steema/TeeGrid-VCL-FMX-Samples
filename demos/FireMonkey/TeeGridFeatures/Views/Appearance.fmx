@@ -1,0 +1,67 @@
+object AppearanceForm: TAppearanceForm
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 528
+  ClientWidth = 749
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object LayoutBase: TLayout
+    Align = Client
+    Size.Width = 749.000000000000000000
+    Size.Height = 528.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object Layout1: TLayout
+      Align = Top
+      Size.Width = 749.000000000000000000
+      Size.Height = 129.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object Rectangle1: TRectangle
+        Align = Client
+        Fill.Color = xFF355A8E
+        Size.Width = 749.000000000000000000
+        Size.Height = 129.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+        object CBFooter: TCheckBox
+          StyledSettings = [Family, Size, Style]
+          Position.X = 32.000000000000000000
+          Position.Y = 48.000000000000000000
+          TabOrder = 0
+          Text = 'Footer Visible'
+          TextSettings.FontColor = claWhite
+          OnChange = CBFooterChange
+        end
+        object CBHeader: TCheckBox
+          StyledSettings = [Family, Size, Style]
+          Position.X = 32.000000000000000000
+          Position.Y = 16.000000000000000000
+          TabOrder = 1
+          Text = 'Header Visible'
+          TextSettings.FontColor = claWhite
+          OnChange = CBHeaderChange
+        end
+      end
+    end
+    object TeeGrid1: TTeeGrid
+      Columns = <>
+      ReadOnly = False
+      Align = Client
+      Size.Width = 749.000000000000000000
+      Size.Height = 399.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      _Headers = (
+        1
+        'TColumnHeaderBand'
+        <
+          item
+          end>)
+    end
+  end
+end

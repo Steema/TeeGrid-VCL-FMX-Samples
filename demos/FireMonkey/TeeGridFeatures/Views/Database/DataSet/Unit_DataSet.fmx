@@ -1,0 +1,122 @@
+object FormGridDataSet: TFormGridDataSet
+  Left = 0
+  Top = 0
+  Caption = 'TeeGrid - FireMonkey DataSet Example'
+  ClientHeight = 480
+  ClientWidth = 640
+  Fill.Color = xFF355A8E
+  Fill.Kind = Solid
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object TeeGrid1: TTeeGrid
+    Columns = <
+      item
+        Header.Text = 'Name'
+        Link = 'Name'
+      end
+      item
+        Header.Text = 'Height'
+        Link = 'Height'
+      end
+      item
+        Header.Text = 'Address'
+        Link = 'Address'
+      end
+      item
+        Header.Text = 'Children'
+        Link = 'Children'
+      end>
+    DataSource = ClientDataSet1
+    ReadOnly = False
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 430.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    object Rectangle1: TRectangle
+      Align = Client
+      Fill.Color = xFF355A8E
+      Size.Width = 640.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      object CheckBox1: TCheckBox
+        StyledSettings = [Family, Size, Style]
+        IsChecked = True
+        Position.X = 264.000000000000000000
+        Position.Y = 16.000000000000000000
+        TabOrder = 0
+        Text = 'Case insensitive'
+        TextSettings.FontColor = claWhite
+        OnChange = CheckBox1Change
+      end
+      object CheckBox2: TCheckBox
+        StyledSettings = [Family, Size, Style]
+        IsChecked = True
+        Position.X = 416.000000000000000000
+        Position.Y = 16.000000000000000000
+        TabOrder = 1
+        Text = 'Partial'
+        TextSettings.FontColor = claWhite
+        OnChange = CheckBox2Change
+      end
+      object Edit1: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 2
+        Position.X = 136.000000000000000000
+        Position.Y = 16.000000000000000000
+        OnChangeTracking = Edit1ChangeTracking
+      end
+      object Label1: TLabel
+        StyledSettings = [Family, Size, Style]
+        FocusControl = Edit1
+        Position.X = 8.000000000000000000
+        Position.Y = 17.000000000000000000
+        TextSettings.FontColor = claWhite
+        Text = 'Filter "Name": '
+        TabOrder = 3
+      end
+    end
+  end
+  object ClientDataSet1: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 288
+    Top = 249
+    object ClientDataSet1Name: TStringField
+      DisplayWidth = 24
+      FieldName = 'Name'
+    end
+    object ClientDataSet1Height: TSingleField
+      FieldName = 'Height'
+    end
+    object ClientDataSet1Address: TStringField
+      DisplayWidth = 36
+      FieldName = 'Address'
+      Size = 30
+    end
+    object ClientDataSet1Children: TIntegerField
+      FieldName = 'Children'
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = ClientDataSet1
+    Left = 368
+    Top = 249
+  end
+end

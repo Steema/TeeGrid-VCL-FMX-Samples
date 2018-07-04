@@ -1,0 +1,137 @@
+object FormGridThemes: TFormGridThemes
+  Left = 0
+  Top = 0
+  Caption = 'TeeGrid - Firemonkey Themes'
+  ClientHeight = 581
+  ClientWidth = 326
+  Fill.Color = xFF355A8E
+  Fill.Kind = Solid
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object Layout5: TLayout
+    Align = Client
+    Size.Width = 326.000000000000000000
+    Size.Height = 581.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object Rectangle3: TRectangle
+      Align = Client
+      Fill.Color = claWhite
+      Size.Width = 326.000000000000000000
+      Size.Height = 581.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object Layout2: TLayout
+        Align = Bottom
+        Position.Y = 312.000000000000000000
+        Size.Width = 326.000000000000000000
+        Size.Height = 269.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        object Layout3: TLayout
+          Align = Top
+          Size.Width = 326.000000000000000000
+          Size.Height = 33.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          object Rectangle1: TRectangle
+            Align = Client
+            Fill.Color = xFF355A8E
+            Size.Width = 326.000000000000000000
+            Size.Height = 33.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+            object Text1: TText
+              Align = Client
+              Size.Width = 326.000000000000000000
+              Size.Height = 33.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'TeeGrid Themes:'
+              TextSettings.FontColor = claWhite
+            end
+          end
+        end
+        object LBTheme: TListBox
+          Align = Top
+          Position.Y = 33.000000000000000000
+          Size.Width = 326.000000000000000000
+          Size.Height = 88.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          DisableFocusEffect = True
+          Items.Strings = (
+            'Default'
+            'iOS'
+            'Android'
+            'Black')
+          DefaultItemStyles.ItemStyle = ''
+          DefaultItemStyles.GroupHeaderStyle = ''
+          DefaultItemStyles.GroupFooterStyle = ''
+          OnChange = LBThemeChange
+          Viewport.Width = 322.000000000000000000
+          Viewport.Height = 84.000000000000000000
+        end
+        object Layout4: TLayout
+          Align = Top
+          Position.Y = 121.000000000000000000
+          Size.Width = 326.000000000000000000
+          Size.Height = 33.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          object Rectangle2: TRectangle
+            Align = Client
+            Fill.Color = xFF355A8E
+            Size.Width = 326.000000000000000000
+            Size.Height = 33.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+            object Text2: TText
+              Align = Client
+              Size.Width = 326.000000000000000000
+              Size.Height = 33.000000000000000000
+              Size.PlatformDefault = False
+              Text = 'FMX System Themes:'
+              TextSettings.FontColor = claWhite
+            end
+          end
+        end
+        object LBFMXThemes: TListBox
+          Align = Client
+          Size.Width = 326.000000000000000000
+          Size.Height = 115.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 3
+          DisableFocusEffect = True
+          DefaultItemStyles.ItemStyle = ''
+          DefaultItemStyles.GroupHeaderStyle = ''
+          DefaultItemStyles.GroupFooterStyle = ''
+          OnChange = LBFMXThemesChange
+          Viewport.Width = 322.000000000000000000
+          Viewport.Height = 111.000000000000000000
+        end
+      end
+      object TeeGrid1: TTeeGrid
+        Back.Brush.Color = claWhite
+        Back.Stroke.Visible = True
+        Back.Stroke.Brush.Color = x00FFFFFF
+        Columns = <>
+        ReadOnly = False
+        Align = Client
+        Size.Width = 326.000000000000000000
+        Size.Height = 312.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        _Headers = (
+          1
+          'TColumnHeaderBand'
+          <
+            item
+            end>)
+      end
+    end
+  end
+end

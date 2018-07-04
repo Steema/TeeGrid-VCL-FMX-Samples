@@ -1,0 +1,112 @@
+object LockedColumnsForm: TLockedColumnsForm
+  Left = 0
+  Top = 0
+  Caption = 'Form9'
+  ClientHeight = 480
+  ClientWidth = 640
+  Fill.Color = xFF355A8E
+  Fill.Kind = Solid
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object TeeGrid1: TTeeGrid
+    Columns = <>
+    ReadOnly = False
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 351.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
+  object Layout1: TLayout
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 129.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object Rectangle1: TRectangle
+      Align = Client
+      Fill.Color = xFF355A8E
+      Size.Width = 640.000000000000000000
+      Size.Height = 129.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object BLeft: TSpeedButton
+        StaysPressed = True
+        GroupName = 'locked'
+        Position.X = 288.000000000000000000
+        Position.Y = 25.000000000000000000
+        Size.Width = 97.000000000000000000
+        Size.Height = 33.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'segmentedbuttonmiddle'
+        Text = 'Left'
+        OnClick = BNoneClick
+      end
+      object BNone: TSpeedButton
+        StaysPressed = True
+        GroupName = 'locked'
+        IsPressed = True
+        Position.X = 191.000000000000000000
+        Position.Y = 25.000000000000000000
+        Size.Width = 97.000000000000000000
+        Size.Height = 33.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'segmentedbuttonleft'
+        Text = 'None'
+        OnClick = BNoneClick
+      end
+      object BRight: TSpeedButton
+        StaysPressed = True
+        GroupName = 'locked'
+        Position.X = 385.000000000000000000
+        Position.Y = 25.000000000000000000
+        Size.Width = 97.000000000000000000
+        Size.Height = 33.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'segmentedbuttonright'
+        Text = 'Right'
+        OnClick = BNoneClick
+      end
+      object Label1: TLabel
+        StyledSettings = [Family, Size, Style]
+        Position.X = 8.000000000000000000
+        Position.Y = 6.000000000000000000
+        TextSettings.FontColor = claWhite
+        Text = 'Columns :'
+        TabOrder = 3
+      end
+      object Label2: TLabel
+        StyledSettings = [Family, Size, Style]
+        Position.X = 191.000000000000000000
+        Position.Y = 6.000000000000000000
+        TextSettings.FontColor = claWhite
+        Text = 'Locked :'
+        TabOrder = 4
+      end
+      object LBColumns: TListBox
+        Position.X = 8.000000000000000000
+        Position.Y = 24.000000000000000000
+        Size.Width = 169.000000000000000000
+        Size.Height = 98.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        OnClick = LBColumnsClick
+        DisableFocusEffect = True
+        DefaultItemStyles.ItemStyle = ''
+        DefaultItemStyles.GroupHeaderStyle = ''
+        DefaultItemStyles.GroupFooterStyle = ''
+        Viewport.Width = 165.000000000000000000
+        Viewport.Height = 94.000000000000000000
+      end
+    end
+  end
+end
