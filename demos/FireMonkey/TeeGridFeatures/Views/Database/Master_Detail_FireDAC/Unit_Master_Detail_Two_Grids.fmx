@@ -173,11 +173,8 @@ object MasterDetail2GridsForm: TMasterDetail2GridsForm
   end
   object Sqlite_demoConnection: TFDConnection
     Params.Strings = (
-      
-        'Database=d:\Users\Public\Documents\Embarcadero\Studio\19.0\Sampl' +
-        'es\data\FDDemo.sdb'
+      'Database=D:\apps\Embarcadero\Studio\19.0\Samples\Data\FDDemo.sdb'
       'ConnectionDef=SQLite_Demo')
-    Connected = True
     LoginPrompt = False
     Left = 489
     Top = 32

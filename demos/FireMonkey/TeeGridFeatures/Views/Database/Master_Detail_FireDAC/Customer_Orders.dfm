@@ -4,9 +4,7 @@ object SampleData: TSampleData
   Width = 267
   object Sqlite_demoConnection: TFDConnection
     Params.Strings = (
-      
-        'Database=d:\Users\Public\Documents\Embarcadero\Studio\19.0\Sampl' +
-        'es\data\FDDemo.sdb'
+      'Database=D:\apps\Embarcadero\Studio\19.0\Samples\Data\FDDemo.sdb'
       'ConnectionDef=SQLite_Demo')
     Connected = True
     LoginPrompt = False
@@ -14,7 +12,6 @@ object SampleData: TSampleData
     Top = 22
   end
   object CustomersTable: TFDQuery
-    Active = True
     Connection = Sqlite_demoConnection
     FetchOptions.AssignedValues = [evRecordCountMode]
     FetchOptions.RecordCountMode = cmTotal

@@ -11,44 +11,12 @@ object FormGridDataSet: TFormGridDataSet
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
   DesignerMasterStyle = 0
-  object TeeGrid1: TTeeGrid
-    Columns = <
-      item
-        Header.Text = 'Name'
-        Link = 'Name'
-      end
-      item
-        Header.Text = 'Height'
-        Link = 'Height'
-      end
-      item
-        Header.Text = 'Address'
-        Link = 'Address'
-      end
-      item
-        Header.Text = 'Children'
-        Link = 'Children'
-      end>
-    DataSource = ClientDataSet1
-    ReadOnly = False
-    Align = Client
-    Size.Width = 640.000000000000000000
-    Size.Height = 430.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 0
-    _Headers = (
-      1
-      'TColumnHeaderBand'
-      <
-        item
-        end>)
-  end
   object Layout1: TLayout
     Align = Top
     Size.Width = 640.000000000000000000
     Size.Height = 50.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 3
+    TabOrder = 2
     object Rectangle1: TRectangle
       Align = Client
       Fill.Color = xFF355A8E
@@ -93,8 +61,41 @@ object FormGridDataSet: TFormGridDataSet
       end
     end
   end
+  object TeeGrid1: TTeeGrid
+    Columns = <
+      item
+        Header.Text = 'Name'
+        Link = 'Name'
+      end
+      item
+        Header.Text = 'Height'
+        Link = 'Height'
+      end
+      item
+        Header.Text = 'Address'
+        Link = 'Address'
+      end
+      item
+        Header.Text = 'Children'
+        Link = 'Children'
+      end>
+    DataSource = DataSource1
+    ReadOnly = False
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 430.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <
+        item
+        end>)
+  end
   object ClientDataSet1: TClientDataSet
     Aggregates = <>
+    FetchOnDemand = False
     Params = <>
     Left = 288
     Top = 249

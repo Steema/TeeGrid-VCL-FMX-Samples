@@ -44,7 +44,52 @@ object MasterDetail: TMasterDetail
     yRadius = 4.000000000000000000
   end
   object TeeGrid1: TTeeGrid
-    Columns = <>
+    Columns = <
+      item
+        Header.Text = 'CustomerID'
+        Link = 'CustomerID'
+      end
+      item
+        Header.Text = 'CompanyName'
+        Link = 'CompanyName'
+      end
+      item
+        Header.Text = 'ContactName'
+        Link = 'ContactName'
+      end
+      item
+        Header.Text = 'ContactTitle'
+        Link = 'ContactTitle'
+      end
+      item
+        Header.Text = 'Address'
+        Link = 'Address'
+      end
+      item
+        Header.Text = 'City'
+        Link = 'City'
+      end
+      item
+        Header.Text = 'Region'
+        Link = 'Region'
+      end
+      item
+        Header.Text = 'PostalCode'
+        Link = 'PostalCode'
+      end
+      item
+        Header.Text = 'Country'
+        Link = 'Country'
+      end
+      item
+        Header.Text = 'Phone'
+        Link = 'Phone'
+      end
+      item
+        Header.Text = 'Fax'
+        Link = 'Fax'
+      end>
+    DataSource = DataSource1
     ReadOnly = False
     Align = Client
     Size.Width = 817.000000000000000000

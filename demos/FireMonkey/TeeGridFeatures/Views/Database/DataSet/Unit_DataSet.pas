@@ -20,7 +20,6 @@ uses
 
 type
   TFormGridDataSet = class(TForm)
-    TeeGrid1: TTeeGrid;
     ClientDataSet1: TClientDataSet;
     ClientDataSet1Name: TStringField;
     ClientDataSet1Height: TSingleField;
@@ -33,6 +32,7 @@ type
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
     Rectangle1: TRectangle;
+    TeeGrid1: TTeeGrid;
     procedure FormCreate(Sender: TObject);
     procedure Edit1ChangeTracking(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
