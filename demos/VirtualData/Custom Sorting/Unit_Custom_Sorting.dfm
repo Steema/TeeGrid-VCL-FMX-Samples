@@ -26,8 +26,6 @@ object Form1: TForm1
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    ExplicitWidth = 762
-    ExplicitHeight = 528
     _Headers = (
       1
       'TColumnHeaderBand'

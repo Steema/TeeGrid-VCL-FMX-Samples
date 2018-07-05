@@ -42,6 +42,7 @@ type
     PersonField : TPersonField;
 
     function Compare(const Left, Right: TPerson): Integer; override;
+    class function FieldOf(const AName:String):TPersonField; static;
   end;
 
 { Form1 }
@@ -79,20 +80,19 @@ end;
 function ParentColumn(AGrid: TTeeGrid; AColumn: TColumn): TColumn;
 var i: Integer;
 begin
-  Result:=nil;
   if AColumn.Parent<>nil then
      for i:=0 to AGrid.Columns.Count-1 do
          if AColumn.Parent = AGrid.Columns[i] then
-         begin
-           Result:=AGrid.Columns[i];
-           Exit;
-         end;
+            Exit(AGrid.Columns[i]);
+
+  Result:=nil;
 end;
 
 procedure TForm1.HeaderSortBy(Sender:TObject; const AColumn:TColumn);
 var ParentCol: TColumn;
 begin
   ParentCol:=ParentColumn(TeeGrid1, AColumn);
+
   if ParentCol<>nil then
   begin
     if (SortColumn=ParentCol.Index) and (SortSubColumn=AColumn.Index) then
@@ -135,19 +135,7 @@ begin
   Comparer:=TPersonComparer.Create;
   try
     Comparer.Ascending:=Ascending;
-
-    if AColumn.Header.Text='Name' then
-       Comparer.PersonField:=TPersonField.Name
-    else if AColumn.Header.Text='Street' then
-       Comparer.PersonField:=TPersonField.Street
-    else if AColumn.Header.Text='Number' then
-       Comparer.PersonField:=TPersonField.Number
-    else if AColumn.Header.Text='BirthDate' then
-       Comparer.PersonField:=TPersonField.BirthDate
-    else if AColumn.Header.Text='Children' then
-       Comparer.PersonField:=TPersonField.Children
-    else
-       Comparer.PersonField:=TPersonField.Height;
+    Comparer.PersonField:=TPersonComparer.FieldOf(AColumn.Header.Text);
 
     TArray.Sort<TPerson>(Persons,Comparer);
   finally
@@ -160,8 +148,8 @@ var ParentCol: TColumn;
 begin
   if AColumn.HasItems then
   begin
-     State:=TSortState.None;
-     Exit;
+    State:=TSortState.None;
+    Exit;
   end;
 
   ParentCol:=ParentColumn(TeeGrid1,AColumn);
@@ -187,10 +175,7 @@ begin
 end;
 
 function TPersonComparer.Compare(const Left, Right: TPerson): Integer;
-var AString, BString: String;
-    AInteger, BInteger: Integer;
-    ASingle, BSingle: Single;
-    APerson, BPerson: TPerson;
+var APerson, BPerson: TPerson;
 begin
   if Ascending then
   begin
@@ -214,7 +199,29 @@ begin
   else if (PersonField=Children) then
      result:=CompareValue(APerson.Children, BPerson.Children)
   else if (PersonField=Height) then
-     result:=CompareValue(APerson.Height, BPerson.Height);
+     result:=CompareValue(APerson.Height, BPerson.Height)
+  else
+     result:=0;
+end;
+
+class function TPersonComparer.FieldOf(const AName: String): TPersonField;
+begin
+  if AName='Name' then
+     result:=TPersonField.Name
+  else
+  if AName='Street' then
+     result:=TPersonField.Street
+  else
+  if AName='Number' then
+     result:=TPersonField.Number
+  else
+  if AName='BirthDate' then
+     result:=TPersonField.BirthDate
+  else
+  if AName='Children' then
+     result:=TPersonField.Children
+  else
+     result:=TPersonField.Height;
 end;
 
 end.
