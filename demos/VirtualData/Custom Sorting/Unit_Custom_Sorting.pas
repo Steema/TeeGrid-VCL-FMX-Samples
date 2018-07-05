@@ -23,6 +23,12 @@ type
     procedure SortData(const AColumn:TColumn; const Ascending:Boolean); overload;
   public
     { Public declarations }
+
+    Persons : TArray<TPerson>;
+
+    SortColumn,
+    SortSubColumn: Integer;
+    SortAsc: Boolean;
   end;
 
 var
@@ -46,9 +52,6 @@ type
   end;
 
 { Form1 }
-var Persons : TArray<TPerson>;
-    SortColumn, SortSubColumn: Integer;
-    SortAsc: Boolean;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
@@ -101,10 +104,12 @@ begin
     SortColumn:=ParentCol.Index;
     SortSubColumn:=AColumn.Index;
 
+    {
     if (SortColumn=1) and (SortSubColumn=0) then
        SortAsc:=True
     else
        SortAsc:=False;
+    }
   end
   else
   begin
@@ -144,34 +149,31 @@ begin
 end;
 
 procedure TForm1.HeaderSortState(const AColumn:TColumn; var State:TSortState);
+
+  function StateOf(const IsSorted:Boolean):TSortState;
+  begin
+    if IsSorted then
+       if SortAsc then
+          result:=Descending
+       else
+          result:=Ascending
+    else
+      result:=TSortState.None;
+  end;
+
 var ParentCol: TColumn;
 begin
   if AColumn.HasItems then
-  begin
-    State:=TSortState.None;
-    Exit;
-  end;
-
-  ParentCol:=ParentColumn(TeeGrid1,AColumn);
-
-  if (ParentCol<>nil) then
-  begin
-     if (ParentCol.Index=SortColumn) and (AColumn.Index=SortSubColumn) then
-        if SortAsc then
-           State:=Descending
-        else
-           State:=Ascending
-     else
-        State:=TSortState.None;
-  end
+     State:=TSortState.None
   else
-    if SortColumn=AColumn.Index then
-       if SortAsc then
-          State:=Descending
-       else
-          State:=Ascending
+  begin
+    ParentCol:=ParentColumn(TeeGrid1,AColumn);
+
+    if ParentCol=nil then
+       State:=StateOf(SortColumn=AColumn.Index)
     else
-       State:=TSortState.None;
+       State:=StateOf((ParentCol.Index=SortColumn) and (AColumn.Index=SortSubColumn));
+  end;
 end;
 
 function TPersonComparer.Compare(const Left, Right: TPerson): Integer;
@@ -188,20 +190,16 @@ begin
     BPerson:=Left;
   end;
 
-  if (PersonField=Name) then
-     result:=CompareText(APerson.Name,BPerson.Name)
-  else if (PersonField=Street) then
-     result:=CompareText(APerson.Address.Street, BPerson.Address.Street)
-  else if (PersonField=Number) then
-     result:=CompareValue(APerson.Address.Number, BPerson.Address.Number)
-  else if (PersonField=BirthDate) then
-     result:=CompareValue(APerson.BirthDate, BPerson.BirthDate)
-  else if (PersonField=Children) then
-     result:=CompareValue(APerson.Children, BPerson.Children)
-  else if (PersonField=Height) then
-     result:=CompareValue(APerson.Height, BPerson.Height)
+  case PersonField of
+    Name  : result:=CompareText(APerson.Name,BPerson.Name);
+    Street: result:=CompareText(APerson.Address.Street, BPerson.Address.Street);
+    Number: result:=CompareValue(APerson.Address.Number, BPerson.Address.Number);
+    BirthDate: result:=CompareValue(APerson.BirthDate, BPerson.BirthDate);
+    Children : result:=CompareValue(APerson.Children, BPerson.Children);
+    Height: result:=CompareValue(APerson.Height, BPerson.Height);
   else
-     result:=0;
+    result:=0;
+  end;
 end;
 
 class function TPersonComparer.FieldOf(const AName: String): TPersonField;
