@@ -1,5 +1,20 @@
 # TeeGrid Release Notes
 
+## Version: Release v1.06, 18th July 2018
+
+### New Features:
+### Summarised:
+
+* Added support for JSON export
+
+### Modification & bugfix report:
+
+### Summarised:
+https://tinyurl.com/TeeGrid-BugFixes-1-06
+
+
+# TeeGrid Release Notes
+
 ## Version: Release v1.05, 23th March 2018
 
 ### Modification & bugfix report:
