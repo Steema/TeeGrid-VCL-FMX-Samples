@@ -9,7 +9,7 @@
 #include <Vcl.Forms.hpp>
 #include "VCLTee.Control.hpp"
 #include "VCLTee.Grid.hpp"
-#include "Tee.Grid.Data.Strings.hpp"
+#include "Tee.GridData.Strings.hpp"
 #include <Vcl.ExtCtrls.hpp>
 //---------------------------------------------------------------------------
 class TFormTeeGridCppBasic : public TForm
