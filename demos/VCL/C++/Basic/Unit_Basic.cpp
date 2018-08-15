@@ -11,7 +11,7 @@
 #pragma link "VCLTee.Control"
 #pragma link "VCLTee.Grid"
 #pragma link "VCLTee.Editor.Grid"
-#pragma link "Tee.Grid.Data.Strings"
+#pragma link "Tee.GridData.Strings"
 #pragma resource "*.dfm"
 TFormTeeGridCppBasic *FormTeeGridCppBasic;
 //---------------------------------------------------------------------------

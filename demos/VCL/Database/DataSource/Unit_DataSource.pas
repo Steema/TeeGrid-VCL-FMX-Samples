@@ -43,7 +43,7 @@ implementation
 {$R *.dfm}
 
 uses
-  BI.Persist, VCLTee.Editor.Grid;
+VCLTee.Editor.Grid;
 
 procedure TForm43.Button2Click(Sender: TObject);
 begin
