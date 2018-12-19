@@ -1,5 +1,21 @@
 # TeeGrid Release Notes
 
+## Version: Release v1.07, 19th December 2018
+
+### New Features:
+### Summarised:
+
+* Support Rad Studio 10.3 Rio
+* Added new feature Layout Manager. Saves your custom layout and format.
+
+### Modification & bugfix report:
+
+### Summarised:
+https://tinyurl.com/TeeGrid-BugFixes-1-07
+
+
+# TeeGrid Release Notes
+
 ## Version: Release v1.06, 18th July 2018
 
 ### New Features:
