@@ -1,5 +1,21 @@
 # TeeGrid Release Notes
 
+## Version: Release v1.08, 9th May 2019
+
+### New Features:
+### Summarised:
+
+* New ParentFont property for TeeGrid
+* New Mouse sensitivity control to avoid high CPU usage on mouseover
+* Indicator column header now takes common header brush
+
+### Modification & bugfix report:
+
+### Summarised:
+https://tinyurl.com/TeeGrid-BugFixes-1-08
+
+# TeeGrid Release Notes
+
 ## Version: Release v1.07, 19th December 2018
 
 ### New Features:
