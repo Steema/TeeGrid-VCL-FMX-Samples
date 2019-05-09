@@ -23,6 +23,7 @@ object FormGridThemes: TFormGridThemes
     Columns = <>
     ReadOnly = False
     Align = alClient
+    ParentFont = False
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
@@ -43,13 +44,22 @@ object FormGridThemes: TFormGridThemes
     BevelOuter = bvNone
     TabOrder = 1
     object Button1: TButton
-      Left = 8
+      Left = 5
       Top = 9
       Width = 75
       Height = 25
       Caption = '&Edit...'
       TabOrder = 0
       OnClick = Button1Click
+    end
+    object Button2: TButton
+      Left = 88
+      Top = 9
+      Width = 75
+      Height = 25
+      Caption = '+ - font.size'
+      TabOrder = 1
+      OnClick = Button2Click
     end
   end
   object Panel2: TPanel

@@ -11,7 +11,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid, Tee.Grid, Tee.Grid.Bands,
   Vcl.StdCtrls, Vcl.ExtCtrls;
 
 type
@@ -26,10 +26,12 @@ type
     Panel4: TPanel;
     Label2: TLabel;
     LBVCLThemes: TListBox;
+    Button2: TButton;
     procedure FormCreate(Sender: TObject);
     procedure LBThemeClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure LBVCLThemesClick(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
 
@@ -59,6 +61,15 @@ begin
   TTeeGridEditor.Edit(Self,TeeGrid1)
 end;
 
+procedure TFormGridThemes.Button2Click(Sender: TObject);
+begin
+  if self.Font.Size = 8 then
+    self.Font.Size := 14
+  else
+    self.Font.Size := 8;
+
+end;
+
 procedure TFormGridThemes.CreateSampleData;
 begin
   SetLength(Persons,100);
@@ -79,6 +90,12 @@ begin
   TVCLGridThemes.Available(LBVCLThemes.Items);
 
   LBVCLThemes.Sorted:=True;
+
+  //Grid font size follows parent
+  TeeGrid1.ParentFont := True;
+
+  //Do not pick mousemove over Grid (reduces CPU activity)
+  TeeGrid1.Grid.MouseActivity := [TGridMouseSense.Down, TGridMouseSense.Up];
 
   // Just a test:
   TeeGrid1.Columns['Children'].InitAlign(THorizontalAlign.Center);
