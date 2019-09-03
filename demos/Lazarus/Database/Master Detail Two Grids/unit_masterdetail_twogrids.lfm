@@ -1,0 +1,75 @@
+object Form1: TForm1
+  Left = 256
+  Height = 475
+  Top = 210
+  Width = 837
+  Caption = 'Form1'
+  ClientHeight = 475
+  ClientWidth = 837
+  OnCreate = FormCreate
+  LCLVersion = '1.8.4.0'
+  object TeeGrid1: TTeeGrid
+    Left = 28
+    Height = 193
+    Top = 16
+    Width = 676
+    Columns = <>
+    DataSource = SQLQuery1
+    ReadOnly = False
+    UseDockManager = False
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <      
+        item
+        end>
+    )
+  end
+  object TeeGrid2: TTeeGrid
+    Left = 28
+    Height = 171
+    Top = 232
+    Width = 676
+    Columns = <>
+    DataSource = SQLQuery2
+    ReadOnly = False
+    UseDockManager = False
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 1
+    _Headers = (
+      1
+      'TColumnHeaderBand'
+      <      
+        item
+        end>
+    )
+  end
+  object ODBCConnection1: TODBCConnection
+    Connected = False
+    LoginPrompt = False
+    KeepConnection = False
+    left = 760
+    top = 16
+  end
+  object SQLTransaction1: TSQLTransaction
+    Active = False
+    left = 765
+    top = 84
+  end
+  object SQLQuery1: TSQLQuery
+    FieldDefs = <>
+    Params = <>
+    left = 765
+    top = 156
+  end
+  object SQLQuery2: TSQLQuery
+    FieldDefs = <>
+    Params = <>
+    left = 765
+    top = 236
+  end
+end

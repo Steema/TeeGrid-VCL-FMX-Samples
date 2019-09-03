@@ -1,5 +1,37 @@
 # TeeGrid Release Notes
 
+## Version: Release v1.08, 9th May 2019
+
+### New Features:
+### Summarised:
+
+* New ParentFont property for TeeGrid
+* New Mouse sensitivity control to avoid high CPU usage on mouseover
+* Indicator column header now takes common header brush
+
+### Modification & bugfix report:
+
+### Summarised:
+https://tinyurl.com/TeeGrid-BugFixes-1-08
+
+# TeeGrid Release Notes
+
+## Version: Release v1.07, 19th December 2018
+
+### New Features:
+### Summarised:
+
+* Support Rad Studio 10.3 Rio
+* Added new feature Layout Manager. Saves your custom layout and format.
+
+### Modification & bugfix report:
+
+### Summarised:
+https://tinyurl.com/TeeGrid-BugFixes-1-07
+
+
+# TeeGrid Release Notes
+
 ## Version: Release v1.06, 18th July 2018
 
 ### New Features:
