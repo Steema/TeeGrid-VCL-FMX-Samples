@@ -15,12 +15,26 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, StrUtils,
   Vcl.ComCtrls, Vcl.Samples.Spin,
 
   VCLTee.Control, VCLTee.Grid, Tee.Grid.Columns;
 
 type
+
+  TComboBox = class(Vcl.StdCtrls.TComboBox)
+  private
+    FStoredItems: TStringList;
+    procedure FilterItems;
+    procedure StoredItemsChange(Sender: TObject);
+    procedure SetStoredItems(const Value: TStringList);
+    procedure CNCommand(var AMessage: TWMCommand); message CN_COMMAND;
+  public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+    property StoredItems: TStringList read FStoredItems write SetStoredItems;
+  end;
+
   TFormCellEditors = class(TForm)
     TeeGrid1: TTeeGrid;
     Panel1: TPanel;
@@ -162,6 +176,12 @@ begin
     if AColumn=TeeGrid1.Columns['EyeColor'] then
        tmpValue:=IntToStr(ColorFromString(tmpValue));
 
+    //decide what to do if empty value entered.
+    if tmpValue = '' then
+      tmpValue := 'none';
+
+    TeeGrid1.Refresh;
+
     TeeGrid1.Data.SetValue(AColumn,ARow,tmpValue);
 
     // Set to False, do not change grid cell data
@@ -189,12 +209,21 @@ begin
   begin
     tmpValue:=TeeGrid1.Data.AsString(AColumn,ARow);
 
-    TComboBox(AEditor).Style:=csDropDownList;
+    TComboBox(AEditor).Style:=csDropDown; //csDropDownList;
 
     if AColumn=TeeGrid1.Columns['Vehicle'] then
+    Begin
        FillCombo(TComboBox(AEditor),
                  ['None','Bicycle','MotorBike','Car','Caravan','Truck','Boat','Plane'],
-                 tmpValue)
+                 tmpValue);
+
+       //setting up stored items offers a filter at runtime, taking characters entered
+       //in the field as a filter on the list
+       TComboBox(AEditor).StoredItems.BeginUpdate;
+       TComboBox(AEditor).StoredItems.Clear;
+       TComboBox(AEditor).StoredItems.AddStrings(TComboBox(AEditor).Items);
+       TComboBox(AEditor).StoredItems.EndUpdate;
+    end
     else
     if AColumn=TeeGrid1.Columns['EyeColor'] then
        FillCombo(TComboBox(AEditor),
@@ -205,6 +234,79 @@ begin
   // Example, use a trackbar as cell editor
   if AColumn=TeeGrid1.Columns['Height'] then
      SetupTrackBar(TTrackBar(AEditor));
+end;
+
+{ TComboBox }
+
+constructor TComboBox.Create(AOwner: TComponent);
+begin
+  inherited;
+  AutoComplete := False;
+  FStoredItems := TStringList.Create;
+  FStoredItems.OnChange := StoredItemsChange;
+end;
+
+destructor TComboBox.Destroy;
+begin
+  FStoredItems.Free;
+  inherited;
+end;
+
+procedure TComboBox.CNCommand(var AMessage: TWMCommand);
+begin
+  inherited;
+
+  if AMessage.NotifyCode = CBN_EDITUPDATE then
+    // fill the items with the matches
+    FilterItems;
+end;
+
+procedure TComboBox.FilterItems;
+var
+  I: Integer;
+  Selection: TSelection;
+begin
+  // store the current combo edit selection
+  SendMessage(Handle, CB_GETEDITSEL, WPARAM(@Selection.StartPos),
+    LPARAM(@Selection.EndPos));
+
+  //start filter cycle
+  Items.BeginUpdate;
+  try
+    // if the combo edit is not empty, then clear the items
+    // and search through the FStoredItems
+    if Text <> '' then
+    begin
+      // clear all items
+      Items.Clear;
+
+      for I := 0 to FStoredItems.Count - 1 do
+        if ContainsText(FStoredItems[I], Text) then
+          Items.Add(FStoredItems[I]); //resulting matched items
+    end
+    else
+      // if no match, ie. empty filter, add all items.
+      Items.Assign(FStoredItems)
+  finally
+    Items.EndUpdate;
+  end;
+  // restore the last combo edit selection
+  SendMessage(Handle, CB_SETEDITSEL, 0, MakeLParam(Selection.StartPos,
+    Selection.EndPos));
+end;
+
+procedure TComboBox.StoredItemsChange(Sender: TObject);
+begin
+  if Assigned(FStoredItems) then
+    FilterItems;
+end;
+
+procedure TComboBox.SetStoredItems(const Value: TStringList);
+begin
+  if Assigned(FStoredItems) then
+    FStoredItems.Assign(Value)
+  else
+    FStoredItems := Value;
 end;
 
 end.
