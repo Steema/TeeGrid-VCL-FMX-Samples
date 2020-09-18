@@ -1,9 +1,32 @@
 # TeeGrid Release Notes
 
+## Version: Release v1.10, 29th May 2020
+
+### New Features:
+
+- Now supporting RAD Studio 10.4 Sydney.
+
+### Modification & bugfix report:
+
+https://tinyurl.com/TeeGrid-Changes-1-10
+
+---
+
+## Version: Release v1.09, 4th Feb 2020
+
+### New Features:
+
+- TeeGrid adds full support for RAD Studio 10.3 Rio (RX/DX/CX) Update 3.
+
+### Modification & bugfix report:
+
+https://tinyurl.com/TeeGrid-BugFixes-1-09
+
+---
+
 ## Version: Release v1.08, 9th May 2019
 
 ### New Features:
-### Summarised:
 
 * New ParentFont property for TeeGrid
 * New Mouse sensitivity control to avoid high CPU usage on mouseover
@@ -11,7 +34,6 @@
 
 ### Modification & bugfix report:
 
-### Summarised:
 https://tinyurl.com/TeeGrid-BugFixes-1-08
 
 ---
@@ -19,14 +41,12 @@ https://tinyurl.com/TeeGrid-BugFixes-1-08
 ## Version: Release v1.07, 19th December 2018
 
 ### New Features:
-### Summarised:
 
 * Support Rad Studio 10.3 Rio
 * Added new feature Layout Manager. Saves your custom layout and format.
 
 ### Modification & bugfix report:
 
-### Summarised:
 https://tinyurl.com/TeeGrid-BugFixes-1-07
 
 ---
@@ -34,37 +54,30 @@ https://tinyurl.com/TeeGrid-BugFixes-1-07
 ## Version: Release v1.06, 18th July 2018
 
 ### New Features:
-### Summarised:
 
 * Added support for JSON export
 
 ### Modification & bugfix report:
 
-### Summarised:
 https://tinyurl.com/TeeGrid-BugFixes-1-06
 
 ---
 
 ## Version: Release v1.05, 23th March 2018
 
-### Modification & bugfix report:
-
-### Summarised:
+### New Features:
 
 * TeeGrid now is supported for Rad Studio 10.2 Tokyo update 3
 
 ### Modification & bugfix report:
 
-### Summarised:
 https://tinyurl.com/TeeGrid-BugFixes-1-05
 
 ---
 
 ## Version: Release v1.04, 16th January 2018
 
-### Modification & bugfix report:
-
-### Summarised:
+### New Features:
 
 * TeeGrid now is supported for Rad Studio 10.2 Tokyo update 2
 
@@ -74,7 +87,6 @@ https://tinyurl.com/TeeGrid-BugFixes-1-05
 
 ### Modification & bugfix report:
 
-### Summarised:
 <a href="http://bugs.teechart.net/buglist.cgi?bug_status=RESOLVED&bug_status=VERIFIED&chfield=resolution&chfieldfrom=2017-04-06&chfieldto=2017-10-30&chfieldvalue=FIXED&list_id=8265&product=TeeGrid%20for%20Delphi&query_format=advanced&resolution=FIXED">Fixed bug report</a>
 
 * #1784 Problem with Repaint of Grid when Datasource is Detail of MasterDetail data
