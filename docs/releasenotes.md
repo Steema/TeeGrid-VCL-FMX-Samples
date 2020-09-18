@@ -104,7 +104,7 @@ https://tinyurl.com/TeeGrid-BugFixes-1-05
 * Resilience improvement for TTeeGrid.ResetScrollBars
 * Fix bug #1784 (http://bugs.teechart.net/show_bug.cgi?id=1784). Problem with Repaint of Grid when Datasource is Detail of MasterDetail data
 
-##Version: Release v1.01, 1st Mar 2017
+## Version: Release v1.01, 1st Mar 2017
  
 ### BREAKING Changes
 
@@ -147,7 +147,7 @@ https://tinyurl.com/TeeGrid-BugFixes-1-05
 * Fixed editing cells linked to rtti data (read only issue)
 
 
-##Version: First Release v1.0, 8th Feb 2017
+## Version: First Release v1.0, 8th Feb 2017
 
 First official release.
 
@@ -168,7 +168,7 @@ First official release.
 * Improving system themes (VCL and FMX), added Hover and Selected colors
 * Fixes to correctly scroll sub-grids
 
-##Version: Release Candidate 1.0, Feb-2nd 2017
+## Version: Release Candidate 1.0, Feb-2nd 2017
 
 ### Improvements
 
@@ -178,7 +178,7 @@ First official release.
 * Changed FireDAC RecordCountMode to "cmTotal" to obtain the real total number of dataset records
 
 
-##Version: 0.5 Beta, Jan-18th 2017
+## Version: 0.5 Beta, Jan-18th 2017
 
 ### Demos
 
@@ -233,7 +233,7 @@ TSheet adds per-cell formatting (font, colors, etc), per-cell formula property (
 * Improved column header highlighting, for "sub-columns" and their parents (columns that are children of other columns)
 * New editor dialogs (VCL for TGridSelection, FMX for Gradient and Ticker classes)
 
-##Version: 0.4 Beta, Dec-12th 2016
+## Version: 0.4 Beta, Dec-12th 2016
 
 ### Virtual Data
 
@@ -343,9 +343,9 @@ TeeGrid1.Columns[3].Locked:= TColumnLocked.Left;
  * Streamlined cell painting to leverage GDI+, Lazarus LCL and Firemonkey automatic text layout support
  
 
-##Version: 0.3 Beta, Nov-30th 2016
+## Version: 0.3 Beta, Nov-30th 2016
 
-###TGridTicker
+### TGridTicker
 
 A new small component class to refresh grid cells using an internal thread.
 See the ["Ticker"](https://github.com/Steema/TeeGrid/tree/master/demos/VCL/Ticker) demos for VCL and Firemonkey, and the design-time "About..." dialog for a live example.
@@ -504,7 +504,7 @@ TeeGrid1.DataSource:= DataDefinition1;
   * ScrollBar visibility (Automatic or hidden) (VCL only)
   
   
-##Version: 0.2 Beta, Nov-22nd 2016
+## Version: 0.2 Beta, Nov-22nd 2016
 
 - GDI+ Plus support 
 
@@ -619,7 +619,7 @@ iOS, Android, "Black" new themes in Tee.Grid.Themes.pas unit
 - DB TDataSource (improper buffering of records)
 
 
-##Version: 0.5 Alpha, Nov-7th 2016
+## Version: 0.5 Alpha, Nov-7th 2016
 
 - Initial release
 
