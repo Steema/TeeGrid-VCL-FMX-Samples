@@ -14,7 +14,7 @@
 ### Summarised:
 https://tinyurl.com/TeeGrid-BugFixes-1-08
 
-# TeeGrid Release Notes
+---
 
 ## Version: Release v1.07, 19th December 2018
 
@@ -29,8 +29,7 @@ https://tinyurl.com/TeeGrid-BugFixes-1-08
 ### Summarised:
 https://tinyurl.com/TeeGrid-BugFixes-1-07
 
-
-# TeeGrid Release Notes
+---
 
 ## Version: Release v1.06, 18th July 2018
 
@@ -44,8 +43,7 @@ https://tinyurl.com/TeeGrid-BugFixes-1-07
 ### Summarised:
 https://tinyurl.com/TeeGrid-BugFixes-1-06
 
-
-# TeeGrid Release Notes
+---
 
 ## Version: Release v1.05, 23th March 2018
 
@@ -60,6 +58,7 @@ https://tinyurl.com/TeeGrid-BugFixes-1-06
 ### Summarised:
 https://tinyurl.com/TeeGrid-BugFixes-1-05
 
+---
 
 ## Version: Release v1.04, 16th January 2018
 
@@ -69,6 +68,7 @@ https://tinyurl.com/TeeGrid-BugFixes-1-05
 
 * TeeGrid now is supported for Rad Studio 10.2 Tokyo update 2
 
+---
 
 ## Version: Release v1.03, 31st October 2017
 
@@ -86,6 +86,7 @@ https://tinyurl.com/TeeGrid-BugFixes-1-05
 ### Other items:
 * TeeGrid now activated as 'ideal' plugin for (<a href="https://www.steema.com/product/teebi">TeeBI</a>)
 
+---
 
 ## Version: Release v1.02, 6th April 2017
 
@@ -103,6 +104,8 @@ https://tinyurl.com/TeeGrid-BugFixes-1-05
 * Pre-XE2 namespaces fix (commented Vcl.Buttons to {Vcl.}Buttons )
 * Resilience improvement for TTeeGrid.ResetScrollBars
 * Fix bug #1784 (http://bugs.teechart.net/show_bug.cgi?id=1784). Problem with Repaint of Grid when Datasource is Detail of MasterDetail data
+
+---
 
 ## Version: Release v1.01, 1st Mar 2017
  
@@ -146,6 +149,7 @@ https://tinyurl.com/TeeGrid-BugFixes-1-05
 * Fixed displaying bitmaps in cells for Firemonkey apps
 * Fixed editing cells linked to rtti data (read only issue)
 
+---
 
 ## Version: First Release v1.0, 8th Feb 2017
 
@@ -168,6 +172,8 @@ First official release.
 * Improving system themes (VCL and FMX), added Hover and Selected colors
 * Fixes to correctly scroll sub-grids
 
+---
+
 ## Version: Release Candidate 1.0, Feb-2nd 2017
 
 ### Improvements
@@ -177,6 +183,7 @@ First official release.
 
 * Changed FireDAC RecordCountMode to "cmTotal" to obtain the real total number of dataset records
 
+---
 
 ## Version: 0.5 Beta, Jan-18th 2017
 
@@ -232,6 +239,8 @@ TSheet adds per-cell formatting (font, colors, etc), per-cell formula property (
 * New TColumn Show and Hide methods (just to change the Visible boolean property)
 * Improved column header highlighting, for "sub-columns" and their parents (columns that are children of other columns)
 * New editor dialogs (VCL for TGridSelection, FMX for Gradient and Ticker classes)
+
+---
 
 ## Version: 0.4 Beta, Dec-12th 2016
 
@@ -309,8 +318,8 @@ end;
  * New basic C++ Builder example at [Demos\VCL\C++](https://github.com/Steema/TeeGrid/tree/master/demos/VCL/C%2B%2B/Basic) folder
  * New example showing the new "Locked" TColumn feature at [Demos\VCL\Locked Columns](https://github.com/Steema/TeeGrid/tree/master/demos/VCL/Locked%20Columns) folder
  * New example using the TVirtualModeData at [Demos\VirtualData\Virtual mode](https://github.com/Steema/TeeGrid/tree/master/demos/VirtualData/Virtual%20Mode) folder
- 
- 
+
+
 ### Linux support for Lazarus
 
 Fixed compilation bugs for Lazarus under Linux (tested on Ubuntu), and other FreePascal supported platforms
@@ -342,6 +351,7 @@ TeeGrid1.Columns[3].Locked:= TColumnLocked.Left;
  * Several fixes to improve scrolling (VCL and Firemonkey)
  * Streamlined cell painting to leverage GDI+, Lazarus LCL and Firemonkey automatic text layout support
  
+---
 
 ## Version: 0.3 Beta, Nov-30th 2016
 
@@ -365,7 +375,6 @@ TeeGrid1.Rows.Height.Automatic:= True;
 ```
 
 ![](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_multiline_text.png)
-
 
 ### TColumn
 
@@ -502,8 +511,9 @@ TeeGrid1.DataSource:= DataDefinition1;
   * Overall speed improvements (see "Benchmark" buttons at StringGrid demos)
   * TeeGrid1.Rows.Back property (TFormat) to optionally fill the space behind all rows
   * ScrollBar visibility (Automatic or hidden) (VCL only)
-  
-  
+
+---
+
 ## Version: 0.2 Beta, Nov-22nd 2016
 
 - GDI+ Plus support 
@@ -618,6 +628,7 @@ iOS, Android, "Black" new themes in Tee.Grid.Themes.pas unit
 
 - DB TDataSource (improper buffering of records)
 
+---
 
 ## Version: 0.5 Alpha, Nov-7th 2016
 
@@ -645,4 +656,3 @@ See demos for an example of use.
 - TPainter
 
 Abstract TPainter class new methods to draw / fill ellipses, polylines, etc
-
