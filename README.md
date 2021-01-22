@@ -33,6 +33,8 @@ See full [License](https://github.com/Steema/TeeGrid/blob/master/docs/license.tx
 
 - [Release Notes](https://www.steema.com/version_info/gridvcl) (What's new?)
 
-- [Google+ Community](https://plus.google.com/u/0/communities/117324086536146457211)
-
 - [TeeBI data-mining](https://www.steema.com/product/teebi)
+
+- [LearnDelphi.org](https://learndelphi.org/)
+
+[![](https://raw.github.com/Steema/TeeGrid/master/docs/img/embarcadero_logo.png)](https://www.embarcadero.com)
