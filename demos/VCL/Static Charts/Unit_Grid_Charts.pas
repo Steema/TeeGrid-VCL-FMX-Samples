@@ -12,7 +12,7 @@ uses
 
   VclTee.TeeGDIPlus, VCLTee.TeEngine,
   VCLTee.Series, VCLTee.Control, VCLTee.Grid, Vcl.ExtCtrls, VCLTee.TeeProcs,
-  VCLTee.Chart,
+  VCLTee.Chart, Tee.Format,
 
   Tee.GridData.Rtti, Tee.Grid.Columns, Tee.Renders, VCLTee.Picture,
   VCLTee.EditChar, VCLTee.Editor.Grid, Tee.Control;
@@ -161,6 +161,10 @@ begin
 
   Chart1.Title.Caption:=Locations[ARow].Name;
 
+  Chart1.Gradient.Visible := False;
+  Chart1.Walls.Visible := False;
+  Chart1.Color := clGray;
+
   R:=TRect.Create(0,0,AWidth-1,AHeight-1);
 
   result:=Chart1.TeeCreateBitmap(Chart1.Color,R);
@@ -175,6 +179,9 @@ begin
 
   Bitmap:=CreateChart(AData.Row,Round(AData.Bounds.Width),Round(AData.Bounds.Height));
   Picture:=TVCLPicture.From(Bitmap);
+  Picture.Transparent := True;   //example transparency
+  Picture.TransparentColor := clGray;
+  Picture.TransparentMode := tmFixed;
   try
     TeeGrid1.Painter.Draw(Picture,AData.Bounds);
   finally
