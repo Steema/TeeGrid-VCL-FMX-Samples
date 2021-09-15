@@ -62,6 +62,7 @@ type
 
 var
   StringGridForm1: TStringGridForm;
+  aChanged: TNotifyEvent;
 
 implementation
 
@@ -213,11 +214,14 @@ begin
   CustomFormat:=TTextFormat.Create(nil);
 
   TeeGrid1.Columns[6].OnPaint:=TestPaintBackground;
+
+  TeeGrid1.Columns[0].OnPaint:=TestPaintBackground;  //texts here
 end;
 
 // Simple test, customize per-cell background format
 procedure TStringGridForm.TestPaintBackground(const Sender:TColumn;
                       var AData:TRenderData; var DefaultPaint:Boolean);
+var aFont, oldFont : TFont;
 begin
   DefaultPaint:=True;
 
@@ -245,7 +249,25 @@ begin
   else
     Exit;
 
+  DefaultPaint:=False;
+
+  //Modify cell Font
+  oldFont := CustomFormat.Font;
+
+  aFont := TFont.Create(aChanged);
+  aFont.Size := 20;
+  aFont.Color := TColors.Orange;
+
+  AData.Painter.SetFont(aFont);
+
+  //background
   AData.Painter.Paint(CustomFormat,AData.Bounds);
+  //text
+  (Sender.Render as TTextRender).Paint(AData);
+
+  AData.Painter.SetFont(oldFont);
+
+  aFont.Free;
 end;
 
 // Speed performance, disable cosmetic effects:
