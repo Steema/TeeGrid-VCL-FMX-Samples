@@ -1,5 +1,17 @@
 # TeeGrid Release Notes
 
+## Version: Release v1.11, 16th Sept. 2021
+
+### New Features:
+
+- Now supporting RAD Studio 11 Alexandria.
+
+### Modification & bugfix report:
+
+https://tinyurl.com/TeeGrid-Changes-1-11
+
+---
+
 ## Version: Release v1.10, 29th May 2020
 
 ### New Features:
