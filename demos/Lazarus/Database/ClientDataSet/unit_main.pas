@@ -47,9 +47,6 @@ begin
   TeeGrid1.Selected.ScrollToView:=True;
 
   // Open table:
-  {$IFDEF LINUX}
-  Dbf1.FilePath:='./';
-  {$ENDIF}
   Dbf1.TableName:='disco.dbf';
   Dbf1.Open;
 

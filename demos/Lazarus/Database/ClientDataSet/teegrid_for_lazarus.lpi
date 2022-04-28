@@ -54,8 +54,8 @@
       <Filename Value="teegrid_for_lazarus"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir);c:\root\teebee\sources\grid\"/>
-      <OtherUnitFiles Value="c:\root\teebee\sources\grid\;c:\root\teebee\sources\grid\vcl\"/>
+      <IncludeFiles Value="$(ProjOutDir);D:\TeeGrid_1.11\Sources\"/>
+      <OtherUnitFiles Value="D:\TeeGrid_1.11\Sources\;D:\TeeGrid_1.11\Sources\VCL\"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
