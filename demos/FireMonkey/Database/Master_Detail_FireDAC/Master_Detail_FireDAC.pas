@@ -32,8 +32,10 @@ type
     BindNavigator1: TBindNavigator;
     DataSource1: TDataSource;
     BindSourceDB1: TBindSourceDB;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure CBEnabledChange(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
 
@@ -48,6 +50,7 @@ type
 
 var
   MasterDetail: TMasterDetail;
+  Open : Boolean;
 
 implementation
 
@@ -60,6 +63,8 @@ procedure TMasterDetail.FormCreate(Sender: TObject);
 begin
   TeeGrid1.DataSource:=SampleData.CustomersTable;
 
+  Open := False;
+
   // Initialize "Expander"
   CBEnabledChange(Self);
 
@@ -68,6 +73,22 @@ begin
 end;
 
 // Optional. Called when a new detail sub-grid has been created
+procedure TMasterDetail.Button1Click(Sender: TObject);
+begin
+
+  if Open = True then
+  Begin
+    TeeGrid1.Grid.Current.ShowHideAllDetail(0,False);
+    Open:= False;
+  End
+  else
+  Begin
+    TeeGrid1.Grid.Current.ShowHideAllDetail(0,True);
+    Open:= True;
+  End;
+
+end;
+
 procedure TMasterDetail.CBEnabledChange(Sender: TObject);
 begin
   if CBEnabled.IsChecked then

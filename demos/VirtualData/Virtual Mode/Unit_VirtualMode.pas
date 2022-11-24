@@ -37,8 +37,12 @@ implementation
 
 {$R *.fmx}
 
+uses Tee.Grid.Rows,Tee.Format,System.UIConsts;
+
 procedure TFormVirtualMode.FormCreate(Sender: TObject);
 var t : Integer;
+    row : TRow;
+    fontstyles :TFontStyles;
 begin
   // Important:
   // Passing an optional default column width (60) means the grid will not need
@@ -57,6 +61,31 @@ begin
 
   // Set Data to Grid
   TeeGrid1.Data:=Data;
+
+  //display format modifications
+  fontstyles := [TFontStyle.fsBold,TFontStyle.fsStrikeOut];
+
+  row := teeGrid1.Rows.Items.AddRow(7);
+  row.Format.Brush.Color := TColors.Red;
+  row.Format.Font.Color := claWhite;
+  row.Format.Brush.Show();
+
+
+  teeGrid1.CellFormat.AddCell(10, 8);
+  teeGrid1.CellFormat.Cell[10, 8].Format.Brush.Color := TColors.Mediumslateblue;
+  teeGrid1.CellFormat.Cell[10, 8].Format.Brush.Show();
+
+  //or
+  teeGrid1.CellFormat.AddCell(3, 4);
+  teeGrid1.CellFormat.Cell[3, 4].Format.Brush.Color := TColors.Green;
+  teeGrid1.CellFormat.Cell[3, 4].Format.Font.Color := claYellow;
+  teeGrid1.CellFormat.Cell[3, 4].Format.Brush.Show();
+
+  teeGrid1.Rows.Items[5].Format.Brush.Show();
+  teeGrid1.Rows.Items[5].Format.Font.Style := fontstyles;
+  teeGrid1.Rows.Items[5].Format.Brush.Color := TColors.CornflowerBlue;
+  teeGrid1.Rows.Items[5].Format.Font.Color := claDarkblue;
+
 end;
 
 procedure TFormVirtualMode.GetCell(Sender: TObject; const AColumn:TColumn; const ARow: Integer;

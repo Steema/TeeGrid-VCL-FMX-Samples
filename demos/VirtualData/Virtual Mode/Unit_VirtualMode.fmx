@@ -14,7 +14,7 @@ object FormVirtualMode: TFormVirtualMode
   DesignerMasterStyle = 0
   object TeeGrid1: TTeeGrid
     Columns = <>
-    ReadOnly = False
+    CellFormat = <>
     Align = Client
     Size.Width = 640.000000000000000000
     Size.Height = 480.000000000000000000

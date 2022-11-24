@@ -21,7 +21,8 @@ object FormCellEditors: TFormCellEditors
     Width = 644
     Height = 191
     Columns = <>
-    ReadOnly = False
+    MouseActivity = [All]
+    CellFormat = <>
     OnCellEditing = TeeGrid1CellEditing
     OnCellEdited = TeeGrid1CellEdited
     Align = alClient
@@ -151,6 +152,24 @@ object FormCellEditors: TFormCellEditors
       Caption = 'Selected Text'
       TabOrder = 3
       OnClick = CBSelectedTextClick
+    end
+    object Button1: TButton
+      Left = 511
+      Top = 64
+      Width = 116
+      Height = 25
+      Caption = 'Mod Cell 1,1 format'
+      TabOrder = 4
+      OnClick = Button1Click
+    end
+    object Button2: TButton
+      Left = 511
+      Top = 95
+      Width = 116
+      Height = 25
+      Caption = 'Mod Cell 2,1 format'
+      TabOrder = 5
+      OnClick = Button2Click
     end
   end
 end
