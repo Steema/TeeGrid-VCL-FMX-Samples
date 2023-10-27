@@ -30,6 +30,7 @@ object AppearanceForm: TAppearanceForm
         Stroke.Kind = None
         object CBFooter: TCheckBox
           StyledSettings = [Family, Size, Style]
+          IsChecked = True
           Position.X = 32.000000000000000000
           Position.Y = 48.000000000000000000
           TabOrder = 0
@@ -39,6 +40,7 @@ object AppearanceForm: TAppearanceForm
         end
         object CBHeader: TCheckBox
           StyledSettings = [Family, Size, Style]
+          IsChecked = True
           Position.X = 32.000000000000000000
           Position.Y = 16.000000000000000000
           TabOrder = 1
@@ -50,7 +52,7 @@ object AppearanceForm: TAppearanceForm
     end
     object TeeGrid1: TTeeGrid
       Columns = <>
-      ReadOnly = False
+      CellFormat = <>
       Align = Client
       Size.Width = 749.000000000000000000
       Size.Height = 399.000000000000000000
