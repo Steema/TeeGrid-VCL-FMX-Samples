@@ -17,8 +17,8 @@ uses
 
 type
    TDemo = record
-     title : string[30];
-     name  : string[30];
+     title : string;
+     name  : string;
      group : byte;
    end;
 
@@ -98,7 +98,7 @@ var
   LItem: TListViewItem;
   I : integer;
 
-  Group, Item: Integer;
+  Group: Integer;
 
 begin
 
