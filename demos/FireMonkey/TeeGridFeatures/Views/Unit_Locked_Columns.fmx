@@ -13,7 +13,7 @@ object LockedColumnsForm: TLockedColumnsForm
   DesignerMasterStyle = 0
   object TeeGrid1: TTeeGrid
     Columns = <>
-    ReadOnly = False
+    CellFormat = <>
     Align = Client
     Size.Width = 640.000000000000000000
     Size.Height = 351.000000000000000000
@@ -49,6 +49,7 @@ object LockedColumnsForm: TLockedColumnsForm
         Size.PlatformDefault = False
         StyleLookup = 'segmentedbuttonmiddle'
         Text = 'Left'
+        TextSettings.Trimming = None
         OnClick = BNoneClick
       end
       object BNone: TSpeedButton
@@ -62,6 +63,7 @@ object LockedColumnsForm: TLockedColumnsForm
         Size.PlatformDefault = False
         StyleLookup = 'segmentedbuttonleft'
         Text = 'None'
+        TextSettings.Trimming = None
         OnClick = BNoneClick
       end
       object BRight: TSpeedButton
@@ -74,6 +76,7 @@ object LockedColumnsForm: TLockedColumnsForm
         Size.PlatformDefault = False
         StyleLookup = 'segmentedbuttonright'
         Text = 'Right'
+        TextSettings.Trimming = None
         OnClick = BNoneClick
       end
       object Label1: TLabel
@@ -81,6 +84,7 @@ object LockedColumnsForm: TLockedColumnsForm
         Position.X = 8.000000000000000000
         Position.Y = 6.000000000000000000
         TextSettings.FontColor = claWhite
+        TextSettings.Trimming = None
         Text = 'Columns :'
         TabOrder = 3
       end
@@ -89,6 +93,7 @@ object LockedColumnsForm: TLockedColumnsForm
         Position.X = 191.000000000000000000
         Position.Y = 6.000000000000000000
         TextSettings.FontColor = claWhite
+        TextSettings.Trimming = None
         Text = 'Locked :'
         TabOrder = 4
       end

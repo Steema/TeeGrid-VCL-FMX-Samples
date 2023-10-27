@@ -102,11 +102,15 @@ begin
   Column:=TeeGrid1.Columns[LBColumns.ItemIndex];
 
   if BNone.IsPressed then
-    Locked:=TColumnLocked(0)
-  else if BLeft.IsPressed then
-    Locked:=TColumnLocked(1)
-  else if BRight.IsPressed then
-    Locked:=TColumnLocked(2);
+     Locked:=TColumnLocked.None
+  else
+  if BLeft.IsPressed then
+     Locked:=TColumnLocked.Left
+  else
+  if BRight.IsPressed then
+     Locked:=TColumnLocked.Right
+  else
+     Locked:=TColumnLocked.None;
 
   SetLocked(Column,Locked);
 end;
