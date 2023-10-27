@@ -1,15 +1,13 @@
 object SampleData: TSampleData
-  OldCreateOrder = False
   Height = 337
   Width = 267
   object Sqlite_demoConnection: TFDConnection
     Params.Strings = (
       'Database=D:\apps\Embarcadero\Studio\19.0\Samples\Data\FDDemo.sdb'
       'ConnectionDef=SQLite_Demo')
-    Connected = True
     LoginPrompt = False
-    Left = 47
-    Top = 22
+    Left = 103
+    Top = 38
   end
   object CustomersTable: TFDQuery
     Connection = Sqlite_demoConnection
@@ -17,19 +15,18 @@ object SampleData: TSampleData
     FetchOptions.RecordCountMode = cmTotal
     SQL.Strings = (
       'SELECT * FROM Customers')
-    Left = 47
-    Top = 85
+    Left = 103
+    Top = 101
   end
   object OrdersTable: TFDQuery
-    Active = True
     Connection = Sqlite_demoConnection
     FetchOptions.AssignedValues = [evRecordCountMode]
     FetchOptions.RecordCountMode = cmTotal
     SQL.Strings = (
       'SELECT * FROM Orders'
       'where CustomerID = :Cust')
-    Left = 49
-    Top = 147
+    Left = 105
+    Top = 163
     ParamData = <
       item
         Name = 'CUST'
@@ -39,7 +36,7 @@ object SampleData: TSampleData
       end>
   end
   object FDStanStorageBinLink1: TFDStanStorageBinLink
-    Left = 48
-    Top = 208
+    Left = 104
+    Top = 224
   end
 end

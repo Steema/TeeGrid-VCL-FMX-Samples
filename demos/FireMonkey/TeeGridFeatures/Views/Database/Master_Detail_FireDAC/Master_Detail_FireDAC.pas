@@ -82,7 +82,9 @@ begin
     Expander.AlwaysExpand:=True;
 
     // Set to first Column
-    TeeGrid1.Columns[0].Render:=Expander;
+
+    if TeeGrid1.Columns.Count>0 then
+       TeeGrid1.Columns[0].Render:=Expander;
   end
   else
   begin
