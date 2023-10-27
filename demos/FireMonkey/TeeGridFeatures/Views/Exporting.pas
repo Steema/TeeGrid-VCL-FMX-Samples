@@ -8,7 +8,7 @@ uses
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Colors, FMXTee.Control,
   FMXTee.Grid,
   Tee.Renders, Tee.Grid.Columns, Tee.Grid.Rows,
-  Tee.Grid.Bands, FMX.DateTimeCtrls, FMX.ScrollBox, FMX.Memo;
+  Tee.Grid.Bands, FMX.DateTimeCtrls, FMX.ScrollBox, FMX.Memo, FMX.Memo.Types;
 
 type
   TExportingForm = class(TForm)
@@ -84,7 +84,7 @@ begin
 end;
 
 procedure TExportingForm.FillData;
-var tmp : TColumnTotals;
+//var tmp : TColumnTotals;
 begin
   SetLength(MyData,10);
   FillMyData(MyData);

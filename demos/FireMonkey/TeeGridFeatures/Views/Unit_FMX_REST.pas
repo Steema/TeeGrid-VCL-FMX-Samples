@@ -13,7 +13,8 @@ uses
   Data.Bind.DBScope,
   Tee.Grid.Rows, Tee.Grid.Columns, Tee.GridData, Tee.Grid.RowGroup,
   Tee.Renders, Tee.Grid.Totals,
-  Tee.GridData.DB, Tee.Grid, System.ImageList, FMX.ImgList, FMX.Objects;
+  Tee.GridData.DB, Tee.Grid, System.ImageList, FMX.ImgList, FMX.Objects,
+  REST.Types;
 
 type
   TRESTClientTeeGridForm = class(TForm)
@@ -40,7 +41,9 @@ type
     procedure CBEnabledChange(Sender: TObject);
   private
     Expander : TExpanderRender;
-    procedure AddTotals;
+
+    //procedure AddTotals;
+
     procedure AddRowGroups;
     procedure DetailNewGroup(const Sender,NewGroup:TRowGroup);
     procedure GetAlbums(const Sender: TExpanderRender; const ARow: Integer;
@@ -59,6 +62,7 @@ uses
 
 {$R *.fmx}
 
+{
 procedure TRESTClientTeeGridForm.AddTotals;
   var Totals : TColumnTotals;
 begin
@@ -70,7 +74,7 @@ begin
   // Add also a band with total names
   TTotalsHeader.CreateTotals( TeeGrid1.Footer, Totals );
 end;
-
+}
 
 procedure TRESTClientTeeGridForm.GetAlbums(const Sender: TExpanderRender; const ARow:Integer; out AData:TObject);
 begin
@@ -141,7 +145,7 @@ end;
 
 procedure TRESTClientTeeGridForm.SpeedButton1Click(Sender: TObject);
 var
-  jValue:TJSONValue;
+//  jValue:TJSONValue;
   i : integer;
 begin
   RESTRequest1.Execute;

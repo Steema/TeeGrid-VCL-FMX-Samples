@@ -11,7 +11,7 @@ object ExportingForm: TExportingForm
   DesignerMasterStyle = 0
   object TeeGrid1: TTeeGrid
     Columns = <>
-    ReadOnly = False
+    CellFormat = <>
     Align = Client
     Size.Width = 640.000000000000000000
     Size.Height = 140.000000000000000000
@@ -51,6 +51,7 @@ object ExportingForm: TExportingForm
       Size.Height = 16.000000000000000000
       Size.PlatformDefault = False
       TextSettings.FontColor = claWhite
+      TextSettings.Trimming = None
       Text = 'Export To : '
       TabOrder = 1
     end
@@ -72,6 +73,7 @@ object ExportingForm: TExportingForm
         TextSettings.Font.StyleExt = {00070000000000000004000000}
         TextSettings.FontColor = claWhite
         TextSettings.HorzAlign = Center
+        TextSettings.Trimming = None
         Text = 'Export'
         TabOrder = 0
       end
@@ -86,7 +88,7 @@ object ExportingForm: TExportingForm
     Size.Height = 288.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 2
-    Viewport.Width = 636.000000000000000000
-    Viewport.Height = 284.000000000000000000
+    Viewport.Width = 640.000000000000000000
+    Viewport.Height = 288.000000000000000000
   end
 end
