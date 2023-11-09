@@ -27,6 +27,15 @@
         <Projects Include="Speed\VCL_TeeGrid_Benchmark.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Database\ClientDataSet\VCL_TeeGrid_DataSet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Static Charts\TeeGrid_Static_Charts.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Themes\TeeGrid_Themes_VCL.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -107,14 +116,41 @@
     <Target Name="VCL_TeeGrid_Benchmark:Make">
         <MSBuild Projects="Speed\VCL_TeeGrid_Benchmark.dproj" Targets="Make"/>
     </Target>
+    <Target Name="VCL_TeeGrid_DataSet">
+        <MSBuild Projects="Database\ClientDataSet\VCL_TeeGrid_DataSet.dproj"/>
+    </Target>
+    <Target Name="VCL_TeeGrid_DataSet:Clean">
+        <MSBuild Projects="Database\ClientDataSet\VCL_TeeGrid_DataSet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VCL_TeeGrid_DataSet:Make">
+        <MSBuild Projects="Database\ClientDataSet\VCL_TeeGrid_DataSet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Static_Charts">
+        <MSBuild Projects="Static Charts\TeeGrid_Static_Charts.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Static_Charts:Clean">
+        <MSBuild Projects="Static Charts\TeeGrid_Static_Charts.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Static_Charts:Make">
+        <MSBuild Projects="Static Charts\TeeGrid_Static_Charts.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Themes_VCL">
+        <MSBuild Projects="Themes\TeeGrid_Themes_VCL.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Themes_VCL:Clean">
+        <MSBuild Projects="Themes\TeeGrid_Themes_VCL.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Themes_VCL:Make">
+        <MSBuild Projects="Themes\TeeGrid_Themes_VCL.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="TeeGrid_Header_Footer;TeeGrid_Locked_Columns;TeeGrid_VCL_Ticker;TeeGrid_VCL_Row_Heights;TeeGrid_CustomBands;TeeGrid_Cell_Editors;TeeGrid_VCL_DataSource;VCL_TeeGrid_Benchmark"/>
+        <CallTarget Targets="TeeGrid_Header_Footer;TeeGrid_Locked_Columns;TeeGrid_VCL_Ticker;TeeGrid_VCL_Row_Heights;TeeGrid_CustomBands;TeeGrid_Cell_Editors;TeeGrid_VCL_DataSource;VCL_TeeGrid_Benchmark;VCL_TeeGrid_DataSet;TeeGrid_Static_Charts;TeeGrid_Themes_VCL"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="TeeGrid_Header_Footer:Clean;TeeGrid_Locked_Columns:Clean;TeeGrid_VCL_Ticker:Clean;TeeGrid_VCL_Row_Heights:Clean;TeeGrid_CustomBands:Clean;TeeGrid_Cell_Editors:Clean;TeeGrid_VCL_DataSource:Clean;VCL_TeeGrid_Benchmark:Clean"/>
+        <CallTarget Targets="TeeGrid_Header_Footer:Clean;TeeGrid_Locked_Columns:Clean;TeeGrid_VCL_Ticker:Clean;TeeGrid_VCL_Row_Heights:Clean;TeeGrid_CustomBands:Clean;TeeGrid_Cell_Editors:Clean;TeeGrid_VCL_DataSource:Clean;VCL_TeeGrid_Benchmark:Clean;VCL_TeeGrid_DataSet:Clean;TeeGrid_Static_Charts:Clean;TeeGrid_Themes_VCL:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="TeeGrid_Header_Footer:Make;TeeGrid_Locked_Columns:Make;TeeGrid_VCL_Ticker:Make;TeeGrid_VCL_Row_Heights:Make;TeeGrid_CustomBands:Make;TeeGrid_Cell_Editors:Make;TeeGrid_VCL_DataSource:Make;VCL_TeeGrid_Benchmark:Make"/>
+        <CallTarget Targets="TeeGrid_Header_Footer:Make;TeeGrid_Locked_Columns:Make;TeeGrid_VCL_Ticker:Make;TeeGrid_VCL_Row_Heights:Make;TeeGrid_CustomBands:Make;TeeGrid_Cell_Editors:Make;TeeGrid_VCL_DataSource:Make;VCL_TeeGrid_Benchmark:Make;VCL_TeeGrid_DataSet:Make;TeeGrid_Static_Charts:Make;TeeGrid_Themes_VCL:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
