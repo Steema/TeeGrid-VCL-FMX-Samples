@@ -10,9 +10,7 @@ object Form43: TForm43
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object TeeGrid1: TTeeGrid
     Left = 0
@@ -44,7 +42,6 @@ object Form43: TForm43
         Link = 'BMP'
       end>
     DataSource = DataSource1
-    ReadOnly = False
     Selected.FullRow = True
     Align = alLeft
     UseDockManager = False
@@ -3659,7 +3656,7 @@ object Form43: TForm43
     Active = True
     Aggregates = <>
     Params = <>
-    Left = 696
+    Left = 704
     Top = 472
     object ClientDataSet1NAME: TStringField
       DisplayWidth = 10
