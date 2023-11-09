@@ -1,0 +1,144 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{38B4D768-866B-4C45-A769-C6907BCB0F8D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Cell Editors\TeeGrid_FMX_Cell_Editors.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Custom Sorting\TeeGrid_Custom_Sorting.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Database\DataSet\TeeGrid_FMX_DataSet_Demo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Database\Master_Detail_FireDAC\TeeGrid_FireDAC_Master_Detail.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Row_SubTitles\TeeGrid_Row_SubTitles.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Sheet\TeeGrid_Sheet.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TeeGridFeatures\TeeGridFeatures.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Themes\TeeGrid_Themes_FMX.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Ticker\TeeGrid_FMX_Ticker.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TStringGrid\TeeGrid_FMX_StringGrid.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="TeeGrid_FMX_Cell_Editors">
+        <MSBuild Projects="Cell Editors\TeeGrid_FMX_Cell_Editors.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_FMX_Cell_Editors:Clean">
+        <MSBuild Projects="Cell Editors\TeeGrid_FMX_Cell_Editors.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_FMX_Cell_Editors:Make">
+        <MSBuild Projects="Cell Editors\TeeGrid_FMX_Cell_Editors.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Custom_Sorting">
+        <MSBuild Projects="Custom Sorting\TeeGrid_Custom_Sorting.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Custom_Sorting:Clean">
+        <MSBuild Projects="Custom Sorting\TeeGrid_Custom_Sorting.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Custom_Sorting:Make">
+        <MSBuild Projects="Custom Sorting\TeeGrid_Custom_Sorting.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_FMX_DataSet_Demo">
+        <MSBuild Projects="Database\DataSet\TeeGrid_FMX_DataSet_Demo.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_FMX_DataSet_Demo:Clean">
+        <MSBuild Projects="Database\DataSet\TeeGrid_FMX_DataSet_Demo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_FMX_DataSet_Demo:Make">
+        <MSBuild Projects="Database\DataSet\TeeGrid_FMX_DataSet_Demo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_FireDAC_Master_Detail">
+        <MSBuild Projects="Database\Master_Detail_FireDAC\TeeGrid_FireDAC_Master_Detail.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_FireDAC_Master_Detail:Clean">
+        <MSBuild Projects="Database\Master_Detail_FireDAC\TeeGrid_FireDAC_Master_Detail.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_FireDAC_Master_Detail:Make">
+        <MSBuild Projects="Database\Master_Detail_FireDAC\TeeGrid_FireDAC_Master_Detail.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Row_SubTitles">
+        <MSBuild Projects="Row_SubTitles\TeeGrid_Row_SubTitles.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Row_SubTitles:Clean">
+        <MSBuild Projects="Row_SubTitles\TeeGrid_Row_SubTitles.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Row_SubTitles:Make">
+        <MSBuild Projects="Row_SubTitles\TeeGrid_Row_SubTitles.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Sheet">
+        <MSBuild Projects="Sheet\TeeGrid_Sheet.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Sheet:Clean">
+        <MSBuild Projects="Sheet\TeeGrid_Sheet.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Sheet:Make">
+        <MSBuild Projects="Sheet\TeeGrid_Sheet.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGridFeatures">
+        <MSBuild Projects="TeeGridFeatures\TeeGridFeatures.dproj"/>
+    </Target>
+    <Target Name="TeeGridFeatures:Clean">
+        <MSBuild Projects="TeeGridFeatures\TeeGridFeatures.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGridFeatures:Make">
+        <MSBuild Projects="TeeGridFeatures\TeeGridFeatures.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Themes_FMX">
+        <MSBuild Projects="Themes\TeeGrid_Themes_FMX.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Themes_FMX:Clean">
+        <MSBuild Projects="Themes\TeeGrid_Themes_FMX.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Themes_FMX:Make">
+        <MSBuild Projects="Themes\TeeGrid_Themes_FMX.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_FMX_Ticker">
+        <MSBuild Projects="Ticker\TeeGrid_FMX_Ticker.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_FMX_Ticker:Clean">
+        <MSBuild Projects="Ticker\TeeGrid_FMX_Ticker.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_FMX_Ticker:Make">
+        <MSBuild Projects="Ticker\TeeGrid_FMX_Ticker.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_FMX_StringGrid">
+        <MSBuild Projects="TStringGrid\TeeGrid_FMX_StringGrid.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_FMX_StringGrid:Clean">
+        <MSBuild Projects="TStringGrid\TeeGrid_FMX_StringGrid.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_FMX_StringGrid:Make">
+        <MSBuild Projects="TStringGrid\TeeGrid_FMX_StringGrid.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="TeeGrid_FMX_Cell_Editors;TeeGrid_Custom_Sorting;TeeGrid_FMX_DataSet_Demo;TeeGrid_FireDAC_Master_Detail;TeeGrid_Row_SubTitles;TeeGrid_Sheet;TeeGridFeatures;TeeGrid_Themes_FMX;TeeGrid_FMX_Ticker;TeeGrid_FMX_StringGrid"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="TeeGrid_FMX_Cell_Editors:Clean;TeeGrid_Custom_Sorting:Clean;TeeGrid_FMX_DataSet_Demo:Clean;TeeGrid_FireDAC_Master_Detail:Clean;TeeGrid_Row_SubTitles:Clean;TeeGrid_Sheet:Clean;TeeGridFeatures:Clean;TeeGrid_Themes_FMX:Clean;TeeGrid_FMX_Ticker:Clean;TeeGrid_FMX_StringGrid:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="TeeGrid_FMX_Cell_Editors:Make;TeeGrid_Custom_Sorting:Make;TeeGrid_FMX_DataSet_Demo:Make;TeeGrid_FireDAC_Master_Detail:Make;TeeGrid_Row_SubTitles:Make;TeeGrid_Sheet:Make;TeeGridFeatures:Make;TeeGrid_Themes_FMX:Make;TeeGrid_FMX_Ticker:Make;TeeGrid_FMX_StringGrid:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
