@@ -10,25 +10,33 @@ object TickerForm: TTickerForm
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 13
+  object Splitter1: TSplitter
+    Left = 0
+    Top = 221
+    Width = 389
+    Height = 3
+    Cursor = crVSplit
+    Align = alBottom
+    ExplicitTop = 41
+    ExplicitWidth = 215
+  end
   object TeeGrid1: TTeeGrid
     Left = 0
     Top = 41
     Width = 389
-    Height = 215
+    Height = 180
     Columns = <>
-    ReadOnly = False
     Align = alClient
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
+    ExplicitHeight = 215
     _Headers = (
       1
       'TColumnHeaderBand'
@@ -38,9 +46,9 @@ object TickerForm: TTickerForm
   end
   object PanelEditor: TPanel
     Left = 0
-    Top = 256
+    Top = 224
     Width = 389
-    Height = 214
+    Height = 246
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1

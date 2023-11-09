@@ -26,6 +26,7 @@ type
     Label1: TLabel;
     TBSpeed: TTrackBar;
     LSpeed: TLabel;
+    Splitter1: TSplitter;
     procedure FormCreate(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
