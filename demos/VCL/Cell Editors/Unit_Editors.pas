@@ -52,6 +52,7 @@ type
     Label6: TLabel;
     Button1: TButton;
     Button2: TButton;
+    Button3: TButton;
     procedure FormCreate(Sender: TObject);
     procedure CBAutoEditClick(Sender: TObject);
     procedure CBAlwaysVisibleClick(Sender: TObject);
@@ -65,6 +66,7 @@ type
       var ChangeData:Boolean; var NewData:String);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
 
@@ -86,38 +88,46 @@ uses
   Tee.Grid, System.UITypes, Tee.Grid.Rows, Tee.Format;
 
 procedure TFormCellEditors.Button1Click(Sender: TObject);
-var t : Integer;
-    cell : TCell;
-    row : TRow;
+var cell : TCell;
     fontstyles :TFontStyles;
 begin
   fontstyles := [TFontStyle.fsBold,TFontStyle.fsStrikeOut];
 
-  cell := TeeGrid1.CellFormat.AddCell(1, teeGrid1.Columns[1].Index);
+  cell := TeeGrid1.CellFormat.AddCell(1, TeeGrid1.Columns[1].Index);
+
   cell.Format.Font.Style := fontstyles;
   cell.Format.Brush.Color := clYellow;
   cell.Format.Font.Color := TColors.Red;
-  cell.Format.Brush.Show();
+  cell.Format.Brush.Show;
 
-  TeeGrid1.Repaint;
+  TeeGrid1.Invalidate;
 end;
 
 procedure TFormCellEditors.Button2Click(Sender: TObject);
-var t : Integer;
-    cell : TCell;
-    row : TRow;
+var cell : TCell;
     fontstyles :TFontStyles;
 begin
   fontstyles := [TFontStyle.fsBold,TFontStyle.fsItalic];
 
-  cell := teeGrid1.CellFormat.Cell[2, 1];
+  cell := TeeGrid1.CellFormat.Cell[2, 1];
   cell.Format.Font.Style := fontstyles;
   cell.Format.Brush.Color := clYellow;
   cell.Format.Font.Color := TColors.Blue;
-  cell.Format.Brush.Show();
+  cell.Format.Brush.Show;
 
-  TeeGrid1.Repaint;
+  TeeGrid1.Invalidate;
+end;
 
+procedure TFormCellEditors.Button3Click(Sender: TObject);
+var row : TRow;
+begin
+   row:=TeeGrid1.Rows.Items[3];
+
+   row.Format.Brush.Show;
+   row.Format.Brush.Color:=clWebTan;
+   row.Format.Font.Color:=clRed;
+
+   TeeGrid1.Invalidate;
 end;
 
 procedure TFormCellEditors.CBAlwaysVisibleClick(Sender: TObject);

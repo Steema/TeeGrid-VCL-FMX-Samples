@@ -3,26 +3,22 @@ object FormCellEditors: TFormCellEditors
   Top = 0
   Caption = 'TeeGrid - Cell Editors Example'
   ClientHeight = 362
-  ClientWidth = 644
+  ClientWidth = 726
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object TeeGrid1: TTeeGrid
     Left = 0
     Top = 41
-    Width = 644
+    Width = 726
     Height = 191
     Columns = <>
-    MouseActivity = [All]
-    CellFormat = <>
     OnCellEditing = TeeGrid1CellEditing
     OnCellEdited = TeeGrid1CellEdited
     Align = alClient
@@ -30,6 +26,7 @@ object FormCellEditors: TFormCellEditors
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
+    ExplicitWidth = 644
     _Headers = (
       1
       'TColumnHeaderBand'
@@ -40,10 +37,11 @@ object FormCellEditors: TFormCellEditors
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 644
+    Width = 726
     Height = 41
     Align = alTop
     TabOrder = 1
+    ExplicitWidth = 644
     object Label1: TLabel
       Left = 248
       Top = 14
@@ -66,10 +64,11 @@ object FormCellEditors: TFormCellEditors
   object Panel2: TPanel
     Left = 0
     Top = 232
-    Width = 644
+    Width = 726
     Height = 130
     Align = alBottom
     TabOrder = 2
+    ExplicitWidth = 644
     object Label2: TLabel
       Left = 16
       Top = 6
@@ -154,22 +153,31 @@ object FormCellEditors: TFormCellEditors
       OnClick = CBSelectedTextClick
     end
     object Button1: TButton
-      Left = 511
-      Top = 64
-      Width = 116
+      Left = 568
+      Top = 16
+      Width = 139
       Height = 25
-      Caption = 'Mod Cell 1,1 format'
+      Caption = 'Custom Cell 1,1 format'
       TabOrder = 4
       OnClick = Button1Click
     end
     object Button2: TButton
-      Left = 511
-      Top = 95
-      Width = 116
+      Left = 568
+      Top = 47
+      Width = 139
       Height = 25
-      Caption = 'Mod Cell 2,1 format'
+      Caption = 'Custom Cell 2,1 format'
       TabOrder = 5
       OnClick = Button2Click
+    end
+    object Button3: TButton
+      Left = 568
+      Top = 78
+      Width = 139
+      Height = 25
+      Caption = 'Custom Row 3 format'
+      TabOrder = 6
+      OnClick = Button3Click
     end
   end
 end
