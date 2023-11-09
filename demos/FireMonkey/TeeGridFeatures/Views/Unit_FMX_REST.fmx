@@ -62,47 +62,38 @@ object RESTClientTeeGridForm: TRESTClientTeeGridForm
   object TeeGrid1: TTeeGrid
     Columns = <
       item
-        LoadOrder = 0
         Header.Text = 'id'
         Link = 'id'
       end
       item
-        LoadOrder = 1
         Header.Text = 'name'
         Link = 'name'
       end
       item
-        LoadOrder = 2
         Header.Text = 'username'
         Link = 'username'
       end
       item
-        LoadOrder = 3
         Header.Text = 'email'
         Link = 'email'
       end
       item
-        LoadOrder = 4
         Header.Text = 'address'
         Link = 'address'
       end
       item
-        LoadOrder = 5
         Header.Text = 'phone'
         Link = 'phone'
       end
       item
-        LoadOrder = 6
         Header.Text = 'website'
         Link = 'website'
       end
       item
-        LoadOrder = 7
         Header.Text = 'company'
         Link = 'company'
       end>
     DataSource = FDMemTable1
-    CellFormat = <>
     Align = Client
     Size.Width = 872.000000000000000000
     Size.Height = 596.000000000000000000

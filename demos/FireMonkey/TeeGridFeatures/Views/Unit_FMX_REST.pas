@@ -86,7 +86,8 @@ begin
   AData:=TVirtualDBData.From(FDMemTable2.Fields[0]);
 
   // Data should be destroyed automatically
-  TVirtualDBData(AData).OwnsData:=True;
+  if AData<>nil then
+     TVirtualDBData(AData).OwnsData:=True;
 end;
 
 procedure TRESTClientTeeGridForm.CBEnabledChange(Sender: TObject);
