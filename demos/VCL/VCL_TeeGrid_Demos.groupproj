@@ -1,0 +1,120 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{A66CF82E-A1BB-4A42-AC81-2AC0B03CAA60}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Header_Footer\TeeGrid_Header_Footer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Locked Columns\TeeGrid_Locked_Columns.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Ticker\TeeGrid_VCL_Ticker.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Row_Heights\TeeGrid_VCL_Row_Heights.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Custom Bands\TeeGrid_CustomBands.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Cell Editors\TeeGrid_Cell_Editors.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Database\DataSource\TeeGrid_VCL_DataSource.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Speed\VCL_TeeGrid_Benchmark.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="TeeGrid_Header_Footer">
+        <MSBuild Projects="Header_Footer\TeeGrid_Header_Footer.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Header_Footer:Clean">
+        <MSBuild Projects="Header_Footer\TeeGrid_Header_Footer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Header_Footer:Make">
+        <MSBuild Projects="Header_Footer\TeeGrid_Header_Footer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Locked_Columns">
+        <MSBuild Projects="Locked Columns\TeeGrid_Locked_Columns.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Locked_Columns:Clean">
+        <MSBuild Projects="Locked Columns\TeeGrid_Locked_Columns.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Locked_Columns:Make">
+        <MSBuild Projects="Locked Columns\TeeGrid_Locked_Columns.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_VCL_Ticker">
+        <MSBuild Projects="Ticker\TeeGrid_VCL_Ticker.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_VCL_Ticker:Clean">
+        <MSBuild Projects="Ticker\TeeGrid_VCL_Ticker.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_VCL_Ticker:Make">
+        <MSBuild Projects="Ticker\TeeGrid_VCL_Ticker.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_VCL_Row_Heights">
+        <MSBuild Projects="Row_Heights\TeeGrid_VCL_Row_Heights.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_VCL_Row_Heights:Clean">
+        <MSBuild Projects="Row_Heights\TeeGrid_VCL_Row_Heights.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_VCL_Row_Heights:Make">
+        <MSBuild Projects="Row_Heights\TeeGrid_VCL_Row_Heights.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_CustomBands">
+        <MSBuild Projects="Custom Bands\TeeGrid_CustomBands.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_CustomBands:Clean">
+        <MSBuild Projects="Custom Bands\TeeGrid_CustomBands.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_CustomBands:Make">
+        <MSBuild Projects="Custom Bands\TeeGrid_CustomBands.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Cell_Editors">
+        <MSBuild Projects="Cell Editors\TeeGrid_Cell_Editors.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Cell_Editors:Clean">
+        <MSBuild Projects="Cell Editors\TeeGrid_Cell_Editors.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Cell_Editors:Make">
+        <MSBuild Projects="Cell Editors\TeeGrid_Cell_Editors.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_VCL_DataSource">
+        <MSBuild Projects="Database\DataSource\TeeGrid_VCL_DataSource.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_VCL_DataSource:Clean">
+        <MSBuild Projects="Database\DataSource\TeeGrid_VCL_DataSource.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_VCL_DataSource:Make">
+        <MSBuild Projects="Database\DataSource\TeeGrid_VCL_DataSource.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VCL_TeeGrid_Benchmark">
+        <MSBuild Projects="Speed\VCL_TeeGrid_Benchmark.dproj"/>
+    </Target>
+    <Target Name="VCL_TeeGrid_Benchmark:Clean">
+        <MSBuild Projects="Speed\VCL_TeeGrid_Benchmark.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VCL_TeeGrid_Benchmark:Make">
+        <MSBuild Projects="Speed\VCL_TeeGrid_Benchmark.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="TeeGrid_Header_Footer;TeeGrid_Locked_Columns;TeeGrid_VCL_Ticker;TeeGrid_VCL_Row_Heights;TeeGrid_CustomBands;TeeGrid_Cell_Editors;TeeGrid_VCL_DataSource;VCL_TeeGrid_Benchmark"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="TeeGrid_Header_Footer:Clean;TeeGrid_Locked_Columns:Clean;TeeGrid_VCL_Ticker:Clean;TeeGrid_VCL_Row_Heights:Clean;TeeGrid_CustomBands:Clean;TeeGrid_Cell_Editors:Clean;TeeGrid_VCL_DataSource:Clean;VCL_TeeGrid_Benchmark:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="TeeGrid_Header_Footer:Make;TeeGrid_Locked_Columns:Make;TeeGrid_VCL_Ticker:Make;TeeGrid_VCL_Row_Heights:Make;TeeGrid_CustomBands:Make;TeeGrid_Cell_Editors:Make;TeeGrid_VCL_DataSource:Make;VCL_TeeGrid_Benchmark:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
