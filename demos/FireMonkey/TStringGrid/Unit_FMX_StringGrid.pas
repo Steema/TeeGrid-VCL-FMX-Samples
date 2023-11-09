@@ -66,12 +66,19 @@ var t1 : TStopWatch;
 begin
   t1:=TStopwatch.StartNew;
 
-  for t:=0 to 999 do
-      TeeGrid1.Grid.Paint;
+  if TeeGrid1.Canvas.BeginScene then
+  begin
+    for t:=0 to 999 do
+        TeeGrid1.Grid.Paint;
+
+    TeeGrid1.Canvas.EndScene;
+  end;
 
   t2:=t1.ElapsedMilliseconds;
 
   Caption:=t2.ToString+' msec to repaint: 1000 times';
+
+  Invalidate;
 end;
 
 // Change the number of grid columns
