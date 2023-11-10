@@ -5,6 +5,8 @@ interface
 uses
   {System.}Classes,
   Tee.Renders, Tee.GridData.Strings, Tee.Grid.Columns, Tee.Painter,
+
+  // This example requires units from "TeeBI" project (www.steema.com)
   BI.Expression;
 
 type
