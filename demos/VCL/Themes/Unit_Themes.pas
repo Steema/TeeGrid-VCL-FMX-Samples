@@ -63,11 +63,10 @@ end;
 
 procedure TFormGridThemes.Button2Click(Sender: TObject);
 begin
-  if self.Font.Size = 8 then
-    self.Font.Size := 14
+  if Font.Size <= 10 then
+     Font.Size := 16
   else
-    self.Font.Size := 8;
-
+     Font.Size := 10;
 end;
 
 procedure TFormGridThemes.CreateSampleData;
@@ -95,7 +94,7 @@ begin
   TeeGrid1.ParentFont := True;
 
   //Do not pick mousemove over Grid (reduces CPU activity)
-  TeeGrid1.Grid.MouseActivity := [TGridMouseSense.Down, TGridMouseSense.Up];
+  //TeeGrid1.Grid.MouseActivity := [TGridMouseSense.Down, TGridMouseSense.Up];
 
   // Just a test:
   TeeGrid1.Columns['Children'].InitAlign(THorizontalAlign.Center);

@@ -10,10 +10,8 @@ object FormGridThemes: TFormGridThemes
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object TeeGrid1: TTeeGrid
     Left = 153
@@ -21,9 +19,7 @@ object FormGridThemes: TFormGridThemes
     Width = 770
     Height = 643
     Columns = <>
-    ReadOnly = False
     Align = alClient
-    ParentFont = False
     UseDockManager = False
     ParentBackground = False
     ParentColor = False

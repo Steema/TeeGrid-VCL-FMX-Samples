@@ -1,17 +1,14 @@
 object SampleData: TSampleData
-  OldCreateOrder = False
   Height = 337
   Width = 267
   object Sqlite_demoConnection: TFDConnection
     Params.Strings = (
       'ConnectionDef=SQLite_Demo')
-    Connected = True
     LoginPrompt = False
     Left = 47
     Top = 22
   end
   object CustomersTable: TFDQuery
-    Active = True
     Connection = Sqlite_demoConnection
     FetchOptions.AssignedValues = [evRecordCountMode]
     FetchOptions.RecordCountMode = cmTotal

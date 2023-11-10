@@ -181,7 +181,7 @@ begin
   Picture:=TVCLPicture.From(Bitmap);
   Picture.Transparent := True;   //example transparency
   Picture.TransparentColor := clGray;
-  Picture.TransparentMode := tmFixed;
+  Picture.TransparentMode := TTeeTransparentMode.ttmFixed;
   try
     TeeGrid1.Painter.Draw(Picture,AData.Bounds);
   finally

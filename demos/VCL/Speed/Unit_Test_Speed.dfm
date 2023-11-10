@@ -20,7 +20,6 @@ object FormSpeed: TFormSpeed
     Height = 41
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 1013
     object LabelResult: TLabel
       Left = 112
       Top = 13
@@ -38,7 +37,7 @@ object FormSpeed: TFormSpeed
       OnClick = Button1Click
     end
     object ComboGraphics: TComboBox
-      Left = 432
+      Left = 236
       Top = 10
       Width = 65
       Height = 23
@@ -52,26 +51,37 @@ object FormSpeed: TFormSpeed
         'GDI'
         'Skia')
     end
-    object CBRepaint: TCheckBox
-      Left = 280
-      Top = 13
-      Width = 97
-      Height = 17
-      Caption = '&Force Repaint'
-      Checked = True
-      State = cbChecked
-      TabOrder = 2
-    end
     object CBAntiAlias: TCheckBox
-      Left = 536
+      Left = 505
       Top = 13
       Width = 97
       Height = 17
       Caption = '&Antialias'
       Checked = True
       State = cbChecked
-      TabOrder = 3
+      TabOrder = 2
       OnClick = CBAntiAliasClick
+    end
+    object TrackBar1: TTrackBar
+      Left = 608
+      Top = 9
+      Width = 150
+      Height = 26
+      Max = 30
+      Min = -5
+      TabOrder = 3
+      OnChange = TrackBar1Change
+    end
+    object CBFormatting: TCheckBox
+      Left = 352
+      Top = 13
+      Width = 129
+      Height = 17
+      Caption = 'Custom Formats'
+      Checked = True
+      State = cbChecked
+      TabOrder = 4
+      OnClick = CBFormattingClick
     end
   end
   object TeeGrid1: TTeeGrid
@@ -85,8 +95,6 @@ object FormSpeed: TFormSpeed
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
-    ExplicitWidth = 1013
-    ExplicitHeight = 641
     _Headers = (
       1
       'TColumnHeaderBand'

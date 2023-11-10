@@ -10,10 +10,8 @@ object FormGridDataset: TFormGridDataset
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object TeeGrid1: TTeeGrid
     Left = 0
@@ -74,7 +72,6 @@ object FormGridDataset: TFormGridDataset
         Link = 'LastInvoiceDate'
       end>
     DataSource = ClientDataSet1
-    ReadOnly = False
     Align = alClient
     UseDockManager = False
     ParentBackground = False

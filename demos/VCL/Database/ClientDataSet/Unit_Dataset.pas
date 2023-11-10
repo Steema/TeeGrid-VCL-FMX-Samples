@@ -16,7 +16,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid, Data.DB,
   Datasnap.DBClient, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.ExtCtrls, Vcl.Menus,
-  Tee.Grid.Columns, Tee.Renders;
+  Tee.Grid.Columns, Tee.Renders, Vcl.Buttons;
 
 type
   TFormGridDataset = class(TForm)

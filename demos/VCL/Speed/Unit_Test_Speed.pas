@@ -13,7 +13,7 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
   Vcl.ExtCtrls,
 
-  VCLTee.Control, VCLTee.Grid;
+  VCLTee.Control, VCLTee.Grid, Vcl.ComCtrls;
 
 type
   TFormSpeed = class(TForm)
@@ -22,17 +22,21 @@ type
     LabelResult: TLabel;
     TeeGrid1: TTeeGrid;
     ComboGraphics: TComboBox;
-    CBRepaint: TCheckBox;
     CBAntiAlias: TCheckBox;
+    TrackBar1: TTrackBar;
+    CBFormatting: TCheckBox;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ComboGraphicsChange(Sender: TObject);
     procedure CBAntiAliasClick(Sender: TObject);
+    procedure TrackBar1Change(Sender: TObject);
+    procedure CBFormattingClick(Sender: TObject);
   private
     { Private declarations }
 
-    procedure Cosmetics;
+    procedure ClearCosmetics;
     procedure RunBenchmark;
+    procedure SetCosmetics;
   public
     { Public declarations }
   end;
@@ -99,6 +103,14 @@ begin
   {$ENDIF}
 end;
 
+procedure TFormSpeed.CBFormattingClick(Sender: TObject);
+begin
+  if CBFormatting.Checked then
+     SetCosmetics
+  else
+     ClearCosmetics;
+end;
+
 procedure TFormSpeed.ComboGraphicsChange(Sender: TObject);
 begin
   case ComboGraphics.ItemIndex of
@@ -122,11 +134,24 @@ begin
   ComboGraphics.Items.Delete(2);
   {$IFEND}
 
-  Cosmetics;
+  SetCosmetics;
+end;
+
+// Remove custom column formatting settings
+procedure TFormSpeed.ClearCosmetics;
+var Column : TColumn;
+begin
+  for Column in TeeGrid1.Columns do
+  begin
+    Column.ParentFormat:=True;
+    Column.TextAlignment:=TColumnTextAlign.Automatic;
+  end;
+
+  TeeGrid1.Rows.ResetHeights;
 end;
 
 // Set some grid settings, just to test
-procedure TFormSpeed.Cosmetics;
+procedure TFormSpeed.SetCosmetics;
 
   procedure SetTextAlign(const AColumn:Integer; const AAlign:THorizontalAlign); overload;
   var Column : TColumn;
@@ -180,23 +205,29 @@ begin
 
   TeeGrid1.Columns[12].ParentFormat:=False;
   TeeGrid1.Columns[12].Format.Font.Name:='Courier New';
+
+  TeeGrid1.Columns[13].ParentFormat:=False;
+  TeeGrid1.Columns[13].Format.Stroke.Show;
+  TeeGrid1.Columns[13].Format.Stroke.Color:=clGreen;
 end;
 
 // Scroll through all grid cells, all rows and all columns
 procedure TFormSpeed.RunBenchmark;
-var Row,
-    Column :Integer;
+var Row : Integer;
+    Column : TColumn;
 begin
   for Row:=0 to TeeGrid1.Data.Count-1 do
-      for Column:=0 to TeeGrid1.Columns.Count-1 do
+      for Column in TeeGrid1.Columns do
       begin
         // Select one cell
-        TeeGrid1.Selected.Column:=TeeGrid1.Columns[Column];
+        TeeGrid1.Selected.Column:=Column;
         TeeGrid1.Selected.Row:=Row;
-
-        if CBRepaint.Checked then
-           TeeGrid1.Repaint;  // Force repaint at every cell
       end;
+end;
+
+procedure TFormSpeed.TrackBar1Change(Sender: TObject);
+begin
+  TeeGrid1.Rows.Spacing.Value:=TrackBar1.Position
 end;
 
 // Do the speed test and measure it
