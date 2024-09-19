@@ -10,10 +10,8 @@ object FormHeaderFooter: TFormHeaderFooter
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object TeeGrid1: TTeeGrid
     Left = 0
@@ -21,7 +19,6 @@ object FormHeaderFooter: TFormHeaderFooter
     Width = 1042
     Height = 679
     Columns = <>
-    ReadOnly = False
     Align = alClient
     UseDockManager = False
     ParentBackground = False
@@ -67,6 +64,15 @@ object FormHeaderFooter: TFormHeaderFooter
       Caption = 'Footers...'
       TabOrder = 2
       OnClick = Button3Click
+    end
+    object Button4: TButton
+      Left = 936
+      Top = 10
+      Width = 91
+      Height = 25
+      Caption = 'New custom...'
+      TabOrder = 3
+      OnClick = Button4Click
     end
   end
 end

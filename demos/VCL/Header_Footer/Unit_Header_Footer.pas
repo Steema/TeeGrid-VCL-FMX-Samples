@@ -14,10 +14,12 @@ type
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
+    Button4: TButton;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -34,7 +36,7 @@ implementation
 uses
   UITypes,
   Tee.Grid.Bands, Tee.Painter, VCLTee.Editor.Grid.Bands,
-  Tee.Format, Tee.GridData.Rtti;
+  Tee.Format, Tee.GridData.Rtti, Tee.Grid.Bands.Columns;
 
 procedure TFormHeaderFooter.Button1Click(Sender: TObject);
 var tmp : TTeeGrid;
@@ -63,6 +65,20 @@ end;
 procedure TFormHeaderFooter.Button3Click(Sender: TObject);
 begin
   TGridBandsEditor.Edit(Self,TeeGrid1.Footer)
+end;
+
+procedure TFormHeaderFooter.Button4Click(Sender: TObject);
+var hdrBand : TColumnsBand;
+begin
+  TeeGrid1.Headers.Clear;
+
+  TeeGrid1.Grid.Root.Header.Visible := False;
+
+  hdrBand := TColumnsBand.Create(TeeGrid1.Headers);
+
+  hdrBand.Texts[0] := 'Street';
+  hdrBand.Texts[1] := 'Level';
+
 end;
 
 procedure TFormHeaderFooter.FormCreate(Sender: TObject);
