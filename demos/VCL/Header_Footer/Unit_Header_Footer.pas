@@ -40,8 +40,11 @@ procedure TFormHeaderFooter.Button1Click(Sender: TObject);
 var tmp : TTeeGrid;
 begin
   tmp:=TTeeGrid.Create(Self);
-  tmp.Assign(TeeGrid1);
-  tmp.Free;
+  try
+    tmp.Assign(TeeGrid1);
+  finally
+    tmp.Free;
+  end;
 end;
 
 type
