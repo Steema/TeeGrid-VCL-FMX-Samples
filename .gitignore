@@ -45,3 +45,4 @@ demos/FMXLinux/TStringGrid/Linux64/
 src/
 
 demos/FireMonkey/TeeGridFeatures/Win32/
+*.rsm
