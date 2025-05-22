@@ -1,0 +1,156 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{D0B4AA59-BE80-4247-AE74-092D23CFFC15}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Array\TeeGrid_Array_Data.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Custom Sorting\TeeGrid_Custom_Sorting.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DataSet\Join Two Tables\TeeGrid_Join_Two_Tables.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DataSet\Master_Detail_Two_Grids\TeeGrid_Master_Detail_Two_Grids.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="DataSet\TChart\TeeGrid_TChart_Dataset.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Matrix\TeeGrid_Matrix_Data.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Pictures\TeeGrid_Pictures.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TChart\TeeChart_in_TeeGrid.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TList\TeeGrid_TList_Data.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TStringGrid\TeeGrid_as_TStringGrid.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Virtual Mode\TeeGrid_VirtualMode.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="TeeGrid_Array_Data">
+        <MSBuild Projects="Array\TeeGrid_Array_Data.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Array_Data:Clean">
+        <MSBuild Projects="Array\TeeGrid_Array_Data.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Array_Data:Make">
+        <MSBuild Projects="Array\TeeGrid_Array_Data.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Custom_Sorting">
+        <MSBuild Projects="Custom Sorting\TeeGrid_Custom_Sorting.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Custom_Sorting:Clean">
+        <MSBuild Projects="Custom Sorting\TeeGrid_Custom_Sorting.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Custom_Sorting:Make">
+        <MSBuild Projects="Custom Sorting\TeeGrid_Custom_Sorting.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Join_Two_Tables">
+        <MSBuild Projects="DataSet\Join Two Tables\TeeGrid_Join_Two_Tables.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Join_Two_Tables:Clean">
+        <MSBuild Projects="DataSet\Join Two Tables\TeeGrid_Join_Two_Tables.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Join_Two_Tables:Make">
+        <MSBuild Projects="DataSet\Join Two Tables\TeeGrid_Join_Two_Tables.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Master_Detail_Two_Grids">
+        <MSBuild Projects="DataSet\Master_Detail_Two_Grids\TeeGrid_Master_Detail_Two_Grids.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Master_Detail_Two_Grids:Clean">
+        <MSBuild Projects="DataSet\Master_Detail_Two_Grids\TeeGrid_Master_Detail_Two_Grids.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Master_Detail_Two_Grids:Make">
+        <MSBuild Projects="DataSet\Master_Detail_Two_Grids\TeeGrid_Master_Detail_Two_Grids.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_TChart_Dataset">
+        <MSBuild Projects="DataSet\TChart\TeeGrid_TChart_Dataset.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_TChart_Dataset:Clean">
+        <MSBuild Projects="DataSet\TChart\TeeGrid_TChart_Dataset.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_TChart_Dataset:Make">
+        <MSBuild Projects="DataSet\TChart\TeeGrid_TChart_Dataset.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Matrix_Data">
+        <MSBuild Projects="Matrix\TeeGrid_Matrix_Data.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Matrix_Data:Clean">
+        <MSBuild Projects="Matrix\TeeGrid_Matrix_Data.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Matrix_Data:Make">
+        <MSBuild Projects="Matrix\TeeGrid_Matrix_Data.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_Pictures">
+        <MSBuild Projects="Pictures\TeeGrid_Pictures.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_Pictures:Clean">
+        <MSBuild Projects="Pictures\TeeGrid_Pictures.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_Pictures:Make">
+        <MSBuild Projects="Pictures\TeeGrid_Pictures.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeChart_in_TeeGrid">
+        <MSBuild Projects="TChart\TeeChart_in_TeeGrid.dproj"/>
+    </Target>
+    <Target Name="TeeChart_in_TeeGrid:Clean">
+        <MSBuild Projects="TChart\TeeChart_in_TeeGrid.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeChart_in_TeeGrid:Make">
+        <MSBuild Projects="TChart\TeeChart_in_TeeGrid.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_TList_Data">
+        <MSBuild Projects="TList\TeeGrid_TList_Data.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_TList_Data:Clean">
+        <MSBuild Projects="TList\TeeGrid_TList_Data.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_TList_Data:Make">
+        <MSBuild Projects="TList\TeeGrid_TList_Data.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_as_TStringGrid">
+        <MSBuild Projects="TStringGrid\TeeGrid_as_TStringGrid.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_as_TStringGrid:Clean">
+        <MSBuild Projects="TStringGrid\TeeGrid_as_TStringGrid.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_as_TStringGrid:Make">
+        <MSBuild Projects="TStringGrid\TeeGrid_as_TStringGrid.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TeeGrid_VirtualMode">
+        <MSBuild Projects="Virtual Mode\TeeGrid_VirtualMode.dproj"/>
+    </Target>
+    <Target Name="TeeGrid_VirtualMode:Clean">
+        <MSBuild Projects="Virtual Mode\TeeGrid_VirtualMode.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TeeGrid_VirtualMode:Make">
+        <MSBuild Projects="Virtual Mode\TeeGrid_VirtualMode.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="TeeGrid_Array_Data;TeeGrid_Custom_Sorting;TeeGrid_Join_Two_Tables;TeeGrid_Master_Detail_Two_Grids;TeeGrid_TChart_Dataset;TeeGrid_Matrix_Data;TeeGrid_Pictures;TeeChart_in_TeeGrid;TeeGrid_TList_Data;TeeGrid_as_TStringGrid;TeeGrid_VirtualMode"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="TeeGrid_Array_Data:Clean;TeeGrid_Custom_Sorting:Clean;TeeGrid_Join_Two_Tables:Clean;TeeGrid_Master_Detail_Two_Grids:Clean;TeeGrid_TChart_Dataset:Clean;TeeGrid_Matrix_Data:Clean;TeeGrid_Pictures:Clean;TeeChart_in_TeeGrid:Clean;TeeGrid_TList_Data:Clean;TeeGrid_as_TStringGrid:Clean;TeeGrid_VirtualMode:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="TeeGrid_Array_Data:Make;TeeGrid_Custom_Sorting:Make;TeeGrid_Join_Two_Tables:Make;TeeGrid_Master_Detail_Two_Grids:Make;TeeGrid_TChart_Dataset:Make;TeeGrid_Matrix_Data:Make;TeeGrid_Pictures:Make;TeeChart_in_TeeGrid:Make;TeeGrid_TList_Data:Make;TeeGrid_as_TStringGrid:Make;TeeGrid_VirtualMode:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

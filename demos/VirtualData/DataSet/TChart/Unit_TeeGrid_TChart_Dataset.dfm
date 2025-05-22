@@ -1,7 +1,7 @@
 object Form224: TForm224
   Left = 0
   Top = 0
-  Caption = 'Form224'
+  Caption = 'TeeGrid and TeeChart working together'
   ClientHeight = 659
   ClientWidth = 1123
   Color = clBtnFace
@@ -10,9 +10,7 @@ object Form224: TForm224
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
-  PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
     Left = 593
@@ -39,51 +37,55 @@ object Form224: TForm224
     Gradient.MidColor = 15395562
     Gradient.StartColor = 15395562
     Gradient.Visible = True
-    LeftWall.Color = 14745599
+    LeftWall.Color = clLightyellow
     Legend.Font.Name = 'Verdana'
     Legend.Shadow.Transparency = 0
-    RightWall.Color = 14745599
+    RightWall.Color = clLightyellow
     Title.Font.Name = 'Verdana'
     Title.Text.Strings = (
       'TChart')
+    OnClickSeries = Chart1ClickSeries
     BottomAxis.Axis.Color = 4210752
-    BottomAxis.Grid.Color = 11119017
+    BottomAxis.Grid.Color = clDarkgray
     BottomAxis.LabelsFormat.Font.Name = 'Verdana'
-    BottomAxis.TicksInner.Color = 11119017
+    BottomAxis.TicksInner.Color = clDarkgray
     BottomAxis.Title.Font.Name = 'Verdana'
     DepthAxis.Axis.Color = 4210752
-    DepthAxis.Grid.Color = 11119017
+    DepthAxis.Grid.Color = clDarkgray
     DepthAxis.LabelsFormat.Font.Name = 'Verdana'
-    DepthAxis.TicksInner.Color = 11119017
+    DepthAxis.TicksInner.Color = clDarkgray
     DepthAxis.Title.Font.Name = 'Verdana'
     DepthTopAxis.Axis.Color = 4210752
-    DepthTopAxis.Grid.Color = 11119017
+    DepthTopAxis.Grid.Color = clDarkgray
     DepthTopAxis.LabelsFormat.Font.Name = 'Verdana'
-    DepthTopAxis.TicksInner.Color = 11119017
+    DepthTopAxis.TicksInner.Color = clDarkgray
     DepthTopAxis.Title.Font.Name = 'Verdana'
     LeftAxis.Axis.Color = 4210752
-    LeftAxis.Grid.Color = 11119017
+    LeftAxis.Grid.Color = clDarkgray
     LeftAxis.LabelsFormat.Font.Name = 'Verdana'
-    LeftAxis.TicksInner.Color = 11119017
+    LeftAxis.TicksInner.Color = clDarkgray
     LeftAxis.Title.Font.Name = 'Verdana'
     RightAxis.Axis.Color = 4210752
-    RightAxis.Grid.Color = 11119017
+    RightAxis.Grid.Color = clDarkgray
     RightAxis.LabelsFormat.Font.Name = 'Verdana'
-    RightAxis.TicksInner.Color = 11119017
+    RightAxis.TicksInner.Color = clDarkgray
     RightAxis.Title.Font.Name = 'Verdana'
     TopAxis.Axis.Color = 4210752
-    TopAxis.Grid.Color = 11119017
+    TopAxis.Grid.Color = clDarkgray
     TopAxis.LabelsFormat.Font.Name = 'Verdana'
-    TopAxis.TicksInner.Color = 11119017
+    TopAxis.TicksInner.Color = clDarkgray
     TopAxis.Title.Font.Name = 'Verdana'
+    View3D = False
     Align = alLeft
     TabOrder = 0
+    ExplicitLeft = -3
     DefaultCanvas = 'TGDIPlusCanvas'
     ColorPaletteIndex = 13
     object Series1: TLineSeries
       Brush.BackColor = clDefault
       Pointer.InflateMargins = True
       Pointer.Style = psRectangle
+      Pointer.Visible = True
       XValues.Name = 'X'
       XValues.Order = loAscending
       YValues.Name = 'Y'
@@ -96,7 +98,6 @@ object Form224: TForm224
         0000087B400000000000407F400000000000E882400000000000407F40000000
         0000E07F4000000000006C81400000000000B880400000000000388340000000
         0000F881400000000000448140}
-      Detail = {0000000000}
     end
   end
   object TeeGrid1: TTeeGrid
@@ -122,12 +123,12 @@ object Form224: TForm224
         Link = 'Label'
       end>
     DataSource = DataSource1
-    ReadOnly = False
     Align = alClient
     UseDockManager = False
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
+    ExplicitLeft = 599
     _Headers = (
       1
       'TColumnHeaderBand'

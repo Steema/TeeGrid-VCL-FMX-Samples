@@ -26,6 +26,8 @@ type
     Layout2: TLayout;
     Label1: TLabel;
     LCells: TLabel;
+    Text1: TText;
+    Text2: TText;
     procedure Button1Click(Sender: TObject);
     procedure EColumnsChangeTracking(Sender: TObject);
     procedure ERowsChangeTracking(Sender: TObject);
@@ -241,7 +243,7 @@ end;
 
 procedure TStringGridForm.RefreshTotalCells;
 begin
-  LCells.Text:=FormatFloat('#,###',Data.Columns*Data.Rows);
+  LCells.Text:='Total cells: '+FormatFloat('#,###',Data.Columns*Data.Rows);
 end;
 
 end.

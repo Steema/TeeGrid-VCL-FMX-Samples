@@ -8,6 +8,9 @@ uses
 {$R *.res}
 
 begin
+  {$IFOPT D+}
+  ReportMemoryLeaksOnShutdown:=True;
+  {$ENDIF}
   Application.Initialize;
   Application.CreateForm(TFormGridDataSet, FormGridDataSet);
   Application.Run;

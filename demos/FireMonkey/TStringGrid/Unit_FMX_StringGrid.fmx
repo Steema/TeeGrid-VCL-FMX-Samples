@@ -43,7 +43,7 @@ object StringGridForm: TStringGridForm
       Cursor = crIBeam
       Max = 10000000.000000000000000000
       Value = 100.000000000000000000
-      Position.X = 152.000000000000000000
+      Position.X = 177.000000000000000000
       Position.Y = 16.000000000000000000
       OnChangeTracking = ERowsChangeTracking
     end
@@ -350,13 +350,29 @@ object StringGridForm: TStringGridForm
       Visible = False
     end
     object LCells: TLabel
-      Position.X = 264.000000000000000000
+      Position.X = 288.000000000000000000
       Position.Y = 19.000000000000000000
       Size.Width = 209.000000000000000000
       Size.Height = 17.000000000000000000
       Size.PlatformDefault = False
       TextSettings.Trimming = None
       Text = 'LCells'
+    end
+    object Text1: TText
+      Position.X = 6.000000000000000000
+      Position.Y = 19.000000000000000000
+      Size.Width = 32.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Cols:'
+    end
+    object Text2: TText
+      Position.X = 141.000000000000000000
+      Position.Y = 19.000000000000000000
+      Size.Width = 32.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Rows:'
     end
   end
   object TeeGrid1: TTeeGrid

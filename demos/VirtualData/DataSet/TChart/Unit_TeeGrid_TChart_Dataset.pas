@@ -18,6 +18,9 @@ type
     Series1: TLineSeries;
     Splitter1: TSplitter;
     TeeGrid1: TTeeGrid;
+    procedure Chart1ClickSeries(Sender: TCustomChart; Series: TChartSeries;
+      ValueIndex: Integer; Button: TMouseButton; Shift: TShiftState; X,
+      Y: Integer);
   private
     { Private declarations }
 
@@ -31,5 +34,11 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm224.Chart1ClickSeries(Sender: TCustomChart; Series: TChartSeries;
+  ValueIndex: Integer; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  TeeGrid1.Selected.Row:=ValueIndex;
+end;
 
 end.

@@ -1,7 +1,7 @@
-object Chart_in_Grid: TChart_in_Grid
+object Form4: TForm4
   Left = 0
   Top = 0
-  Caption = 'TeeGrid and TeeChart'
+  Caption = 'TeeGrid automatic TPicture rendering'
   ClientHeight = 441
   ClientWidth = 624
   Color = clBtnFace
@@ -11,14 +11,14 @@ object Chart_in_Grid: TChart_in_Grid
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   TextHeight = 15
   object TeeGrid1: TTeeGrid
-    Left = 0
-    Top = 0
-    Width = 624
-    Height = 441
+    Left = 8
+    Top = 8
+    Width = 608
+    Height = 417
     Columns = <>
-    Align = alClient
     UseDockManager = False
     ParentBackground = False
     ParentColor = False

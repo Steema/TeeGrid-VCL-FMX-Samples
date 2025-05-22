@@ -103,7 +103,8 @@ begin
     Expander.AlwaysExpand:=True;
 
     // Set to first Column
-    TeeGrid1.Columns[0].Render:=Expander;
+    if TeeGrid1.Columns.Count>0 then
+       TeeGrid1.Columns[0].Render:=Expander;
   end
   else
   begin
@@ -111,7 +112,8 @@ begin
     TeeGrid1.Rows.Children.Clear;
 
     // Set first column render to default (no expander)
-    TeeGrid1.Columns[0].Render:=nil;
+    if TeeGrid1.Columns.Count>0 then
+       TeeGrid1.Columns[0].Render:=nil;
   end;
 end;
 

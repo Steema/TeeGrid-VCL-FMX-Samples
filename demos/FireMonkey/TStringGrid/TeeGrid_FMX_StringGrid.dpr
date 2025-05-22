@@ -11,6 +11,10 @@ uses
 {$R *.res}
 
 begin
+  {$IFOPT D+}
+  ReportMemoryLeaksOnShutdown:=True;
+  {$ENDIF}
+
   {$IF CompilerVersion>35}
 //  GlobalUseSkia := True;
   {$IFEND}

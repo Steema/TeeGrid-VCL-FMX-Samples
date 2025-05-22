@@ -10,10 +10,8 @@ object CustomBandForm: TCustomBandForm
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object TeeGrid1: TTeeGrid
     Left = 425
@@ -21,7 +19,6 @@ object CustomBandForm: TCustomBandForm
     Width = 363
     Height = 469
     Columns = <>
-    ReadOnly = False
     Align = alClient
     UseDockManager = False
     ParentBackground = False

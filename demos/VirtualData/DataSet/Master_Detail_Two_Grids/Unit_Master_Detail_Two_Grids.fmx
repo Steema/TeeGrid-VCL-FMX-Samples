@@ -1,7 +1,7 @@
 object Form54: TForm54
   Left = 0
   Top = 0
-  Caption = 'Form54'
+  Caption = 'TeeGrid Master-Detail example (Two linked Grids)'
   ClientHeight = 480
   ClientWidth = 640
   FormFactor.Width = 320
@@ -56,7 +56,6 @@ object Form54: TForm54
         Link = 'Fax'
       end>
     DataSource = DataSource1
-    ReadOnly = False
     Position.X = 16.000000000000000000
     Position.Y = 16.000000000000000000
     Size.Width = 601.000000000000000000
@@ -71,8 +70,64 @@ object Form54: TForm54
         end>)
   end
   object TeeGrid2: TTeeGrid
-    Columns = <>
-    ReadOnly = False
+    Columns = <
+      item
+        Header.Text = 'OrderID'
+        Link = 'OrderID'
+      end
+      item
+        Header.Text = 'CustomerID'
+        Link = 'CustomerID'
+      end
+      item
+        Header.Text = 'EmployeeID'
+        Link = 'EmployeeID'
+      end
+      item
+        Header.Text = 'OrderDate'
+        Link = 'OrderDate'
+      end
+      item
+        Header.Text = 'RequiredDate'
+        Link = 'RequiredDate'
+      end
+      item
+        Header.Text = 'ShippedDate'
+        Link = 'ShippedDate'
+      end
+      item
+        Header.Text = 'ShipVia'
+        Link = 'ShipVia'
+      end
+      item
+        Header.Text = 'Freight'
+        Link = 'Freight'
+      end
+      item
+        Header.Text = 'ShipName'
+        Link = 'ShipName'
+      end
+      item
+        Header.Text = 'ShipAddress'
+        Link = 'ShipAddress'
+      end
+      item
+        Header.Text = 'ShipCity'
+        Link = 'ShipCity'
+      end
+      item
+        Header.Text = 'ShipRegion'
+        Link = 'ShipRegion'
+      end
+      item
+        Header.Text = 'ShipPostalCode'
+        Link = 'ShipPostalCode'
+      end
+      item
+        Header.Text = 'ShipCountry'
+        Link = 'ShipCountry'
+      end>
+    DataSource = DataSource2
     Position.X = 16.000000000000000000
     Position.Y = 248.000000000000000000
     Size.Width = 601.000000000000000000
@@ -114,10 +169,14 @@ object Form54: TForm54
   end
   object OrdersTable: TFDTable
     Active = True
+    IndexFieldNames = 'CustomerID'
+    MasterSource = DataSource1
+    MasterFields = 'CustomerID'
     Connection = Sqlite_demoConnection
+    ResourceOptions.AssignedValues = [rvEscapeExpand]
     UpdateOptions.UpdateTableName = 'Orders'
     TableName = 'Orders'
-    Left = 496
-    Top = 136
+    Left = 488
+    Top = 152
   end
 end

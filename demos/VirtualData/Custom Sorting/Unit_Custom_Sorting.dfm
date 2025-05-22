@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 0
   Top = 0
-  Caption = 'Form1'
+  Caption = 'TeeGrid Custom Column Sorting Example'
   ClientHeight = 503
   ClientWidth = 820
   Color = clBtnFace
@@ -10,9 +10,7 @@ object Form1: TForm1
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object TeeGrid1: TTeeGrid
     Left = 0
@@ -20,7 +18,6 @@ object Form1: TForm1
     Width = 820
     Height = 503
     Columns = <>
-    ReadOnly = False
     Align = alClient
     UseDockManager = False
     ParentBackground = False

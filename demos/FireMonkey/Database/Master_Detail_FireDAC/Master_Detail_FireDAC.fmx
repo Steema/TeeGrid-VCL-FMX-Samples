@@ -14,62 +14,50 @@ object MasterDetail: TMasterDetail
     Columns = <
       item
         Format.Font.Style = [fsBold]
-        LoadOrder = 0
         Header.Text = 'CustomerID'
         ParentFormat = False
         Link = 'CustomerID'
       end
       item
-        LoadOrder = 1
         Header.Text = 'CompanyName'
         Link = 'CompanyName'
       end
       item
-        LoadOrder = 2
         Header.Text = 'ContactName'
         Link = 'ContactName'
       end
       item
-        LoadOrder = 3
         Header.Text = 'ContactTitle'
         Link = 'ContactTitle'
       end
       item
-        LoadOrder = 4
         Header.Text = 'Address'
         Link = 'Address'
       end
       item
-        LoadOrder = 5
         Header.Text = 'City'
         Link = 'City'
       end
       item
-        LoadOrder = 6
         Header.Text = 'Region'
         Link = 'Region'
       end
       item
-        LoadOrder = 7
         Header.Text = 'PostalCode'
         Link = 'PostalCode'
       end
       item
-        LoadOrder = 8
         Header.Text = 'Country'
         Link = 'Country'
       end
       item
-        LoadOrder = 9
         Header.Text = 'Phone'
         Link = 'Phone'
       end
       item
-        LoadOrder = 10
         Header.Text = 'Fax'
         Link = 'Fax'
       end>
-    CellFormat = <>
     Align = Client
     Size.Width = 817.000000000000000000
     Size.Height = 554.000000000000000000
@@ -107,6 +95,7 @@ object MasterDetail: TMasterDetail
       Size.PlatformDefault = False
       TabOrder = 1
       Text = '&Open/Close All'
+      TextSettings.Trimming = None
       OnClick = Button1Click
     end
   end

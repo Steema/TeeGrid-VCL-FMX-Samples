@@ -8,6 +8,9 @@ uses
 {$R *.res}
 
 begin
+  {$IFOPT D+}
+  ReportMemoryLeaksOnShutdown:=True;
+  {$ENDIF}
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TChart_in_Grid, Chart_in_Grid);

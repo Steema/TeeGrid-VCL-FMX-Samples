@@ -1,8 +1,8 @@
-program TeeGrid_CustomBands;
+program TeeGrid_Pictures;
 
 uses
   Vcl.Forms,
-  Unit_Custom_Bands in 'Unit_Custom_Bands.pas' {CustomBandForm};
+  Unit_Pictures in 'Unit_Pictures.pas' {Form4};
 
 {$R *.res}
 
@@ -12,6 +12,6 @@ begin
   {$ENDIF}
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TCustomBandForm, CustomBandForm);
+  Application.CreateForm(TForm4, Form4);
   Application.Run;
 end.
