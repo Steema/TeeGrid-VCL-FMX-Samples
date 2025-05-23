@@ -46,3 +46,4 @@ src/
 
 demos/FireMonkey/TeeGridFeatures/Win32/
 *.rsm
+demos/VirtualData/Custom Sorting/__recovery/

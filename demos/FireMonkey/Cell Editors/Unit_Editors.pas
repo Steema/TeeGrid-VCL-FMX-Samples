@@ -27,6 +27,8 @@ type
     Text5: TText;
     Label1: TLabel;
     CBEnterKey: TComboBox;
+    Label2: TLabel;
+    CBSelectingEnterKey: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure CBCustomEditorsChange(Sender: TObject);
     procedure CBAutoEditChange(Sender: TObject);
@@ -38,6 +40,7 @@ type
     procedure TeeGrid1CellEdited(const Sender: TObject; const AEditor: TControl;
       const AColumn: TColumn; const ARow: Integer; var ChangeData: Boolean;
       var NewData: string);
+    procedure CBSelectingEnterKeyChange(Sender: TObject);
   private
     { Private declarations }
 
@@ -56,7 +59,7 @@ implementation
 uses
   Unit_Example_Data, Unit_Utils,
 
-  Tee.Grid;
+  Tee.Grid, Tee.Grid.Selection;
 
 procedure TFormCellEditors.CBAlwaysVisibleChange(Sender: TObject);
 begin
@@ -90,6 +93,11 @@ procedure TFormCellEditors.CBSelectedTextChange(Sender: TObject);
 begin
   // When True, editing a cell using a TEdit will select all text
   TeeGrid1.Editing.Text.Selected:=CBSelectedText.IsChecked;
+end;
+
+procedure TFormCellEditors.CBSelectingEnterKeyChange(Sender: TObject);
+begin
+  TeeGrid1.Selected.EnterKey:=TSelectingEnter(CBSelectingEnterKey.ItemIndex);
 end;
 
 procedure TFormCellEditors.FormCreate(Sender: TObject);
@@ -127,12 +135,18 @@ end;
 procedure TFormCellEditors.TeeGrid1CellEdited(const Sender: TObject;
   const AEditor: TControl; const AColumn: TColumn; const ARow: Integer;
   var ChangeData: Boolean; var NewData: string);
+var tmp : String;
 begin
   if AColumn=TeeGrid1.Columns['Height'] then
   begin
-    ChangeData:=False;
+    if AEditor is TTrackBar then
+    begin
+      ChangeData:=False;
 
-    TeeGrid1.Data.SetValue(AColumn,ARow,FloatToStr(TTrackBar(AEditor).Value*0.01));
+      tmp:=FloatToStr(TTrackBar(AEditor).Value*0.01);
+
+      TeeGrid1.Data.SetValue(AColumn,ARow,tmp);
+    end;
   end;
 end;
 
@@ -153,17 +167,17 @@ begin
                  tmpValue);
   end
   else
-  if AColumn=TeeGrid1.Columns['EyeColor'] then
+  if (AColumn=TeeGrid1.Columns['EyeColor']) and (AEditor is TComboColorBox)  then
      TComboColorBox(AEditor).Color:=Round(TeeGrid1.Data.AsFloat(AColumn,ARow))
   else
-  if AColumn=TeeGrid1.Columns['Height'] then
+  if (AColumn=TeeGrid1.Columns['Height']) and (AEditor is TTrackBar) then
   begin
     TTrackBar(AEditor).Min:=400;
     TTrackBar(AEditor).Max:=700;
     TTrackBar(AEditor).Value:=100*TeeGrid1.Data.AsFloat(AColumn,ARow);
   end
   else
-  if AColumn=TeeGrid1.Columns['Happiness'] then
+  if (AColumn=TeeGrid1.Columns['Happiness']) and (AEditor is TNumberBox) then
   begin
     TNumberBox(AEditor).ValueType:=TNumValueType.Float;
     TNumberBox(AEditor).Min:=0;

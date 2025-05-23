@@ -2,7 +2,7 @@ object FormCellEditors: TFormCellEditors
   Left = 0
   Top = 0
   Caption = 'TeeGrid - Cell Editors Example'
-  ClientHeight = 362
+  ClientHeight = 396
   ClientWidth = 726
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object FormCellEditors: TFormCellEditors
     Left = 0
     Top = 41
     Width = 726
-    Height = 191
+    Height = 183
     Columns = <>
     OnCellEditing = TeeGrid1CellEditing
     OnCellEdited = TeeGrid1CellEdited
@@ -61,9 +61,9 @@ object FormCellEditors: TFormCellEditors
   end
   object Panel2: TPanel
     Left = 0
-    Top = 232
+    Top = 224
     Width = 726
-    Height = 130
+    Height = 172
     Align = alBottom
     TabOrder = 2
     object Label2: TLabel
@@ -92,11 +92,11 @@ object FormCellEditors: TFormCellEditors
         ' to another cells'
     end
     object Label5: TLabel
-      Left = 71
+      Left = 36
       Top = 102
-      Width = 50
+      Width = 85
       Height = 13
-      Caption = 'Enter key:'
+      Caption = 'Editing Enter key:'
     end
     object Label6: TLabel
       Left = 127
@@ -106,6 +106,13 @@ object FormCellEditors: TFormCellEditors
       Caption = 
         'True = Cell editor using TEdit will select all text when showing' +
         ' it'
+    end
+    object Label7: TLabel
+      Left = 25
+      Top = 129
+      Width = 96
+      Height = 13
+      Caption = 'Selecting Enter key:'
     end
     object CBAutoEdit: TCheckBox
       Left = 24
@@ -128,7 +135,7 @@ object FormCellEditors: TFormCellEditors
     object CBEnterKey: TComboBox
       Left = 127
       Top = 99
-      Width = 194
+      Width = 242
       Height = 21
       Style = csDropDownList
       ItemIndex = 0
@@ -175,6 +182,21 @@ object FormCellEditors: TFormCellEditors
       Caption = 'Custom Row 3 format'
       TabOrder = 6
       OnClick = Button3Click
+    end
+    object CBSelectingEnter: TComboBox
+      Left = 127
+      Top = 126
+      Width = 242
+      Height = 21
+      Style = csDropDownList
+      ItemIndex = 0
+      TabOrder = 7
+      Text = 'Move to next cell at right and bottom'
+      OnChange = CBSelectingEnterChange
+      Items.Strings = (
+        'Move to next cell at right and bottom'
+        'Move to cell below'
+        'Move to next cell at right')
     end
   end
 end

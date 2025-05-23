@@ -2,7 +2,7 @@ object FormCellEditors: TFormCellEditors
   Left = 0
   Top = 0
   Caption = 'TeeGrid - Custom Cell Editor Controls'
-  ClientHeight = 430
+  ClientHeight = 483
   ClientWidth = 640
   FormFactor.Width = 320
   FormFactor.Height = 480
@@ -11,12 +11,11 @@ object FormCellEditors: TFormCellEditors
   DesignerMasterStyle = 0
   object TeeGrid1: TTeeGrid
     Columns = <>
-    ReadOnly = False
     OnCellEditing = TeeGrid1CellEditing
     OnCellEdited = TeeGrid1CellEdited
     Align = Client
     Size.Width = 640.000000000000000000
-    Size.Height = 241.000000000000000000
+    Size.Height = 262.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 0
     _Headers = (
@@ -54,9 +53,9 @@ object FormCellEditors: TFormCellEditors
   end
   object Layout2: TLayout
     Align = Bottom
-    Position.Y = 291.000000000000000000
+    Position.Y = 312.000000000000000000
     Size.Width = 640.000000000000000000
-    Size.Height = 139.000000000000000000
+    Size.Height = 171.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 2
     object Text2: TText
@@ -126,12 +125,12 @@ object FormCellEditors: TFormCellEditors
       TextSettings.HorzAlign = Leading
     end
     object Label1: TLabel
-      Position.X = 48.000000000000000000
+      Position.X = 22.000000000000000000
       Position.Y = 107.000000000000000000
-      Size.Width = 89.000000000000000000
+      Size.Width = 115.000000000000000000
       Size.Height = 17.000000000000000000
       Size.PlatformDefault = False
-      Text = 'Enter Key:'
+      Text = 'Editing Enter Key:'
     end
     object CBEnterKey: TComboBox
       Items.Strings = (
@@ -141,11 +140,34 @@ object FormCellEditors: TFormCellEditors
       ItemIndex = 0
       Position.X = 144.000000000000000000
       Position.Y = 104.000000000000000000
-      Size.Width = 193.000000000000000000
+      Size.Width = 249.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 9
+      OnChange = CBEnterKeyChange
+    end
+    object Label2: TLabel
+      Position.X = 22.000000000000000000
+      Position.Y = 139.000000000000000000
+      Size.Width = 114.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Selecting Enter Key:'
+      TabOrder = 10
+    end
+    object CBSelectingEnterKey: TComboBox
+      Items.Strings = (
+        'Move to next cell (at right and below)'
+        'Move to cell below'
+        'Move to next cell (at right only)')
+      ItemIndex = 0
+      Position.X = 144.000000000000000000
+      Position.Y = 134.000000000000000000
+      Size.Width = 249.000000000000000000
       Size.Height = 22.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 8
-      OnChange = CBEnterKeyChange
+      OnChange = CBSelectingEnterKeyChange
     end
   end
 end
