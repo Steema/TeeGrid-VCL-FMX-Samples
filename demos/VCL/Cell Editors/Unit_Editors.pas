@@ -85,6 +85,8 @@ implementation
 uses
   Unit_Example_Data, Unit_Utils,
 
+  VCLTee.Painter,
+
   Tee.Grid, System.UITypes, Tee.Grid.Rows, Tee.Format;
 
 procedure TFormCellEditors.Button1Click(Sender: TObject);
@@ -166,6 +168,9 @@ end;
 
 procedure TFormCellEditors.FormCreate(Sender: TObject);
 begin
+// Example, switch from Windows GDI+ graphics to GDI:
+//  TeeGrid1.Painter:=TGdiPainter.Create(TeeGrid1.Canvas);
+
   // Use random sample data
   TeeGrid1.Data:=SampleData;
 

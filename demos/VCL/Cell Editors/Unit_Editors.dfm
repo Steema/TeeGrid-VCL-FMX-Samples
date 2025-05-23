@@ -26,7 +26,6 @@ object FormCellEditors: TFormCellEditors
     ParentBackground = False
     ParentColor = False
     TabOrder = 0
-    ExplicitWidth = 644
     _Headers = (
       1
       'TColumnHeaderBand'
@@ -41,7 +40,6 @@ object FormCellEditors: TFormCellEditors
     Height = 41
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 644
     object Label1: TLabel
       Left = 248
       Top = 14
@@ -68,7 +66,6 @@ object FormCellEditors: TFormCellEditors
     Height = 130
     Align = alBottom
     TabOrder = 2
-    ExplicitWidth = 644
     object Label2: TLabel
       Left = 16
       Top = 6
