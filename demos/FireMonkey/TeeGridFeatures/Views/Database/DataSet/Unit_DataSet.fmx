@@ -80,7 +80,6 @@ object FormGridDataSet: TFormGridDataSet
         Link = 'Children'
       end>
     DataSource = DataSource1
-    ReadOnly = False
     Align = Client
     Size.Width = 640.000000000000000000
     Size.Height = 430.000000000000000000

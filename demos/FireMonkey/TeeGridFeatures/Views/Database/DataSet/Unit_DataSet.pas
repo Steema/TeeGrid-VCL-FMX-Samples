@@ -81,6 +81,8 @@ begin
       ClientDataSet1.Open;
 
       AddSampleRecords;
+
+      ClientDataSet1.First;
     finally
       ClientDataSet1.EnableControls;
     end;
@@ -121,9 +123,9 @@ procedure TFormGridDataSet.Edit1ChangeTracking(Sender: TObject);
   function GetWildCard : String;
   Begin
      if CheckBox2.IsChecked then
-       result := '*'
+        result := '*'
      else
-       result:='';
+        result:='';
   end;
 
 var tmpS : String;
@@ -137,6 +139,8 @@ begin
   if tmpS='' then
      ClientDataSet1.Filter:=''
   else
+    // Unfortunately, Delphi ClientDataset Filtering do not support *
+    // wildcards at the beginning of the filter string, only at the end
      ClientDataSet1.Filter:='Name = '+QuotedStr(tmpS+GetWildCard);
 
   ClientDataSet1.Filtered:=ClientDataSet1.Filter<>'';
