@@ -48,6 +48,7 @@ type
     procedure BArrayFloatClick(Sender: TObject);
     procedure BArrayStringClick(Sender: TObject);
     procedure BArrayObjectClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     SampleHeader : TTextBand;
     procedure SetExpander(const AColumn: String; const ARows: TRows);
@@ -279,6 +280,11 @@ end;
 procedure TArrayAsDataForm.BEditClick(Sender: TObject);
 begin
 //  TTeeGridEditor.Edit(Self,TeeGrid1);
+end;
+
+procedure TArrayAsDataForm.FormDestroy(Sender: TObject);
+begin
+  Clean(MyCars); // Free memory
 end;
 
 end.
