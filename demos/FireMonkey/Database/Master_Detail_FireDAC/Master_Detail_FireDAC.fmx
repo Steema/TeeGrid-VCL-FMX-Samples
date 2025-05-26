@@ -11,53 +11,7 @@ object MasterDetail: TMasterDetail
   OnCreate = FormCreate
   DesignerMasterStyle = 0
   object TeeGrid1: TTeeGrid
-    Columns = <
-      item
-        Format.Font.Style = [fsBold]
-        Header.Text = 'CustomerID'
-        ParentFormat = False
-        Link = 'CustomerID'
-      end
-      item
-        Header.Text = 'CompanyName'
-        Link = 'CompanyName'
-      end
-      item
-        Header.Text = 'ContactName'
-        Link = 'ContactName'
-      end
-      item
-        Header.Text = 'ContactTitle'
-        Link = 'ContactTitle'
-      end
-      item
-        Header.Text = 'Address'
-        Link = 'Address'
-      end
-      item
-        Header.Text = 'City'
-        Link = 'City'
-      end
-      item
-        Header.Text = 'Region'
-        Link = 'Region'
-      end
-      item
-        Header.Text = 'PostalCode'
-        Link = 'PostalCode'
-      end
-      item
-        Header.Text = 'Country'
-        Link = 'Country'
-      end
-      item
-        Header.Text = 'Phone'
-        Link = 'Phone'
-      end
-      item
-        Header.Text = 'Fax'
-        Link = 'Fax'
-      end>
+    Columns = <>
     Align = Client
     Size.Width = 817.000000000000000000
     Size.Height = 554.000000000000000000

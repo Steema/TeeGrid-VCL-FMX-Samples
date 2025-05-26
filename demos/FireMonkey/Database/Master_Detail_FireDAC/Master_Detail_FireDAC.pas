@@ -61,6 +61,8 @@ uses
 
 procedure TMasterDetail.FormCreate(Sender: TObject);
 begin
+  SampleData.CustomersTable.Open;
+
   TeeGrid1.DataSource:=SampleData.CustomersTable;
 
   Open := False;
@@ -75,8 +77,7 @@ end;
 // Optional. Called when a new detail sub-grid has been created
 procedure TMasterDetail.Button1Click(Sender: TObject);
 begin
-
-  if Open = True then
+  if Open then
   Begin
     TeeGrid1.Grid.Current.ShowHideAllDetail(0,False);
     Open:= False;
@@ -86,7 +87,6 @@ begin
     TeeGrid1.Grid.Current.ShowHideAllDetail(0,True);
     Open:= True;
   End;
-
 end;
 
 procedure TMasterDetail.CBEnabledChange(Sender: TObject);
