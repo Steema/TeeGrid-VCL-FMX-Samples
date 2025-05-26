@@ -234,9 +234,12 @@ var tmp : TColumn;
 begin
   tmp:=TeeGrid1.Columns[AColumn];
 
-  tmp.Render:=TExpanderRender.Create(tmp.Changed);
+  if tmp<>nil then
+  begin
+    tmp.Render:=TExpanderRender.Create(tmp.Changed);
 
-  TExpanderRender(tmp.Render).OnGetExpanded:=ARows.IsChildrenVisible;
+    TExpanderRender(tmp.Render).OnGetExpanded:=ARows.IsChildrenVisible;
+  end;
 end;
 
 // Create a new Title grid-band

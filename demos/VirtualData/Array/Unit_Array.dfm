@@ -49,7 +49,7 @@ object FormArray: TFormArray
       OnClick = Button1Click
     end
     object BInteger: TButton
-      Left = 280
+      Left = 282
       Top = 8
       Width = 75
       Height = 25
