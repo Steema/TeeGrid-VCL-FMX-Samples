@@ -57,6 +57,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 begin
   SetLength(Persons,10);
   FillMyData(Persons);
+
   SortColumn:=-1;
   SortSubColumn:=-1;
 
