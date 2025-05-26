@@ -7,6 +7,7 @@ object MasterDetail2GridsForm: TMasterDetail2GridsForm
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
   DesignerMasterStyle = 0
   object Rectangle1: TRectangle
     Align = Client
@@ -62,7 +63,6 @@ object MasterDetail2GridsForm: TMasterDetail2GridsForm
           Link = 'Fax'
         end>
       DataSource = DataSource1
-      ReadOnly = False
       Selected.FullRow = True
       Align = Top
       Position.Y = 50.000000000000000000
@@ -136,7 +136,6 @@ object MasterDetail2GridsForm: TMasterDetail2GridsForm
           Link = 'ShipCountry'
         end>
       DataSource = DataSource2
-      ReadOnly = False
       Align = Client
       Margins.Top = 5.000000000000000000
       Size.Width = 708.000000000000000000
@@ -173,7 +172,7 @@ object MasterDetail2GridsForm: TMasterDetail2GridsForm
   end
   object Sqlite_demoConnection: TFDConnection
     Params.Strings = (
-      'Database=D:\apps\Embarcadero\Studio\19.0\Samples\Data\FDDemo.sdb'
+      'Database=FDDemo.sdb'
       'ConnectionDef=SQLite_Demo')
     LoginPrompt = False
     Left = 489

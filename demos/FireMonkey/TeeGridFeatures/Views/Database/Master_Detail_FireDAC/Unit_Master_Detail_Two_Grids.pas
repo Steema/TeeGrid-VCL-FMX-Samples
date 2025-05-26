@@ -11,7 +11,7 @@ uses
   FireDAC.Stan.ExprFuncs, FireDAC.FMXUI.Wait, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FMXTee.Control, FMXTee.Grid, Data.DB,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, FMX.Controls.Presentation,
-  FMX.StdCtrls, FMX.Layouts, FMX.Objects;
+  FMX.StdCtrls, FMX.Layouts, FMX.Objects, FireDAC.Phys.SQLiteWrapper.Stat;
 
 type
   TMasterDetail2GridsForm = class(TForm)
@@ -26,6 +26,7 @@ type
     Layout1: TLayout;
     cbConnect: TCheckBox;
     procedure cbConnectChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -39,10 +40,37 @@ implementation
 
 {$R *.fmx}
 
+uses
+  IOUtils;
+
+function FolderWithSampleData:String;
+begin
+  result:='fddemo.sdb';
+
+  repeat
+    if TFile.Exists(result) then
+       exit
+    else
+       result:=TPath.Combine('..',result);
+
+  until Length(result)>100;
+end;
+
 procedure TMasterDetail2GridsForm.cbConnectChange(Sender: TObject);
 begin
   CustomersTable.Active:=cbConnect.IsChecked;
   OrdersTable.Active:=cbConnect.IsChecked;
+end;
+
+procedure TMasterDetail2GridsForm.FormCreate(Sender: TObject);
+var Path : String;
+begin
+  Path:=FolderWithSampleData;
+
+  if Path='' then
+     raise Exception.Create('Error: Missing SQL sample database file FDDEMO.SDB required by this demo');
+
+  Sqlite_demoConnection.Params.Values['Database']:=Path;
 end;
 
 end.
