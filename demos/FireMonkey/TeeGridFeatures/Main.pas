@@ -12,7 +12,7 @@ uses
   Appearance, Unit_Editors, Unit_Locked_Columns, Unit_Custom_Sorting,
   Master_Detail_FireDAC, Unit_DataSet,
   Unit_FMX_Themes, Unit_FMX_Ticker, Exporting, Unit_FMX_REST, System.ImageList,
-  FMX.ImgList, Unit_Master_Detail_Two_Grids, ArrayData
+  FMX.ImgList, Unit_Master_Detail_Two_Grids, ArrayData, FMX.Menus
   ;
 
 type
@@ -43,10 +43,13 @@ type
     procedure ListView1ItemClick(const Sender: TObject; const AItem: TListViewItem);
     procedure FormCreate(Sender: TObject);
   private
+    CurrentDemo : TCustomForm;
+
     procedure AddDemosToListView;
-    procedure RegisterClasses;
+    procedure DestroyCurrentDemo;
     procedure CreateFormFromName(const FormName: string);
     procedure EmbeddForm(AParent: TControl; AForm: TCustomForm);
+    procedure RegisterClasses;
   public
   end;
 
@@ -60,9 +63,9 @@ const
 
   GroupHeaders = 4;
   GroupHeadersArray : array [1..GroupHeaders] of string = ('Adding Data',
-                                                            'Appearance',
-                                                            'Exporting',
-                                                            'Other Features');
+                                                           'Appearance',
+                                                           'Exporting',
+                                                           'Other Features');
 
   NumDemos = 12;
   Demos : array[1..NumDemos] of TDemo =
@@ -125,21 +128,6 @@ begin
   finally
     ListView1.EndUpdate;
   end;
-
-(*
-
-  ListView1.BeginUpdate;
-  try
-    for I := 1 to NumDemos do
-    begin
-      LItem := ListView1.Items.Add;
-      LItem.Text := DemosTitlearray[I];
-      LItem.TagString := DemosNameArray[I];
-    end;
-  finally
-    ListView1.EndUpdate;
-  end;
-  *)
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
@@ -148,14 +136,21 @@ begin
   AddDemosToListView;
 end;
 
-procedure TMainForm.ListView1ItemClick(const Sender: TObject; const AItem: TListViewItem);
-var
-s : string;
+procedure TMainForm.DestroyCurrentDemo;
 begin
-  MultiView1.HideMaster;
+  CurrentDemo.Free;
+  CurrentDemo:=nil;
 
   while LayoutDemo.ChildrenCount>0 do
     LayoutDemo.Children[0].Free;
+end;
+
+procedure TMainForm.ListView1ItemClick(const Sender: TObject; const AItem: TListViewItem);
+var s : string;
+begin
+  MultiView1.HideMaster;
+
+  DestroyCurrentDemo;
 
   s := AItem.TagString;
   DetailLabel.Text := AItem.Text;
@@ -180,17 +175,16 @@ begin
 end;
 
 procedure TMainForm.CreateFormFromName(const FormName : string);
-var
-ObjClass: TFmxObjectClass;
-NewForm : TCustomForm;
+var ObjClass: TFmxObjectClass;
 begin
   ObjClass := TFmxObjectClass(GetClass(FormName));
 
   if ObjClass <> nil then
   begin
-    NewForm := ObjClass.Create(Self) as TCustomForm;
-    if Assigned(NewForm) then
-      EmbeddForm(LayoutDemo,NewForm);
+    CurrentDemo:= ObjClass.Create(Self) as TCustomForm;
+
+    if Assigned(CurrentDemo) then
+       EmbeddForm(LayoutDemo,CurrentDemo);
   end
 end;
 
