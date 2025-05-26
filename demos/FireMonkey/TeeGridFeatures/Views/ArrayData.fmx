@@ -7,6 +7,7 @@ object ArrayAsDataForm: TArrayAsDataForm
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnDestroy = FormDestroy
   DesignerMasterStyle = 0
   object Layout1: TLayout
     Align = Client
@@ -29,12 +30,12 @@ object ArrayAsDataForm: TArrayAsDataForm
         Size.PlatformDefault = False
         TabOrder = 0
         Text = 'Adding Data by using Array of Records'
+        TextSettings.Trimming = None
         OnClick = BArrayRecordsClick
       end
     end
     object TeeGrid1: TTeeGrid
       Columns = <>
-      ReadOnly = False
       Align = Client
       Size.Width = 745.000000000000000000
       Size.Height = 416.000000000000000000
@@ -55,6 +56,7 @@ object ArrayAsDataForm: TArrayAsDataForm
       Size.PlatformDefault = False
       TabOrder = 3
       Text = 'Adding Data by using Array of Integers'
+      TextSettings.Trimming = None
       OnClick = BArrayIntegersClick
     end
     object BArrayFloat: TButton
@@ -65,6 +67,7 @@ object ArrayAsDataForm: TArrayAsDataForm
       Size.PlatformDefault = False
       TabOrder = 2
       Text = 'Adding Data by using Array of Float'
+      TextSettings.Trimming = None
       OnClick = BArrayFloatClick
     end
     object BArrayString: TButton
@@ -75,6 +78,7 @@ object ArrayAsDataForm: TArrayAsDataForm
       Size.PlatformDefault = False
       TabOrder = 1
       Text = 'Adding Data by using Array of String'
+      TextSettings.Trimming = None
       OnClick = BArrayStringClick
     end
     object BArrayObject: TButton
@@ -85,6 +89,7 @@ object ArrayAsDataForm: TArrayAsDataForm
       Size.PlatformDefault = False
       TabOrder = 0
       Text = 'Adding Data by using Array of Objects'
+      TextSettings.Trimming = None
       OnClick = BArrayObjectClick
     end
   end

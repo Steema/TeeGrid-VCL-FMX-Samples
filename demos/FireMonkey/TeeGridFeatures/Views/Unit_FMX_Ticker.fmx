@@ -69,7 +69,6 @@ object TickerForm: TTickerForm
   end
   object TeeGrid1: TTeeGrid
     Columns = <>
-    ReadOnly = False
     Align = Client
     Size.Width = 417.000000000000000000
     Size.Height = 246.000000000000000000
