@@ -17,6 +17,7 @@ type
     CustomersTable: TFDQuery;
     OrdersTable: TFDQuery;
     FDStanStorageBinLink1: TFDStanStorageBinLink;
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
 
@@ -35,6 +36,11 @@ implementation
 {%CLASSGROUP 'FMX.Controls.TControl'}
 
 {$R *.dfm}
+
+procedure TSampleData.DataModuleCreate(Sender: TObject);
+begin
+  Sqlite_demoConnection.Open;
+end;
 
 function TSampleData.OrdersOfCustomer(const ARecNo:Integer):TDataSet;
 
