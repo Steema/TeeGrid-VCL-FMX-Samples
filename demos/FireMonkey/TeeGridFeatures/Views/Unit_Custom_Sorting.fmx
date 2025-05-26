@@ -14,7 +14,6 @@ object FormCustomSorting: TFormCustomSorting
   DesignerMasterStyle = 0
   object TeeGrid1: TTeeGrid
     Columns = <>
-    ReadOnly = False
     Align = Client
     Size.Width = 640.000000000000000000
     Size.Height = 503.000000000000000000

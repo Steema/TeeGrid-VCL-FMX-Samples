@@ -107,6 +107,8 @@ begin
 
   // Set grid data
   TeeGrid1.Data:=TVirtualArrayData<TLocation>.Create(Locations);
+
+  // Cosmetics
   TeeGrid1.Columns.Items[0].Width.Value:= 150;
   TeeGrid1.Columns.Items[1].Width.Value:= 150;
 end;
@@ -180,18 +182,61 @@ type
   end;
 
 procedure TFormCustomSorting.SortData(const AColumn:TColumn; const Ascending:Boolean);
+
+  // Returns the current selected Location in the grid, if any
+  function CurrentLocation:TLocation;
+  var row : Integer;
+  begin
+    row:=TeeGrid1.Selected.Row;
+
+    if row=-1 then
+    begin
+      result.Name:='';
+      result.Country:='';
+    end
+    else
+      result:=Locations[row];
+  end;
+
+  // Finds the index of ALocation in our array, or -1
+  function FindLocation(const ALocation:TLocation):Integer;
+  var t : Integer;
+  begin
+    result:=-1;
+
+    if ALocation.Name<>'' then
+       for t:=0 to High(Locations) do
+           if (Locations[t].Name=ALocation.Name) and
+              (Locations[t].Country=ALocation.Country) then
+           begin
+             result:=t;
+             break;
+           end;
+  end;
+
 var Comparer : TLocationComparer;
+    Current : TLocation;
 begin
+  // Remember the current selection Location record in the grid, if any
+  Current:=CurrentLocation;
+
   Comparer:=TLocationComparer.Create;
   try
     Comparer.Ascending:=Ascending;
 
+    // Choose a column
     if AColumn.Header.Text='Name' then
        Comparer.Field:=TLocationField.Name
     else
        Comparer.Field:=TLocationField.Country;
 
+    // Do the Sort !
     TArray.Sort<TLocation>(Locations,Comparer);
+
+    // Set back again the current selected Location
+    if Current.Name<>'' then
+       TeeGrid1.Selected.Row:=FindLocation(Current);
+
   finally
     Comparer.Free;
   end;
