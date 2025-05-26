@@ -23,6 +23,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure LBColumnsClick(Sender: TObject);
     procedure BNoneClick(Sender: TObject);
+    procedure TeeGrid1Select(Sender: TObject);
   private
     Data : TStringsData;
     procedure FillCells;
@@ -94,7 +95,7 @@ begin
           Data[t,row]:=IntToStr(t)+' x '+IntToStr(row);
 end;
 
-// Add all columns to listbox
+// Change the Locked status of the selected Column
 procedure TLockedColumnsForm.BNoneClick(Sender: TObject);
 var Column : TColumn;
     Locked : TColumnLocked;
@@ -115,6 +116,7 @@ begin
   SetLocked(Column,Locked);
 end;
 
+// Add all columns to listbox
 procedure TLockedColumnsForm.FillBox;
 var t : Integer;
 begin
@@ -144,5 +146,14 @@ begin
   end;
 end;
 
+// Change the current listbox Column when selecting it in the grid
+procedure TLockedColumnsForm.TeeGrid1Select(Sender: TObject);
+begin
+  if TeeGrid1.Selected.Column<>nil then
+  begin
+    LBColumns.ItemIndex:=TeeGrid1.Selected.Column.Index;
+    LBColumnsClick(Self);
+  end;
+end;
 
 end.

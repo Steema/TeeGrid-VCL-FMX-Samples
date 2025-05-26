@@ -13,7 +13,7 @@ object LockedColumnsForm: TLockedColumnsForm
   DesignerMasterStyle = 0
   object TeeGrid1: TTeeGrid
     Columns = <>
-    CellFormat = <>
+    OnSelect = TeeGrid1Select
     Align = Client
     Size.Width = 640.000000000000000000
     Size.Height = 351.000000000000000000
