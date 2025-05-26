@@ -58,6 +58,8 @@ uses
 
 procedure TMasterDetail.FormCreate(Sender: TObject);
 begin
+  SampleData.OpenTables;
+
   TeeGrid1.DataSource:=SampleData.CustomersTable;
 
   // Initialize "Expander"
