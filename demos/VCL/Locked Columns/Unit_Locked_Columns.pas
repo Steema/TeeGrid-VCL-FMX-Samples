@@ -49,6 +49,11 @@ begin
 
   TeeGrid1.Data:=Data;
 
+  //enabling multi-field copy-paste
+  TeeGrid1.Grid.QuoteStringsOnCopy := false;
+  TeeGrid1.Grid.CopyFieldSeparator := ';';
+  TeeGrid1.Selected.Range.Enabled:= True;
+
   FillBox;
 
   // Example, lock some columns to left and right edges
