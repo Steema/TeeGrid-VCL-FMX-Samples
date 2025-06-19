@@ -22,7 +22,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
   Tee.Renders, BI.DataSet, VCLTee.Editor.Grid, Vcl.StdCtrls, Vcl.ExtCtrls,
 
-  BI.Data, Tee.Grid.Rows, Tee.Grid.Columns, Tee.GridData, Tee.Grid.RowGroup;
+  BI.DataItem, Tee.Grid.Rows, Tee.Grid.Columns, Tee.GridData, Tee.Grid.RowGroup;
 
 type
   TFormDetailRows = class(TForm)
@@ -31,9 +31,11 @@ type
     Button1: TButton;
     CBExpander: TComboBox;
     Label1: TLabel;
+    Button2: TButton;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure CBExpanderChange(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
 
@@ -64,12 +66,17 @@ uses
 
   BI.DataSource, BI.Persist, BI.GridData,
   Tee.Grid.Header, Tee.Grid.Totals, Tee.Grid.Themes, Tee.Grid.Bands, Tee.Grid,
-  Tee.Format;
+  Tee.Format, VCLTee.Editor.Font;
 
 procedure TFormDetailRows.Button1Click(Sender: TObject);
 begin
   // Show TeeGrid editor dialog
   TTeeGridEditor.Edit(Self,TeeGrid1)
+end;
+
+procedure TFormDetailRows.Button2Click(Sender: TObject);
+begin
+  TFontEditor.Edit(Self,TeeGrid1.Grid.Current.Cells.Format.Font);
 end;
 
 // Change the aspect of the "expanded" box
