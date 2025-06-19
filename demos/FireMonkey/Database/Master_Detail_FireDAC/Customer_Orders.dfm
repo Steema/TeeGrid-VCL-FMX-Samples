@@ -4,6 +4,9 @@ object SampleData: TSampleData
   Width = 267
   object Sqlite_demoConnection: TFDConnection
     Params.Strings = (
+      
+        'Database=C:\Users\Public\Documents\Embarcadero\Studio\23.0\Sampl' +
+        'es\data\FDDemo.sdb'
       'ConnectionDef=SQLite_Demo')
     LoginPrompt = False
     Left = 111

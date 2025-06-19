@@ -129,6 +129,12 @@ begin
 
   // Add a Totals header:
   TTotalsHeader.CreateTotals(NewGroup.Footer,tmpTot);
+
+  // Cosmetics on the sub-grid
+  NewGroup.Rows.Back.Brush.Color:=TAlphaColors.Bisque;
+  NewGroup.Rows.Back.Brush.Visible:=True;
+
+  NewGroup.Cells.Format.Font.Color:=TAlphaColors.Darkblue;
 end;
 
 // Called when a new sub-grid has been created, to obtain the sub-grid Data
