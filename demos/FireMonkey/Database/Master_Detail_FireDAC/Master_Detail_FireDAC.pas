@@ -40,6 +40,7 @@ type
     { Private declarations }
 
     procedure DetailNewGroup(const Sender,NewGroup:TRowGroup);
+    procedure SubDetailNewGroup(const Sender,NewGroup:TRowGroup);
 
     procedure EnableDisableSubGrid(const AGroup:TRowGroup; const AEvent:TExpanderGetDataEvent);
 
@@ -135,6 +136,9 @@ var tmpTot : TColumnTotals;
 begin
   EnableDisableSubGrid(NewGroup,GetOrderItems);
 
+    // Optional:
+  NewGroup.OnNewDetail:=SubDetailNewGroup;
+
   // Create a Totals band
   tmpTot:=TColumnTotals.Create(NewGroup.Footer); // <--- set to Footer
 
@@ -150,6 +154,15 @@ begin
   NewGroup.Rows.Back.Brush.Visible:=True;
 
   NewGroup.Cells.Format.Font.Color:=TAlphaColors.Darkblue;
+end;
+
+procedure TMasterDetail.SubDetailNewGroup(const Sender,NewGroup:TRowGroup);
+begin
+  // Cosmetics on the sub-sub-grid
+  NewGroup.Rows.Back.Brush.Color:=TAlphaColors.Lavender;
+  NewGroup.Rows.Back.Brush.Visible:=True;
+
+  NewGroup.Cells.Format.Font.Color:=TAlphaColors.Blueviolet;
 end;
 
 // Called when a new sub-grid has been created, to obtain the sub-grid Data
