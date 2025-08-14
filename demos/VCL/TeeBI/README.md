@@ -5,9 +5,12 @@
  TeeGrid VCL/FMX
 =========================
 
-The TeeBI_Costumber_Orders example 
-show how TeeGrid and TeeBI works together. 
-Therefore is necessary have installed TeeBI
-to run the example in correct way.
+The Customer_Orders example shows how TeeGrid and TeeBI work together. 
+
+It is necessary have installed TeeBI to compile and run this example.
+
+[Click here](https://github.com/Steema/TeeBI) to access the TeeBI free opensource repository.
 
 ----------------------------------------------------
+
+![](https://raw.github.com/Steema/TeeGrid-VCL-FMX-Samples/master/docs/img/TeeGrid_and_TeeBI_subgrids.png)
