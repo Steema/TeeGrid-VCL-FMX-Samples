@@ -21,7 +21,7 @@ uses
 
   FMXTee.Control, FMXTee.Grid,
 
-  Tee.Renders, Tee.Grid.RowGroup, Customer_Orders, Data.Bind.Controls,
+  Tee.Format, Tee.Renders, Tee.Grid.RowGroup, Customer_Orders, Data.Bind.Controls,
   Data.Bind.Components, Data.Bind.DBScope, Data.DB, Fmx.Bind.Navigator;
 
 type
@@ -39,10 +39,15 @@ type
   private
     { Private declarations }
 
-    Expander : TExpanderRender;
-
     procedure DetailNewGroup(const Sender,NewGroup:TRowGroup);
+
+    procedure EnableDisableSubGrid(const AGroup:TRowGroup; const AEvent:TExpanderGetDataEvent);
+
+    // Sub-Grid level 1
     procedure GetOrders(const Sender: TExpanderRender; const ARow:Integer; out AData:TObject);
+
+    // Sub-Grid level 2
+    procedure GetOrderItems(const Sender: TExpanderRender; const ARow:Integer; out AData:TObject);
 
   public
     { Public declarations }
@@ -89,37 +94,47 @@ begin
   End;
 end;
 
-procedure TMasterDetail.CBEnabledChange(Sender: TObject);
+// This method is used for any sub-grid level, in this example it is used
+// twice, one for Customer->Orders, and another for Orders->Order Details
+procedure TMasterDetail.EnableDisableSubGrid(const AGroup:TRowGroup; const AEvent:TExpanderGetDataEvent);
+var Expander : TExpanderRender;
 begin
   if CBEnabled.IsChecked then
   begin
     // Create "Expander"
-    Expander:=TeeGrid1.Grid.Current.NewExpander;
+    Expander:=AGroup.NewExpander;
 
-    // Setup event
-    Expander.OnGetData:=GetOrders;
+    // Setup data event
+    Expander.OnGetData:=AEvent;
 
     // We don't know in advance if a row can be expanded or not, so set Always
     Expander.AlwaysExpand:=True;
 
     // Set to first Column
-    if TeeGrid1.Columns.Count>0 then
-       TeeGrid1.Columns[0].Render:=Expander;
+    if AGroup.Columns.Count>0 then
+       AGroup.Columns[0].Render:=Expander;
   end
   else
   begin
     // Remove all detail grids
-    TeeGrid1.Rows.Children.Clear;
+    AGroup.Rows.Children.Clear;
 
     // Set first column render to default (no expander)
-    if TeeGrid1.Columns.Count>0 then
-       TeeGrid1.Columns[0].Render:=nil;
+    if AGroup.Columns.Count>0 then
+       AGroup.Columns[0].Render:=nil;
   end;
+end;
+
+procedure TMasterDetail.CBEnabledChange(Sender: TObject);
+begin
+  EnableDisableSubGrid(TeeGrid1.Grid.Current,GetOrders);
 end;
 
 procedure TMasterDetail.DetailNewGroup(const Sender,NewGroup:TRowGroup);
 var tmpTot : TColumnTotals;
 begin
+  EnableDisableSubGrid(NewGroup,GetOrderItems);
+
   // Create a Totals band
   tmpTot:=TColumnTotals.Create(NewGroup.Footer); // <--- set to Footer
 
@@ -144,6 +159,17 @@ procedure TMasterDetail.GetOrders(const Sender: TExpanderRender; const ARow:Inte
 begin
   // Return a new Data using a clone of Orders rows for a given Customer
   AData:=TVirtualDBData.From(SampleData.OrdersOfCustomer(ARow+1));
+
+  // Data should be destroyed automatically
+  TVirtualDBData(AData).OwnsData:=True;
+end;
+
+// Called when a new sub-sub-grid has been created, to obtain the sub-sub-grid Data
+// The "Order Items" for the current "Order" for the current "Customer"
+procedure TMasterDetail.GetOrderItems(const Sender: TExpanderRender; const ARow:Integer; out AData:TObject);
+begin
+  // Return a new Data using a clone of Order Items rows for a given Order of a given Customer
+  AData:=TVirtualDBData.From(SampleData.OrderDetailsOfOrder(ARow+1));
 
   // Data should be destroyed automatically
   TVirtualDBData(AData).OwnsData:=True;

@@ -1,6 +1,6 @@
 object SampleData: TSampleData
   OnCreate = DataModuleCreate
-  Height = 337
+  Height = 479
   Width = 267
   object Sqlite_demoConnection: TFDConnection
     Params.Strings = (
@@ -37,7 +37,22 @@ object SampleData: TSampleData
       end>
   end
   object FDStanStorageBinLink1: TFDStanStorageBinLink
-    Left = 104
-    Top = 216
+    Left = 108
+    Top = 288
+  end
+  object OrderDetailsTable: TFDQuery
+    Connection = Sqlite_demoConnection
+    FetchOptions.AssignedValues = [evRecordCountMode]
+    FetchOptions.RecordCountMode = cmTotal
+    SQL.Strings = (
+      'SELECT * FROM "Order Details"'
+      'where OrderID = :Order')
+    Left = 109
+    Top = 211
+    ParamData = <
+      item
+        Name = 'ORDER'
+        ParamType = ptInput
+      end>
   end
 end

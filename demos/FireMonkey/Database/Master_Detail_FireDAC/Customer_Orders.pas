@@ -17,6 +17,7 @@ type
     CustomersTable: TFDQuery;
     OrdersTable: TFDQuery;
     FDStanStorageBinLink1: TFDStanStorageBinLink;
+    OrderDetailsTable: TFDQuery;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
@@ -26,6 +27,7 @@ type
     { Public declarations }
 
     function OrdersOfCustomer(const ARecNo:Integer):TDataSet;
+    function OrderDetailsOfOrder(const ARecNo:Integer):TDataSet;
   end;
 
 var
@@ -62,6 +64,28 @@ function TSampleData.OrdersOfCustomer(const ARecNo:Integer):TDataSet;
 begin
   FilterOrders(CustomerID);
   result:=CloneData(OrdersTable);
+end;
+
+function TSampleData.OrderDetailsOfOrder(const ARecNo:Integer):TDataSet;
+
+  // Return the OrderID for row: ARow
+  function OrderID:String;
+  begin
+    OrdersTable.RecNo:=ARecNo;
+    result:=OrdersTable.FieldByName('OrderID').AsString;
+  end;
+
+  // Execute OrderDetailsTable query for a given OrderID
+  procedure FilterOrderDetails(const AOrderID:String);
+  begin
+    OrderDetailsTable.Close;
+    OrderDetailsTable.ParamByName('Order').AsString:=AOrderID;
+    OrderDetailsTable.Open;
+  end;
+
+begin
+  FilterOrderDetails(OrderID);
+  result:=CloneData(OrderDetailsTable);
 end;
 
 // Return a new clone copy of ADataSet data, all rows

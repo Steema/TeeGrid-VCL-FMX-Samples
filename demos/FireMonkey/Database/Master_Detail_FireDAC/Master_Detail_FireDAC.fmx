@@ -49,7 +49,6 @@ object MasterDetail: TMasterDetail
       Size.PlatformDefault = False
       TabOrder = 1
       Text = '&Open/Close All'
-      TextSettings.Trimming = None
       OnClick = Button1Click
     end
   end
