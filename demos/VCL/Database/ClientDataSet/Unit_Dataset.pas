@@ -16,7 +16,10 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid, Data.DB,
   Datasnap.DBClient, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.ExtCtrls, Vcl.Menus,
-  Tee.Grid.Columns, Tee.Renders, Vcl.Buttons;
+  Tee.Grid.Columns, Tee.Renders, Vcl.Buttons, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client;
 
 type
   TFormGridDataset = class(TForm)
@@ -27,8 +30,6 @@ type
     CheckBox1: TCheckBox;
     Button1: TButton;
     DBNavigator1: TDBNavigator;
-    ComboSource: TComboBox;
-    Label1: TLabel;
     ClientDataSet2: TClientDataSet;
     DataSource2: TDataSource;
     Button2: TButton;
@@ -41,12 +42,17 @@ type
     PopupMenu1: TPopupMenu;
     BenchmarkScrolling1: TMenuItem;
     ClientDataSet3Password: TStringField;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    ListBox1: TListBox;
+    FDMemTable1: TFDMemTable;
+    DataSource4: TDataSource;
     procedure CheckBox1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
-    procedure ComboSourceChange(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure BenchmarkScrolling1Click(Sender: TObject);
+    procedure ListBox1Click(Sender: TObject);
   private
     { Private declarations }
 
@@ -54,6 +60,8 @@ type
 
     procedure PaintPassword(const Sender:TColumn; var AData:TRenderData;
                             var DefaultPaint:Boolean);
+
+    procedure SetGridSortable;
   public
     { Public declarations }
   end;
@@ -68,7 +76,9 @@ implementation
 uses
   {System.}Diagnostics,
 
-  VCLTee.Editor.Grid, Tee.Grid.RowGroup, Tee.Grid;
+  VCLTee.Editor.Grid, Tee.Grid.RowGroup, Tee.Grid,
+
+  Tee.Grid.DB.SortableDataSet;
 
 // Show the TeeGrid editor dialog
 procedure TFormGridDataset.Button1Click(Sender: TObject);
@@ -132,7 +142,45 @@ begin
   AColumn.Render:=ARender.Create(AColumn.Changed);
 end;
 
-procedure TFormGridDataset.ComboSourceChange(Sender: TObject);
+procedure TFormGridDataset.SetGridSortable;
+var tmp : TDataSet;
+begin
+  if TeeGrid1.DataSource is TDataSource then
+     tmp:=(TeeGrid1.DataSource as TDataSource).DataSet
+  else
+  if TeeGrid1.DataSource is TDataSet then
+     tmp:=(TeeGrid1.DataSource as TDataSet)
+  else
+     Exit;
+
+  if tmp is TClientDataSet then  // DataSnap TClientDataSet support
+     TSortableClientDataset.CreateSortable(TeeGrid1.Grid,tmp as TClientDataSet)
+  else
+  if tmp is TFDDataSet then // FireDAC DataSet support
+     TSortableFireDACDataset.CreateSortable(TeeGrid1.Grid,tmp as TFDDataSet);
+end;
+
+procedure TFormGridDataSet.PaintPassword(const Sender:TColumn; var AData:TRenderData;
+              var DefaultPaint:Boolean);
+begin
+  AData.Data:='######';
+  DefaultPaint:=True;
+end;
+
+procedure TFormGridDataset.FormCreate(Sender: TObject);
+begin
+  // Enable drag / pan grid scrolling by finger touch and / or left-button mouse
+  TeeGrid1.Scrolling.Mode:=TScrollingMode.Both;
+  //  TeeGrid1.Scrolling.Horizontal:=TScrollDirection.Disabled;
+
+  // Change the selected row when scrolling the grid
+  // TeeGrid1.Selected.ScrollToView:=True;
+
+  ListBox1.ItemIndex:=1;
+  ListBox1Click(Self);
+end;
+
+procedure TFormGridDataset.ListBox1Click(Sender: TObject);
 begin
   // False = All rows same height
   TeeGrid1.Rows.Height.Automatic:=False;
@@ -140,18 +188,22 @@ begin
   // 0 = Automatic row height (depends on Cells.Format.Font.Size)
   TeeGrid1.Rows.Height.Value:=0;
 
-  case ComboSource.ItemIndex of
+  case ListBox1.ItemIndex of
+
     0: begin
+         // No data:
          TeeGrid1.DataSource:=nil;
          DBNavigator1.DataSource:=nil;
        end;
 
     1: begin
+         // TClientDataSet:
          TeeGrid1.DataSource:=ClientDataSet1;
          DBNavigator1.DataSource:=DataSource1;
        end;
 
     2: begin
+         // another TClientDataSet:
          TeeGrid1.DataSource:=ClientDataSet2;
 
          // Just a test, set a custom row Height
@@ -166,44 +218,39 @@ begin
          // every row, so considering possible multi-line text in cells
          TeeGrid1.Rows.Height.Automatic:=True;
 
+         // A TDataSource:
          TeeGrid1.DataSource:=DataSource1;
          DBNavigator1.DataSource:=DataSource1;
        end;
+
+    4: begin
+         // A big dataset:
+         CheckBigDataSet;
+
+         TeeGrid1.DataSource:=DataSource3;
+         DBNavigator1.DataSource:=DataSource3;
+
+         // EXAMPLE: Use a custom render for the password column:
+         ChangeRender(TeeGrid1.Columns['Password'],TPasswordRender);
+
+         // Alternative way:
+         // TeeGrid1.Columns['Password'].OnPaint:=PaintPassword;
+    end;
   else
+
     begin
-      CheckBigDataSet;
+      // A FireDAC TFDMemTable:
 
-      TeeGrid1.DataSource:=DataSource3;
-      DBNavigator1.DataSource:=DataSource3;
-
-      // Use a render for password column:
-      ChangeRender(TeeGrid1.Columns['Password'],TPasswordRender);
-
-      // Alternative way:
-      // TeeGrid1.Columns['Password'].OnPaint:=PaintPassword;
+      TeeGrid1.DataSource:=FDMemTable1;
+      DBNavigator1.DataSource:=DataSource4;
     end;
   end;
 
-  TeeGrid1.SetFocus;
-end;
+  // Tell grid to enable sorting by clicking columns
+  SetGridSortable;
 
-procedure TFormGridDataSet.PaintPassword(const Sender:TColumn; var AData:TRenderData;
-              var DefaultPaint:Boolean);
-begin
-  AData.Data:='######';
-  DefaultPaint:=True;
-end;
-
-procedure TFormGridDataset.FormCreate(Sender: TObject);
-begin
-  // Enable drag / pan grid scrolling by finger touch and / or left-button mouse
-  TeeGrid1.Scrolling.Mode:=TScrollingMode.Both;
-//  TeeGrid1.Scrolling.Horizontal:=TScrollDirection.Disabled;
-
-  // Change the selected row when scrolling the grid
-  //TeeGrid1.Selected.ScrollToView:=True;
-
-  TeeGrid1.DataSource:=DataSource1;
+  if Showing then
+     TeeGrid1.SetFocus;
 end;
 
 // Internal Test. Scrolling / repainting speed

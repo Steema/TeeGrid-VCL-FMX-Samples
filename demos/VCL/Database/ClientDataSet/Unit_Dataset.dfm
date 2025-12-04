@@ -14,9 +14,9 @@ object FormGridDataset: TFormGridDataset
   OnCreate = FormCreate
   TextHeight = 13
   object TeeGrid1: TTeeGrid
-    Left = 0
+    Left = 154
     Top = 41
-    Width = 647
+    Width = 493
     Height = 462
     Columns = <
       item
@@ -80,6 +80,8 @@ object FormGridDataset: TFormGridDataset
     PopupMenu = PopupMenu1
     ShowHint = False
     TabOrder = 0
+    ExplicitLeft = 0
+    ExplicitWidth = 647
     _Headers = (
       1
       'TColumnHeaderBand'
@@ -94,13 +96,6 @@ object FormGridDataset: TFormGridDataset
     Height = 41
     Align = alTop
     TabOrder = 1
-    object Label1: TLabel
-      Left = 164
-      Top = 15
-      Width = 27
-      Height = 13
-      Caption = 'Data:'
-    end
     object CheckBox1: TCheckBox
       Left = 19
       Top = 13
@@ -113,38 +108,21 @@ object FormGridDataset: TFormGridDataset
       OnClick = CheckBox1Click
     end
     object Button1: TButton
-      Left = 543
-      Top = 10
+      Left = 204
+      Top = 9
       Width = 75
       Height = 25
       Caption = '&Edit...'
       TabOrder = 1
       OnClick = Button1Click
     end
-    object ComboSource: TComboBox
-      Left = 197
-      Top = 11
-      Width = 180
-      Height = 21
-      Style = csDropDownList
-      ItemIndex = 1
-      TabOrder = 2
-      Text = 'Customers ClientDataSet'
-      OnChange = ComboSourceChange
-      Items.Strings = (
-        '(none)'
-        'Customers ClientDataSet'
-        'Animals ClientDataSet'
-        'DataSource1'
-        'Big Dataset')
-    end
     object Button2: TButton
-      Left = 448
-      Top = 10
+      Left = 109
+      Top = 9
       Width = 75
       Height = 25
       Caption = 'Copy'
-      TabOrder = 3
+      TabOrder = 2
       OnClick = Button2Click
     end
   end
@@ -156,6 +134,45 @@ object FormGridDataset: TFormGridDataset
     DataSource = DataSource1
     Align = alBottom
     TabOrder = 2
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 41
+    Width = 154
+    Height = 462
+    Align = alLeft
+    TabOrder = 3
+    object Panel3: TPanel
+      Left = 1
+      Top = 1
+      Width = 152
+      Height = 41
+      Align = alTop
+      Caption = 'Data'
+      TabOrder = 0
+      ExplicitLeft = 0
+      ExplicitTop = 211
+      ExplicitWidth = 185
+    end
+    object ListBox1: TListBox
+      Left = 1
+      Top = 42
+      Width = 152
+      Height = 419
+      Align = alClient
+      ItemHeight = 13
+      Items.Strings = (
+        '(none)'
+        'Customers ClientDataSet'
+        'Animals ClientDataSet'
+        'DataSource1'
+        'Big Dataset'
+        'FireDAC MemTable')
+      TabOrder = 1
+      OnClick = ListBox1Click
+      ExplicitLeft = -4
+      ExplicitTop = 48
+    end
   end
   object ClientDataSet1: TClientDataSet
     PersistDataPacket.Data = {
@@ -397,13 +414,13 @@ object FormGridDataset: TFormGridDataset
     Active = True
     Aggregates = <>
     Params = <>
-    Left = 296
-    Top = 80
+    Left = 27
+    Top = 243
   end
   object DataSource1: TDataSource
     DataSet = ClientDataSet1
-    Left = 368
-    Top = 80
+    Left = 109
+    Top = 244
   end
   object ClientDataSet2: TClientDataSet
     PersistDataPacket.Data = {
@@ -3951,19 +3968,19 @@ object FormGridDataset: TFormGridDataset
     Active = True
     Aggregates = <>
     Params = <>
-    Left = 288
-    Top = 168
+    Left = 39
+    Top = 309
   end
   object DataSource2: TDataSource
     DataSet = ClientDataSet2
-    Left = 368
-    Top = 168
+    Left = 119
+    Top = 309
   end
   object ClientDataSet3: TClientDataSet
     Aggregates = <>
     Params = <>
-    Left = 288
-    Top = 249
+    Left = 40
+    Top = 375
     object ClientDataSet3Name: TStringField
       DisplayWidth = 10
       FieldName = 'Name'
@@ -3987,15 +4004,31 @@ object FormGridDataset: TFormGridDataset
   end
   object DataSource3: TDataSource
     DataSet = ClientDataSet3
-    Left = 368
-    Top = 249
+    Left = 120
+    Top = 375
   end
   object PopupMenu1: TPopupMenu
-    Left = 312
-    Top = 344
+    Left = 201
+    Top = 118
     object BenchmarkScrolling1: TMenuItem
       Caption = 'Benchmark Scrolling'
       OnClick = BenchmarkScrolling1Click
     end
+  end
+  object FDMemTable1: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 42
+    Top = 438
+  end
+  object DataSource4: TDataSource
+    DataSet = FDMemTable1
+    Left = 125
+    Top = 436
   end
 end
