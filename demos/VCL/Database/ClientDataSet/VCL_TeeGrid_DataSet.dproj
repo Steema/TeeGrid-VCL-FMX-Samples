@@ -137,7 +137,6 @@
             <Form>FormGridDataset</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Tee.Grid.DB.SortableDataSet.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

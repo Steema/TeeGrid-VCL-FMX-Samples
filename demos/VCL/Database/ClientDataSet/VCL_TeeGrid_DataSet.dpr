@@ -2,8 +2,7 @@ program VCL_TeeGrid_DataSet;
 
 uses
   Vcl.Forms,
-  Unit_Dataset in 'Unit_Dataset.pas' {FormGridDataset},
-  Tee.Grid.DB.SortableDataSet in 'Tee.Grid.DB.SortableDataSet.pas';
+  Unit_Dataset in 'Unit_Dataset.pas' {FormGridDataset};
 
 {$R *.res}
 

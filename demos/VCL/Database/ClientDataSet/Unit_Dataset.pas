@@ -84,7 +84,7 @@ uses
 
   VCLTee.Editor.Grid, Tee.Grid.RowGroup, Tee.Grid,
 
-  Tee.Grid.DB.SortableDataSet;
+  Tee.GridData.DB.Sortable;
 
 // Show the TeeGrid editor dialog
 procedure TFormGridDataset.Button1Click(Sender: TObject);
