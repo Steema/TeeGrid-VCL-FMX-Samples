@@ -10,16 +10,21 @@ interface
   TeeGrid1.DataSource:= DataSource1;
 
   TeeGrid1.DataSource:= ClientDataset1;
+
+  This demo also shows how to enable sorting on DB Dataset columns by clicking
+  the grid header column names.
+
+  This works with DataSnap TClientDataset, and FireDAC any TFDDataset.
 }
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid, Data.DB,
   Datasnap.DBClient, Vcl.StdCtrls, Vcl.DBCtrls, Vcl.ExtCtrls, Vcl.Menus,
   Tee.Grid.Columns, Tee.Renders, Vcl.Buttons, FireDAC.Stan.Intf,
   FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
   FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client, FireDAC.Stan.StorageBin;
 
 type
   TFormGridDataset = class(TForm)
@@ -53,6 +58,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure BenchmarkScrolling1Click(Sender: TObject);
     procedure ListBox1Click(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     { Private declarations }
 
@@ -180,6 +186,15 @@ begin
   ListBox1Click(Self);
 end;
 
+procedure TFormGridDataset.FormDestroy(Sender: TObject);
+begin
+  // Not strictly necessary, remove temporary indexes
+  TSortableClientDataset.CleanUp(ClientDataSet1);
+  TSortableClientDataset.CleanUp(ClientDataSet2);
+  TSortableClientDataset.CleanUp(ClientDataSet3);
+  TSortableFireDACDataset.CleanUp(FDMemTable1);
+end;
+
 procedure TFormGridDataset.ListBox1Click(Sender: TObject);
 begin
   // False = All rows same height
@@ -237,7 +252,6 @@ begin
          // TeeGrid1.Columns['Password'].OnPaint:=PaintPassword;
     end;
   else
-
     begin
       // A FireDAC TFDMemTable:
 
