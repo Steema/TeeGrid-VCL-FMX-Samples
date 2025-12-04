@@ -3,7 +3,7 @@
 ### [Download latest version](https://www.steema.com/downloads/gridvcl)
 ## Lightweight full-featured Grid / Tabular control
 
-### For Embarcadero RAD Studio Athens 12.3 and older ides, Delphi and C++, VCL and Firemonkey frameworks (all platforms: Windows 32 and 64 bit, 64 bit Modern, Mac OSX, Android and iOS), and Lazarus FreePascal (Windows, Linux, etc)
+### For Embarcadero RAD Studio 13.0 Florence and older ides, Delphi and C++, VCL and Firemonkey frameworks (all platforms: Windows 32 and 64 bit, 64 bit Modern, Mac OSX, Android, Linux and iOS), and Lazarus FreePascal (Windows, Linux, etc)
 
 Written from scratch (not derived from `TCustomGrid` or `TGrid`), aprox 10K lines of code and 100K compiled size.
 
