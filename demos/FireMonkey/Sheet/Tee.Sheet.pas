@@ -1,9 +1,18 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  TSheet class                               }
+{  Copyright (c) 2015-2025 by Steema Software }
+{  All Rights Reserved                        }
+{*********************************************}
 unit Tee.Sheet;
 
 interface
 
 {
    Common unit (VCL, Firemonkey and Lazarus LCL)
+
+   This unit implements the TSheet class, which contains the
+   Grid and the Data of the spreadsheet.
 }
 
 uses
@@ -84,6 +93,13 @@ begin
   // Automatically start the cell editing mode when pressing a letter or number key
   IGrid.Editing.AutoEdit:=True;
 
+  // Do not select text when autoediting a cell
+  IGrid.Editing.Text.Selected:=False;
+
+  // Keep selected cells highlighted when unfocusing the sheet
+  IGrid.Selected.UnFocused.Visible:=True;
+
+  // ss
   IGrid.Selected.Range.Enabled:=True;
 end;
 

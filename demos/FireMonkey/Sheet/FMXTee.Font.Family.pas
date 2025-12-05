@@ -1,3 +1,9 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  Returns the list of installed fonts        }
+{  Copyright (c) 2015-2025 by Steema Software }
+{  All Rights Reserved                        }
+{*********************************************}
 unit FMXTee.Font.Family;
 
 interface

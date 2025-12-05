@@ -1,3 +1,9 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  Form to edit cells text and format         }
+{  Copyright (c) 2015-2025 by Steema Software }
+{  All Rights Reserved                        }
+{*********************************************}
 unit FMXTee.Sheet.Tools;
 
 interface
@@ -13,10 +19,6 @@ uses
 
 type
   TSheetTools = class(TForm)
-    Tabs: TTabControl;
-    TabFile: TTabItem;
-    TabHome: TTabItem;
-    TabInsert: TTabItem;
     LayoutClipboard: TLayout;
     BPaste: TButton;
     BCut: TButton;
@@ -32,7 +34,6 @@ type
     SBLeft: TSpeedButton;
     SBCenter: TSpeedButton;
     SBRight: TSpeedButton;
-    procedure FormCreate(Sender: TObject);
     procedure BCutClick(Sender: TObject);
     procedure BPasteClick(Sender: TObject);
     procedure BCopyClick(Sender: TObject);
@@ -132,11 +133,6 @@ class function TSheetTools.Embedd(const AOwner: TComponent;
 begin
   result:=TSheetTools.Create(AOwner);
   TStrokeEditor.AddForm(result,AParent);
-end;
-
-procedure TSheetTools.FormCreate(Sender: TObject);
-begin
-  Tabs.ActiveTab:=TabHome;
 end;
 
 function TSheetTools.GetCell(out AColumn: TColumn; out ARow: Integer): Boolean;

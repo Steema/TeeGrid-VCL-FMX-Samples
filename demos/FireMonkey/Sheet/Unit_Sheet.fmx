@@ -41,6 +41,27 @@ object FormSheet: TFormSheet
   object MainMenu1: TMainMenu
     Left = 56
     Top = 168
+    object MenuItem1: TMenuItem
+      Text = '&File'
+      object MenuItem5: TMenuItem
+        Locked = True
+        ShortCut = 32883
+        Text = '&Exit'
+      end
+    end
+    object MenuItem2: TMenuItem
+      Text = '&Sheet'
+      object MenuItem3: TMenuItem
+        Locked = True
+        Text = '&Add'
+        OnClick = MenuItem3Click
+      end
+      object MenuItem4: TMenuItem
+        Locked = True
+        Text = '&Rename...'
+        OnClick = MenuItem4Click
+      end
+    end
   end
   object PopupTabs: TPopupMenu
     OnPopup = PopupTabsPopup

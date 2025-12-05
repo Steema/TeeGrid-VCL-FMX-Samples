@@ -1,9 +1,19 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  Excel-like Spreadsheet Example             }
+{  Copyright (c) 2015-2025 by Steema Software }
+{  All Rights Reserved                        }
+{*********************************************}
 unit Unit_Sheet;
 
 interface
 
 {
-  This example uses TeeGrid to simulate a spreadsheet (Excel)
+  This example uses TeeGrid to simulate a spreadsheet (Excel).
+
+  Cells can contain expressions (like for example: C1+C2)
+  These expressions are calculated using TeeBI units, see folder.
+
 }
 
 uses
@@ -27,6 +37,11 @@ type
     PopupColumns: TPopupMenu;
     MenuInsertColumn: TMenuItem;
     MenuDeleteColumn: TMenuItem;
+    MenuItem1: TMenuItem;
+    MenuItem2: TMenuItem;
+    MenuItem3: TMenuItem;
+    MenuItem4: TMenuItem;
+    MenuItem5: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure InsertTabClick(Sender: TObject);
     procedure PopupTabsPopup(Sender: TObject);
@@ -36,6 +51,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MenuDeleteColumnClick(Sender: TObject);
+    procedure MenuItem3Click(Sender: TObject);
+    procedure MenuItem4Click(Sender: TObject);
   private
     { Private declarations }
 
@@ -64,6 +81,7 @@ implementation
 
 {$R *.fmx}
 
+// Add a new Sheet and a new tab at the bottom
 function TFormSheet.AddSheet(const ATab: TTabControl): TGridSheet;
 var tmp : TTabItem;
 begin
@@ -81,6 +99,7 @@ begin
   result.Grid.OnTyping:=TypingCell;
 end;
 
+// Recalculate formulas when changing cells
 procedure TFormSheet.TypingCell(Sender: TObject);
 begin
   Expression.RefreshFormula;
@@ -108,6 +127,7 @@ begin
   end;
 end;
 
+// Returns the current grid
 function TFormSheet.CurrentGrid: TGridSheet;
 var tmp : TObject;
 begin
@@ -122,6 +142,7 @@ begin
      result:=TGridSheet(tmp);
 end;
 
+// Returns the Sheet of the current grid
 function TFormSheet.Current: TSheet;
 var tmp : TGridSheet;
 begin
@@ -138,6 +159,7 @@ begin
   result:=Current.Grid.Selected.Column;
 end;
 
+// Remove a Sheet and its tab
 procedure TFormSheet.DeleteTabClick(Sender: TObject);
 var tmp,
     tmpCount : Integer;
@@ -202,6 +224,16 @@ end;
 procedure TFormSheet.MenuDeleteColumnClick(Sender: TObject);
 begin
   CurrentColumn.Free;
+end;
+
+procedure TFormSheet.MenuItem3Click(Sender: TObject);
+begin
+  InsertTabClick(Self);
+end;
+
+procedure TFormSheet.MenuItem4Click(Sender: TObject);
+begin
+  RenameTabClick(Self);
 end;
 
 procedure TFormSheet.PopupTabsPopup(Sender: TObject);

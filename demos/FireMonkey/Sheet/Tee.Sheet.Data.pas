@@ -1,6 +1,19 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  TSheetCells, array of TSheetCell           }
+{  Copyright (c) 2015-2025 by Steema Software }
+{  All Rights Reserved                        }
+{*********************************************}
 unit Tee.Sheet.Data;
 
 interface
+
+{
+
+  TSheetCells is an array of Cells (columns by rows).
+
+  Every cell has an Expression (the cell value).
+}
 
 uses
   {System.}Classes,

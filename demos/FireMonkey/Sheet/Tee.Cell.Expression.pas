@@ -1,6 +1,17 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  TCellExpression                            }
+{  Copyright (c) 2015-2025 by Steema Software }
+{  All Rights Reserved                        }
+{*********************************************}
 unit Tee.Cell.Expression;
 
 interface
+
+{
+  TCellExpression is a TExpression associated to a spreadsheet cell,
+  identified by Column and Row.
+}
 
 uses
   Tee.Grid.Columns, Tee.Sheet.Data,

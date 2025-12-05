@@ -1,19 +1,28 @@
+{*********************************************}
+{  TeeGrid Software Library                   }
+{  TGridSheet, a specialized TeeGrid          }
+{  Copyright (c) 2015-2025 by Steema Software }
+{  All Rights Reserved                        }
+{*********************************************}
 unit FMXTee.Sheet.Grid;
 
 interface
 
 {
-  Special FMX TeeGrid, maintains an internal "Sheet" object
+   TSheets, a collection of TGridSheet controls.
 }
 
 uses
   System.Classes,
-  FMXTee.Grid, Tee.Sheet;
+
+  FMXTee.Grid, Tee.Sheet, Tee.Grid.Columns;
 
 type
   TGridSheet=class(TTeeGrid)
   private
     FSheet : TSheet;
+
+    procedure ColumnResized(Sender:TObject; const AColumn:TColumn);
   public
     Constructor Create(AOwner:TComponent); override;
 
@@ -50,7 +59,15 @@ uses
 Constructor TGridSheet.Create(AOwner: TComponent);
 begin
   inherited;
+
   FSheet:=TSheet.Create(Grid);
+
+  Selected.Range.Enabled:=True;
+
+  // OnColumnResized is no longer necessary, there is a property to do this:
+  // Header.ResizeRepaint:=True;
+
+  OnColumnResized:=ColumnResized;
 end;
 
 {$IFNDEF AUTOREFCOUNT}
@@ -61,6 +78,11 @@ begin
 end;
 {$ENDIF}
 
+procedure TGridSheet.ColumnResized(Sender:TObject; const AColumn:TColumn);
+begin
+  Repaint;
+end;
+
 { TSheets }
 
 function TSheets.Add: TSheetItem;
@@ -68,7 +90,8 @@ begin
   result:=inherited Add as TSheetItem;
 
   result.Sheet:=TGridSheet.Create(Owner as TComponent);
-  result.Sheet.Sheet.Name:=NewName;
+  result.Sheet.Name:=NewName;
+  result.Sheet.Sheet.Name:=result.Sheet.Name;
 end;
 
 function TSheets.Get(const Index: Integer): TSheetItem;
