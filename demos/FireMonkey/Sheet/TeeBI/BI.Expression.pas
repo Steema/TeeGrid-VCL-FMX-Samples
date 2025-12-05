@@ -1,7 +1,7 @@
 {*********************************************}
 {  TeeBI Software Library                     }
 {  Expression parser and evaluator            }
-{  Copyright (c) 2015-2018 by Steema Software }
+{  Copyright (c) 2015-2025 by Steema Software }
 {  All Rights Reserved                        }
 {*********************************************}
 unit BI.Expression;
@@ -466,7 +466,8 @@ type
     class function Max:Integer; static;
     function ToString:String; overload;
     class function ToString(const Index:Integer):String; overload; inline; static;
-    class function ToCode(const Index:Integer):String; static;
+    class function ToCode(const Index:Integer):String; overload; static;
+    function ToCode: String; overload;
   end;
 
   TDateTimePartExpression=class(TParameterExpression)
@@ -1342,7 +1343,7 @@ Constructor TArrayExpression.Create(const AValues: array of TData);
 
   function FromItem(const Index:Integer):TExpression;
 
-    procedure DoError;
+    procedure DoError; {$IFNDEF FPC}{$IF CompilerVersion>=37}noreturn;{$ENDIF}{$ENDIF}
     begin
       raise Exception.Create('Cannot interpret array item at index: '+IntToStr(Index));
     end;
@@ -1515,7 +1516,7 @@ end;
 
 const
   DateParts:Array[0..22] of String=(
-                     '',
+                     '', // None
            'Millisecond',
       'HundredsOfSecond',
         'TenthsOfSecond',
@@ -1614,6 +1615,11 @@ end;
 function TDateTimePartHelper.ToString: String;
 begin
   result:=Texts[Self];
+end;
+
+function TDateTimePartHelper.ToCode: String;
+begin
+  result:=DateParts[Ord(Self)];
 end;
 
 class function TDateTimePartHelper.ToCode(const Index: Integer): String;
@@ -1789,13 +1795,15 @@ end;
 {$IFDEF FPC}
 function TExpression.DoError(const APos:Integer; const AMessage:String):Boolean;
 {$ELSE}
-class function TExpression.DoError(const APos:Integer; const AMessage:String):Boolean;
+class function TExpression.DoError(const APos:Integer; const AMessage:String):Boolean; {$IF CompilerVersion>=37}noreturn;{$ENDIF}
 {$ENDIF}
 begin
   raise EExpressionParse.Create(APos,AMessage);
 
+  {$IFNDEF FPC}
   {$IF CompilerVersion<35}
   result:=False; // <-- to skip warning
+  {$ENDIF}
   {$ENDIF}
 end;
 
@@ -2312,8 +2320,12 @@ begin
             end;
 
       ')',
-      ']',
-      ',' : break;
+      ']' : break;
+
+      ',' : // Not possible to use "," as decimal separator in expressions,
+            // because the parser will for example wrongly interpret [1,2]
+            // as 1.2 instead of an array of two integers (1 and 2).
+            break;
 
  '"','''' : begin
               if tmp=nil then
@@ -2372,14 +2384,22 @@ begin
               result:=Logical(tmp,ParseComparerOperand(C));
               Exit;
             end;
+
     else
       Token:=Token+C;
     end;
   end;
 
   if Token<>'' then
-     GuessToken;
- 
+     if tmp=nil then
+        GuessToken
+     else
+     begin
+       tmp.Free;
+       tmp:=nil;
+       DoError(Start-Length(Token),'Wrong syntax, extra token');
+     end;
+
   result:=tmp
 end;
 
@@ -2926,7 +2946,7 @@ end;
 
 function TTextOperandExpression.Value: TData;
 
-  procedure DoErrorParams;
+  procedure DoErrorParams; {$IFNDEF FPC}{$IF CompilerVersion>=37}noreturn;{$ENDIF}{$ENDIF}
   begin
     raise Exception.Create('Error: '+Operand.ToString+
           ' function wrong number of parameters ('+IntToStr(Operand.ParameterCount)+')');
@@ -2964,7 +2984,7 @@ begin
   if L=1 then
   begin
     {$IFDEF FPC}
-    tmp:=TExpression(NativeInt(AParameters[0]));
+    tmp:=TExpression(Integer(AParameters[0]));     // NativeInt conversion is not allowed in Lazarus 4.0.4
     Create(tmp);
     {$ELSE}
     Create(AParameters[0]);

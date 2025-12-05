@@ -51,7 +51,7 @@ type
 
     class function CalcDayOfYear(T: Integer; out Y:Word): Word; static;
     class function CalcLeap(T: Integer; out D:Word): Boolean; inline; static;
-    class function DateTimeToDateStamp(const DateTime: TDateTime): Integer; static;
+    class function DateTimeToDateStamp(const DateTime: TDateTime): Integer; static; inline;
     class function DayMonth(const T:Integer; out M:Byte): Word; overload; static;
     {$ENDIF}
   public
@@ -131,13 +131,20 @@ begin
   result:=IsLeapYear(Y);
 end;
 
-class function TBIDateTime.DateTimeToDateStamp(const DateTime: TDateTime): Integer;
-const
-  FMSecsPerDay: Single = MSecsPerDay;
-  IMSecsPerDay: Integer = MSecsPerDay;
+// It is faster to use Round than Trunc in 64 bits cpu,
+// and the opposite, it is faster to use Trunc than Round in 32 bits cpu.
+{$IFDEF CPUX64}
+{$DEFINE USEROUNDSTAMP}
+{$ENDIF}
 
+class function TBIDateTime.DateTimeToDateStamp(const DateTime: TDateTime): Integer;
 begin
-  Result := DateDelta + (Round(DateTime * FMSecsPerDay) div IMSecsPerDay);
+  Result := DateDelta +
+    {$IFDEF USEROUNDSTAMP}
+    (Round(DateTime * MSecsPerDay) div MSecsPerDay);
+    {$ELSE}
+    Trunc(DateTime);
+    {$ENDIF}
 end;
 
 {$DEFINE LOOKUP}
