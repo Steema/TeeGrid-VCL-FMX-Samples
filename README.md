@@ -38,6 +38,15 @@ See full [License](https://github.com/Steema/TeeGrid/blob/master/docs/license.tx
 
 - [TeeBI data-mining](https://www.steema.com/product/teebi)
 
+### Other Steema libraries at Github:
+
+- [TeeChart](https://github.com/Steema/TeeChart-VCL-FMX-Samples)
+- [TeeBI](https://github.com/Steema/TeeBI)
+- [TeeTree](https://github.com/Steema/TeeTree)
+
+
+### Embarcadero
+
 - [LearnDelphi.org](https://learndelphi.org/)
 
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/embarcadero_logo.png)](https://www.embarcadero.com)
