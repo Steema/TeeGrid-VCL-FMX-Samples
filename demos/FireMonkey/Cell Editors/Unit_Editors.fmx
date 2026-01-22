@@ -169,5 +169,35 @@ object FormCellEditors: TFormCellEditors
       TabOrder = 8
       OnChange = CBSelectingEnterKeyChange
     end
+    object Button1: TButton
+      Position.X = 528.000000000000000000
+      Position.Y = 96.000000000000000000
+      Size.Width = 96.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 11
+      Text = 'Cell 1,1 format'
+      OnClick = Button1Click
+    end
+    object Button2: TButton
+      Position.X = 528.000000000000000000
+      Position.Y = 121.000000000000000000
+      Size.Width = 96.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 12
+      Text = 'Cell 2,1 format'
+      OnClick = Button2Click
+    end
+    object Button3: TButton
+      Position.X = 528.000000000000000000
+      Position.Y = 146.000000000000000000
+      Size.Width = 96.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 13
+      Text = 'Row 3 format'
+      OnClick = Button3Click
+    end
   end
 end

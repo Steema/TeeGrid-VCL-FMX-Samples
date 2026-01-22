@@ -9,7 +9,7 @@ uses
 
   FMX.DateTimeCtrls, FMX.ListBox, FMX.Colors, FMX.NumberBox, FMX.Text,
 
-  Tee.Grid.Columns;
+  Tee.Grid.Columns, Tee.Grid.Rows;
 
 type
   TFormCellEditors = class(TForm)
@@ -29,6 +29,9 @@ type
     CBEnterKey: TComboBox;
     Label2: TLabel;
     CBSelectingEnterKey: TComboBox;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
     procedure FormCreate(Sender: TObject);
     procedure CBCustomEditorsChange(Sender: TObject);
     procedure CBAutoEditChange(Sender: TObject);
@@ -41,6 +44,9 @@ type
       const AColumn: TColumn; const ARow: Integer; var ChangeData: Boolean;
       var NewData: string);
     procedure CBSelectingEnterKeyChange(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
 
@@ -60,6 +66,50 @@ uses
   Unit_Example_Data, Unit_Utils,
 
   Tee.Grid, Tee.Grid.Selection;
+
+procedure TFormCellEditors.Button1Click(Sender: TObject);
+var cell : TCell;
+    fontstyles :TFontStyles;
+begin
+  fontstyles := [TFontStyle.fsBold,TFontStyle.fsStrikeOut];
+
+  cell := TeeGrid1.CellFormat.AddCell(1, TeeGrid1.Columns[1].Index);
+
+  cell.Format.Font.Style := fontstyles;
+  cell.Format.Brush.Color := TColors.Yellow;
+  cell.Format.Font.Color := TColors.Red;
+  cell.Format.Brush.Show;
+
+  TeeGrid1.Repaint;
+end;
+
+procedure TFormCellEditors.Button2Click(Sender: TObject);
+var cell : TCell;
+    fontstyles :TFontStyles;
+begin
+  fontstyles := [TFontStyle.fsBold,TFontStyle.fsItalic];
+
+  cell := TeeGrid1.CellFormat.Cell[2, 1];
+  cell.Format.Font.Style := fontstyles;
+  cell.Format.Brush.Color := TColors.Yellow;
+  cell.Format.Font.Color := TColors.Blue;
+  cell.Format.Brush.Show;
+
+  TeeGrid1.Repaint;
+
+end;
+
+procedure TFormCellEditors.Button3Click(Sender: TObject);
+var row : TRow;
+begin
+   row:=TeeGrid1.Rows.Items[3];
+
+   row.Format.Brush.Show;
+   row.Format.Brush.Color:=TColors.Burlywood;
+   row.Format.Font.Color:=TColors.Red;
+
+   TeeGrid1.Repaint;
+end;
 
 procedure TFormCellEditors.CBAlwaysVisibleChange(Sender: TObject);
 begin
