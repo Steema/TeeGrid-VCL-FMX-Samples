@@ -16,7 +16,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, StrUtils,
-  Vcl.ComCtrls, Vcl.Samples.Spin,
+  Vcl.ComCtrls,
 
   VCLTee.Control, VCLTee.Grid, Tee.Grid.Columns;
 
@@ -55,6 +55,7 @@ type
     Button3: TButton;
     Label7: TLabel;
     CBSelectingEnter: TComboBox;
+    CBSort: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure CBAutoEditClick(Sender: TObject);
     procedure CBAlwaysVisibleClick(Sender: TObject);
@@ -70,6 +71,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure CBSelectingEnterChange(Sender: TObject);
+    procedure CBSortClick(Sender: TObject);
   private
     { Private declarations }
 
@@ -88,9 +90,11 @@ implementation
 uses
   Unit_Example_Data, Unit_Utils,
 
-  VCLTee.Painter,
+  VCLTee.Painter, VCL.Samples.Spin,
 
-  Tee.Grid, System.UITypes, Tee.Grid.Rows, Tee.Format, Tee.Grid.Selection;
+  Tee.Grid, System.UITypes, Tee.Grid.Rows, Tee.Format, Tee.Grid.Selection,
+
+  Tee.GridData.Sortable;
 
 procedure TFormCellEditors.Button1Click(Sender: TObject);
 var cell : TCell;
@@ -175,6 +179,11 @@ begin
   TeeGrid1.Selected.EnterKey:=TSelectingEnter(CBSelectingEnter.ItemIndex);
 end;
 
+procedure TFormCellEditors.CBSortClick(Sender: TObject);
+begin
+  TeeGrid1.Header.Sortable:=CBSort.Checked;
+end;
+
 procedure TFormCellEditors.FormCreate(Sender: TObject);
 begin
 // Example, switch from Windows GDI+ graphics to GDI:
@@ -191,6 +200,8 @@ begin
   TeeGrid1.Editing.Text.Selected:=False;
 
   SetupCustomEditors;
+
+  TSortableVirtualData.CreateSortable(TeeGrid1.Grid);
 end;
 
 // Different editor control for each column

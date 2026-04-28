@@ -40,6 +40,7 @@ object FormCellEditors: TFormCellEditors
     Height = 41
     Align = alTop
     TabOrder = 1
+    ExplicitTop = -6
     object Label1: TLabel
       Left = 248
       Top = 14
@@ -57,6 +58,17 @@ object FormCellEditors: TFormCellEditors
       State = cbChecked
       TabOrder = 0
       OnClick = CBCustomEditorsClick
+    end
+    object CBSort: TCheckBox
+      Left = 568
+      Top = 18
+      Width = 139
+      Height = 17
+      Caption = 'Click Header to Sort'
+      Checked = True
+      State = cbChecked
+      TabOrder = 1
+      OnClick = CBSortClick
     end
   end
   object Panel2: TPanel
