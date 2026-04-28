@@ -40,7 +40,6 @@ object FormCellEditors: TFormCellEditors
     Height = 41
     Align = alTop
     TabOrder = 1
-    ExplicitTop = -6
     object Label1: TLabel
       Left = 248
       Top = 14

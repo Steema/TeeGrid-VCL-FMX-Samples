@@ -6,12 +6,11 @@ interface
 
 {
   NOTE:
-    This code is not necessary if you want a default sorting mechanism.
-    For default sorting, just do this:
+    This code is only necessary if you want a custom sorting mechanism.
 
-    uses Tee.GridData.Sortable;
-    TeeGrid1.Header.Sortable:=True;
-    TSortableVirtualData.CreateSortable(TeeGrid1.Grid);
+    Default sorting is enabled, it can be disabled like:
+
+    TeeGrid1.Header.Sortable := False
 }
 
 uses

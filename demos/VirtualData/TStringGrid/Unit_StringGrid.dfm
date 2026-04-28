@@ -10,11 +10,9 @@ object StringGridForm: TStringGridForm
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
   TextHeight = 13
   object TeeGrid1: TTeeGrid
     Left = 0
@@ -23,7 +21,6 @@ object StringGridForm: TStringGridForm
     Height = 410
     Columns = <>
     Header.OnClick = TeeGrid1ClickedHeader
-    ReadOnly = False
     OnClickedHeader = TeeGrid1ClickedHeader
     OnSelect = TeeGrid1Select
     Align = alClient

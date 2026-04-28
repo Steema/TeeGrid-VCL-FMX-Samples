@@ -92,9 +92,7 @@ uses
 
   VCLTee.Painter, VCL.Samples.Spin,
 
-  Tee.Grid, System.UITypes, Tee.Grid.Rows, Tee.Format, Tee.Grid.Selection,
-
-  Tee.GridData.Sortable;
+  Tee.Grid, System.UITypes, Tee.Grid.Rows, Tee.Format, Tee.Grid.Selection;
 
 procedure TFormCellEditors.Button1Click(Sender: TObject);
 var cell : TCell;
@@ -200,8 +198,6 @@ begin
   TeeGrid1.Editing.Text.Selected:=False;
 
   SetupCustomEditors;
-
-  TSortableVirtualData.CreateSortable(TeeGrid1.Grid);
 end;
 
 // Different editor control for each column

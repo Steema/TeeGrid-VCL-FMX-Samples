@@ -180,7 +180,7 @@ begin
   //  TeeGrid1.Scrolling.Horizontal:=TScrollDirection.Disabled;
 
   // Change the selected row when scrolling the grid
-  // TeeGrid1.Selected.ScrollToView:=True;
+//  TeeGrid1.Selected.ScrollToView:=True;
 
   ListBox1.ItemIndex:=1;
   ListBox1Click(Self);
