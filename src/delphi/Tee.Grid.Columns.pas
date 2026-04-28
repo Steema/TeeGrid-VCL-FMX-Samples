@@ -93,7 +93,10 @@ type
   end;
 
   // Just an alias
-  TColumnWidth=class(TCoordinate);
+  TColumnWidth=class(TCoordinate)
+  public
+    Valid : Boolean;
+  end;
 
   // Cell text alignment. Automatic means to right-align numbers etc.
   TColumnTextAlign=(Automatic,Custom);
@@ -180,7 +183,6 @@ type
     EditorClass : TClass;
 
     Left : Single;
-    ValidWidth : Boolean;
 
     Constructor Create(ACollection:TCollection); override;
 
