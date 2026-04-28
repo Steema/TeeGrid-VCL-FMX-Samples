@@ -2,6 +2,18 @@ unit Unit_Custom_Sorting;
 
 interface
 
+// Use a custom "TComparer" class to sort the grid array data.
+
+{
+  NOTE:
+    This code is not necessary if you want a default sorting mechanism.
+    For default sorting, just do this:
+
+    uses Tee.GridData.Sortable;
+    TeeGrid1.Header.Sortable:=True;
+    TSortableVirtualData.CreateSortable(TeeGrid1.Grid);
+}
+
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
