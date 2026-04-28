@@ -36,7 +36,7 @@ implementation
 uses
   UITypes,
   Tee.Grid.Bands, Tee.Painter, VCLTee.Editor.Grid.Bands,
-  Tee.Format, Tee.GridData.Rtti, Tee.Grid.Bands.Columns;
+  Tee.Format, Tee.GridData.Rtti, Tee.Grid.Bands.Columns, Tee.GridData.Sortable;
 
 procedure TFormHeaderFooter.Button1Click(Sender: TObject);
 var tmp : TTeeGrid;
@@ -117,6 +117,8 @@ begin
   Houses[1].Address:='456 St';
 
   TeeGrid1.Data:=TVirtualData<TArray<THouse>>.Create(Houses);
+
+  TSortableVirtualData.CreateSortable(TeeGrid1.Grid);
 
   {
   tmp:=TBandGroup.Create(TeeGrid1.Headers.Bands,TeeGrid1.Changed);
