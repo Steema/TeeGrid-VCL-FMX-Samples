@@ -88,6 +88,8 @@ uses
 
   VCLTee.Painter.GdiPlus, VCLTee.Painter, Tee.Format,
 
+  Tee.GridData.Sortable,
+
   Tee.Grid.Totals, VCLTee.Editor.Grid.Bands, VCLTee.Editor.Painter.GDIPlus;
 
 // Show the TeeGrid editor dialog
@@ -337,6 +339,9 @@ begin
 
   // Enable automatic multi-line text in cells
   TeeGrid1.Rows.Height.Automatic:=True;
+
+  // Add default column sorting:
+  TSortableVirtualData.CreateSortable(TeeGrid1.Grid);
 end;
 
 procedure TFormArray.FormDestroy(Sender: TObject);
