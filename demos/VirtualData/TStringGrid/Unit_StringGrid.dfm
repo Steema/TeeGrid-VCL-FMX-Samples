@@ -44,6 +44,13 @@ object StringGridForm: TStringGridForm
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitTop = 457
+    object LabelInfo: TLabel
+      Left = 16
+      Top = 12
+      Width = 3
+      Height = 13
+    end
   end
   object Panel2: TPanel
     Left = 0

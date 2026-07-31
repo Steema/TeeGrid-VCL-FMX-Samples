@@ -35,6 +35,7 @@ type
     CBGDIPlus: TCheckBox;
     OkImage: TImage;
     Benchmark: TButton;
+    LabelInfo: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure TeeGrid1ClickedHeader(Sender: TObject);
     procedure TeeGrid1Select(Sender: TObject);
@@ -311,7 +312,7 @@ end;
 // Just a test, when clicking a column header
 procedure TStringGridForm.TeeGrid1ClickedHeader(Sender: TObject);
 begin
-  Panel1.Caption:='Clicked column header: '+(Sender as TColumn).Header.Text;
+  LabelInfo.Caption:='Clicked column header: '+(Sender as TColumn).Header.Text;
 end;
 
 // Just a test, when selecting a grid cell with mouse click or arrow keys
@@ -330,9 +331,9 @@ begin
   tmp:=TeeGrid1.Grid.Current.Selected;
 
   if tmp.IsEmpty then
-     Panel1.Caption:=''
+     LabelInfo.Caption:=''
   else
-     Panel1.Caption:='Selected cell: '+ColumnHeader(tmp.Column)+
+     LabelInfo.Caption:='Selected cell: '+ColumnHeader(tmp.Column)+
                      ' Row: '+IntToStr(tmp.Row)+
                      ' Value: '+TeeGrid1.Grid.Current.Data.AsString(tmp.Column,tmp.Row);
 end;
