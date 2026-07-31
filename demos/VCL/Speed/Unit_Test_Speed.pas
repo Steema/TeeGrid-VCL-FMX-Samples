@@ -13,7 +13,9 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
   Vcl.ExtCtrls,
 
-  VCLTee.Control, VCLTee.Grid, Vcl.ComCtrls;
+  VCLTee.Control, VCLTee.Grid, Vcl.ComCtrls,
+
+  Tee.GridData.Strings;
 
 type
   TFormSpeed = class(TForm)
@@ -25,14 +27,24 @@ type
     CBAntiAlias: TCheckBox;
     TrackBar1: TTrackBar;
     CBFormatting: TCheckBox;
+    Panel2: TPanel;
+    Button2: TButton;
+    ButtonDeleteRow: TButton;
+    ButtonInsertRow: TButton;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ComboGraphicsChange(Sender: TObject);
     procedure CBAntiAliasClick(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
     procedure CBFormattingClick(Sender: TObject);
+    procedure TeeGrid1Select(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure ButtonDeleteRowClick(Sender: TObject);
+    procedure ButtonInsertRowClick(Sender: TObject);
   private
     { Private declarations }
+
+    Data : TStringsData;
 
     procedure ClearCosmetics;
     procedure RunBenchmark;
@@ -53,9 +65,8 @@ implementation
 {$IFEND}
 
 uses
-  Tee.GridData.Strings,
-
   Tee.Grid.Columns, Tee.Painter, Tee.Format,
+  Tee.Grid.Selection, Tee.Grid, Tee.Grid.RowGroup,
 
   VCLTee.Painter,
   VCLTee.Painter.GdiPlus,
@@ -92,6 +103,27 @@ begin
 end;
 
 // Switch the graphics render engine (GDI+, GDI, Skia)
+procedure TFormSpeed.Button2Click(Sender: TObject);
+begin
+  // Optional parameter: Quantity of rows to append at the end of the data grid
+  Data.AppendRows {(5)} ; // default is 1 row
+
+  // Select the new last row
+  TeeGrid1.Selected.Row:=Data.Rows-1;
+end;
+
+procedure TFormSpeed.ButtonDeleteRowClick(Sender: TObject);
+begin
+  // Optional parameter: Quantity of rows to delete, default 1 row
+  Data.DeleteRows(TeeGrid1.Selected.Row  {,5});
+end;
+
+procedure TFormSpeed.ButtonInsertRowClick(Sender: TObject);
+begin
+  // Optional parameter: Quantity of rows to insert at, default 1 row
+  Data.InsertRows(TeeGrid1.Selected.Row {,5});
+end;
+
 procedure TFormSpeed.CBAntiAliasClick(Sender: TObject);
 begin
   if TeeGrid1.Painter is TGdiPlusPainter then
@@ -128,7 +160,11 @@ end;
 // Initialize grid with sample data
 procedure TFormSpeed.FormCreate(Sender: TObject);
 begin
-  TeeGrid1.Data:=Sample_Data;
+  Data:=Sample_Data;
+  TeeGrid1.Data:=Data;
+
+  TeeGrid1.Selected.Range.Enabled:=True;
+//  TeeGrid1.Selected.RangeFormat.Stroke.Visible:=True;
 
   {$IFNDEF HAS_SKIA} // Remove Skia option
   ComboGraphics.Items.Delete(2);
@@ -223,6 +259,15 @@ begin
         TeeGrid1.Selected.Column:=Column;
         TeeGrid1.Selected.Row:=Row;
       end;
+end;
+
+procedure TFormSpeed.TeeGrid1Select(Sender: TObject);
+var tmp : TGridSelection;
+begin
+  tmp:=TeeGrid1.Grid.Current.Selected;
+
+  ButtonDeleteRow.Enabled:=not tmp.IsEmpty;
+  ButtonInsertRow.Enabled:=ButtonDeleteRow.Enabled;
 end;
 
 procedure TFormSpeed.TrackBar1Change(Sender: TObject);

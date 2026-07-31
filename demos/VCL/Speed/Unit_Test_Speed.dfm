@@ -23,7 +23,7 @@ object FormSpeed: TFormSpeed
     object LabelResult: TLabel
       Left = 112
       Top = 13
-      Width = 69
+      Width = 70
       Height = 15
       Caption = 'Time: 0 msec'
     end
@@ -88,8 +88,9 @@ object FormSpeed: TFormSpeed
     Left = 0
     Top = 41
     Width = 853
-    Height = 541
+    Height = 500
     Columns = <>
+    OnSelect = TeeGrid1Select
     Align = alClient
     UseDockManager = False
     ParentBackground = False
@@ -101,5 +102,42 @@ object FormSpeed: TFormSpeed
       <
         item
         end>)
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 541
+    Width = 853
+    Height = 41
+    Align = alBottom
+    TabOrder = 2
+    object Button2: TButton
+      Left = 16
+      Top = 6
+      Width = 109
+      Height = 25
+      Caption = 'Append Row'
+      TabOrder = 0
+      OnClick = Button2Click
+    end
+    object ButtonDeleteRow: TButton
+      Left = 120
+      Top = 6
+      Width = 109
+      Height = 25
+      Caption = 'Delete Row'
+      Enabled = False
+      TabOrder = 1
+      OnClick = ButtonDeleteRowClick
+    end
+    object ButtonInsertRow: TButton
+      Left = 251
+      Top = 6
+      Width = 109
+      Height = 25
+      Caption = 'Insert Row'
+      Enabled = False
+      TabOrder = 2
+      OnClick = ButtonInsertRowClick
+    end
   end
 end
