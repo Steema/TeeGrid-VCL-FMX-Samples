@@ -6,13 +6,16 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, VCLTee.Control, VCLTee.Grid,
-  Vcl.ExtCtrls, Tee.Renders.SparkLines;
+  Vcl.ExtCtrls, Tee.Renders.SparkLines, Vcl.StdCtrls;
 
 type
   TMainForm = class(TForm)
     Panel1: TPanel;
     TeeGrid1: TTeeGrid;
+    Label1: TLabel;
+    CBStyle: TComboBox;
     procedure FormShow(Sender: TObject);
+    procedure CBStyleChange(Sender: TObject);
   private
     { Private declarations }
 
@@ -56,14 +59,21 @@ begin
   TeeGrid1.Data:=Data;
 end;
 
+procedure TMainForm.CBStyleChange(Sender: TObject);
+begin
+  Sparks.Style:=TSparkStyle(CBStyle.ItemIndex);
+end;
+
 procedure TMainForm.FormShow(Sender: TObject);
 begin
   AddRandomData;
 
-  Sparks:=TSparkLines.AddTo(TeeGrid1.Grid, 1,TeeGrid1.Columns.Count-2, 'Sparks');
+  Sparks:=TSparkLines.AddTo(TeeGrid1.Grid, 1,10, 'Sparks');
 
   Sparks.Stroke.Size:=2;
   Sparks.Stroke.Color:=TColors.Blue;
+
+  Sparks.Format.Brush.Color:=TColors.Lightsteelblue;
 end;
 
 end.

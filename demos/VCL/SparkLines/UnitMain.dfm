@@ -23,6 +23,29 @@ object MainForm: TMainForm
     ExplicitLeft = 232
     ExplicitTop = 224
     ExplicitWidth = 185
+    object Label1: TLabel
+      Left = 16
+      Top = 13
+      Width = 28
+      Height = 15
+      Caption = '&Style:'
+      FocusControl = CBStyle
+    end
+    object CBStyle: TComboBox
+      Left = 57
+      Top = 10
+      Width = 63
+      Height = 23
+      Style = csDropDownList
+      ItemIndex = 0
+      TabOrder = 0
+      Text = 'Line'
+      OnChange = CBStyleChange
+      Items.Strings = (
+        'Line'
+        'Bar'
+        'Area')
+    end
   end
   object TeeGrid1: TTeeGrid
     Left = 0
