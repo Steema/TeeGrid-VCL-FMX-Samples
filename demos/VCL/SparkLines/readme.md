@@ -3,7 +3,7 @@
 Add new columns to draw "spark lines" (mini charts) using data from other columns.
 You can add as many as you wish.
 
-<img width="794" height="634" alt="image" src="https://github.com/user-attachments/assets/3e743471-a8d3-481e-81fe-4ddd3c552b72" />
+<img width="823" height="844" alt="image" src="https://github.com/user-attachments/assets/7ba04e80-5123-4e0a-8371-0ef447c9f2ef" />
 
 ```delphi
 uses Tee.Renders.SparkLines, UITypes;
