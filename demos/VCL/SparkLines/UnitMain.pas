@@ -22,6 +22,7 @@ type
     Sparks : TSparkLines;
 
     procedure AddRandomData;
+    procedure PaintSparks(Sender: TObject);
   public
     { Public declarations }
   end;
@@ -74,6 +75,25 @@ begin
   Sparks.Stroke.Color:=TColors.Blue;
 
   Sparks.Format.Brush.Color:=TColors.Lightsteelblue;
+
+  Sparks.OnPaint:=PaintSparks;
+end;
+
+// Optional, just to demonstrate how to customize per-row
+procedure TMainForm.PaintSparks(Sender: TObject);
+begin
+  if Sparks.Row=9 then
+     Sparks.Style:=TSparkStyle.Area
+  else
+  if Sparks.Row in [7,11,14] then
+     Sparks.Style:=TSparkStyle.Bar
+  else
+     Sparks.Style:=TSparkStyle.Line;
+
+  if Sparks.Row in [3,11,16] then
+     Sparks.Stroke.Color:=TColors.Red
+  else
+     Sparks.Stroke.Color:=TColors.Blue;
 end;
 
 end.

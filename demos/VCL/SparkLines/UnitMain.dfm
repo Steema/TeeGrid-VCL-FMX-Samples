@@ -20,9 +20,6 @@ object MainForm: TMainForm
     Height = 41
     Align = alTop
     TabOrder = 0
-    ExplicitLeft = 232
-    ExplicitTop = 224
-    ExplicitWidth = 185
     object Label1: TLabel
       Left = 16
       Top = 13
@@ -58,7 +55,6 @@ object MainForm: TMainForm
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
-    ExplicitTop = 47
     _Headers = (
       1
       'TColumnHeaderBand'
