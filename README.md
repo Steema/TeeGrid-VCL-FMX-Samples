@@ -19,6 +19,9 @@ See full [License](https://github.com/Steema/TeeGrid/blob/master/docs/license.tx
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_VCL.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_VCL.png)
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_Lazarus.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_Lazarus.png)
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_Hierarchical.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_Hierarchical.png)
+###
+<img width="223" height="244" alt="image" src="https://github.com/user-attachments/assets/5c902ab2-f152-46f8-a923-e19e1fefcb72" />
+
 
 ### Getting started
 
