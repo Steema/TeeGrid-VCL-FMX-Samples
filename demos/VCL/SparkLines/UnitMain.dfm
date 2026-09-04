@@ -20,6 +20,7 @@ object MainForm: TMainForm
     Height = 41
     Align = alTop
     TabOrder = 0
+    ExplicitTop = -6
     object Label1: TLabel
       Left = 16
       Top = 13
@@ -42,6 +43,15 @@ object MainForm: TMainForm
         'Line'
         'Bar'
         'Area')
+    end
+    object CheckBox1: TCheckBox
+      Left = 160
+      Top = 13
+      Width = 97
+      Height = 17
+      Caption = 'Custom Sparks'
+      TabOrder = 1
+      OnClick = CheckBox1Click
     end
   end
   object TeeGrid1: TTeeGrid
