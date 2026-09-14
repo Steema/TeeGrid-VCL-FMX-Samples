@@ -13,7 +13,7 @@ var Sparks : TSparkLines;
 // 1 and 10 are the start and finish columns you want to plot
 Sparks := TSparkLines.AddTo(TeeGrid1.Grid, 1,10, 'Sparks');
 
-Sarks.Stroke.Size:=2;
+Sparks.Stroke.Size:=2;
 Sparks.Stroke.Color:=TColors.Blue;
 
 ```
