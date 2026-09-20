@@ -3,7 +3,7 @@
 ### [Download latest version](https://www.steema.com/downloads/gridvcl)
 ## Lightweight full-featured Grid / Tabular control
 
-### For Embarcadero RAD Studio 13.0 Florence and older ides, Delphi and C++, VCL and Firemonkey frameworks (all platforms: Windows 32 and 64 bit, 64 bit Modern, Mac OSX, Android, Linux and iOS), and Lazarus FreePascal (Windows, Linux, etc)
+#### For Embarcadero RAD Studio 13.2 Florence and older ides, Delphi and C++, VCL and Firemonkey frameworks (all platforms: Windows 32 and 64 bit, 64 bit Modern, ARM64, Mac OSX, Android, Linux and iOS), and Lazarus FreePascal (Windows, Linux, etc)
 
 Written from scratch (not derived from `TCustomGrid` or `TGrid`), aprox 10K lines of code and 100K compiled size.
 
@@ -14,6 +14,7 @@ Same code for VCL and Firemonkey, 100% pure Pascal.
 
 See full [License](https://github.com/Steema/TeeGrid/blob/master/docs/license.txt) document
 
+### [See all features explained with screenshots](https://github.com/Steema/TeeGrid-VCL-FMX-Samples/wiki/3.-Getting-Started#current-features)
 
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_FMX.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_FMX.png)
 [![](https://raw.github.com/Steema/TeeGrid/master/docs/img/small/TeeGrid_VCL.png)](https://raw.github.com/Steema/TeeGrid/master/docs/img/TeeGrid_VCL.png)
